@@ -1,13 +1,332 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jalpc</title>
-    <description>Jack's blog,use Jekyll and github pages.</description>
-    <link>http://localhost:4000/Jalpc/</link>
-    <atom:link href="http://localhost:4000/Jalpc/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 Mar 2020 05:12:23 +0900</pubDate>
-    <lastBuildDate>Sun, 08 Mar 2020 05:12:23 +0900</lastBuildDate>
+    <title>son</title>
+    <description>Son's blog,use Jekyll and github pages.</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 09 Mar 2020 07:02:11 +0900</pubDate>
+    <lastBuildDate>Mon, 09 Mar 2020 07:02:11 +0900</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>os</title>
+        <description>&lt;h2 id=&quot;운영체제-역할&quot;&gt;운영체제 역할&lt;/h2&gt;
+
+&lt;p&gt;운영체제는 응용 프로그램이 요청하는 시스템 리소스를 효율적으로 분배하고, 지원하는 소프트웨어&lt;/p&gt;
+
+&lt;p&gt;운영체제의 목표: 사용자가 사용하는 응용 프로그램이 효율적으로, 적절하게 동작하도록 지원&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;시스템 자원(System Resource) 관리자
+    &lt;ul&gt;
+      &lt;li&gt;시스템 자원은 컴퓨터 하드웨어의 성능이라고 생각할 수 있다.&lt;/li&gt;
+      &lt;li&gt;CPU(중앙처리장치), Memory(DRAM, RAM), I/O Devices(입출력장치 - Monitor, Mouse, Keyboard, Network)&lt;/li&gt;
+      &lt;li&gt;저장매체: SSD, HDD&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;사용자와 컴퓨터간의 커뮤니케이션 지원&lt;/li&gt;
+  &lt;li&gt;컴퓨터 하드웨어와 프로그램을 제어&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;컴퓨터 하드웨어는 스스로 할 수 있는 것이 없다.&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;CPU: 각 프로그램이 얼마나 CPU를 사용할지를 결정할 수는 없다.&lt;/li&gt;
+  &lt;li&gt;Memory: 각 프로그램이 어느 주소에 저장되어야 하는지, 어느 정도의 메모리 공간을 확보해줘야 하는지를 결정할 수는 없다.&lt;/li&gt;
+  &lt;li&gt;저장매체(HDD, SSD): 어떻게, 어디에 저장할지는 결정할 수 없다.&lt;/li&gt;
+  &lt;li&gt;키보드/마우스: 스스로 표시할 수 는 없다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;운영체제와-응용-프로그램간의-관계&quot;&gt;운영체제와 응용 프로그램간의 관계&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;응용 프로그램을 관리&lt;/li&gt;
+  &lt;li&gt;시스템 자원을 관리&lt;/li&gt;
+  &lt;li&gt;사용자와 컴퓨터 간의 커뮤니케이션을 지원&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;운영체제-history&quot;&gt;운영체제 History&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1950년대&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;에니악(ENIAC): 첫 번째 컴퓨터&lt;/p&gt;
+
+&lt;p&gt;이 당시에는 운영체제가 없었기 때문에 응용프로그램이 시스템 자원을 제어했었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1960년대&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;프로그램 종류도 많아지고, 사용자도 슬슬 많아지기 시작한다.&lt;/p&gt;
+
+&lt;p&gt;배치 처리 시스템(Batch processing system) 출현했다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;여러 응용 프로그램을 등록시켜 놓으면 순차적으로 실행하는 시스템&lt;/li&gt;
+  &lt;li&gt;배치 처리 시스템을 기반으로 운영체제가 출현&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 09 Mar 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/operating%20system/2020/03/09/os.html</link>
+        <guid isPermaLink="true">http://localhost:4000/operating%20system/2020/03/09/os.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>os</category>
+        
+        
+        <category>Operating System</category>
+        
+      </item>
+    
+      <item>
+        <title>스프링 부트(Spring Boot)</title>
+        <description>&lt;h2 id=&quot;스프링-부트란&quot;&gt;스프링 부트란?&lt;/h2&gt;
+
+&lt;p&gt;스프링 부트(Spring Boot)를 사용하면 빠르게 게발하고 이후 확장성도 좋다.&lt;/p&gt;
+
+&lt;p&gt;Spring Framework의 설정이 너무 복잡하고 어려웠기 때문에, 이를 해결학디 위해 만들어졌다.&lt;/p&gt;
+
+&lt;p&gt;Spring Boot가 나오면서 초기 생산성이 획기적으로 좋아졌다.&lt;/p&gt;
+
+&lt;p&gt;스프링은 다양한 식재료이고, 스프링부트는 완성된 케이라고 생각하면 이해하기 쉽다.&lt;/p&gt;
+
+&lt;p&gt;식재료를 다양하게 섞어서 자신만의 요리를 만들고 싶은 사람도 있을 것이고, 거의 다 만들어져 있는 음식을 데우기만 해서 먹고 싶은 사람도 있을 것이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;스프링-부트의-특징&quot;&gt;스프링 부트의 특징&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Starter를 통한 어플리케이션의 간편하고 자동화된 빌드 및 설정을 제공함&lt;/li&gt;
+  &lt;li&gt;Embed 서버를 제공함으로써 복잡한 배포 설정들을 간편하게 제공함&lt;/li&gt;
+  &lt;li&gt;Production에서 사용할 수 있는 추가적인 기능을 제공함 (actuator)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Convention Over Configuration = 설정보다는 관습 (CoC)&lt;/p&gt;
+
+  &lt;p&gt;“개발자가 설정해야 하는 것은 어플리케이션의 관례를 따르지 않는 점 뿐이다.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;아래의 사이트를 통해 스프링 부트 프로젝트를 생성한다.&lt;/p&gt;
+
+&lt;p&gt;https://start.spring.io/&lt;/p&gt;
+
+&lt;p&gt;스프링 부트를 코딩하기 위해 IntelliJ IDEA를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;IntelliJ란?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;젯브레인스(JetBrains) 사에서 제작한 Java 개발을 위한 툴&lt;/li&gt;
+  &lt;li&gt;IntelliJ 혹은 IDEA 로도 불린다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;아래 사이트를 통해 설치한다.&lt;/p&gt;
+
+&lt;p&gt;https://www.jetbrains.com/idea/&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 08 Mar 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/java/2020/03/08/spring-boot.html</link>
+        <guid isPermaLink="true">http://localhost:4000/java/2020/03/08/spring-boot.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>java</category>
+        
+        <category>spring</category>
+        
+        
+        <category>Java</category>
+        
+      </item>
+    
+      <item>
+        <title>Blog sample</title>
+        <description>&lt;h3 id=&quot;헤더header&quot;&gt;헤더(Header)&lt;/h3&gt;
+
+&lt;h1 id=&quot;헤더-크기-h1&quot;&gt;헤더 크기 (h1)&lt;/h1&gt;
+&lt;h2 id=&quot;헤더-크기-h2&quot;&gt;헤더 크기 (h2)&lt;/h2&gt;
+&lt;h3 id=&quot;헤더-크기-h3&quot;&gt;헤더 크기 (h3)&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;목록list&quot;&gt;목록(List)&lt;/h3&gt;
+
+&lt;p&gt;Unordered&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2
+    &lt;ul&gt;
+      &lt;li&gt;Item 2a&lt;/li&gt;
+      &lt;li&gt;Item 2b&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ordered&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+  &lt;li&gt;Item 3
+    &lt;ol&gt;
+      &lt;li&gt;Item 3a&lt;/li&gt;
+      &lt;li&gt;Item 3b&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;이미지images&quot;&gt;이미지(Images)&lt;/h3&gt;
+
+&lt;p&gt;첫번째 방법 
+&lt;img src=&quot;/images/markdown_logo.jpg&quot; alt=&quot;Github logo&quot; /&gt; 
+Format: &lt;img src=&quot;url 링크&quot; alt=&quot;이미지 alt명&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;두번째 방법 
+&lt;a href=&quot;#&quot;&gt;&lt;img src=&quot;https://github.com/..각자절대경로../images/markdown_syntax.jpg&quot; width=&quot;400px&quot; alt=&quot;sample image&quot; /&gt;&lt;/a&gt; 
+Format: img 태그 사용 - 이미지경로는 상대경로 or 절대경로&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;하이퍼링크links&quot;&gt;하이퍼링크(Links)&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com&quot; title=&quot;깃허브&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;인용-상자blockquotes&quot;&gt;인용 상자(Blockquotes)&lt;/h3&gt;
+
+&lt;p&gt;As Grace Hopper said:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I’ve always been more interested. 
+in the future than in the past.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;강조emphasis&quot;&gt;강조(Emphasis)&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt; 
+&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;This text will be bold&lt;/strong&gt; 
+&lt;strong&gt;This will also be bold&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;You &lt;strong&gt;can&lt;/strong&gt; combine them&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;테이블-tables&quot;&gt;테이블 TABLES&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;First Header&lt;/th&gt;
+      &lt;th&gt;Second Header&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Content cell 1&lt;/td&gt;
+      &lt;td&gt;Content cell 2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Content column 1&lt;/td&gt;
+      &lt;td&gt;Content column 2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;체크-박스task-lists&quot;&gt;체크 박스(Task Lists)&lt;/h3&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;this is a complete item&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;this is an incomplete item&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;@mentions, #refs, &lt;a href=&quot;&quot;&gt;links&lt;/a&gt;, &lt;strong&gt;formatting&lt;/strong&gt;, and &lt;del&gt;tags&lt;/del&gt; supported&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;list syntax required (any unordered or ordered list supported)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;인라인-코드inline-code&quot;&gt;인라인 코드(Inline code)&lt;/h3&gt;
+
+&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;수평선hr&quot;&gt;수평선(hr)&lt;/h3&gt;
+
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;탈출-문자-backslash-escapes&quot;&gt;탈출 문자 (Backslash Escapes)&lt;/h3&gt;
+
+&lt;p&gt;＼&lt;em&gt;literal asterisks＼&lt;/em&gt; 
+&lt;em&gt;literal asterisks&lt;/em&gt; 
+&lt;strong&gt;＼&lt;em&gt;＼&lt;/em&gt;Text＼&lt;em&gt;＼&lt;/em&gt;&lt;/strong&gt; 
+_＼_Tom＼__&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;이모지emoji---아이콘&quot;&gt;이모지(EMOJI) - 아이콘&lt;/h3&gt;
+
+&lt;p&gt;GitHub supports emoji! 
+:+1: :sparkles: :camel: :tada: 
+:rocket: :metal: :octocat:&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;코드-블록code-blocks&quot;&gt;코드 블록(Code Blocks)&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;배지badge-만들기&quot;&gt;배지(badge) 만들기&lt;/h3&gt;
+
+&lt;p&gt;https://shields.io&lt;/p&gt;
+
+&lt;p&gt;작성 예시
+&lt;a href=&quot;https://img.shields.io/badge/license-mit-green.svg&amp;quot;&quot;&gt;https://img.shields.io/badge/license-mit-green.svg&quot;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;https://img.shields.io/badge/–.svg&lt;/p&gt;
+
+&lt;p&gt;APM: /apm/l/:packageName.svg&lt;/p&gt;
+
+&lt;p&gt;AUR license: /aur/license/:packageName.svg&lt;/p&gt;
+</description>
+        <pubDate>Sat, 07 Mar 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/sample/2020/03/07/test.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2020/03/07/test.html</guid>
+        
+        <category>Son</category>
+        
+        <category>blog</category>
+        
+        
+        <category>Sample</category>
+        
+      </item>
     
       <item>
         <title>code snippet test</title>
@@ -40,15 +359,15 @@ say_hello()   // &quot;hello world!&quot;
 &lt;p&gt;Side note comment: applied a bug fix similar to &lt;a href=&quot;https://github.com/Atlas7/atlas7.github.io/commit/6659f4a47f6ec66987adb0f683a9c6f3842252ae#diff-818954a41dbfb01af70050a459c603b9&quot;&gt;this commit&lt;/a&gt; to ensure code snippet does not collapse unexpectly upon clicking on it. This issue is tracked &lt;a href=&quot;https://github.com/jarrekk/Jalpc/issues/97&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 21 Dec 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/Jalpc/html/2017/12/21/test-code-snippets.html</link>
-        <guid isPermaLink="true">http://localhost:4000/Jalpc/html/2017/12/21/test-code-snippets.html</guid>
+        <link>http://localhost:4000/sample/2017/12/21/test-code-snippets-copy.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2017/12/21/test-code-snippets-copy.html</guid>
         
         <category>Jalpc</category>
         
         <category>Jekyll</category>
         
         
-        <category>HTML</category>
+        <category>Sample</category>
         
       </item>
     
@@ -62,8 +381,8 @@ say_hello()   // &quot;hello world!&quot;
   &lt;li&gt;
     &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
 
-    &lt;p&gt;&lt;!-- ![edit](/Jalpc/static/assets/img/blog/3steps/edit.gif) --&gt;
- &lt;img src=&quot;/Jalpc/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;!-- ![edit](/crisis513.github.io/static/assets/img/blog/3steps/edit.gif) --&gt;
+ &lt;img src=&quot;/crisis513.github.io/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Enter into repository directory and edit following file list:&lt;/p&gt;
@@ -99,15 +418,15 @@ say_hello()   // &quot;hello world!&quot;
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jan 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/Jalpc/html/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</link>
-        <guid isPermaLink="true">http://localhost:4000/Jalpc/html/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</guid>
+        <link>http://localhost:4000/sample/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</guid>
         
         <category>Jalpc</category>
         
         <category>Jekyll</category>
         
         
-        <category>HTML</category>
+        <category>Sample</category>
         
       </item>
     
