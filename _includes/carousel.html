@@ -2,6 +2,7 @@
     <ol class="carousel-indicators">
         <li data-target="#inSlider" data-slide-to="0" class="active"></li>
         <li data-target="#inSlider" data-slide-to="1"></li>
+        <li data-target="#inSlider" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
 
@@ -16,7 +17,7 @@
             <!-- Set background for slide in css -->
             <div
             class="header-back"
-            style="background-image: url({{ '/static/assets/img/' | prepend: site.baseurl }}{{ site.data.index.banners[0].src }});"
+            style="background-image: url({{ "/static/assets/img/" | prepend: site.baseurl }}{{ site.data.index.banners[0].src }});"
             title="{{ site.data.index.banners[0].title }}">
             </div>
         </div>
@@ -31,7 +32,7 @@
                 </div>
             </div>
             <!-- Set background for slide in css -->
-            <div class="header-back" style="background-image: url({{ "/static/assets/img/"  | prepend: site.baseurl }}{{ banner.src }});" title="{{ banner.title }}"></div>
+            <div class="header-back" style="background-image: url({{ "/static/assets/img/" | prepend: site.baseurl }}{{ banner.src }});" title="{{ banner.title }}"></div>
         </div>
         {% endfor %}
 

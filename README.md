@@ -1,12 +1,10 @@
-# Jalpc. [![Analytics](https://ga-beacon.appspot.com/UA-73784599-1/welcome-page)](https://github.com/jarrekk/Jalpc)
+# Son. [![Analytics](https://ga-beacon.appspot.com/UA-73784599-1/welcome-page)](https://github.com/crisis513/crisis513.github.io)
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badge/)
 
-<https://jarrekk.github.io/Jalpc/>
-
-<http://www.jarrekk.com>  -- Personal website
+<https://crisis513.github.io>
 
 ![Blog](https://github.com/jarrekk/Jalpc/raw/master/readme_files/Jalpc.png)
 
@@ -239,7 +237,3 @@ If this project let you enjoy your blog time, you can give me a cup of coffee :)
 * [Change Log](https://github.com/jarrekk/Jalpc/wiki/Change-Log)
 * [Contributors](https://github.com/jarrekk/Jalpc/wiki/Contributors)
 * [Thanks to the following](https://github.com/jarrekk/Jalpc/wiki/Thanks-to-the-following)
-
-# Ad
-[Jalpc-A](https://github.com/Jack614/Jalpc-A): another Jekyll theme written by [AngularJS](https://angularjs.org/).
-

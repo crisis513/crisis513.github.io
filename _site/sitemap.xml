@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://localhost:4000/operating%20system/2020/03/09/os.html</loc>
+        <loc>http://localhost:4000/operating/2020/03/09/os-overview.html</loc>
     </url>
 
     <url>
@@ -27,11 +27,11 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/blog/</loc>
+        <loc>http://localhost:4000/architecture/</loc>
     </url>
 
     <url>
-        <loc>http://localhost:4000/computer architecture/</loc>
+        <loc>http://localhost:4000/blog/</loc>
     </url>
 
     <url>
@@ -67,7 +67,7 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/operating system/</loc>
+        <loc>http://localhost:4000/operating/</loc>
     </url>
 
     <url>
