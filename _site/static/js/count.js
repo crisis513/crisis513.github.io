@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    pre_content = $("#jalpc_site_pv").html();
-    $("#jalpc_site_pv").html(pre_content);
+    pre_content = $("#son_site_pv").html();
+    $("#son_site_pv").html(pre_content);
     $.ajax({
         type: "get",
         async: false,
@@ -10,7 +10,7 @@ $(document).ready(function() {
         jsonpCallback: "flightHandler",
         success: function(json) {
             var website_count = json.data;
-            $("#jalpc_site_pv").html('<span class="navy">' + website_count + '</span>&nbsp;<span data-i18n="link.view">views</span>&nbsp;||&nbsp;' + pre_content);
+            $("#son_site_pv").html('<span class="navy">' + website_count + '</span>&nbsp;<span data-i18n="link.view">views</span>&nbsp;||&nbsp;' + pre_content);
         },
         error: function() {
             console.log('fail');
