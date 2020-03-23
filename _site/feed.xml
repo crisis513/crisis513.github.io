@@ -5,9 +5,52 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Mar 2020 19:02:38 +0900</pubDate>
-    <lastBuildDate>Wed, 11 Mar 2020 19:02:38 +0900</lastBuildDate>
+    <pubDate>Mon, 23 Mar 2020 18:24:27 +0900</pubDate>
+    <lastBuildDate>Mon, 23 Mar 2020 18:24:27 +0900</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>운영체제 구조</title>
+        <description>&lt;h2 id=&quot;운영체제를-만든다면&quot;&gt;운영체제를 만든다면?&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;운영체제를 개발 (Kernel)&lt;/li&gt;
+  &lt;li&gt;시스템 콜을 개발&lt;/li&gt;
+  &lt;li&gt;C API (Library) 개발&lt;/li&gt;
+  &lt;li&gt;Shell 프로그램 개발&lt;/li&gt;
+  &lt;li&gt;응용 프로그램 개발&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;운영체제와-시스템콜&quot;&gt;운영체제와 시스템콜&lt;/h2&gt;
+
+&lt;p&gt;시스템콜 정의 예&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/cd/E19455-01/index.html&quot;&gt;POSIX API&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;윈도우 API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;API: 각 언어별 운영체제 기능 호출 인터페이스 함수(각 언어별 인터페이스)
+시스템콜: 운영체제 기능을 호출하는 함수&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        <pubDate>Fri, 13 Mar 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/operating/2020/03/13/os-architecture.html</link>
+        <guid isPermaLink="true">http://localhost:4000/operating/2020/03/13/os-architecture.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>os</category>
+        
+        <category>history</category>
+        
+        
+        <category>Operating</category>
+        
+      </item>
     
       <item>
         <title>운영체제 개요</title>
