@@ -1,25 +1,16 @@
 # blog page sections
-- name: Blog
+- name: All
   href: /blog/
 
 # edit following lines to custom your blog page, make sure name is the same as href but capitalized first letter(except HTML)
-- name: Operating
-  href: /operating/
-
-- name: Architecture
-  href: /architecture/
-
-- name: HTML
-  href: /html/
-
-- name: Database
-  href: /database/
+- name: Project
+  href: /project/
+  
+- name: Patent
+  href: /patent/
 
 - name: Java
   href: /java/
-
-- name: Life
-  href: /life/
 
 - name: Sample
   href: /sample/

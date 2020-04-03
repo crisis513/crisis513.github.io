@@ -1,0 +1,21 @@
+I"�<h3 id="테이블-tables">테이블 TABLES</h3>
+
+<table border="1"> 
+    <thead> 
+        <tr> 
+            <th style="text-align: center">특허</th> 
+            <th style="text-align: center">출원번호</th> 
+            <th style="text-align: center">출원일</th> 
+            <th style="text-align: center">등록일</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr> 
+            <td style="text-align: center">제 10-1959219 호</td> 
+            <td style="text-align: center">제 10-2017-0120224 호</td> 
+            <td style="text-align: center">2017년 09월 19일</td> 
+            <td style="text-align: center">2019년 03월 12일</td> 
+        </tr> 
+    </tbody> 
+</table>
+:ET

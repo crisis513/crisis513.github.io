@@ -5,9 +5,136 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Mar 2020 19:02:38 +0900</pubDate>
-    <lastBuildDate>Wed, 11 Mar 2020 19:02:38 +0900</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Fri, 03 Apr 2020 21:24:32 +0900</pubDate>
+    <lastBuildDate>Fri, 03 Apr 2020 21:24:32 +0900</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체</title>
+        <description>&lt;h1 id=&quot;특허증&quot;&gt;특허증&lt;/h1&gt;
+&lt;h5 id=&quot;certificate-of-patent&quot;&gt;CERTIFICATE OF PATENT&lt;/h5&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;특허&quot;&gt;특허&lt;/h2&gt;
+&lt;h6 id=&quot;patent-number&quot;&gt;PATENT NUMBER&lt;/h6&gt;
+&lt;p&gt;10-1957610&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출원번호&quot;&gt;출원번호&lt;/h2&gt;
+&lt;h6 id=&quot;application-number&quot;&gt;Application Number&lt;/h6&gt;
+&lt;p&gt;10-2017-0173938&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출원일&quot;&gt;출원일&lt;/h2&gt;
+&lt;h6 id=&quot;filing-date&quot;&gt;Filing Date&lt;/h6&gt;
+&lt;p&gt;2017년 12월 18일&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;등록일&quot;&gt;등록일&lt;/h2&gt;
+&lt;h6 id=&quot;registration-date&quot;&gt;Registration Date&lt;/h6&gt;
+&lt;p&gt;2019년 03월 06일&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;발명의-명칭&quot;&gt;발명의 명칭&lt;/h2&gt;
+&lt;h6 id=&quot;title-of-the-invention&quot;&gt;Title of the Invention&lt;/h6&gt;
+&lt;p&gt;히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/patent/2020/04/03/patent2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/patent/2020/04/03/patent2.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>patent</category>
+        
+        
+        <category>Patent</category>
+        
+      </item>
+    
+      <item>
+        <title>타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체</title>
+        <description>&lt;h1 id=&quot;특허증&quot;&gt;특허증&lt;/h1&gt;
+&lt;h5 id=&quot;certificate-of-patent&quot;&gt;CERTIFICATE OF PATENT&lt;/h5&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;특허&quot;&gt;특허&lt;/h2&gt;
+&lt;h6 id=&quot;patent-number&quot;&gt;PATENT NUMBER&lt;/h6&gt;
+&lt;p&gt;10-1959219&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출원번호&quot;&gt;출원번호&lt;/h2&gt;
+&lt;h6 id=&quot;application-number&quot;&gt;Application Number&lt;/h6&gt;
+&lt;p&gt;10-2017-0120224&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출원일&quot;&gt;출원일&lt;/h2&gt;
+&lt;h6 id=&quot;filing-date&quot;&gt;Filing Date&lt;/h6&gt;
+&lt;p&gt;2017년 09월 19일&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;등록일&quot;&gt;등록일&lt;/h2&gt;
+&lt;h6 id=&quot;registration-date&quot;&gt;Registration Date&lt;/h6&gt;
+&lt;p&gt;2019년 03월 12일&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;발명의-명칭&quot;&gt;발명의 명칭&lt;/h2&gt;
+&lt;h6 id=&quot;title-of-the-invention&quot;&gt;Title of the Invention&lt;/h6&gt;
+&lt;p&gt;타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/patent/2020/04/03/patent1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/patent/2020/04/03/patent1.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>patent</category>
+        
+        
+        <category>Patent</category>
+        
+      </item>
+    
+      <item>
+        <title>ssustack</title>
+        <description>&lt;h1 id=&quot;ssustack&quot;&gt;ssustack&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/static/assets/video/ssustack_working.mp4&quot;&gt;&lt;img src=&quot;https://i.imgur.com/vKb2F1B.png&quot; alt=&quot;Watch the video&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 31 Mar 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/2020/03/31/ssustack-copy.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/2020/03/31/ssustack-copy.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>project</category>
+        
+        <category>ssustack</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
     
       <item>
         <title>운영체제 개요</title>
@@ -197,8 +324,8 @@ CPU 명령어나 Memory 주소를 직접 써야하는데, 컴퓨터마다 환경
 &lt;/ol&gt;
 </description>
         <pubDate>Mon, 09 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/operating/2020/03/09/os-overview.html</link>
-        <guid isPermaLink="true">http://localhost:4000/operating/2020/03/09/os-overview.html</guid>
+        <link>http://localhost:4000/operating/2020/03/09/os_overview.html</link>
+        <guid isPermaLink="true">http://localhost:4000/operating/2020/03/09/os_overview.html</guid>
         
         <category>son</category>
         
@@ -263,8 +390,8 @@ CPU 명령어나 Memory 주소를 직접 써야하는데, 컴퓨터마다 환경
 
 </description>
         <pubDate>Sun, 08 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/java/2020/03/08/spring-boot.html</link>
-        <guid isPermaLink="true">http://localhost:4000/java/2020/03/08/spring-boot.html</guid>
+        <link>http://localhost:4000/java/2020/03/08/spring_boot.html</link>
+        <guid isPermaLink="true">http://localhost:4000/java/2020/03/08/spring_boot.html</guid>
         
         <category>son</category>
         
@@ -492,8 +619,8 @@ say_hello()   // &quot;hello world!&quot;
 &lt;p&gt;Side note comment: applied a bug fix similar to &lt;a href=&quot;https://github.com/Atlas7/atlas7.github.io/commit/6659f4a47f6ec66987adb0f683a9c6f3842252ae#diff-818954a41dbfb01af70050a459c603b9&quot;&gt;this commit&lt;/a&gt; to ensure code snippet does not collapse unexpectly upon clicking on it. This issue is tracked &lt;a href=&quot;https://github.com/jarrekk/Jalpc/issues/97&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 21 Dec 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/sample/2017/12/21/test-code-snippets-copy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/sample/2017/12/21/test-code-snippets-copy.html</guid>
+        <link>http://localhost:4000/sample/2017/12/21/test_code_snippets.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2017/12/21/test_code_snippets.html</guid>
         
         <category>Jalpc</category>
         
@@ -551,8 +678,8 @@ say_hello()   // &quot;hello world!&quot;
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jan 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/sample/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</link>
-        <guid isPermaLink="true">http://localhost:4000/sample/2017/01/31/3-steps-to-setup-website-with-Jalpc.html</guid>
+        <link>http://localhost:4000/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html</guid>
         
         <category>Jalpc</category>
         

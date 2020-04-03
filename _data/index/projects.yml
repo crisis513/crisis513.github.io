@@ -7,6 +7,13 @@
   img: /static/assets/img/landing/ssustack.png
   desc: ssuStack 프로젝트는 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다.
 
+- name: naver-news-scraper
+  i18n: naver-news-scraper
+  gh_user: crisis513
+  repo: naver-news-scraper
+  img: /static/assets/img/landing/nn-logo.png
+  desc: naver-news-scraper 프로젝트는 네이버뉴스 속보에서 원하는 키워드에 해당하는 뉴스를 스크랩하여 카카오톡으로 나에게 보내기 위해 사용됩니다.
+  
 - name: Python
   i18n: cpython
   gh_user: python
