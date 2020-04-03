@@ -3,6 +3,8 @@
 # Suggest projects' img be located at '/static/assets/img/landing', and edit following img items.
 - name: ssuStack
   i18n: ssustack
+  gh_user: crisis513
+  repo: ssustack
   url: http://git.dotstack.io/crisis513/ssustack
   img: /static/assets/img/landing/ssustack.png
   desc: ssuStack 프로젝트는 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다.

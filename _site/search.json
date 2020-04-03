@@ -3,6 +3,7 @@
     "data" : [
      
     {
+<<<<<<< HEAD
         "title" : "히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체 - 2020-04-03",
         "url" : "/patent/2020/04/03/patent2.html"
     }
@@ -21,6 +22,10 @@
     {
         "title" : "ssustack - 2020-03-31",
         "url" : "/project/2020/03/31/ssustack-copy.html"
+=======
+        "title" : "운영체제 구조 - 2020-03-13",
+        "url" : "/operating/2020/03/13/os-architecture.html"
+>>>>>>> c29add2574624d300abf653be454a963970734c7
     }
     
     ,
