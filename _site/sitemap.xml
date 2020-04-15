@@ -2,15 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-<<<<<<< HEAD
-        <loc>http://localhost:4000/patent/2020/04/03/patent2.html</loc>
-=======
-        <loc>http://localhost:4000/operating/2020/03/13/os-architecture.html</loc>
+        <loc>http://localhost:4000/python/2020/04/07/python_crawling.html</loc>
     </url>
 
     <url>
-        <loc>http://localhost:4000/operating/2020/03/09/os-overview.html</loc>
->>>>>>> c29add2574624d300abf653be454a963970734c7
+        <loc>http://localhost:4000/patent/2020/04/03/patent2.html</loc>
     </url>
 
     <url>
@@ -18,7 +14,15 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/project/2020/03/31/ssustack-copy.html</loc>
+        <loc>http://localhost:4000/thesis/2020/04/01/bkms.html</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/project/2020/03/31/ssustack.html</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/operating/2020/03/13/os-architecture.html</loc>
     </url>
 
     <url>
@@ -34,15 +38,11 @@
     </url>
 
     <url>
-<<<<<<< HEAD
         <loc>http://localhost:4000/sample/2017/12/21/test_code_snippets.html</loc>
     </url>
 
     <url>
         <loc>http://localhost:4000/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html</loc>
-=======
-        <loc>http://localhost:4000/blog/</loc>
->>>>>>> c29add2574624d300abf653be454a963970734c7
     </url>
 
 
@@ -71,10 +71,6 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/java/</loc>
-    </url>
-
-    <url>
         <loc>http://localhost:4000/patent/</loc>
     </url>
 
@@ -100,6 +96,10 @@
 
     <url>
         <loc>http://localhost:4000/sitemap.xml</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/thesis/</loc>
     </url>
 
     <url>

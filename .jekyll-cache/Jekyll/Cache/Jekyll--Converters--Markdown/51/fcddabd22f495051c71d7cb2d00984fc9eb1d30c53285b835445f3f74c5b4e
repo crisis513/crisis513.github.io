@@ -1,0 +1,97 @@
+I"�<h1 id="ssustack">ssustack</h1>
+
+<p>ssustack 프로젝트는 완전한 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다.</p>
+
+<p>오픈스택에서 사용할 기본적인 설정을 정의한 후에 설치스크립트를 이용하여 간편하게 설치가 가능합니다.</p>
+
+<p><br /></p>
+
+<h3 id="installation">Installation</h3>
+
+<ol>
+  <li></li>
+</ol>
+
+<p>OpenStack 환경을 구성하는 모든 노드에서 진행</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone http://git.dotstack.io/crisis513/ssustack.git
+$ cd Catstack_Project/bin
+$ ./ssustack_user_creation.sh
+$ cp -r &lt;your_controller_path&gt;/Catstack_Project/ .
+</code></pre></div></div>
+
+<p>생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 Catstack_Project 폴더를 ssustack 유저의 홈 디렉토리로 복사합니다.</p>
+
+<p><br /></p>
+
+<ol>
+  <li>SSH 설정
+위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/hosts
+10.10.10.11 controller-node
+10.10.10.21 compute-node1 
+10.10.10.22 compute-node2
+10.10.10.23 compute-node3
+    
+$ cd Catstack_Project/bin/
+$ ./creating_ssh_keys.sh [&lt;host_name&gt; ... ]
+ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>OpenStack 설치 스크립트 설정</p>
+
+    <p>$ cd ..
+  $ vi local.conf</p>
+  </li>
+  <li>
+    <p>local.conf 설정을 기반으로 각 노드별 스크립트 생성</p>
+
+    <p>$ ./ssustack.sh</p>
+  </li>
+  <li>
+    <p>Catstack_Project/tmp 경로에서 각 노드에 맞는 스크립트 실행
+※ 현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..</p>
+
+    <p># controller-node case
+  $ cd tmp/controller/
+  $ ./controller.sh</p>
+
+    <p># compute-node1 case
+  $ cd tmp/compute/
+  $ ./compute_1.sh</p>
+
+    <p># compute-node2 case
+  $ cd tmp/compute/
+  $ ./compute_2.sh</p>
+
+    <p># compute-node3 case
+  $ cd tmp/compute/
+  $ ./compute_3.sh</p>
+  </li>
+  <li>
+    <p>controller node에서 ceph 추가 설정</p>
+
+    <p>$ cd ../../bin/ # Catstack_Project/bin/
+  $ ./ceph_configuration.sh [<host_name> ... ]
+  ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3</host_name></p>
+  </li>
+  <li>
+    <p>각 compute node에서 ceph osd 및 ceph mon 설정</p>
+
+    <p>$ cd ../../bin/ # Catstack_Project/bin/
+  $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
+  $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip</p>
+  </li>
+  <li>
+    <p>controller node에서 compute 호스트를 찾도록 스크립트 실행</p>
+
+    <p>$ ./add_compute_node.sh</p>
+  </li>
+</ul>
+
+<p><a href="/static/assets/video/ssustack_working.mp4"><img src="https://i.imgur.com/vKb2F1B.png" alt="Watch the video" /></a></p>
+:ET

@@ -6,11 +6,14 @@
 - name: Project
   href: /project/
   
+- name: Thesis
+  href: /thesis/
+
 - name: Patent
   href: /patent/
 
-- name: Java
-  href: /java/
+- name: Python
+  href: /python/
 
 - name: Sample
   href: /sample/

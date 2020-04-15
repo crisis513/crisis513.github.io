@@ -3,7 +3,14 @@
     "data" : [
      
     {
-<<<<<<< HEAD
+        "title" : "파이썬 크롤링 - 2020-04-07",
+        "url" : "/python/2020/04/07/python_crawling.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체 - 2020-04-03",
         "url" : "/patent/2020/04/03/patent2.html"
     }
@@ -20,12 +27,24 @@
     
     
     {
+        "title" : "클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 - 2020-04-01",
+        "url" : "/thesis/2020/04/01/bkms.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "ssustack - 2020-03-31",
-        "url" : "/project/2020/03/31/ssustack-copy.html"
-=======
+        "url" : "/project/2020/03/31/ssustack.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "운영체제 구조 - 2020-03-13",
         "url" : "/operating/2020/03/13/os-architecture.html"
->>>>>>> c29add2574624d300abf653be454a963970734c7
     }
     
     ,

@@ -1,0 +1,24 @@
+I"�<h2 id="운영체제를-만든다면">운영체제를 만든다면?</h2>
+
+<ol>
+  <li>운영체제를 개발 (Kernel)</li>
+  <li>시스템 콜을 개발</li>
+  <li>C API (Library) 개발</li>
+  <li>Shell 프로그램 개발</li>
+  <li>응용 프로그램 개발</li>
+</ol>
+
+<h2 id="운영체제와-시스템콜">운영체제와 시스템콜</h2>
+
+<p>시스템콜 정의 예</p>
+<ul>
+  <li><a href="https://docs.oracle.com/cd/E19455-01/index.html">POSIX API</a></li>
+  <li>윈도우 API</li>
+</ul>
+
+<blockquote>
+  <p>API: 각 언어별 운영체제 기능 호출 인터페이스 함수(각 언어별 인터페이스)
+시스템콜: 운영체제 기능을 호출하는 함수</p>
+</blockquote>
+
+:ET
