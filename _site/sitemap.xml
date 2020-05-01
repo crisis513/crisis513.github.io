@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>http://localhost:4000/project/2020/04/08/nn_scraper.html</loc>
+    </url>
+
+    <url>
         <loc>http://localhost:4000/python/2020/04/07/python_crawling.html</loc>
     </url>
 
@@ -19,14 +23,6 @@
 
     <url>
         <loc>http://localhost:4000/project/2020/03/31/ssustack.html</loc>
-    </url>
-
-    <url>
-        <loc>http://localhost:4000/operating/2020/03/13/os-architecture.html</loc>
-    </url>
-
-    <url>
-        <loc>http://localhost:4000/operating/2020/03/09/os_overview.html</loc>
     </url>
 
     <url>

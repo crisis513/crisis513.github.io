@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "naver-news-scraper - 2020-04-08",
+        "url" : "/project/2020/04/08/nn_scraper.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "파이썬 크롤링 - 2020-04-07",
         "url" : "/python/2020/04/07/python_crawling.html"
     }
@@ -37,22 +45,6 @@
     {
         "title" : "ssustack - 2020-03-31",
         "url" : "/project/2020/03/31/ssustack.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "운영체제 구조 - 2020-03-13",
-        "url" : "/operating/2020/03/13/os-architecture.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "운영체제 개요 - 2020-03-09",
-        "url" : "/operating/2020/03/09/os_overview.html"
     }
     
     ,

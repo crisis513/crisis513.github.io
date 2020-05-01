@@ -32,6 +32,43 @@ BeautifulSoup 모듈은 HTML과 XML을 파싱하는 데에 사용되는 파이�
 selenium은 웹 애플리케이션 테스트를 위한 포터블 프레임워크
 > $ pip install selenium
 
+사용할 브라우저의 드라이버를 설치
+https://chromedriver.storage.googleapis.com/index.html?path=83.0.4103.14/
+
+> from selenium import webdriver
+> import time
+>
+> driver = webdriver.Chrome('chromedriver')
+> driver.get("https://www.youtube.com/")
+>
+> time.sleep(3)
+>
+> search = driver.find_element_by_xpath('//*[@id="search"]')
+>
+> search.send_keys('검색')
+> time.sleep(1)
+
+<br>
+
+[1 to 50 게임 자동화]
+
+> num = 1
+> 
+> def clickBtn():
+>     global num
+>     btns = driver.find_elements_by_xpath('//*[@id="grid"]/div[*]')
+> 
+>     for btn in btns:
+>         print(btn.text, end='\t')
+>         if btn.text == str(num):
+>             btn.click()
+>             prunt(true)
+>             num += 1
+>             return
+> 
+> while num <= 50:
+>     clickBtn()
+
 <br>
 
 ### 특수문자 치환

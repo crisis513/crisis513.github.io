@@ -1,0 +1,82 @@
+I"_	<h3 id="크롤링-관련-용어-정리">크롤링 관련 용어 정리</h3>
+<ul>
+  <li>스크랩핑(scraping) : 데이터를 수집하는 행위</li>
+  <li>크롤링(Crawling) : 조직적 자동화된 방법으로 월드와이드웹을 탐색 하는 것</li>
+  <li>파싱(parsing) : 문장 혹은 문서를 구성 성분으로 분해하고 위계관계를 분석하여 문장의 구조를 결정하는 것</li>
+</ul>
+
+<p><br /></p>
+
+<p>os 모듈 - 시스템 명령어를 실행시킬 수 있는 모듈</p>
+
+<h3 id="파이썬-크롤링에-사용되는-모듈">파이썬 크롤링에 사용되는 모듈</h3>
+
+<h3 id="1-requests">1. requests</h3>
+<p>requests 모듈은 Apache License 2.0에 따라 배포 된 HTTP 파이썬 라이브러리</p>
+<blockquote>
+  <p>$ pip install requests</p>
+</blockquote>
+
+<h3 id="2-beautifulsoup4">2. BeautifulSoup4</h3>
+<p>BeautifulSoup 모듈은 HTML과 XML을 파싱하는 데에 사용되는 파이썬 라이브러리</p>
+<blockquote>
+  <p>$ pip install bs4</p>
+</blockquote>
+
+<h3 id="3-selenium">3. selenium</h3>
+<p>selenium은 웹 애플리케이션 테스트를 위한 포터블 프레임워크</p>
+<blockquote>
+  <p>$ pip install selenium</p>
+</blockquote>
+
+<p>사용할 브라우저의 드라이버를 설치
+https://chromedriver.storage.googleapis.com/index.html?path=83.0.4103.14/</p>
+
+<blockquote>
+  <p>from selenium import webdriver
+import time</p>
+
+  <p>driver = webdriver.Chrome(‘chromedriver’)
+driver.get(“https://www.youtube.com/”)</p>
+
+  <p>time.sleep(3)</p>
+
+  <p>search = driver.find_element_by_xpath(‘//*[@id=”search”]’)</p>
+
+  <p>search.send_keys(‘검색’)
+time.sleep(1)</p>
+</blockquote>
+
+<p><br /></p>
+
+<p>[1 to 50 게임 자동화]</p>
+
+<blockquote>
+  <p>num = 1</p>
+
+  <p>def clickBtn():
+    global num
+    btns = driver.find_elements_by_xpath(‘//<em>[@id=”grid”]/div[</em>]’)</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for btn in btns:
+    print(btn.text, end='\t')
+    if btn.text == str(num):
+        btn.click()
+        prunt(true)
+        num += 1
+        return
+</code></pre></div>  </div>
+
+  <p>while num &lt;= 50:
+    clickBtn()</p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="특수문자-치환">특수문자 치환</h3>
+<p>re.sub(‘[^0-9a-zA-Zr-힗]’, ‘’, title)</p>
+
+<h3 id="다운로드">다운로드</h3>
+<p>urlretrive(img_src, title + ‘.jpg’)</p>
+
+:ET
