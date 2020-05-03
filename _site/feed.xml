@@ -5,9 +5,9 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 03 May 2020 18:55:34 +0900</pubDate>
-    <lastBuildDate>Sun, 03 May 2020 18:55:34 +0900</lastBuildDate>
-    <generator>Jekyll v4.0.0</generator>
+    <pubDate>Mon, 04 May 2020 01:05:51 +0900</pubDate>
+    <lastBuildDate>Mon, 04 May 2020 01:05:51 +0900</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>ssustack_installer</title>
@@ -17,15 +17,16 @@
 
 &lt;p&gt;ssustack_installer를 실행하면 웹 브라우저가 뜨게되고, 필요한 설정을 입력 및 선택하면 ssustack 스크립트를 기반으로 설치가 시작됩니다.&lt;/p&gt;
 
-&lt;p&gt;사용자의 선택에 따라 싱글노드 혹은 멀티호스트로 자유롭게 설치가 가능하다.&lt;/p&gt;
+&lt;p&gt;사용자의 선택에 따라 싱글노드 혹은 멀티호스트로 자유롭게 설치가 가능합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
 
-&lt;p&gt;OpenStack : Rokcy Release&lt;/p&gt;
-
-&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;OpenStack : Rokcy Release&lt;/li&gt;
+  &lt;li&gt;OS : Ubuntu 18.04 LTS&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -33,7 +34,7 @@
 
 &lt;h4 id=&quot;1-ssustack--ssustack_installer-클론&quot;&gt;1. ssustack &amp;amp; ssustack_installer 클론&lt;/h4&gt;
 
-&lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
+&lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
@@ -42,13 +43,51 @@ $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.&lt;/p&gt;
+&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;2-hosts-및-ssh-설정&quot;&gt;2. hosts 및 SSH 설정&lt;/h4&gt;
+&lt;h4 id=&quot;2-network-설정&quot;&gt;2. network 설정&lt;/h4&gt;
 
-&lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
+&lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+auto &amp;lt;INTERFACE_NAME_1&amp;gt;
+iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
+    address &amp;lt;PUBLIC_IP&amp;gt;
+    netmask &amp;lt;PUBLIC_IP_NETMASK&amp;gt;
+    gateway &amp;lt;PUBLIC_IP_GATEWAY&amp;gt;
+    dns-servernames &amp;lt;DNS_NAMESERVERS&amp;gt;
+auto &amp;lt;INTERFACE_NAME_2&amp;gt;
+iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
+    address 10.10.10.11
+    netmask 255.255.255.0
+auto &amp;lt;INTERFACE_NAME_3&amp;gt;
+iface &amp;lt;INTERFACE_NAME_3&amp;gt; inet manual
+up ip link set dev $IFACE up
+down ip link set dev $IFACE down
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+auto &amp;lt;INTERFACE_NAME_1&amp;gt;
+iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
+    address &amp;lt;PUBLIC_IP&amp;gt;
+    netmask &amp;lt;PUBLIC_IP_NETMASK&amp;gt;
+    gateway &amp;lt;PUBLIC_IP_GATEWAY&amp;gt;
+    dns-servernames &amp;lt;DNS_NAMESERVERS&amp;gt;
+auto &amp;lt;INTERFACE_NAME_2&amp;gt;
+iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
+    address 10.10.10.21
+    netmask 255.255.255.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-hosts-및-ssh-설정&quot;&gt;3. hosts 및 SSH 설정&lt;/h4&gt;
+
+&lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
@@ -63,129 +102,55 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
+&lt;h4 id=&quot;4-ssustack_installer-실행&quot;&gt;4. ssustack_installer 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
-$ vi local.conf
+&lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+$ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;app.sh를 실행시키고나면 우분투 기본 브라우저로 사용되는 파이어폭스가 실행됩니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
+&lt;h4 id=&quot;5-welcome-페이지&quot;&gt;5. Welcome 페이지&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;권장 사양과 현재 PC의 사양을 확인해보고 설치 전 작업이 재대로 되었는지 확인하고 다음으로 넘어갑니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
+&lt;h4 id=&quot;6-enable-services-페이지&quot;&gt;6. Enable Services 페이지&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
-$ cd tmp/controller/
-$ ./controller.sh
+&lt;p&gt;Controller node 및 Compute node에서 설치할 서비스를 선택하고 넘어갑니다. 필수로 설치되어야하는 패키지의 경우 이미 체크되어 있습니다.&lt;/p&gt;
 
-## compute-node1 Case
-$ cd tmp/compute/
-$ ./compute_1.sh
- 
-## compute-node2 Case
-$ cd tmp/compute/
-$ ./compute_2.sh
- 
-## compute-node3 Case
-$ cd tmp/compute/
-$ ./compute_3.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;7-environment-settings-페이지&quot;&gt;7. Environment Settings 페이지&lt;/h4&gt;
+
+&lt;p&gt;각각의 Controller node 및 Compute node에서 설정되어야 할 ip, subnet, hostname, password 등을 설정하고 다음으로 넘어갑니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;8-installing-페이지&quot;&gt;8. Installing 페이지&lt;/h4&gt;
+
+&lt;p&gt;앞의 설정이 재대로 되어있는지 확인해보고 Start 버튼을 눌러주고 설치 로그를 확인해줍니다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..&lt;/p&gt;
+  &lt;p&gt;한 번만 누르고 브라우저를 종료하면 안됩니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
+&lt;h4 id=&quot;9-finished-페이지&quot;&gt;9. Finished 페이지&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
-$ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
-ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;정상적으로 설치되었는지 확인하고 종료합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
+&lt;h4 id=&quot;10-추가-설정&quot;&gt;10. 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
-$ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
-$ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;[ssustack_installer manual]&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;주어진 ISO 이미지 기반 부팅 디스크로 우분투 설치 (user: ssustack, password: ssustack123)&lt;/li&gt;
-  &lt;li&gt;네트워크 인터페이스, 호스트네임, 호스트 설정파일 수정 후 reboot (/etc/network/interfaces, /etc/hostname, /etc/hosts)&lt;/li&gt;
-  &lt;li&gt;ssh 설정 
- $ sudo vim /etc/hosts  # compute node들의 IP 설정
- $ ssustack_installer/bin/create_ssh_keys.sh &lt;COMPUTE_NODE1&gt; &lt;COMPUTE_NODE2&gt; ...  # /etc/hosts의 IP 및 hostname 매핑 기반&lt;/COMPUTE_NODE2&gt;&lt;/COMPUTE_NODE1&gt;&lt;/li&gt;
-  &lt;li&gt;ssustack_installer 실행
- $ ssustack_installer/app.sh&lt;/li&gt;
-  &lt;li&gt;브라우저를 통해 설정 및 설치 진행&lt;/li&gt;
-  &lt;li&gt;Ceph OSD 추가 (컴퓨트 노드+추가 하드 있는 경우) - ※주의 : $ sudo fdisk -l 명령어를 통해 디스크 이름 확인 (e.g. /dev/sdb)
- $ ssustack/bin/add_ceph_osd.sh &lt;DISK_NAME&gt;&lt;/DISK_NAME&gt;&lt;/li&gt;
-  &lt;li&gt;Ceph OSD 추가 확인
- $ sudo ceph -s&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;네트워크 생성
- # Horizon admin 유저로 로그인하여 아래 작업 실행
- a. Admin&amp;gt;Network&amp;gt;Networks의 Create Network
-     *Network
-     Name: external
-     Project: admin
-     Provider Network Type: Flat
-     Physical Network: provider
-     체크박스 4개 모두 체크
-     *Subnet
-     Subnet Name: external-subnet
-     Network Address: 자기 네트워크 CDIR
-     Gateway IP: 보통 x.x.x.254
- b. Admin&amp;gt;Network&amp;gt;Networks의 Create Network
-     *Network
-     Name: internal
-     Project: admin
-     Provider Network Type: vxlan 
-     Segmentation ID: 1
-     체크박스 위아래 두개만 체크 (기존 체크)
-     *Subnet
-     Subnet Name: internal-subnet
-     Network Address: 내부 네트워크 CDIR
-     Gateway IP: 보통 x.x.x.254
- c. Project&amp;gt;Network&amp;gt;Routers의 Create Router
-     Router Name: router
-     External Network: external
-     나머지 체크박스 등 기본 상태로
- d. Network Topology에서 라우터 클릭 후 Add Interface
-     Subnet: internal&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;이미지 업로드
- $ ssustack/bin/create_image.sh&lt;/li&gt;
-  &lt;li&gt;대시보드 업데이트
-$ ssustack/bin/horizon_update.sh&lt;/li&gt;
-  &lt;li&gt;모니터링 설정
-a. Grafana 대시보드 접속 후 패스워드 설정
-    스크립트가 정상 종료된 후에 WEB_SERVER_IP:3000(Grafana URL)로 접속한다.
-    Grafana의 초기 아이디 및 패스워드는 admin/admin이다. 
-b. Gnocchi Datasources를 생성
-    URL에는 Gnocchi Endpoint 주소를, Auth Mode는 token으로 하여 터미널에서 $ openstack token issue 명령을 통해 나온 토큰 값을 작성한다.
-    e.g. URL: http://10.10.10.11:8041, Token: gAAAAABcj3Q0kqr_QDVI-ehExoBpwMYHFI2w0C5qYZpsXDT81-nnSkqLURqlwCwYR_2feaU7wWdi0KXiPNcwb1QSYofC_xt-o7tVhjkBg66r47QaGBLUBJPeugpwhRw3SR_bKqz203n3OqLaHdkfRz8DwUm2XDJuxgNkVJb6eV29gxJYGAS84qE
-c. Gnocchi 대시보드 
-    [Dashboards - Settings - JSON Model] 패널으로 이동하여 ssustack 폴더에 있는 datasource-sample.json 내용을 붙여넣는다.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;아래 비디오에서 Ceph OSD를 추가하고, Horizon에서 네트워크를 생성하고, 우분투 이미지를 업로드하여 인스턴스 생성 및 테스트하는 부분까지 보여줍니다. (10:30)&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -226,9 +191,37 @@ c. Gnocchi 대시보드
 
 &lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
 
-&lt;p&gt;OpenStack : Rokcy Release&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;OpenStack : Rokcy Release&lt;/li&gt;
+  &lt;li&gt;OS : Ubuntu 18.04 LTS&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;minimum-hardware-requirements&quot;&gt;Minimum hardware requirements&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Controller node
+    &lt;ul&gt;
+      &lt;li&gt;Processor: 1 Core&lt;/li&gt;
+      &lt;li&gt;Ram: 4GB&lt;/li&gt;
+      &lt;li&gt;Storage: 5GB&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Compute node
+    &lt;ul&gt;
+      &lt;li&gt;Processor: 1 Core&lt;/li&gt;
+      &lt;li&gt;Ram: 2GB&lt;/li&gt;
+      &lt;li&gt;Storage: 10GB&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;노드별-설치-패키지&quot;&gt;노드별 설치 패키지&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/node_packages.png&quot; alt=&quot;node_packages&quot; width=&quot;600&quot; height=&quot;280&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -327,6 +320,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/project/2020/04/29/ssustack.html</link>
@@ -355,11 +349,11 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
 
-&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
-
-&lt;p&gt;Python : 2.7.17&lt;/p&gt;
-
-&lt;p&gt;pip : 9.0.1&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;OS : Ubuntu 18.04 LTS&lt;/li&gt;
+  &lt;li&gt;Python : 2.7.17&lt;/li&gt;
+  &lt;li&gt;pip : 9.0.1&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -653,72 +647,6 @@ time.sleep(1)&lt;/p&gt;
         
         
         <category>Thesis</category>
-        
-      </item>
-    
-      <item>
-        <title>스프링 부트(Spring Boot)</title>
-        <description>&lt;h2 id=&quot;스프링-부트란&quot;&gt;스프링 부트란?&lt;/h2&gt;
-
-&lt;p&gt;스프링 부트(Spring Boot)를 사용하면 빠르게 게발하고 이후 확장성도 좋다.&lt;/p&gt;
-
-&lt;p&gt;Spring Framework의 설정이 너무 복잡하고 어려웠기 때문에, 이를 해결학디 위해 만들어졌다.&lt;/p&gt;
-
-&lt;p&gt;Spring Boot가 나오면서 초기 생산성이 획기적으로 좋아졌다.&lt;/p&gt;
-
-&lt;p&gt;스프링은 다양한 식재료이고, 스프링부트는 완성된 케이라고 생각하면 이해하기 쉽다.&lt;/p&gt;
-
-&lt;p&gt;식재료를 다양하게 섞어서 자신만의 요리를 만들고 싶은 사람도 있을 것이고, 거의 다 만들어져 있는 음식을 데우기만 해서 먹고 싶은 사람도 있을 것이다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;스프링-부트의-특징&quot;&gt;스프링 부트의 특징&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Starter를 통한 어플리케이션의 간편하고 자동화된 빌드 및 설정을 제공함&lt;/li&gt;
-  &lt;li&gt;Embed 서버를 제공함으로써 복잡한 배포 설정들을 간편하게 제공함&lt;/li&gt;
-  &lt;li&gt;Production에서 사용할 수 있는 추가적인 기능을 제공함 (actuator)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Convention Over Configuration = 설정보다는 관습 (CoC)&lt;/p&gt;
-
-  &lt;p&gt;“개발자가 설정해야 하는 것은 어플리케이션의 관례를 따르지 않는 점 뿐이다.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;아래의 사이트를 통해 스프링 부트 프로젝트를 생성한다.&lt;/p&gt;
-
-&lt;p&gt;https://start.spring.io/&lt;/p&gt;
-
-&lt;p&gt;스프링 부트를 코딩하기 위해 IntelliJ IDEA를 사용한다.&lt;/p&gt;
-
-&lt;p&gt;IntelliJ란?&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;젯브레인스(JetBrains) 사에서 제작한 Java 개발을 위한 툴&lt;/li&gt;
-  &lt;li&gt;IntelliJ 혹은 IDEA 로도 불린다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래 사이트를 통해 설치한다.&lt;/p&gt;
-
-&lt;p&gt;https://www.jetbrains.com/idea/&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 08 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/java/2020/03/08/spring_boot.html</link>
-        <guid isPermaLink="true">http://localhost:4000/java/2020/03/08/spring_boot.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>java</category>
-        
-        <category>spring</category>
-        
-        
-        <category>Java</category>
         
       </item>
     

@@ -17,11 +17,9 @@ nn-scraper 프로젝트는 원하는 키워드에 해당하는 네이버 뉴스 
 
 ### Environment
 
-OS : Ubuntu 18.04 LTS
-
-Python : 2.7.17
-
-pip : 9.0.1
+* OS : Ubuntu 18.04 LTS
+* Python : 2.7.17
+* pip : 9.0.1
 
 <br>
 

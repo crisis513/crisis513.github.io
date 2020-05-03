@@ -15,15 +15,14 @@ ssustack_installer 프로젝트는 ssustack 설치를 웹 브라우저에서 더
 
 ssustack_installer를 실행하면 웹 브라우저가 뜨게되고, 필요한 설정을 입력 및 선택하면 ssustack 스크립트를 기반으로 설치가 시작됩니다.
 
-사용자의 선택에 따라 싱글노드 혹은 멀티호스트로 자유롭게 설치가 가능하다.
+사용자의 선택에 따라 싱글노드 혹은 멀티호스트로 자유롭게 설치가 가능합니다.
 
 <br>
 
 ### Environment
 
-OpenStack : Rokcy Release
-
-OS : Ubuntu 18.04 LTS
+* OpenStack : Rokcy Release
+* OS : Ubuntu 18.04 LTS
 
 <br>
 
@@ -31,7 +30,7 @@ OS : Ubuntu 18.04 LTS
 
 #### 1. ssustack & ssustack_installer 클론
 
-OpenStack 환경을 구성하는 모든 노드에서 진행
+OpenStack 환경을 구성하는 모든 노드에서 진행합니다.
 
 ```
 $ git clone http://git.dotstack.io/crisis513/ssustack.git
@@ -41,13 +40,53 @@ $ ./ssustack_user_creation.sh
 $ cp -r <your_controller_path>/ssustack/ .
 ```
 
-생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.
+생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사합니다.
 
 <br>
 
-#### 2. hosts 및 SSH 설정
+#### 2. network 설정
 
-위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정
+모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.
+
+```
+$ sudo vi /etc/network/interfaces
+auto <INTERFACE_NAME_1>
+iface <INTERFACE_NAME_1> inet static
+    address <PUBLIC_IP>
+    netmask <PUBLIC_IP_NETMASK>
+    gateway <PUBLIC_IP_GATEWAY>
+    dns-servernames <DNS_NAMESERVERS>
+auto <INTERFACE_NAME_2>
+iface <INTERFACE_NAME_2> inet static
+    address 10.10.10.11
+    netmask 255.255.255.0
+auto <INTERFACE_NAME_3>
+iface <INTERFACE_NAME_3> inet manual
+up ip link set dev $IFACE up
+down ip link set dev $IFACE down
+```
+
+Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.
+
+```
+$ sudo vi /etc/network/interfaces
+auto <INTERFACE_NAME_1>
+iface <INTERFACE_NAME_1> inet static
+    address <PUBLIC_IP>
+    netmask <PUBLIC_IP_NETMASK>
+    gateway <PUBLIC_IP_GATEWAY>
+    dns-servernames <DNS_NAMESERVERS>
+auto <INTERFACE_NAME_2>
+iface <INTERFACE_NAME_2> inet static
+    address 10.10.10.21
+    netmask 255.255.255.0
+```
+
+<br>
+
+#### 3. hosts 및 SSH 설정
+
+위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.
 
 ```
 $ sudo vi /etc/hosts
@@ -63,132 +102,55 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 <br>
 
-#### 3. OpenStack 설치 스크립트 설정
+#### 4. ssustack_installer 실행
+
+ssustack_installer는 Controller node에서 실행시킵니다.
 
 ```
-$ cd ..
-$ vi local.conf
+$ cd ssustack_installer/
+$ ./app.sh
 ```
+
+app.sh를 실행시키고나면 우분투 기본 브라우저로 사용되는 파이어폭스가 실행됩니다.
 
 <br>
 
-#### 4. local.conf 설정을 기반으로 각 노드별 스크립트 생성
+#### 5. Welcome 페이지
 
-```
-$ ./ssustack.sh
-```
+권장 사양과 현재 PC의 사양을 확인해보고 설치 전 작업이 재대로 되었는지 확인하고 다음으로 넘어갑니다.
 
 <br>
 
-#### 5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행
+#### 6. Enable Services 페이지
 
-```
-## controller-node Case
-$ cd tmp/controller/
-$ ./controller.sh
-
-## compute-node1 Case
-$ cd tmp/compute/
-$ ./compute_1.sh
- 
-## compute-node2 Case
-$ cd tmp/compute/
-$ ./compute_2.sh
- 
-## compute-node3 Case
-$ cd tmp/compute/
-$ ./compute_3.sh
-```
-
-> 현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함.. 
+Controller node 및 Compute node에서 설치할 서비스를 선택하고 넘어갑니다. 필수로 설치되어야하는 패키지의 경우 이미 체크되어 있습니다.
 
 <br>
 
-#### 6. controller node에서 ceph 추가 설정
+#### 7. Environment Settings 페이지
 
-```
-$ cd ../../bin/ # ssustack/bin/
-$ ./ceph_configuration.sh [<host_name> ... ]
-ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
-```
+각각의 Controller node 및 Compute node에서 설정되어야 할 ip, subnet, hostname, password 등을 설정하고 다음으로 넘어갑니다.
 
 <br>
 
-#### 7. 각 compute node에서 ceph osd 및 ceph mon 설정
+#### 8. Installing 페이지
 
-```
-$ cd ../../bin/ # ssustack/bin/
-$ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
-$ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
-```
+앞의 설정이 재대로 되어있는지 확인해보고 Start 버튼을 눌러주고 설치 로그를 확인해줍니다.
+
+> 한 번만 누르고 브라우저를 종료하면 안됩니다.
 
 <br>
 
-#### 8. controller node에서 compute 호스트를 찾도록 스크립트 실행
+#### 9. Finished 페이지
 
-```  
-$ ./add_compute_node.sh
-```
+정상적으로 설치되었는지 확인하고 종료합니다.
 
+<br>
 
-[ssustack_installer manual]
-1. 주어진 ISO 이미지 기반 부팅 디스크로 우분투 설치 (user: ssustack, password: ssustack123)
-2. 네트워크 인터페이스, 호스트네임, 호스트 설정파일 수정 후 reboot (/etc/network/interfaces, /etc/hostname, /etc/hosts)
-3. ssh 설정 
-	$ sudo vim /etc/hosts  # compute node들의 IP 설정
-	$ ssustack_installer/bin/create_ssh_keys.sh <COMPUTE_NODE1> <COMPUTE_NODE2> ...  # /etc/hosts의 IP 및 hostname 매핑 기반
-4. ssustack_installer 실행
-	$ ssustack_installer/app.sh
-5. 브라우저를 통해 설정 및 설치 진행
-6. Ceph OSD 추가 (컴퓨트 노드+추가 하드 있는 경우) - ※주의 : $ sudo fdisk -l 명령어를 통해 디스크 이름 확인 (e.g. /dev/sdb)
-	$ ssustack/bin/add_ceph_osd.sh <DISK_NAME> 
-7. Ceph OSD 추가 확인
-	$ sudo ceph -s 
-8. 네트워크 생성
-	# Horizon admin 유저로 로그인하여 아래 작업 실행
-	a. Admin>Network>Networks의 Create Network
-		*Network
-		Name: external
-		Project: admin
-		Provider Network Type: Flat
-		Physical Network: provider
-		체크박스 4개 모두 체크
-		*Subnet
-		Subnet Name: external-subnet
-		Network Address: 자기 네트워크 CDIR
-		Gateway IP: 보통 x.x.x.254
-	b. Admin>Network>Networks의 Create Network
-		*Network
-		Name: internal
-		Project: admin
-		Provider Network Type: vxlan 
-		Segmentation ID: 1
-		체크박스 위아래 두개만 체크 (기존 체크)
-		*Subnet
-		Subnet Name: internal-subnet
-		Network Address: 내부 네트워크 CDIR
-		Gateway IP: 보통 x.x.x.254
-	c. Project>Network>Routers의 Create Router
-		Router Name: router
-		External Network: external
-		나머지 체크박스 등 기본 상태로
-	d. Network Topology에서 라우터 클릭 후 Add Interface
-		Subnet: internal
-	
-9. 이미지 업로드
-	$ ssustack/bin/create_image.sh
-10. 대시보드 업데이트
-	$ ssustack/bin/horizon_update.sh
-11. 모니터링 설정
-	a. Grafana 대시보드 접속 후 패스워드 설정
-		스크립트가 정상 종료된 후에 WEB_SERVER_IP:3000(Grafana URL)로 접속한다.
-		Grafana의 초기 아이디 및 패스워드는 admin/admin이다. 
-	b. Gnocchi Datasources를 생성
-		URL에는 Gnocchi Endpoint 주소를, Auth Mode는 token으로 하여 터미널에서 $ openstack token issue 명령을 통해 나온 토큰 값을 작성한다.
-		e.g. URL: http://10.10.10.11:8041, Token: gAAAAABcj3Q0kqr_QDVI-ehExoBpwMYHFI2w0C5qYZpsXDT81-nnSkqLURqlwCwYR_2feaU7wWdi0KXiPNcwb1QSYofC_xt-o7tVhjkBg66r47QaGBLUBJPeugpwhRw3SR_bKqz203n3OqLaHdkfRz8DwUm2XDJuxgNkVJb6eV29gxJYGAS84qE
-	c. Gnocchi 대시보드 
-		[Dashboards - Settings - JSON Model] 패널으로 이동하여 ssustack 폴더에 있는 datasource-sample.json 내용을 붙여넣는다.
-        
+#### 10. 추가 설정
+
+아래 비디오에서 Ceph OSD를 추가하고, Horizon에서 네트워크를 생성하고, 우분투 이미지를 업로드하여 인스턴스 생성 및 테스트하는 부분까지 보여줍니다. (10:30)
+
 <br>
 
 ### Testing video
