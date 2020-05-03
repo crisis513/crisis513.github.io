@@ -1,4 +1,4 @@
-I"J<h1 id="ssustack">ssustack</h1>
+I"�<h1 id="ssustack">ssustack</h1>
 
 <p>ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.</p>
 
@@ -64,8 +64,6 @@ $ vi local.conf
 
 <h4 id="5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행">5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행</h4>
 
-<p>※ 현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..</p>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
@@ -82,6 +80,10 @@ $ ./compute_2.sh
 $ cd tmp/compute/
 $ ./compute_3.sh
 </code></pre></div></div>
+
+<blockquote>
+  <p>현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..</p>
+</blockquote>
 
 <p><br /></p>
 
@@ -111,6 +113,8 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 <p><br /></p>
 
 <h3 id="testing-video">Testing video</h3>
+
+<video width="320" height="240" src="/static/assets/video/ssustack_working.mp4" controls=""></video>
 
 <p><a href="/static/assets/video/ssustack_working.mp4"><img src="/static/assets/img/landing/ssustack_main.png" alt="Watch the video" /></a></p>
 :ET

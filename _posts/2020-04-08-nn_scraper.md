@@ -11,7 +11,7 @@ icon: icon-html
 
 # naver-news-scraper
 
-nn-scraper 프로젝트는 
+nn-scraper 프로젝트는 원하는 키워드에 해당하는 네이버 뉴스 속보를 스크랩하여 텔레그램 봇 혹은 카카오톡 봇으로 알림받을 수 있습니다.
 
 <br>
 
@@ -61,4 +61,14 @@ nn-scraper에서 사용할 수 있는 봇은 카카오톡, 텔레그램 두 종�
 
 ### Testing images
 
-[![Watch the video](/static/assets/img/landing/ssustack_main.png)](/static/assets/video/ssustack_working.mp4)
+#### [Telegram bot]
+
+텔레그램 봇을 사용하기 위해서는 @botfather 를 검색하여 아래 사진과 같이 새로운 봇을 만들고 봇의 TOKEN을 획득해야 한다.
+
+![use_telegrambot](/static/assets/img/landing/telegrambot.png){: width="360" height="1200"}
+
+<br>
+
+#### [Kakaotalk bot]
+
+![use_kakaotalkbot](/static/assets/img/landing/kakaotalkbot.png){: width="360" height="780"}

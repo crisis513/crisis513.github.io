@@ -5,15 +5,351 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 01 May 2020 18:39:58 +0900</pubDate>
-    <lastBuildDate>Fri, 01 May 2020 18:39:58 +0900</lastBuildDate>
+    <pubDate>Sun, 03 May 2020 18:55:34 +0900</pubDate>
+    <lastBuildDate>Sun, 03 May 2020 18:55:34 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>ssustack_installer</title>
+        <description>&lt;h1 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h1&gt;
+
+&lt;p&gt;ssustack_installer 프로젝트는 ssustack 설치를 웹 브라우저에서 더욱 쉽게 설치할 수 있도록 도와줍니다.&lt;/p&gt;
+
+&lt;p&gt;ssustack_installer를 실행하면 웹 브라우저가 뜨게되고, 필요한 설정을 입력 및 선택하면 ssustack 스크립트를 기반으로 설치가 시작됩니다.&lt;/p&gt;
+
+&lt;p&gt;사용자의 선택에 따라 싱글노드 혹은 멀티호스트로 자유롭게 설치가 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
+
+&lt;p&gt;OpenStack : Rokcy Release&lt;/p&gt;
+
+&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-ssustack--ssustack_installer-클론&quot;&gt;1. ssustack &amp;amp; ssustack_installer 클론&lt;/h4&gt;
+
+&lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+$ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
+$ cd ssustack/bin
+$ ./ssustack_user_creation.sh
+$ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-hosts-및-ssh-설정&quot;&gt;2. hosts 및 SSH 설정&lt;/h4&gt;
+
+&lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+10.10.10.11 controller-node
+10.10.10.21 compute-node1 
+10.10.10.22 compute-node2
+10.10.10.23 compute-node3
+    
+$ cd ssustack/bin/
+$ ./creating_ssh_keys.sh [&amp;lt;host_name&amp;gt; ... ]
+ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+$ vi local.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+$ cd tmp/controller/
+$ ./controller.sh
+
+## compute-node1 Case
+$ cd tmp/compute/
+$ ./compute_1.sh
+ 
+## compute-node2 Case
+$ cd tmp/compute/
+$ ./compute_2.sh
+ 
+## compute-node3 Case
+$ cd tmp/compute/
+$ ./compute_3.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+$ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
+ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+$ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
+$ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;[ssustack_installer manual]&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;주어진 ISO 이미지 기반 부팅 디스크로 우분투 설치 (user: ssustack, password: ssustack123)&lt;/li&gt;
+  &lt;li&gt;네트워크 인터페이스, 호스트네임, 호스트 설정파일 수정 후 reboot (/etc/network/interfaces, /etc/hostname, /etc/hosts)&lt;/li&gt;
+  &lt;li&gt;ssh 설정 
+ $ sudo vim /etc/hosts  # compute node들의 IP 설정
+ $ ssustack_installer/bin/create_ssh_keys.sh &lt;COMPUTE_NODE1&gt; &lt;COMPUTE_NODE2&gt; ...  # /etc/hosts의 IP 및 hostname 매핑 기반&lt;/COMPUTE_NODE2&gt;&lt;/COMPUTE_NODE1&gt;&lt;/li&gt;
+  &lt;li&gt;ssustack_installer 실행
+ $ ssustack_installer/app.sh&lt;/li&gt;
+  &lt;li&gt;브라우저를 통해 설정 및 설치 진행&lt;/li&gt;
+  &lt;li&gt;Ceph OSD 추가 (컴퓨트 노드+추가 하드 있는 경우) - ※주의 : $ sudo fdisk -l 명령어를 통해 디스크 이름 확인 (e.g. /dev/sdb)
+ $ ssustack/bin/add_ceph_osd.sh &lt;DISK_NAME&gt;&lt;/DISK_NAME&gt;&lt;/li&gt;
+  &lt;li&gt;Ceph OSD 추가 확인
+ $ sudo ceph -s&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;네트워크 생성
+ # Horizon admin 유저로 로그인하여 아래 작업 실행
+ a. Admin&amp;gt;Network&amp;gt;Networks의 Create Network
+     *Network
+     Name: external
+     Project: admin
+     Provider Network Type: Flat
+     Physical Network: provider
+     체크박스 4개 모두 체크
+     *Subnet
+     Subnet Name: external-subnet
+     Network Address: 자기 네트워크 CDIR
+     Gateway IP: 보통 x.x.x.254
+ b. Admin&amp;gt;Network&amp;gt;Networks의 Create Network
+     *Network
+     Name: internal
+     Project: admin
+     Provider Network Type: vxlan 
+     Segmentation ID: 1
+     체크박스 위아래 두개만 체크 (기존 체크)
+     *Subnet
+     Subnet Name: internal-subnet
+     Network Address: 내부 네트워크 CDIR
+     Gateway IP: 보통 x.x.x.254
+ c. Project&amp;gt;Network&amp;gt;Routers의 Create Router
+     Router Name: router
+     External Network: external
+     나머지 체크박스 등 기본 상태로
+ d. Network Topology에서 라우터 클릭 후 Add Interface
+     Subnet: internal&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;이미지 업로드
+ $ ssustack/bin/create_image.sh&lt;/li&gt;
+  &lt;li&gt;대시보드 업데이트
+$ ssustack/bin/horizon_update.sh&lt;/li&gt;
+  &lt;li&gt;모니터링 설정
+a. Grafana 대시보드 접속 후 패스워드 설정
+    스크립트가 정상 종료된 후에 WEB_SERVER_IP:3000(Grafana URL)로 접속한다.
+    Grafana의 초기 아이디 및 패스워드는 admin/admin이다. 
+b. Gnocchi Datasources를 생성
+    URL에는 Gnocchi Endpoint 주소를, Auth Mode는 token으로 하여 터미널에서 $ openstack token issue 명령을 통해 나온 토큰 값을 작성한다.
+    e.g. URL: http://10.10.10.11:8041, Token: gAAAAABcj3Q0kqr_QDVI-ehExoBpwMYHFI2w0C5qYZpsXDT81-nnSkqLURqlwCwYR_2feaU7wWdi0KXiPNcwb1QSYofC_xt-o7tVhjkBg66r47QaGBLUBJPeugpwhRw3SR_bKqz203n3OqLaHdkfRz8DwUm2XDJuxgNkVJb6eV29gxJYGAS84qE
+c. Gnocchi 대시보드 
+    [Dashboards - Settings - JSON Model] 패널으로 이동하여 ssustack 폴더에 있는 datasource-sample.json 내용을 붙여넣는다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;testing-video&quot;&gt;Testing video&lt;/h3&gt;
+
+&lt;video width=&quot;840&quot; height=&quot;480&quot; src=&quot;/static/assets/video/ssustack_working.mp4&quot; controls=&quot;&quot;&gt;&lt;/video&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;영상이 재생되지 않는다면 IE 환경에서 다시 재생해보세요.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Thu, 30 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/2020/04/30/ssustack_installer.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/2020/04/30/ssustack_installer.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>project</category>
+        
+        <category>ssustack</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
+    
+      <item>
+        <title>ssustack</title>
+        <description>&lt;h1 id=&quot;ssustack&quot;&gt;ssustack&lt;/h1&gt;
+
+&lt;p&gt;ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.&lt;/p&gt;
+
+&lt;p&gt;OpenStack에서 사용할 기본적인 설정을 정의한 후에 설치스크립트를 이용하여 간편하게 설치가 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
+
+&lt;p&gt;OpenStack : Rokcy Release&lt;/p&gt;
+
+&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-ssustack-클론&quot;&gt;1. ssustack 클론&lt;/h4&gt;
+
+&lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+$ cd ssustack/bin
+$ ./ssustack_user_creation.sh
+$ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-hosts-및-ssh-설정&quot;&gt;2. hosts 및 SSH 설정&lt;/h4&gt;
+
+&lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+10.10.10.11 controller-node
+10.10.10.21 compute-node1 
+10.10.10.22 compute-node2
+10.10.10.23 compute-node3
+    
+$ cd ssustack/bin/
+$ ./creating_ssh_keys.sh [&amp;lt;host_name&amp;gt; ... ]
+ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+$ vi local.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+$ cd tmp/controller/
+$ ./controller.sh
+
+## compute-node1 Case
+$ cd tmp/compute/
+$ ./compute_1.sh
+ 
+## compute-node2 Case
+$ cd tmp/compute/
+$ ./compute_2.sh
+ 
+## compute-node3 Case
+$ cd tmp/compute/
+$ ./compute_3.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+$ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
+ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+$ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
+$ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/2020/04/29/ssustack.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/2020/04/29/ssustack.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>project</category>
+        
+        <category>ssustack</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
     
       <item>
         <title>naver-news-scraper</title>
         <description>&lt;h1 id=&quot;naver-news-scraper&quot;&gt;naver-news-scraper&lt;/h1&gt;
 
-&lt;p&gt;nn-scraper 프로젝트는&lt;/p&gt;
+&lt;p&gt;nn-scraper 프로젝트는 원하는 키워드에 해당하는 네이버 뉴스 속보를 스크랩하여 텔레그램 봇 혹은 카카오톡 봇으로 알림받을 수 있습니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -59,7 +395,17 @@ $ pip install -r requirements.txt
 
 &lt;h3 id=&quot;testing-images&quot;&gt;Testing images&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&quot;/static/assets/video/ssustack_working.mp4&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/ssustack_main.png&quot; alt=&quot;Watch the video&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;telegram-bot&quot;&gt;[Telegram bot]&lt;/h4&gt;
+
+&lt;p&gt;텔레그램 봇을 사용하기 위해서는 @botfather 를 검색하여 아래 사진과 같이 새로운 봇을 만들고 봇의 TOKEN을 획득해야 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/telegrambot.png&quot; alt=&quot;use_telegrambot&quot; width=&quot;360&quot; height=&quot;1200&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;kakaotalk-bot&quot;&gt;[Kakaotalk bot]&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/kakaotalkbot.png&quot; alt=&quot;use_kakaotalkbot&quot; width=&quot;360&quot; height=&quot;780&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/project/2020/04/08/nn_scraper.html</link>
@@ -307,141 +653,6 @@ time.sleep(1)&lt;/p&gt;
         
         
         <category>Thesis</category>
-        
-      </item>
-    
-      <item>
-        <title>ssustack</title>
-        <description>&lt;h1 id=&quot;ssustack&quot;&gt;ssustack&lt;/h1&gt;
-
-&lt;p&gt;ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.&lt;/p&gt;
-
-&lt;p&gt;OpenStack에서 사용할 기본적인 설정을 정의한 후에 설치스크립트를 이용하여 간편하게 설치가 가능하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;environment&quot;&gt;Environment&lt;/h3&gt;
-
-&lt;p&gt;OpenStack : Rokcy Release&lt;/p&gt;
-
-&lt;p&gt;OS : Ubuntu 18.04 LTS&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
-
-&lt;h4 id=&quot;1-ssustack-클론&quot;&gt;1. ssustack 클론&lt;/h4&gt;
-
-&lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
-$ cd ssustack/bin
-$ ./ssustack_user_creation.sh
-$ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-hosts-및-ssh-설정&quot;&gt;2. hosts 및 SSH 설정&lt;/h4&gt;
-
-&lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
-10.10.10.11 controller-node
-10.10.10.21 compute-node1 
-10.10.10.22 compute-node2
-10.10.10.23 compute-node3
-    
-$ cd ssustack/bin/
-$ ./creating_ssh_keys.sh [&amp;lt;host_name&amp;gt; ... ]
-ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
-$ vi local.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
-
-&lt;p&gt;※ 현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
-$ cd tmp/controller/
-$ ./controller.sh
-
-## compute-node1 Case
-$ cd tmp/compute/
-$ ./compute_1.sh
- 
-## compute-node2 Case
-$ cd tmp/compute/
-$ ./compute_2.sh
- 
-## compute-node3 Case
-$ cd tmp/compute/
-$ ./compute_3.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
-$ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
-ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
-$ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
-$ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;testing-video&quot;&gt;Testing video&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;/static/assets/video/ssustack_working.mp4&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/ssustack_main.png&quot; alt=&quot;Watch the video&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 31 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/03/31/ssustack.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/03/31/ssustack.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>project</category>
-        
-        <category>ssustack</category>
-        
-        
-        <category>Project</category>
         
       </item>
     
