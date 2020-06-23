@@ -5,9 +5,79 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 May 2020 17:02:55 +0900</pubDate>
-    <lastBuildDate>Mon, 04 May 2020 17:02:55 +0900</lastBuildDate>
+    <pubDate>Fri, 19 Jun 2020 16:38:06 +0900</pubDate>
+    <lastBuildDate>Fri, 19 Jun 2020 16:38:06 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Orientation</title>
+        <description>&lt;h4 id=&quot;ict-트렌드와-함께보는-클라우드-컴퓨팅-기술과-보안-이슈&quot;&gt;ICT 트렌드와 함께보는 클라우드 컴퓨팅 기술과 보안 이슈&lt;/h4&gt;
+
+&lt;p&gt;박기웅 교수님(woongbak@sejong.ac.kr)&lt;/p&gt;
+
+&lt;p&gt;클라우드 컴퓨팅의 단점 -&amp;gt; Single Point Failure&lt;/p&gt;
+
+&lt;p&gt;2010~2012 top 10&lt;/p&gt;
+
+&lt;p&gt;클라우드 컴퓨팅이란 - IBM Watson&lt;/p&gt;
+
+&lt;p&gt;1987-1990-2008-2010&lt;/p&gt;
+
+&lt;p&gt;성능 업, 가격 다운, 용량 업, 사이즈 다운&lt;/p&gt;
+
+&lt;p&gt;CPU 속도를 빠르게하니 발열이 나서 코어가 등장&lt;/p&gt;
+
+&lt;p&gt;Sandy Bridge&lt;/p&gt;
+
+&lt;p&gt;2008 - South Bridge, North Bridge&lt;/p&gt;
+
+&lt;p&gt;이후 South Bridge가 사라짐&lt;/p&gt;
+
+&lt;p&gt;전 세계 정보 감시의 중심 = NSA&lt;/p&gt;
+
+&lt;p&gt;tails usb&lt;/p&gt;
+
+&lt;p&gt;클라우드 이상징후 탐지 -&amp;gt; 모니터링 필수&lt;/p&gt;
+
+&lt;p&gt;인간의 상상력 (100년 후 예측)&lt;/p&gt;
+
+&lt;p&gt;발전에 따른 해킹 기술&lt;/p&gt;
+
+&lt;p&gt;보안 + AI&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;베스핀글로벌 정현석 강사님&lt;/p&gt;
+
+&lt;p&gt;ICBM =? 대륙간탄도미사일 ㅋㅋㅋ&lt;/p&gt;
+
+&lt;p&gt;4차 산업혁명 = 1,2차(현실)과 3차(가상)의 융합..?&lt;/p&gt;
+
+&lt;p&gt;모든 기업들은 5년 후에도 살아남기 위해 -&amp;gt; 디지털변형&lt;/p&gt;
+
+&lt;p&gt;마이크로서비스 아키텍처&lt;/p&gt;
+
+&lt;p&gt;쿠팡 클라우드 전략 - MSA + Data Platform + Public Cloud&lt;/p&gt;
+
+&lt;p&gt;빅데이터 - GCP, 마켓트렐저 - Azure, 드래픽 싼 곳 - AWS&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 19 Jun 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/2020/06/19/orientation.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/2020/06/19/orientation.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>project</category>
+        
+        <category>ssustack</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
     
       <item>
         <title>ssustack_installer</title>
