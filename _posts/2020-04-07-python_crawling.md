@@ -4,7 +4,7 @@ title: "파이썬 크롤링"
 date: 2020-04-07
 desc: "파이썬 크롤링"
 keywords: "son,blog,python,crawling"
-categories: [Python]
+categories: []
 tags: [son,blog,python,crawling]
 icon: icon-html
 ---

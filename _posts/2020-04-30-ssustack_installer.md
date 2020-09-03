@@ -9,7 +9,7 @@ tags: [son,blog,project,ssustack]
 icon: icon-html
 ---
 
-# ssustack_installer
+## ssustack_installer
 
 ssustack_installer 프로젝트는 ssustack 설치를 웹 브라우저에서 더욱 쉽게 설치할 수 있도록 도와줍니다.
 

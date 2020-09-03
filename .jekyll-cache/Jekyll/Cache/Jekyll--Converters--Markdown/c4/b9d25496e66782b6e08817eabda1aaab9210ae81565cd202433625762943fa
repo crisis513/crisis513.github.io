@@ -1,0 +1,10 @@
+I"�<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```
+a = 1 # 변수 선언
+b = 2
+
+a = "A를 문자로 선언해라!!" 
+
+print("a + b = ", a + b) # a + b
+```
+</code></pre></div></div>
+:ET

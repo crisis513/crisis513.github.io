@@ -1,0 +1,7 @@
+I"P<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- text in red
+</span><span class="gi">+ text in green
+</span><span class="gs">! text in orange
+</span><span class="err">#</span> text in gray
+<span class="p">@@ text in purple (and bold)@@</span>
+</code></pre></div></div>
+:ET

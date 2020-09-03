@@ -1,0 +1,199 @@
+I"�<h3 id="목차">목차</h3>
+
+<p><a href="#헤더(Header)">1. 헤더(Header)</a></p>
+
+<p><a href="#목록(List)">2. 목록(List)</a></p>
+
+<p><a href="#이미지(Images)">3. 이미지(Images)</a></p>
+
+<p><a href="#하이퍼링크(Links)">4. 하이퍼링크(Links)</a></p>
+
+<p><a href="#인용-상자(Blockquotes)">5. 인용 상자(Blockquotes)</a></p>
+
+<p><a href="#강조(Emphasis)">6. 강조(Emphasis)</a></p>
+
+<p><a href="#테이블(Tables)">7. 테이블(Tables)</a></p>
+
+<p><a href="#체크-박스(Task-Lists)">8. 체크 박스(Task Lists)</a></p>
+
+<p><a href="#인라인-코드(Inline-code)">9. 인라인 코드(Inline code)</a></p>
+
+<p><a href="#수평선(hr)">10. 수평선(hr)</a></p>
+
+<p><a href="#탈출-문자(Backslash-Escapes)">11. 탈출 문자(Backslash Escapes)</a></p>
+
+<p><a href="#이모지(Emoji)">12. 이모지(Emoji)</a></p>
+
+<p><a href="#코드-블록(Code-Blocks)">13. 코드 블록(Code Blocks)</a></p>
+
+<p><a href="#배지">14. 배지(badge) 만들기</a></p>
+
+<hr />
+
+<h3 id="헤더header">헤더(Header)</h3>
+
+<h1 id="헤더-크기-h1">헤더 크기 (h1)</h1>
+<h2 id="헤더-크기-h2">헤더 크기 (h2)</h2>
+<h3 id="헤더-크기-h3">헤더 크기 (h3)</h3>
+
+<hr />
+
+<h3 id="목록list">목록(List)</h3>
+
+<p>Unordered</p>
+<ul>
+  <li>Item 1</li>
+  <li>Item 2
+    <ul>
+      <li>Item 2a</li>
+      <li>Item 2b</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Ordered</p>
+<ol>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3
+    <ol>
+      <li>Item 3a</li>
+      <li>Item 3b</li>
+    </ol>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="이미지images">이미지(Images)</h3>
+
+<p>첫번째 방법</p>
+
+<p><img src="/images/markdown_logo.jpg" alt="Github logo" /></p>
+
+<p>Format: <img src="url 링크" alt="이미지 alt명" /></p>
+
+<p>두번째 방법</p>
+
+<p><a href="#"><img src="https://github.com/..각자절대경로../images/markdown_syntax.jpg" width="400px" alt="sample image" /></a></p>
+
+<p>Format: img 태그 사용 - 이미지경로는 상대경로 or 절대경로</p>
+
+<hr />
+
+<h3 id="하이퍼링크links">하이퍼링크(Links)</h3>
+
+<p><a href="http://github.com" title="깃허브">GitHub</a></p>
+
+<hr />
+
+<h3 id="인용-상자blockquotes">인용 상자(Blockquotes)</h3>
+
+<p>As Grace Hopper said:</p>
+
+<blockquote>
+  <p>I’ve always been more interested. 
+in the future than in the past.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="강조emphasis">강조(Emphasis)</h3>
+
+<p><em>This text will be italic</em> 
+<em>This will also be italic</em></p>
+
+<p><strong>This text will be bold</strong> 
+<strong>This will also be bold</strong></p>
+
+<p><em>You <strong>can</strong> combine them</em></p>
+
+<hr />
+
+<h3 id="테이블tables">테이블(Tables)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Header</th>
+      <th>Second Header</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Content cell 1</td>
+      <td>Content cell 2</td>
+    </tr>
+    <tr>
+      <td>Content column 1</td>
+      <td>Content column 2</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="체크-박스task-lists">체크 박스(Task Lists)</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />this is a complete item</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />this is an incomplete item</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />@mentions, #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> supported</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />list syntax required (any unordered or ordered list supported)</li>
+</ul>
+
+<hr />
+
+<h3 id="인라인-코드inline-code">인라인 코드(Inline code)</h3>
+
+<p>문단 중간에 <code class="language-plaintext highlighter-rouge">Code</code>를 넣을 수 있습니다. 
+예를 들어 <code class="language-plaintext highlighter-rouge">printf("hello world!");</code> 이런 식으로 들어갑니다.</p>
+
+<hr />
+
+<h3 id="수평선hr">수평선(hr)</h3>
+
+<hr />
+<hr />
+<hr />
+
+<hr />
+
+<h3 id="탈출-문자backslash-escapes">탈출 문자(Backslash Escapes)</h3>
+
+<p>＼<em>literal asterisks＼</em> 
+<em>literal asterisks</em> 
+<strong>＼<em>＼</em>Text＼<em>＼</em></strong> 
+_＼_Tom＼__</p>
+
+<hr />
+
+<h3 id="이모지emoji">이모지(Emoji)</h3>
+
+<p>GitHub supports emoji!</p>
+
+<p>:+1: :sparkles: :camel: :tada: 
+:rocket: :metal: :octocat:</p>
+
+<hr />
+
+<h3 id="코드-블록code-blocks">코드 블록(Code Blocks)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>코드 내용
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="배지">배지</h3>
+
+<p>https://shields.io</p>
+
+<p>작성 예시
+<a href="https://img.shields.io/badge/license-mit-green.svg&quot;">https://img.shields.io/badge/license-mit-green.svg"</a></p>
+
+<p>https://img.shields.io/badge/–.svg</p>
+
+<p>APM: /apm/l/:packageName.svg</p>
+
+<p>AUR license: /aur/license/:packageName.svg</p>
+:ET

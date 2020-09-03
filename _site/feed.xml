@@ -5,83 +5,39 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 19 Jun 2020 16:38:06 +0900</pubDate>
-    <lastBuildDate>Fri, 19 Jun 2020 16:38:06 +0900</lastBuildDate>
-    <generator>Jekyll v4.0.0</generator>
+    <pubDate>Wed, 02 Sep 2020 11:53:21 +0900</pubDate>
+    <lastBuildDate>Wed, 02 Sep 2020 11:53:21 +0900</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
     
       <item>
-        <title>Orientation</title>
-        <description>&lt;h4 id=&quot;ict-트렌드와-함께보는-클라우드-컴퓨팅-기술과-보안-이슈&quot;&gt;ICT 트렌드와 함께보는 클라우드 컴퓨팅 기술과 보안 이슈&lt;/h4&gt;
-
-&lt;p&gt;박기웅 교수님(woongbak@sejong.ac.kr)&lt;/p&gt;
-
-&lt;p&gt;클라우드 컴퓨팅의 단점 -&amp;gt; Single Point Failure&lt;/p&gt;
-
-&lt;p&gt;2010~2012 top 10&lt;/p&gt;
-
-&lt;p&gt;클라우드 컴퓨팅이란 - IBM Watson&lt;/p&gt;
-
-&lt;p&gt;1987-1990-2008-2010&lt;/p&gt;
-
-&lt;p&gt;성능 업, 가격 다운, 용량 업, 사이즈 다운&lt;/p&gt;
-
-&lt;p&gt;CPU 속도를 빠르게하니 발열이 나서 코어가 등장&lt;/p&gt;
-
-&lt;p&gt;Sandy Bridge&lt;/p&gt;
-
-&lt;p&gt;2008 - South Bridge, North Bridge&lt;/p&gt;
-
-&lt;p&gt;이후 South Bridge가 사라짐&lt;/p&gt;
-
-&lt;p&gt;전 세계 정보 감시의 중심 = NSA&lt;/p&gt;
-
-&lt;p&gt;tails usb&lt;/p&gt;
-
-&lt;p&gt;클라우드 이상징후 탐지 -&amp;gt; 모니터링 필수&lt;/p&gt;
-
-&lt;p&gt;인간의 상상력 (100년 후 예측)&lt;/p&gt;
-
-&lt;p&gt;발전에 따른 해킹 기술&lt;/p&gt;
-
-&lt;p&gt;보안 + AI&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;베스핀글로벌 정현석 강사님&lt;/p&gt;
-
-&lt;p&gt;ICBM =? 대륙간탄도미사일 ㅋㅋㅋ&lt;/p&gt;
-
-&lt;p&gt;4차 산업혁명 = 1,2차(현실)과 3차(가상)의 융합..?&lt;/p&gt;
-
-&lt;p&gt;모든 기업들은 5년 후에도 살아남기 위해 -&amp;gt; 디지털변형&lt;/p&gt;
-
-&lt;p&gt;마이크로서비스 아키텍처&lt;/p&gt;
-
-&lt;p&gt;쿠팡 클라우드 전략 - MSA + Data Platform + Public Cloud&lt;/p&gt;
-
-&lt;p&gt;빅데이터 - GCP, 마켓트렐저 - Azure, 드래픽 싼 곳 - AWS&lt;/p&gt;
-
+        <title>Network</title>
+        <description>&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;- text in red
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+ text in green
+&lt;/span&gt;&lt;span class=&quot;gs&quot;&gt;! text in orange
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; text in gray
+&lt;span class=&quot;p&quot;&gt;@@ text in purple (and bold)@@&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-        <pubDate>Fri, 19 Jun 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/06/19/orientation.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/06/19/orientation.html</guid>
+        <pubDate>Mon, 22 Jun 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/cccr/2020/06/22/network.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cccr/2020/06/22/network.html</guid>
         
         <category>son</category>
         
         <category>blog</category>
         
-        <category>project</category>
+        <category>cccr</category>
         
-        <category>ssustack</category>
+        <category>network</category>
         
         
-        <category>Project</category>
+        <category>Cccr</category>
         
       </item>
     
       <item>
         <title>ssustack_installer</title>
-        <description>&lt;h1 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h1&gt;
+        <description>&lt;h2 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h2&gt;
 
 &lt;p&gt;ssustack_installer 프로젝트는 ssustack 설치를 웹 브라우저에서 더욱 쉽게 설치할 수 있도록 도와줍니다.&lt;/p&gt;
 
@@ -106,7 +62,7 @@
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -121,7 +77,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -140,7 +96,7 @@ down ip link set dev $IFACE down
 
 &lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -159,7 +115,7 @@ iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
 
 &lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -176,7 +132,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
 $ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -251,7 +207,7 @@ $ ./app.sh
     
       <item>
         <title>ssustack</title>
-        <description>&lt;h1 id=&quot;ssustack&quot;&gt;ssustack&lt;/h1&gt;
+        <description>&lt;h2 id=&quot;ssustack&quot;&gt;ssustack&lt;/h2&gt;
 
 &lt;p&gt;ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.&lt;/p&gt;
 
@@ -301,7 +257,7 @@ $ ./app.sh
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
@@ -315,7 +271,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -330,7 +286,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
 $ vi local.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -338,14 +294,14 @@ $ vi local.conf
 
 &lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -370,7 +326,7 @@ $ ./compute_3.sh
 
 &lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -379,7 +335,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -388,9 +344,8 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/project/2020/04/29/ssustack.html</link>
@@ -433,7 +388,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;p&gt;naver-news-scraper 소스를 다운로드 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -443,7 +398,7 @@ $ cd naver-news-scraper
 
 &lt;p&gt;nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -572,7 +527,7 @@ time.sleep(1)&lt;/p&gt;
     global num
     btns = driver.find_elements_by_xpath(‘//&lt;em&gt;[@id=”grid”]/div[&lt;/em&gt;]’)&lt;/p&gt;
 
-  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
     print(btn.text, end='\t')
     if btn.text == str(num):
         btn.click()
@@ -595,8 +550,8 @@ time.sleep(1)&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 07 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/python/2020/04/07/python_crawling.html</link>
-        <guid isPermaLink="true">http://localhost:4000/python/2020/04/07/python_crawling.html</guid>
+        <link>http://localhost:4000/2020/04/07/python_crawling.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/07/python_crawling.html</guid>
         
         <category>son</category>
         
@@ -607,48 +562,64 @@ time.sleep(1)&lt;/p&gt;
         <category>crawling</category>
         
         
-        <category>Python</category>
-        
       </item>
     
       <item>
         <title>히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체</title>
-        <description>&lt;h1 id=&quot;특허증&quot;&gt;특허증&lt;/h1&gt;
+        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 특허증&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;   1.1. 특허&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;   1.2. 출원번호&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list4&quot;&gt;   1.3. 출원일&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list5&quot;&gt;   1.4. 등록일&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list6&quot;&gt;   1.5. 발명의 명칭&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list7&quot;&gt;   1.6. KIPRIS 검색&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;특허증----&quot;&gt;특허증    &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;h5 id=&quot;certificate-of-patent&quot;&gt;CERTIFICATE OF PATENT&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;특허&quot;&gt;특허&lt;/h2&gt;
+&lt;h3 id=&quot;특허&quot;&gt;특허&lt;/h3&gt;
 &lt;h6 id=&quot;patent-number&quot;&gt;PATENT NUMBER&lt;/h6&gt;
 &lt;p&gt;10-1957610&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;출원번호&quot;&gt;출원번호&lt;/h2&gt;
+&lt;h3 id=&quot;출원번호&quot;&gt;출원번호&lt;/h3&gt;
 &lt;h6 id=&quot;application-number&quot;&gt;Application Number&lt;/h6&gt;
 &lt;p&gt;10-2017-0173938&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;출원일&quot;&gt;출원일&lt;/h2&gt;
+&lt;h3 id=&quot;출원일&quot;&gt;출원일&lt;/h3&gt;
 &lt;h6 id=&quot;filing-date&quot;&gt;Filing Date&lt;/h6&gt;
 &lt;p&gt;2017년 12월 18일&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;등록일&quot;&gt;등록일&lt;/h2&gt;
+&lt;h3 id=&quot;등록일&quot;&gt;등록일&lt;/h3&gt;
 &lt;h6 id=&quot;registration-date&quot;&gt;Registration Date&lt;/h6&gt;
 &lt;p&gt;2019년 03월 06일&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;발명의-명칭&quot;&gt;발명의 명칭&lt;/h2&gt;
+&lt;h3 id=&quot;발명의-명칭&quot;&gt;발명의 명칭&lt;/h3&gt;
 &lt;h6 id=&quot;title-of-the-invention&quot;&gt;Title of the Invention&lt;/h6&gt;
 &lt;p&gt;히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;kipris-검색&quot;&gt;KIPRIS 검색&lt;/h2&gt;
+&lt;h3 id=&quot;kipris-검색&quot;&gt;KIPRIS 검색&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/patent2.png&quot; alt=&quot;patent2&quot; width=&quot;675&quot; height=&quot;150&quot; /&gt;&lt;/p&gt;
 </description>
@@ -669,42 +640,60 @@ time.sleep(1)&lt;/p&gt;
     
       <item>
         <title>타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체</title>
-        <description>&lt;h1 id=&quot;특허증&quot;&gt;특허증&lt;/h1&gt;
+        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 특허증&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;   1.1. 특허&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;   1.2. 출원번호&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list4&quot;&gt;   1.3. 출원일&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list5&quot;&gt;   1.4. 등록일&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list6&quot;&gt;   1.5. 발명의 명칭&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list7&quot;&gt;   1.6. KIPRIS 검색&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;특허증----&quot;&gt;특허증    &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;h5 id=&quot;certificate-of-patent&quot;&gt;CERTIFICATE OF PATENT&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;특허&quot;&gt;특허&lt;/h2&gt;
+&lt;h3 id=&quot;특허----&quot;&gt;특허    &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;h6 id=&quot;patent-number&quot;&gt;PATENT NUMBER&lt;/h6&gt;
 &lt;p&gt;10-1959219&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;출원번호&quot;&gt;출원번호&lt;/h2&gt;
+&lt;h3 id=&quot;출원번호----&quot;&gt;출원번호    &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;h6 id=&quot;application-number&quot;&gt;Application Number&lt;/h6&gt;
 &lt;p&gt;10-2017-0120224&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;출원일&quot;&gt;출원일&lt;/h2&gt;
+&lt;h3 id=&quot;출원일--&quot;&gt;출원일  &lt;a name=&quot;list4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;h6 id=&quot;filing-date&quot;&gt;Filing Date&lt;/h6&gt;
 &lt;p&gt;2017년 09월 19일&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;등록일&quot;&gt;등록일&lt;/h2&gt;
+&lt;h3 id=&quot;등록일--&quot;&gt;등록일  &lt;a name=&quot;list5&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;h6 id=&quot;registration-date&quot;&gt;Registration Date&lt;/h6&gt;
 &lt;p&gt;2019년 03월 12일&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;발명의-명칭&quot;&gt;발명의 명칭&lt;/h2&gt;
+&lt;h3 id=&quot;발명의-명칭-&quot;&gt;발명의 명칭 &lt;a name=&quot;list6&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;h6 id=&quot;title-of-the-invention&quot;&gt;Title of the Invention&lt;/h6&gt;
 &lt;p&gt;타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;kipris-검색&quot;&gt;KIPRIS 검색&lt;/h2&gt;
+&lt;h3 id=&quot;kipris-검색-&quot;&gt;KIPRIS 검색 &lt;a name=&quot;list7&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/patent.png&quot; alt=&quot;patent1&quot; width=&quot;675&quot; height=&quot;150&quot; /&gt;&lt;/p&gt;
 </description>
@@ -725,7 +714,45 @@ time.sleep(1)&lt;/p&gt;
     
       <item>
         <title>클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현</title>
-        <description>&lt;p&gt;클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 = Design and Implementation of Blockchain-based Authentication Key Management System in Cloud Computing Environment&lt;/p&gt;
+        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 논문 제목&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;   1.1. 저자&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;   1.2. 발행연도&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list4&quot;&gt;   1.3. 주제어&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list5&quot;&gt;   1.4. URL&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;논문-제목---&quot;&gt;논문 제목   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 = Design and Implementation of Blockchain-based Authentication Key Management System in Cloud Computing Environment&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;저자----&quot;&gt;저자    &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;손한기&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;발행연도----&quot;&gt;발행연도    &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;2020.02&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;주제어----&quot;&gt;주제어    &lt;a name=&quot;list4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;클라우드 컴퓨팅, 블록체인, 키 관리 시스템&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;url---&quot;&gt;URL   &lt;a name=&quot;list5&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;http://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&amp;amp;control_no=648f5d72e457c232ffe0bdc3ef48d419&lt;/p&gt;
 </description>
@@ -752,7 +779,39 @@ time.sleep(1)&lt;/p&gt;
     
       <item>
         <title>Blog sample</title>
-        <description>&lt;h3 id=&quot;헤더header&quot;&gt;헤더(Header)&lt;/h3&gt;
+        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 헤더(Header)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. 목록(List)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. 이미지(Images)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list4&quot;&gt;4. 하이퍼링크(Links)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list5&quot;&gt;5. 인용 상자(Blockquotes)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list6&quot;&gt;6. 강조(Emphasis)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list7&quot;&gt;7. 테이블(Tables)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list8&quot;&gt;8. 체크 박스(Task Lists)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list9&quot;&gt;9. 인라인 코드(Inline code)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list10&quot;&gt;10. 수평선(hr)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list11&quot;&gt;11. 탈출 문자(Backslash Escapes)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list12&quot;&gt;12. 이모지(Emoji)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list13&quot;&gt;13. 코드 블록(Code Blocks)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list14&quot;&gt;14. 배지(Badge) 만들기&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;헤더header----&quot;&gt;헤더(Header)    &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h1 id=&quot;헤더-크기-h1&quot;&gt;헤더 크기 (h1)&lt;/h1&gt;
 &lt;h2 id=&quot;헤더-크기-h2&quot;&gt;헤더 크기 (h2)&lt;/h2&gt;
@@ -760,7 +819,7 @@ time.sleep(1)&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;목록list&quot;&gt;목록(List)&lt;/h3&gt;
+&lt;h3 id=&quot;목록list----&quot;&gt;목록(List)    &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;Unordered&lt;/p&gt;
 &lt;ul&gt;
@@ -787,7 +846,7 @@ time.sleep(1)&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;이미지images&quot;&gt;이미지(Images)&lt;/h3&gt;
+&lt;h3 id=&quot;이미지images----&quot;&gt;이미지(Images)    &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;첫번째 방법&lt;/p&gt;
 
@@ -803,13 +862,13 @@ time.sleep(1)&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;하이퍼링크links&quot;&gt;하이퍼링크(Links)&lt;/h3&gt;
+&lt;h3 id=&quot;하이퍼링크links----&quot;&gt;하이퍼링크(Links)    &lt;a name=&quot;list4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://github.com&quot; title=&quot;깃허브&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;인용-상자blockquotes&quot;&gt;인용 상자(Blockquotes)&lt;/h3&gt;
+&lt;h3 id=&quot;인용-상자blockquotes----&quot;&gt;인용 상자(Blockquotes)    &lt;a name=&quot;list5&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;As Grace Hopper said:&lt;/p&gt;
 
@@ -820,7 +879,7 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;강조emphasis&quot;&gt;강조(Emphasis)&lt;/h3&gt;
+&lt;h3 id=&quot;강조emphasis----&quot;&gt;강조(Emphasis)    &lt;a name=&quot;list6&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt; 
 &lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
@@ -832,7 +891,7 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;테이블-tables&quot;&gt;테이블 TABLES&lt;/h3&gt;
+&lt;h3 id=&quot;테이블tables----&quot;&gt;테이블(Tables)    &lt;a name=&quot;list7&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -855,7 +914,7 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;체크-박스task-lists&quot;&gt;체크 박스(Task Lists)&lt;/h3&gt;
+&lt;h3 id=&quot;체크-박스task-lists----&quot;&gt;체크 박스(Task Lists)    &lt;a name=&quot;list8&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;ul class=&quot;task-list&quot;&gt;
   &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;this is a complete item&lt;/li&gt;
@@ -866,22 +925,22 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;인라인-코드inline-code&quot;&gt;인라인 코드(Inline code)&lt;/h3&gt;
+&lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;수평선hr&quot;&gt;수평선(hr)&lt;/h3&gt;
-
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
+&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;탈출-문자-backslash-escapes&quot;&gt;탈출 문자 (Backslash Escapes)&lt;/h3&gt;
+&lt;h3 id=&quot;수평선hr----&quot;&gt;수평선(hr)    &lt;a name=&quot;list10&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;탈출-문자backslash-escapes----&quot;&gt;탈출 문자(Backslash Escapes)    &lt;a name=&quot;list11&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;＼&lt;em&gt;literal asterisks＼&lt;/em&gt; 
 &lt;em&gt;literal asterisks&lt;/em&gt; 
@@ -890,7 +949,7 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;이모지emoji---아이콘&quot;&gt;이모지(EMOJI) - 아이콘&lt;/h3&gt;
+&lt;h3 id=&quot;이모지emoji----&quot;&gt;이모지(Emoji)    &lt;a name=&quot;list12&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;GitHub supports emoji!&lt;/p&gt;
 
@@ -899,14 +958,14 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;코드-블록code-blocks&quot;&gt;코드 블록(Code Blocks)&lt;/h3&gt;
+&lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;배지badge-만들기&quot;&gt;배지(badge) 만들기&lt;/h3&gt;
+&lt;h3 id=&quot;배지bedge-만들기----&quot;&gt;배지(Bedge) 만들기    &lt;a name=&quot;list14&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;https://shields.io&lt;/p&gt;
 
@@ -936,14 +995,14 @@ _＼_Tom＼__&lt;/p&gt;
         <title>code snippet test</title>
         <description>&lt;p&gt;This is a raw snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
 123
 This is a text snippet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This is a JavaScript snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
 const minus = (a, b) =&amp;gt; a - b
 
 console.log(add(100,200))  // 300
@@ -952,7 +1011,7 @@ console.log(minus(100,200))  // -100
 
 &lt;p&gt;This is a Python snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
     print(&quot;hello world!&quot;)
 
 say_hello()   // &quot;hello world!&quot;
@@ -983,7 +1042,7 @@ say_hello()   // &quot;hello world!&quot;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
 
     &lt;p&gt;&lt;!-- ![edit](/crisis513.github.io/static/assets/img/blog/3steps/edit.gif) --&gt;
  &lt;img src=&quot;/crisis513.github.io/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
@@ -1002,10 +1061,10 @@ say_hello()   // &quot;hello world!&quot;
         &lt;p&gt;&lt;strong&gt;_data/index/&lt;/strong&gt;: edit sections’ data to yours at index page, please notice comment at each file.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;Go to repo’s settings panel, config &lt;strong&gt;GitHub Pages&lt;/strong&gt; section to make sure website is released.&lt;/p&gt;
@@ -1017,7 +1076,7 @@ say_hello()   // &quot;hello world!&quot;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
+&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
 
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
