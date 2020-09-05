@@ -1,4 +1,4 @@
-I"v<h2 id="ssustack">ssustack</h2>
+I"�<h2 id="ssustack">ssustack</h2>
 
 <p>ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.</p>
 
@@ -48,7 +48,7 @@
 
 <p>OpenStack 환경을 구성하는 모든 노드에서 진행</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone http://git.dotstack.io/crisis513/ssustack.git
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &lt;your_controller_path&gt;/ssustack/ .
@@ -62,7 +62,7 @@ $ cp -r &lt;your_controller_path&gt;/ssustack/ .
 
 <p>위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/hosts
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -77,7 +77,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 <h4 id="3-openstack-설치-스크립트-설정">3. OpenStack 설치 스크립트 설정</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ..
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ..
 $ vi local.conf
 </code></pre></div></div>
 
@@ -85,14 +85,14 @@ $ vi local.conf
 
 <h4 id="4-localconf-설정을-기반으로-각-노드별-스크립트-생성">4. local.conf 설정을 기반으로 각 노드별 스크립트 생성</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./ssustack.sh
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./ssustack.sh
 </code></pre></div></div>
 
 <p><br /></p>
 
 <h4 id="5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행">5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## controller-node Case
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -117,7 +117,7 @@ $ ./compute_3.sh
 
 <h4 id="6-controller-node에서-ceph-추가-설정">6. controller node에서 ceph 추가 설정</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ../../bin/ # ssustack/bin/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&lt;host_name&gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 </code></pre></div></div>
@@ -126,7 +126,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 <h4 id="7-각-compute-node에서-ceph-osd-및-ceph-mon-설정">7. 각 compute node에서 ceph osd 및 ceph mon 설정</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ../../bin/ # ssustack/bin/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 </code></pre></div></div>
@@ -135,6 +135,6 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 <h4 id="8-controller-node에서-compute-호스트를-찾도록-스크립트-실행">8. controller node에서 compute 호스트를 찾도록 스크립트 실행</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./add_compute_node.sh
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./add_compute_node.sh
 </code></pre></div></div>
 :ET

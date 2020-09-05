@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);//google web font added
+
 .landing-page .carousel-caption {
   h1, p {
     text-transform: uppercase;
@@ -740,7 +742,7 @@ button {
 .label {
   background-color: #d1dade;
   color: #5e5e5e;
-  font-family: 'Open Sans';
+  font-family: 'Nanum Gothic Coding', serif;
   text-shadow: none;
   font-weight: 600;
 }
@@ -1218,9 +1220,9 @@ label.error {
 }
 
 body {
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Nanum Gothic Coding', serif;
   background-color: #2f4050;
-  font-size: 13px;
+  font-size: 16px;
   color: #676a6c;
   height: 100%;
 }
@@ -2013,8 +2015,9 @@ body {
   }
   &.landing-page {
     color: #676a6c;
-    font-family: 'Open Sans', helvetica, arial, sans-serif;
+    font-family: 'Nanum Gothic Coding', serif;
     background-color: #fff;
+    margin: 10px;
   }
 }
 
@@ -2413,7 +2416,7 @@ body {
     transition: all .3s ease-in-out 0s;
     .nav li a {
       color: #fff;
-      font-family: 'Open Sans', helvetica, arial, sans-serif;
+      font-family: 'Nanum Gothic Coding', serif;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;

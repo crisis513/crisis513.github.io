@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "ssustack_installer"
+title: "[Project]ssustack_installer"
 date: 2020-04-30
-desc: "ssustack_installer"
-keywords: "son,blog,project,ssustack"
+desc: "[Project]ssustack_installer"
+keywords: "son,blog,project,ssustack,installer"
 categories: [Project]
-tags: [son,blog,project,ssustack]
+tags: [son,blog,project,ssustack,installer]
 icon: icon-html
 ---
+
+> 본 프로젝트는 숭실대학교에서 김명호 교수님의 지도하에 진행 된 프로젝트입니다.
 
 ## ssustack_installer
 
@@ -27,6 +29,10 @@ ssustack_installer를 실행하면 웹 브라우저가 뜨게되고, 필요한 �
 <br>
 
 ### Installation
+
+다음 설명할 설치 방법은 모든 노드가 Ubuntu 18.04 운영체제만 설치된 환경이라 가정하고 진행해야 할 작업을 설명합니다.
+
+<br>
 
 #### 1. ssustack & ssustack_installer 클론
 

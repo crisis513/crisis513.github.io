@@ -5,22 +5,120 @@
     <description>Son's blog,use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 02 Sep 2020 11:53:21 +0900</pubDate>
-    <lastBuildDate>Wed, 02 Sep 2020 11:53:21 +0900</lastBuildDate>
-    <generator>Jekyll v4.1.1</generator>
+    <pubDate>Sat, 05 Sep 2020 15:42:06 +0900</pubDate>
+    <lastBuildDate>Sat, 05 Sep 2020 15:42:06 +0900</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
     
       <item>
-        <title>Network</title>
-        <description>&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;- text in red
-&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+ text in green
-&lt;/span&gt;&lt;span class=&quot;gs&quot;&gt;! text in orange
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; text in gray
-&lt;span class=&quot;p&quot;&gt;@@ text in purple (and bold)@@&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+        <title>[Docker] 도커 설치</title>
+        <description>&lt;hr /&gt;
+
+&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 설치&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. 실습 환경&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. 도커 설치 실습&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-도커-설치---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. 도커 설치&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;실습 환경&lt;/strong&gt; &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;※ 본 포스트를 포함한 앞으로의 도커 관련 실습 환경은 다음과 같은 환경에서 진행됩니다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;Host OS인 Ubuntu에서 Virtualbox를 통해 CentOS VM을 생성 및 접속하여 진행했습니다.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;Host OS - Ubuntu 18.04 LTS&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;IP : 192.168.56.1&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Username : son&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Hostname : ubuntu&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;Guest OS - CentOS 7.8 (on Virtualbox)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;IP : 192.168.56.100&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Username : user&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Hostname : docker&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커 설치 실습&lt;/strong&gt;    &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# 1. 사전 패키지 설치&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; yum-utils &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; device-mapper-persistent-data &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; lvm2
+
+  &lt;span class=&quot;c&quot;&gt;# 2. yum 저장소 설정&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum-config-manager &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--add-repo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://download.docker.com/linux/centos/docker-ce.repo&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum repolist
+
+  &lt;span class=&quot;c&quot;&gt;# 3. docker-ce 설치&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;docker-ce docker-ce-cli containerd.io
+
+  &lt;span class=&quot;c&quot;&gt;# 4. 서비스 실행 및 활성화&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start docker
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;docker
+
+  &lt;span class=&quot;c&quot;&gt;# 5. docker 그룹 지정&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;usermod &lt;span class=&quot;nt&quot;&gt;-aG&lt;/span&gt; docker &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit
+
+  &lt;/span&gt;son@ubuntu:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh user@192.168.56.100
+
+  &lt;span class=&quot;c&quot;&gt;# 6. docker 버전 확인&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker version
+  Client: Docker Engine - Community
+      Version:           19.03.12
+      API version:       1.40
+      Go version:        go1.13.10
+      Git commit:        48a66213fe
+      Built:             Mon Jun 22 15:46:54 2020
+      OS/Arch:           linux/amd64
+      Experimental:      &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;# 7. hello world 컨테이너 실행&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
-        <pubDate>Mon, 22 Jun 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/cccr/2020/06/22/network.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cccr/2020/06/22/network.html</guid>
+        <pubDate>Tue, 01 Sep 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/cccr/2020/09/01/docker2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/01/docker2.html</guid>
         
         <category>son</category>
         
@@ -28,7 +126,7 @@
         
         <category>cccr</category>
         
-        <category>network</category>
+        <category>docker</category>
         
         
         <category>Cccr</category>
@@ -36,8 +134,381 @@
       </item>
     
       <item>
-        <title>ssustack_installer</title>
-        <description>&lt;h2 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h2&gt;
+        <title>[Docker] 도커 개요</title>
+        <description>&lt;hr /&gt;
+
+&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 개요&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. 도커란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. 가상머신과 컨테이너 비교&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. 도커의 특징&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_4&quot;&gt;   1.4. 도커의 구조 및 기능&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_5&quot;&gt;   1.5. 도커의 핵심 기술&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-도커-개요---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. 도커 개요&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커란?&lt;/strong&gt;   &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;Go 언어로 개발&lt;/strong&gt;된 컨테이너 기반의 오픈소스 가상화 플랫폼&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;다양한 OS 환경, 여러 프로그램들을 화물에 비유하여 컨테이너에 실어 여러 곳으로 운반하여 배포한다는 개념&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;가상머신과 컨테이너 비교&lt;/strong&gt;    &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/vm_vs_container.png&quot; alt=&quot;vm_vs_container&quot; width=&quot;760&quot; height=&quot;330&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] 컨테이너(왼쪽) vs 가상머신(오른쪽)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;가상머신(Virtual Machine)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS의 자원을 할당받아&lt;/code&gt; 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;속도저하&lt;/code&gt;의 단점이 존재&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;컨테이너(Container)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS를 공유&lt;/code&gt;하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립적으로 실행&lt;/code&gt;되어 &lt;code class=&quot;highlighter-rouge&quot;&gt;가벼움&lt;/code&gt;&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;VM과의 가장 큰 차이점은 &lt;code class=&quot;highlighter-rouge&quot;&gt;프로세스를 격리&lt;/code&gt; 하는 것&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;오버헤드가 적음&lt;/code&gt;&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;p&gt;즉, 가상 머신은 전체 하드웨어 서버를 추상화하는 반면 컨테이너는 운영 체제 커널을 추상화하여 &lt;strong&gt;훨씬 더 빠르고 가벼운 인스턴스를 제공&lt;/strong&gt;합니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커의 특징&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;서버를 코드 형태로 정의&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;strong&gt;IaC(Infrastructure as Code)&lt;/strong&gt;&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;이미지를 제작할 때 코드 형태로 정의하여 작성 가능&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;이식성(portability)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;개발 환경, 테스트 환경, 서비스 환경을 모두 동일하게 사용 가능&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;도커 컨테이너의 기반이 되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지&lt;/code&gt;가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;상호운용성(interoperability)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;다양한 벤더의 시스템 및 오픈소스와 연계하여 사용 가능&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본으로 탑재&lt;/code&gt;&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;AWS에서도 Amazon EC2 Container Service를 통해 도커 실행 환경 운영 서비스를 제공&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커의 구조 및 기능&lt;/strong&gt;   &lt;a name=&quot;list1_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/docker_architecture.png&quot; alt=&quot;docker_architecture&quot; width=&quot;760&quot; height=&quot;390&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] 도커 아키텍처&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;도커 데몬(Docker Deamon)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;strong&gt;도커 API 요청을 지속적으로 수신 및 처리&lt;/strong&gt;&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;도커 이미지, 컨테이너, 네트워크 및 볼륨을 관리하는 지속적인 백그라운드 프로세스&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;도커 클라이언트(Docker Client)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;strong&gt;도커 데몬과 상호 작용&lt;/strong&gt;하기 위한 CLI(Docker)&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;컨테이너 인스턴스 관리 방법이 단순함&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker commit, docker export, docker import 등의 도커 관련 명령이 존재&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;도커 레지스트리(Docker Registry)&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지를 저장&lt;/code&gt;하기 위해 사용&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Hub&lt;/code&gt;라는 퍼블릭 레지스트리로 설정되어 있고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Harbor&lt;/code&gt;와 같은 프라이빗 레지스트리도 사용 가능&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;도커 객체&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;이미지&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;컨테이너를 생성하기 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Read Only&lt;/code&gt; 템플릿&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;을 통해 빌드 가능&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;새로운 컨테이너를 생성하면 변경된 레이어만 따로 체크하는 형태로 가볍고 빠름&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;컨테이너&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;이미지의 실행 형태, 이미지를 실행하여 메모리에 올려 동작하는 것&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 컨테이너&lt;/code&gt;에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 애플리케이션&lt;/code&gt;만 실행하는 것을 &lt;strong&gt;권장&lt;/strong&gt;&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;기본적으로 호스트 머신의 네트워크 연결을 통해 외부 네트워크와 연결 가능&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;네트워크&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;격리 되어 동작하는 모든 컨테이너가 통신하기 위한 통로로 사용되며 다음의 5 가지 네트워크 드라이버를 사용&lt;/p&gt;
+
+                &lt;p&gt;1) Bridge&lt;/p&gt;
+
+                &lt;p&gt;컨테이너의 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본 네트워크 드라이버&lt;/code&gt;입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.&lt;/p&gt;
+
+                &lt;p&gt;2) Host&lt;/p&gt;
+
+                &lt;p&gt;이 드라이버는 도커 컨테이너와 도커 호스트 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;네트워크 격리를 제거&lt;/code&gt;합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.&lt;/p&gt;
+
+                &lt;p&gt;3) Overlay&lt;/p&gt;
+
+                &lt;p&gt;이 네트워크는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Swarm 서비스가 서로 통신&lt;/code&gt; 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.&lt;/p&gt;
+
+                &lt;p&gt;4) None&lt;/p&gt;
+
+                &lt;p&gt;이 드라이버는 &lt;strong&gt;모든 네트워킹을 비활성화&lt;/strong&gt;합니다.&lt;/p&gt;
+
+                &lt;p&gt;5) macvlan&lt;/p&gt;
+
+                &lt;p&gt;이 드라이버는 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨테이너에 MAC 주소를 할당&lt;/code&gt;하여 물리 장치처럼 보이게합니다. &lt;strong&gt;Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅&lt;/strong&gt;합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;서비스&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;여러가지 도커 데몬들로 구성 및 확장 가능&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Swarm&lt;/code&gt;과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커의 핵심 기술&lt;/strong&gt;   &lt;a name=&quot;list1_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;네임스페이스(Namespace)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;strong&gt;서로가 충돌하지 않는 독립된 컨테이너를 제공하기 위해&lt;/strong&gt; 네임스페이스라는 기술을 적용&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;리눅스에서는 다음 6 가지 네임스페이스를 지원&lt;/p&gt;
+
+            &lt;p&gt;1) mnt (파일시스템 마운트): 호스트 파일시스템에 구애받지 않고 독립적으로 파일시스템을 마운트하거나 언마운트 가능&lt;/p&gt;
+
+            &lt;p&gt;2) pid (프로세스): 독립적인 프로세스 공간을 할당&lt;/p&gt;
+
+            &lt;p&gt;3) net (네트워크): namespace간에 network 충돌 방지 (중복 포트 바인딩 등)&lt;/p&gt;
+
+            &lt;p&gt;4) ipc (SystemV IPC): 프로세스간의 독립적인 통신통로 할당&lt;/p&gt;
+
+            &lt;p&gt;5) uts (hostname): 독립적인 hostname 할당&lt;/p&gt;
+
+            &lt;p&gt;6) user (UID): 독립적인 사용자 할당&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;cgroups(Control Groups)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;&lt;strong&gt;리소스에 대한 제어를 가능&lt;/strong&gt;하게 해주는 리눅스 커널의 기능&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;도커 엔진(Docker Engine)이 사용 가능한 하드웨어 자원을 공유하도록 허용하거나 선택적으로 제한할 수 있음&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;다음 리소스를 제어할 수 있음&lt;/p&gt;
+
+            &lt;p&gt;1) 메모리&lt;/p&gt;
+
+            &lt;p&gt;2) CPU&lt;/p&gt;
+
+            &lt;p&gt;3) I/O&lt;/p&gt;
+
+            &lt;p&gt;4) 네트워크&lt;/p&gt;
+
+            &lt;p&gt;5) device 노드(/dev/)&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Sep 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/cccr/2020/09/01/docker1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/01/docker1.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>cccr</category>
+        
+        <category>docker</category>
+        
+        <category>vm</category>
+        
+        
+        <category>Cccr</category>
+        
+      </item>
+    
+      <item>
+        <title>[Project]ssustack_installer</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;본 프로젝트는 숭실대학교에서 김명호 교수님의 지도하에 진행 된 프로젝트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h2&gt;
 
 &lt;p&gt;ssustack_installer 프로젝트는 ssustack 설치를 웹 브라우저에서 더욱 쉽게 설치할 수 있도록 도와줍니다.&lt;/p&gt;
 
@@ -58,11 +529,15 @@
 
 &lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
 
+&lt;p&gt;다음 설명할 설치 방법은 모든 노드가 Ubuntu 18.04 운영체제만 설치된 환경이라 가정하고 진행해야 할 작업을 설명합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h4 id=&quot;1-ssustack--ssustack_installer-클론&quot;&gt;1. ssustack &amp;amp; ssustack_installer 클론&lt;/h4&gt;
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -77,7 +552,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -96,7 +571,7 @@ down ip link set dev $IFACE down
 
 &lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -115,7 +590,7 @@ iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
 
 &lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -132,7 +607,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
 $ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -200,18 +675,24 @@ $ ./app.sh
         
         <category>ssustack</category>
         
+        <category>installer</category>
+        
         
         <category>Project</category>
         
       </item>
     
       <item>
-        <title>ssustack</title>
-        <description>&lt;h2 id=&quot;ssustack&quot;&gt;ssustack&lt;/h2&gt;
+        <title>[Project]ssustack</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;본 프로젝트는 숭실대학교에서 김명호 교수님, 김영종 교수님의 지도하에 진행되었습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌다.&lt;/p&gt;
+&lt;h2 id=&quot;ssustack&quot;&gt;ssustack&lt;/h2&gt;
 
-&lt;p&gt;OpenStack에서 사용할 기본적인 설정을 정의한 후에 설치스크립트를 이용하여 간편하게 설치가 가능하다.&lt;/p&gt;
+&lt;p&gt;ssustack 프로젝트는 Ubuntu 환경에서 OpenStack을 자동으로 설치하여 클라우드 컴퓨팅을 손쉽게 구축할 수 있도록 만들어졌습니다.&lt;/p&gt;
+
+&lt;p&gt;OpenStack에서 사용할 기본적인 설정을 정의한 후에 설치스크립트를 이용하여 간편하게 설치가 가능합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -253,17 +734,21 @@ $ ./app.sh
 
 &lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
 
+&lt;p&gt;다음 설명할 설치 방법은 모든 노드가 Ubuntu 18.04 운영체제만 설치된 환경이라 가정하고 진행해야 할 작업을 설명합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h4 id=&quot;1-ssustack-클론&quot;&gt;1. ssustack 클론&lt;/h4&gt;
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사한다.&lt;/p&gt;
+&lt;p&gt;생성할 유저의 패스워드를 설정하여 ssustack 유저가 생성되면 ssustack 폴더를 ssustack 유저의 홈 디렉토리로 복사합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -271,7 +756,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -286,7 +771,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
 $ vi local.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -294,14 +779,14 @@ $ vi local.conf
 
 &lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -319,14 +804,14 @@ $ ./compute_3.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 함..&lt;/p&gt;
+  &lt;p&gt;현재는 각 스크립트를 직접 수정하여 rbd_secret_uuid 값을 수동으로 맞춰주어야 합니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -335,7 +820,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -344,7 +829,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
@@ -365,7 +850,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
       </item>
     
       <item>
-        <title>naver-news-scraper</title>
+        <title>[Project]naver-news-scraper</title>
         <description>&lt;h1 id=&quot;naver-news-scraper&quot;&gt;naver-news-scraper&lt;/h1&gt;
 
 &lt;p&gt;nn-scraper 프로젝트는 원하는 키워드에 해당하는 네이버 뉴스 속보를 스크랩하여 텔레그램 봇 혹은 카카오톡 봇으로 알림받을 수 있습니다.&lt;/p&gt;
@@ -388,7 +873,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;p&gt;naver-news-scraper 소스를 다운로드 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -398,7 +883,7 @@ $ cd naver-news-scraper
 
 &lt;p&gt;nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -466,107 +951,14 @@ $ pip install -r requirements.txt
       </item>
     
       <item>
-        <title>파이썬 크롤링</title>
-        <description>&lt;h3 id=&quot;크롤링-관련-용어-정리&quot;&gt;크롤링 관련 용어 정리&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;스크랩핑(scraping) : 데이터를 수집하는 행위&lt;/li&gt;
-  &lt;li&gt;크롤링(Crawling) : 조직적 자동화된 방법으로 월드와이드웹을 탐색 하는 것&lt;/li&gt;
-  &lt;li&gt;파싱(parsing) : 문장 혹은 문서를 구성 성분으로 분해하고 위계관계를 분석하여 문장의 구조를 결정하는 것&lt;/li&gt;
-&lt;/ul&gt;
+        <title>[Patent]히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체</title>
+        <description>&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;히스토그램을 이용한 고속 유사도 측정 방법 및 이를 수행할 수 있는 유사도 측정 장치가 제공된다. 본 발명의 실시례에 따른 고속 유사도 측정 방법은 유사도 측정 대상 영상의 히스토그램을 생성하는 히스토그램 생성 단계, 상기 히스토그램을 기반으로 상기 유사도 측정 대상 영상의 이진수 열을 생성하는 메타데이터 생성 단계, 메타데이터 데이터베이스로부터 기준 영상의 이진수 열을 획득하여 상기 유사도 측정 대상 영상의 이진수 열과 매칭(matching)하는 매칭 단계 및 상기 매칭 결과를 출력하는 출력 단계를 포함한다.&lt;/p&gt;
 
-&lt;p&gt;os 모듈 - 시스템 명령어를 실행시킬 수 있는 모듈&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;h3 id=&quot;파이썬-크롤링에-사용되는-모듈&quot;&gt;파이썬 크롤링에 사용되는 모듈&lt;/h3&gt;
-
-&lt;h3 id=&quot;1-requests&quot;&gt;1. requests&lt;/h3&gt;
-&lt;p&gt;requests 모듈은 Apache License 2.0에 따라 배포 된 HTTP 파이썬 라이브러리&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;$ pip install requests&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;2-beautifulsoup4&quot;&gt;2. BeautifulSoup4&lt;/h3&gt;
-&lt;p&gt;BeautifulSoup 모듈은 HTML과 XML을 파싱하는 데에 사용되는 파이썬 라이브러리&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;$ pip install bs4&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;3-selenium&quot;&gt;3. selenium&lt;/h3&gt;
-&lt;p&gt;selenium은 웹 애플리케이션 테스트를 위한 포터블 프레임워크&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;$ pip install selenium&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;사용할 브라우저의 드라이버를 설치
-https://chromedriver.storage.googleapis.com/index.html?path=83.0.4103.14/&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;from selenium import webdriver
-import time&lt;/p&gt;
-
-  &lt;p&gt;driver = webdriver.Chrome(‘chromedriver’)
-driver.get(“https://www.youtube.com/”)&lt;/p&gt;
-
-  &lt;p&gt;time.sleep(3)&lt;/p&gt;
-
-  &lt;p&gt;search = driver.find_element_by_xpath(‘//*[@id=”search”]’)&lt;/p&gt;
-
-  &lt;p&gt;search.send_keys(‘검색’)
-time.sleep(1)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;[1 to 50 게임 자동화]&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;num = 1&lt;/p&gt;
-
-  &lt;p&gt;def clickBtn():
-    global num
-    btns = driver.find_elements_by_xpath(‘//&lt;em&gt;[@id=”grid”]/div[&lt;/em&gt;]’)&lt;/p&gt;
-
-  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
-    print(btn.text, end='\t')
-    if btn.text == str(num):
-        btn.click()
-        prunt(true)
-        num += 1
-        return
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-
-  &lt;p&gt;while num &amp;lt;= 50:
-    clickBtn()&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;특수문자-치환&quot;&gt;특수문자 치환&lt;/h3&gt;
-&lt;p&gt;re.sub(‘[^0-9a-zA-Zr-힗]’, ‘’, title)&lt;/p&gt;
-
-&lt;h3 id=&quot;다운로드&quot;&gt;다운로드&lt;/h3&gt;
-&lt;p&gt;urlretrive(img_src, title + ‘.jpg’)&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 07 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/07/python_crawling.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/07/python_crawling.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>python</category>
-        
-        <category>crawling</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체</title>
-        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 특허증&lt;/a&gt;&lt;/p&gt;
 
@@ -633,14 +1025,22 @@ time.sleep(1)&lt;/p&gt;
         
         <category>patent</category>
         
+        <category>histogram</category>
+        
         
         <category>Patent</category>
         
       </item>
     
       <item>
-        <title>타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체</title>
-        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+        <title>[Patent]타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체</title>
+        <description>&lt;h3 id=&quot;abstact&quot;&gt;Abstact&lt;/h3&gt;
+
+&lt;p&gt;타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법을 개시한다. 사용자 단말로부터 수신한 ID와 패스워드를 이용하여 웹 서버에서 사용자 인증을 수행하는 사용자 인증 시스템에 있어서, 상기 사용자 단말은, 사용자로부터 ID 및 패스워드를 입력받는 입력부; 상기 입력부를 통해 패스워드를 입력받을 때, 패스워드를 구성하는 각각의 문자에 대해 키 입력이 시작되는 시간 및 키 입력이 종료되는 시간, 마지막 엔터키가 입력되는 시간을 감지하여 키 입력 정보를 생성하는 키 입력 정보 생성부; 및 상기 입력부를 통해 입력받은 ID 및 패스워드와 상기 키 입력 정보 생성부에서 생성된 키 입력 정보를 상기 웹 서버로 전송하는 전송부;를 포함하고, 상기 웹 서버는, 상기 사용자 단말로부터 ID 및 패스워드와 키 입력 정보를 수신하는 수신부; 사용자별로 사용자 인증에 필요한 ID 및 패스워드와 타이핑 속도 허용 범위를 저장하는 사용자 인증 DB; 상기 수신한 키 입력 정보를 이용하여 패스워드를 구성하는 문자열의 입력에 대한 타이핑 속도를 산출하는 타이핑 속도 산출부; 상기 수신한 ID 및 패스워드와 상기 사용자 인증 DB에 저장되어 있는 ID 및 패스워드를 비교하여 사용자 인증을 수행하는 제1사용자 인증부; 및 상기 제1사용자 인증부에서 사용자 인증에 성공하면, 상기 산출된 타이핑 속도와 상기 ID에 매핑되어 상기 사용자 인증 DB에 저장되어 있는 타이핑 속도 허용 범위를 비교하여 사용자 인증을 수행하는 제2사용자 인증부;를 포함하는 것이 바람직하다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 특허증&lt;/a&gt;&lt;/p&gt;
 
@@ -707,14 +1107,26 @@ time.sleep(1)&lt;/p&gt;
         
         <category>patent</category>
         
+        <category>authentication</category>
+        
+        <category>tps</category>
+        
         
         <category>Patent</category>
         
       </item>
     
       <item>
-        <title>클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현</title>
-        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
+        <title>[Thesis]클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현</title>
+        <description>&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;클라우드 컴퓨팅은 컴퓨팅 자원을 유연하게 사용할 수 있어 프로비저닝이 빠르고 편리하며 확장성이 높은 등 많은 장점을 제공하고 있다. 하지만 해킹을 통한 중요 데이터가 유출되는 사고가 발생한 사례들이 많아 클라우드 보안 위협은 꾸준히 제기되고 있다. 그 중에서도 클라우드 인증에 사용되는 토큰과 이 토큰의 정보를 보호하기 위해 사용되는 암호 키를 관리하는 것은 보안에 있어 항상 중요한 문제이다. 암호 키가 재대로 관리되지 않으면 무단 접근을 허용하여 조직 혹은 사용자에게 심각한 피해가 생기게 된다. 보안 강도가 높은 암호화 알고리즘을 사용하더라도 키가 노출된다면 자유롭게 데이터를 복호화할 수 있게 되기 때문에 키 관리는 매우 중요하다. 기존에는 대부분 중앙집중식으로 키를 관리하여 확장성이 낮고 분산된 키 관리 서비스를 제공하지 않아 항상 잠재적인 단일 장애점의 문제를 갖고 있다. 그리고 키 보안 공급 업체를 통해 암호 키를 관리하더라도 단일 보안 위반 상태가 된다.&lt;/p&gt;
+
+&lt;p&gt;본 논문에서는 프라이빗 블록체인을 구축하여 허가형 비공개 네트워크에서 안전하게 암호 키를 분산 저장 및 관리하는 환경을 통해 클라우드 컴퓨팅 인증을 수행하는 시스템을 제안한다. 제안하는 시스템은 기존에 항상 잠재적으로 존재해왔던 단일 장애점의 문제를 해결하고 분산 저장을 통해 확장성을 높일 수 있다. 제안하는 시스템을 구현한 결과 기존의 키 관리 방식에 비해 성능에 큰 차이가 없고 기본적인 키 관리 요구사항들을 충족시키면서 단일 장애점의 문제를 해결했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 논문 제목&lt;/a&gt;&lt;/p&gt;
 
@@ -927,8 +1339,8 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
+&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -960,7 +1372,7 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
@@ -979,8 +1391,8 @@ _＼_Tom＼__&lt;/p&gt;
 &lt;p&gt;AUR license: /aur/license/:packageName.svg&lt;/p&gt;
 </description>
         <pubDate>Sat, 07 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/sample/2020/03/07/test.html</link>
-        <guid isPermaLink="true">http://localhost:4000/sample/2020/03/07/test.html</guid>
+        <link>http://localhost:4000/sample/2020/03/07/sample.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sample/2020/03/07/sample.html</guid>
         
         <category>Son</category>
         
@@ -995,14 +1407,14 @@ _＼_Tom＼__&lt;/p&gt;
         <title>code snippet test</title>
         <description>&lt;p&gt;This is a raw snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
 123
 This is a text snippet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This is a JavaScript snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
 const minus = (a, b) =&amp;gt; a - b
 
 console.log(add(100,200))  // 300
@@ -1011,7 +1423,7 @@ console.log(minus(100,200))  // -100
 
 &lt;p&gt;This is a Python snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
     print(&quot;hello world!&quot;)
 
 say_hello()   // &quot;hello world!&quot;
@@ -1042,7 +1454,7 @@ say_hello()   // &quot;hello world!&quot;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
 
     &lt;p&gt;&lt;!-- ![edit](/crisis513.github.io/static/assets/img/blog/3steps/edit.gif) --&gt;
  &lt;img src=&quot;/crisis513.github.io/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
@@ -1061,10 +1473,10 @@ say_hello()   // &quot;hello world!&quot;
         &lt;p&gt;&lt;strong&gt;_data/index/&lt;/strong&gt;: edit sections’ data to yours at index page, please notice comment at each file.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;Go to repo’s settings panel, config &lt;strong&gt;GitHub Pages&lt;/strong&gt; section to make sure website is released.&lt;/p&gt;
@@ -1076,7 +1488,7 @@ say_hello()   // &quot;hello world!&quot;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
+&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
 
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
@@ -1090,6 +1502,105 @@ say_hello()   // &quot;hello world!&quot;
         
         
         <category>Sample</category>
+        
+      </item>
+    
+      <item>
+        <title>파이썬 크롤링</title>
+        <description>&lt;h3 id=&quot;크롤링-관련-용어-정리&quot;&gt;크롤링 관련 용어 정리&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;스크랩핑(scraping) : 데이터를 수집하는 행위&lt;/li&gt;
+  &lt;li&gt;크롤링(Crawling) : 조직적 자동화된 방법으로 월드와이드웹을 탐색 하는 것&lt;/li&gt;
+  &lt;li&gt;파싱(parsing) : 문장 혹은 문서를 구성 성분으로 분해하고 위계관계를 분석하여 문장의 구조를 결정하는 것&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;os 모듈 - 시스템 명령어를 실행시킬 수 있는 모듈&lt;/p&gt;
+
+&lt;h3 id=&quot;파이썬-크롤링에-사용되는-모듈&quot;&gt;파이썬 크롤링에 사용되는 모듈&lt;/h3&gt;
+
+&lt;h3 id=&quot;1-requests&quot;&gt;1. requests&lt;/h3&gt;
+&lt;p&gt;requests 모듈은 Apache License 2.0에 따라 배포 된 HTTP 파이썬 라이브러리&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;$ pip install requests&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;2-beautifulsoup4&quot;&gt;2. BeautifulSoup4&lt;/h3&gt;
+&lt;p&gt;BeautifulSoup 모듈은 HTML과 XML을 파싱하는 데에 사용되는 파이썬 라이브러리&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;$ pip install bs4&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;3-selenium&quot;&gt;3. selenium&lt;/h3&gt;
+&lt;p&gt;selenium은 웹 애플리케이션 테스트를 위한 포터블 프레임워크&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;$ pip install selenium&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;사용할 브라우저의 드라이버를 설치
+https://chromedriver.storage.googleapis.com/index.html?path=83.0.4103.14/&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;from selenium import webdriver
+import time&lt;/p&gt;
+
+  &lt;p&gt;driver = webdriver.Chrome(‘chromedriver’)
+driver.get(“https://www.youtube.com/”)&lt;/p&gt;
+
+  &lt;p&gt;time.sleep(3)&lt;/p&gt;
+
+  &lt;p&gt;search = driver.find_element_by_xpath(‘//*[@id=”search”]’)&lt;/p&gt;
+
+  &lt;p&gt;search.send_keys(‘검색’)
+time.sleep(1)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;[1 to 50 게임 자동화]&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;num = 1&lt;/p&gt;
+
+  &lt;p&gt;def clickBtn():
+    global num
+    btns = driver.find_elements_by_xpath(‘//&lt;em&gt;[@id=”grid”]/div[&lt;/em&gt;]’)&lt;/p&gt;
+
+  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
+    print(btn.text, end='\t')
+    if btn.text == str(num):
+        btn.click()
+        prunt(true)
+        num += 1
+        return
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;p&gt;while num &amp;lt;= 50:
+    clickBtn()&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;특수문자-치환&quot;&gt;특수문자 치환&lt;/h3&gt;
+&lt;p&gt;re.sub(‘[^0-9a-zA-Zr-힗]’, ‘’, title)&lt;/p&gt;
+
+&lt;h3 id=&quot;다운로드&quot;&gt;다운로드&lt;/h3&gt;
+&lt;p&gt;urlretrive(img_src, title + ‘.jpg’)&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 01 Jan 2000 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2000/01/01/python_crawling.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2000/01/01/python_crawling.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>python</category>
+        
+        <category>crawling</category>
+        
         
       </item>
     

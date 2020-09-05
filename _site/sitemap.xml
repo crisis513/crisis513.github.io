@@ -2,7 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://localhost:4000/cccr/2020/06/22/network.html</loc>
+        <loc>http://localhost:4000/cccr/2020/09/01/docker2.html</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/cccr/2020/09/01/docker1.html</loc>
     </url>
 
     <url>
@@ -18,10 +22,6 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/2020/04/07/python_crawling.html</loc>
-    </url>
-
-    <url>
         <loc>http://localhost:4000/patent/2020/04/03/patent2.html</loc>
     </url>
 
@@ -34,7 +34,7 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/sample/2020/03/07/test.html</loc>
+        <loc>http://localhost:4000/sample/2020/03/07/sample.html</loc>
     </url>
 
     <url>
@@ -43,6 +43,10 @@
 
     <url>
         <loc>http://localhost:4000/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/2000/01/01/python_crawling.html</loc>
     </url>
 
 
@@ -80,10 +84,6 @@
 
     <url>
         <loc>http://localhost:4000/project/</loc>
-    </url>
-
-    <url>
-        <loc>http://localhost:4000/python/</loc>
     </url>
 
     <url>

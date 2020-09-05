@@ -21,9 +21,9 @@
   i18n: bkms
   gh_user: crisis513
   repo: crisis513
-  url: http://git.dotstack.io/crisis513/bkms
+  url: http://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&control_no=648f5d72e457c232ffe0bdc3ef48d419
   img: /static/assets/img/landing/bkms.png
-  desc: BKMS(Blockchain-based Key Management System)은 손한기의 석사학위논문 작성에 개발되었습니다. http://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&control_no=648f5d72e457c232ffe0bdc3ef48d419
+  desc: BKMS(Blockchain-based Key Management System)은 손한기의 석사학위논문 작성에 개발되었습니다. 
 
 - name: naver-news-scraper
   i18n: naver-news-scraper
