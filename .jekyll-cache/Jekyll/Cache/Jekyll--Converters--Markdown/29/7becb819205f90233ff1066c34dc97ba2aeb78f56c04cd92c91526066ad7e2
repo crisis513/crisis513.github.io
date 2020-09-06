@@ -1,0 +1,121 @@
+I"�<hr />
+
+<h3 id="목차">목차</h3>
+
+<p><a href="#list1">1. 도커 설치</a></p>
+
+<p><a href="#list1_1">   1.1. 실습 환경</a></p>
+
+<p><a href="#list1_2">   1.2. 도커 설치 실습</a></p>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="1-도커-설치---"><span style="color:purple"><strong>1. 도커 설치</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>실습 환경</strong> <a name="list1_1"></a></p>
+
+    <blockquote>
+      <p>※ 본 포스트를 포함한 앞으로의 도커 관련 실습 환경은 다음과 같은 환경에서 진행됩니다.</p>
+    </blockquote>
+
+    <p>Host OS인 Ubuntu에서 Virtualbox를 통해 CentOS VM을 생성 및 접속하여 진행했습니다.</p>
+
+    <ul>
+      <li>
+        <p><strong>Host OS - Ubuntu 18.04 LTS</strong></p>
+
+        <ul>
+          <li>
+            <p>IP : 192.168.56.1</p>
+          </li>
+          <li>
+            <p>Username : son</p>
+          </li>
+          <li>
+            <p>Hostname : ubuntu</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Guest OS - CentOS 7.8 (on Virtualbox)</strong></p>
+
+        <ul>
+          <li>
+            <p>IP : 192.168.56.100</p>
+          </li>
+          <li>
+            <p>Username : user</p>
+          </li>
+          <li>
+            <p>Hostname : docker</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>도커 설치 실습</strong>    <a name="list1_2"></a></p>
+
+    <ol>
+      <li>
+        <p>Docker CE 설치</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils <span class="se">\</span>
+ <span class="o">&gt;</span> device-mapper-persistent-data <span class="se">\</span>
+ <span class="o">&gt;</span> lvm2
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+ <span class="o">&gt;</span> <span class="nt">--add-repo</span><span class="o">=</span><span class="s2">"https://download.docker.com/linux/centos/docker-ce.repo"</span>
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>서비스 실행 및 활성화</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl start docker
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>docker
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>docker 그룹 지정</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span>
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">exit
+
+ </span>son@ubuntu:~<span class="nv">$ </span>ssh user@192.168.56.100
+</code></pre></div>        </div>
+
+        <p>현재 사용 중인 유저에 docker 그룹을 추가하여 권한 상승(sudo) 없이도 docker 명령을 사용할 수 있도록 해줍니다.</p>
+      </li>
+      <li>
+        <p>docker 버전 확인</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker version
+ Client: Docker Engine - Community
+     Version:           19.03.12
+     API version:       1.40
+     Go version:        go1.13.10
+     Git commit:        48a66213fe
+     Built:             Mon Jun 22 15:46:54 2020
+     OS/Arch:           linux/amd64
+     Experimental:      <span class="nb">false</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>hello world 컨테이너 실행</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run hello-world
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+</ul>
+:ET

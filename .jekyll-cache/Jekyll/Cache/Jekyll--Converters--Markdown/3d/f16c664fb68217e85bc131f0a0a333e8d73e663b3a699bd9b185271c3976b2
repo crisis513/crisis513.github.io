@@ -1,0 +1,470 @@
+I"�@<hr />
+
+<h3 id="목차">목차</h3>
+
+<p><a href="#list1">1. 도커 개요</a></p>
+
+<p><a href="#list1_1">   1.1. 도커란?</a></p>
+
+<p><a href="#list1_2">   1.2. 가상머신과 컨테이너 비교</a></p>
+
+<p><a href="#list1_3">   1.3. 도커의 특징</a></p>
+
+<p><a href="#list1_4">   1.4. 도커의 구조 및 기능</a></p>
+
+<p><a href="#list1_5">   1.5. 도커의 핵심 기술</a></p>
+
+<p><a href="#list2">2. 도커 설치</a></p>
+
+<p><a href="#list2_1">   2.1. 실습 환경</a></p>
+
+<p><a href="#list2_2">   2.2. 도커 설치 실습</a></p>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="1-도커-개요---"><span style="color:purple"><strong>1. 도커 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커란?</strong>   <a name="list1_1"></a></p>
+
+    <ul>
+      <li>
+        <p><strong>Go 언어로 개발</strong>된 컨테이너 기반의 오픈소스 가상화 플랫폼</p>
+      </li>
+      <li>
+        <p>다양한 OS 환경, 여러 프로그램들을 화물에 비유하여 컨테이너에 실어 여러 곳으로 운반하여 배포한다는 개념</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>가상머신과 컨테이너 비교</strong>    <a name="list1_2"></a></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/vm_vs_container.png" alt="vm_vs_container" width="760" height="330" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] 컨테이너(왼쪽) vs 가상머신(오른쪽)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <ol>
+      <li>
+        <p>가상머신(Virtual Machine)</p>
+
+        <ul>
+          <li>
+            <p><code class="highlighter-rouge">Host OS의 자원을 할당받아</code> 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식</p>
+          </li>
+          <li>
+            <p>Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 <code class="highlighter-rouge">속도저하</code>의 단점이 존재</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>컨테이너(Container)</p>
+
+        <ul>
+          <li>
+            <p><code class="highlighter-rouge">Host OS를 공유</code>하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 <code class="highlighter-rouge">독립적으로 실행</code>되어 <code class="highlighter-rouge">가벼움</code></p>
+          </li>
+          <li>
+            <p>VM과의 가장 큰 차이점은 <code class="highlighter-rouge">프로세스를 격리</code> 하는 것</p>
+          </li>
+          <li>
+            <p>독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 <code class="highlighter-rouge">오버헤드가 적음</code></p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>즉, 가상 머신은 전체 하드웨어 서버를 추상화하는 반면 컨테이너는 운영 체제 커널을 추상화하여 <strong>훨씬 더 빠르고 가벼운 인스턴스를 제공</strong>합니다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커의 특징</strong>   <a name="list1_3"></a></p>
+
+    <ol>
+      <li>
+        <p>서버를 코드 형태로 정의</p>
+
+        <ul>
+          <li>
+            <p><strong>IaC(Infrastructure as Code)</strong></p>
+          </li>
+          <li>
+            <p>이미지를 제작할 때 코드 형태로 정의하여 작성 가능</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>이식성(portability)</strong></p>
+
+        <ul>
+          <li>
+            <p>개발 환경, 테스트 환경, 서비스 환경을 모두 동일하게 사용 가능</p>
+          </li>
+          <li>
+            <p>도커 컨테이너의 기반이 되는 <code class="highlighter-rouge">도커 이미지</code>가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>상호운용성(interoperability)</strong></p>
+
+        <ul>
+          <li>
+            <p>다양한 벤더의 시스템 및 오픈소스와 연계하여 사용 가능</p>
+          </li>
+          <li>
+            <p>예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 <code class="highlighter-rouge">기본으로 탑재</code></p>
+          </li>
+          <li>
+            <p>AWS에서도 Amazon EC2 Container Service를 통해 도커 실행 환경 운영 서비스를 제공</p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커의 구조 및 기능</strong>   <a name="list1_4"></a></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/docker_architecture.png" alt="docker_architecture" width="760" height="390" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] 도커 아키텍처</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <ol>
+      <li>
+        <p><strong>도커 데몬(Docker Deamon)</strong></p>
+
+        <ul>
+          <li>
+            <p><strong>도커 API 요청을 지속적으로 수신 및 처리</strong></p>
+          </li>
+          <li>
+            <p>도커 이미지, 컨테이너, 네트워크 및 볼륨을 관리하는 지속적인 백그라운드 프로세스</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>도커 클라이언트(Docker Client)</strong></p>
+
+        <ul>
+          <li>
+            <p><strong>도커 데몬과 상호 작용</strong>하기 위한 CLI(Docker)</p>
+          </li>
+          <li>
+            <p>컨테이너 인스턴스 관리 방법이 단순함</p>
+          </li>
+          <li>
+            <p>docker commit, docker export, docker import 등의 도커 관련 명령이 존재</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>도커 레지스트리(Docker Registry)</strong></p>
+
+        <ul>
+          <li>
+            <p><code class="highlighter-rouge">도커 이미지를 저장</code>하기 위해 사용</p>
+          </li>
+          <li>
+            <p>기본적으로 <code class="highlighter-rouge">Docker Hub</code>라는 퍼블릭 레지스트리로 설정되어 있고 <code class="highlighter-rouge">Harbor</code>와 같은 프라이빗 레지스트리도 사용 가능</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>도커 객체</strong></p>
+
+        <ul>
+          <li>
+            <p>이미지</p>
+
+            <ul>
+              <li>
+                <p>컨테이너를 생성하기 위한 <code class="highlighter-rouge">Read Only</code> 템플릿</p>
+              </li>
+              <li>
+                <p>도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 <code class="highlighter-rouge">Dockerfile</code>을 통해 빌드 가능</p>
+              </li>
+              <li>
+                <p>새로운 컨테이너를 생성하면 변경된 레이어만 따로 체크하는 형태로 가볍고 빠름</p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>컨테이너</p>
+
+            <ul>
+              <li>
+                <p>이미지의 실행 형태, 이미지를 실행하여 메모리에 올려 동작하는 것</p>
+              </li>
+              <li>
+                <p><code class="highlighter-rouge">하나의 컨테이너</code>에는 <code class="highlighter-rouge">하나의 애플리케이션</code>만 실행하는 것을 <strong>권장</strong></p>
+              </li>
+              <li>
+                <p>기본적으로 호스트 머신의 네트워크 연결을 통해 외부 네트워크와 연결 가능</p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>네트워크</p>
+
+            <ul>
+              <li>
+                <p>격리 되어 동작하는 모든 컨테이너가 통신하기 위한 통로로 사용되며 다음의 5 가지 네트워크 드라이버를 사용</p>
+
+                <p>1) Bridge</p>
+
+                <p>컨테이너의 <code class="highlighter-rouge">기본 네트워크 드라이버</code>입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.</p>
+
+                <p>2) Host</p>
+
+                <p>이 드라이버는 도커 컨테이너와 도커 호스트 간의 <code class="highlighter-rouge">네트워크 격리를 제거</code>합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.</p>
+
+                <p>3) Overlay</p>
+
+                <p>이 네트워크는 <code class="highlighter-rouge">Swarm 서비스가 서로 통신</code> 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.</p>
+
+                <p>4) None</p>
+
+                <p>이 드라이버는 <strong>모든 네트워킹을 비활성화</strong>합니다.</p>
+
+                <p>5) macvlan</p>
+
+                <p>이 드라이버는 <code class="highlighter-rouge">컨테이너에 MAC 주소를 할당</code>하여 물리 장치처럼 보이게합니다. <strong>Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅</strong>합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.</p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>서비스</p>
+
+            <ul>
+              <li>
+                <p>여러가지 도커 데몬들로 구성 및 확장 가능</p>
+              </li>
+              <li>
+                <p><code class="highlighter-rouge">Docker Swarm</code>과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커의 핵심 기술</strong>   <a name="list1_5"></a></p>
+
+    <ol>
+      <li>
+        <p>네임스페이스(Namespace)</p>
+
+        <ul>
+          <li>
+            <p><strong>서로가 충돌하지 않는 독립된 컨테이너를 제공하기 위해</strong> 네임스페이스라는 기술을 적용</p>
+          </li>
+          <li>
+            <p>리눅스에서는 다음 6 가지 네임스페이스를 지원</p>
+
+            <p>1) mnt (파일시스템 마운트): 호스트 파일시스템에 구애받지 않고 독립적으로 파일시스템을 마운트하거나 언마운트 가능</p>
+
+            <p>2) pid (프로세스): 독립적인 프로세스 공간을 할당</p>
+
+            <p>3) net (네트워크): namespace간에 network 충돌 방지 (중복 포트 바인딩 등)</p>
+
+            <p>4) ipc (SystemV IPC): 프로세스간의 독립적인 통신통로 할당</p>
+
+            <p>5) uts (hostname): 독립적인 hostname 할당</p>
+
+            <p>6) user (UID): 독립적인 사용자 할당</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>cgroups(Control Groups)</p>
+
+        <ul>
+          <li>
+            <p><strong>리소스에 대한 제어를 가능</strong>하게 해주는 리눅스 커널의 기능</p>
+          </li>
+          <li>
+            <p>도커 엔진(Docker Engine)이 사용 가능한 하드웨어 자원을 공유하도록 허용하거나 선택적으로 제한할 수 있음</p>
+          </li>
+          <li>
+            <p>다음 리소스를 제어할 수 있음</p>
+
+            <p>1) 메모리</p>
+
+            <p>2) CPU</p>
+
+            <p>3) I/O</p>
+
+            <p>4) 네트워크</p>
+
+            <p>5) device 노드(/dev/)</p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-도커-설치---"><span style="color:purple"><strong>1. 도커 설치</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>실습 환경</strong> <a name="list1_1"></a></p>
+
+    <blockquote>
+      <p>※ 본 포스트를 포함한 앞으로의 도커 관련 실습 환경은 다음과 같은 환경에서 진행됩니다.</p>
+    </blockquote>
+
+    <p>Host OS인 Ubuntu에서 Virtualbox를 통해 CentOS VM을 생성 및 접속하여 진행했습니다.</p>
+
+    <ul>
+      <li>
+        <p><strong>Host OS - Ubuntu 18.04 LTS</strong></p>
+
+        <ul>
+          <li>
+            <p>IP : 192.168.56.1</p>
+          </li>
+          <li>
+            <p>Username : son</p>
+          </li>
+          <li>
+            <p>Hostname : ubuntu</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Guest OS - CentOS 7.8 (on Virtualbox)</strong></p>
+
+        <ul>
+          <li>
+            <p>IP : 192.168.56.100</p>
+          </li>
+          <li>
+            <p>Username : user</p>
+          </li>
+          <li>
+            <p>Hostname : docker</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커 설치 실습</strong>    <a name="list1_2"></a></p>
+
+    <ol>
+      <li>
+        <p>Docker CE 설치</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils <span class="se">\</span>
+ <span class="o">&gt;</span> device-mapper-persistent-data <span class="se">\</span>
+ <span class="o">&gt;</span> lvm2
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+ <span class="o">&gt;</span> <span class="nt">--add-repo</span><span class="o">=</span><span class="s2">"https://download.docker.com/linux/centos/docker-ce.repo"</span>
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>서비스 실행 및 활성화</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl start docker
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>docker
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>docker 그룹 지정</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span>
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">exit
+
+ </span>son@ubuntu:~<span class="nv">$ </span>ssh user@192.168.56.100
+</code></pre></div>        </div>
+
+        <p>현재 사용 중인 유저에 docker 그룹을 추가하여 권한 상승(sudo) 없이도 docker 명령을 사용할 수 있도록 해줍니다.</p>
+      </li>
+      <li>
+        <p>docker 버전 확인</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker version
+ Client: Docker Engine - Community
+     Version:           19.03.12
+     API version:       1.40
+     Go version:        go1.13.10
+     Git commit:        48a66213fe
+     Built:             Mon Jun 22 15:46:54 2020
+     OS/Arch:           linux/amd64
+     Experimental:      <span class="nb">false</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>hello world 컨테이너 실행</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run hello-world
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+:ET

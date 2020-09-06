@@ -1,20 +1,20 @@
 # Welcome to Jekyll!
 
 # Website settings
-title: Son
-description: Son's blog,use Jekyll and github pages.
-keywords: son,blog,Jekyll,github
+title: s6i
+description: s6i's blog, use Jekyll and github pages.
+keywords: son,blog,Jekyll,github,s6i
 baseurl:  # if you have suburl as homepage like '/homepage', please change it to '/homepage' and your repo's name should be 'homepage'
-url: https://crisis513.github.io  # url should be 'http://<github_username>.github.io/homepage' as before
+url: https://crisis513.github.io/  # url should be 'http://<github_username>.github.io/homepage' as before
 # url: http://127.0.0.1:4000
 img_path: /crisis513.github.io/static/assets/img/blog  # url should be '/homepage/static/assets/img/blog' as before
 
 # author -- index page "about me" section
 author:  # change following line to your infomation.
-  name: Son  # Be used at blog posts' author.
-  first_name: Han Gi  # Be used at index page about me section.
-  last_name: Son  # Be used at index page about me section.
-  avatar: /static/assets/img/landing/avatar.jpg  # upload your avatar at directory and edit it.
+  name: s6i  # Be used at blog posts' author.
+  first_name: Han-gi  # Be used at index page about me section.
+  last_name: Son(Abbr. s6i) # Be used at index page about me section.
+  avatar: /static/assets/img/landing/me.jpg  # upload your avatar at directory and edit it.
   github_username: crisis513  # Leave blank if you don't have now
   linkedin_id:  # Leave blank if you don't have now
   facebook_username:   # Leave blank if you don't have now
@@ -26,7 +26,7 @@ author:  # change following line to your infomation.
   skill_icon2:
     - name: fa-linux
     - name: icon-apache
-  desc: 블로그 정리중..  # Describe yourself.
+  desc: "클라우드 컴퓨팅, 데브옵스, 보안 등 IT 인프라에 많은 관심을 갖고 배우며 기록하고 있습니다."  # Describe yourself.
 
 # comment
 disqus:  # if you wanna comment feature, go to https://disqus.com/ to get your configuration; if not, comment following two lines.
