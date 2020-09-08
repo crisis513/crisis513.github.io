@@ -2,19 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://localhost:4000/cccr/2020/09/03/docker3-copy.html</loc>
+        <loc>http://localhost:4000/infra/2020/09/02/docker3.html</loc>
     </url>
 
     <url>
-        <loc>http://localhost:4000/cccr/2020/09/02/docker3.html</loc>
+        <loc>http://localhost:4000/infra/2020/09/01/docker2.html</loc>
     </url>
 
     <url>
-        <loc>http://localhost:4000/cccr/2020/09/01/docker2.html</loc>
-    </url>
-
-    <url>
-        <loc>http://localhost:4000/cccr/2020/09/01/docker1.html</loc>
+        <loc>http://localhost:4000/infra/2020/09/01/docker1.html</loc>
     </url>
 
     <url>
@@ -67,10 +63,6 @@
     </url>
 
     <url>
-        <loc>http://localhost:4000/cccr/</loc>
-    </url>
-
-    <url>
         <loc>http://localhost:4000/static/css/custom.css</loc>
     </url>
 
@@ -84,6 +76,10 @@
 
     <url>
         <loc>http://localhost:4000/</loc>
+    </url>
+
+    <url>
+        <loc>http://localhost:4000/infra/</loc>
     </url>
 
     <url>

@@ -9,14 +9,6 @@
   img: /static/assets/img/landing/ssustack.png
   desc: ssustack 프로젝트는 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다.
 
-- name: ssustack_installer
-  i18n: ssustack_installer
-  gh_user: crisis513
-  repo: dotstack
-  url: http://git.dotstack.io/dotstack/ssustack_installer
-  img: /static/assets/img/landing/ssustack.png
-  desc: ssustack_installer 프로젝트는 ssustack의 CUI 기반 설치를 웹 브라우저에서 좀 더 쉽게 설치할 수 있도록 만들어졌습니다.
-
 - name: bkms
   i18n: bkms
   gh_user: crisis513

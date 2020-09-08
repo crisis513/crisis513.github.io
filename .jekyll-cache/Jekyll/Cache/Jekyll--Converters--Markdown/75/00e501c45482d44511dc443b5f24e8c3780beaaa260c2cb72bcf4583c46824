@@ -1,4 +1,4 @@
-I"�<blockquote>
+I"�<blockquote>
   <p>본 프로젝트는 숭실대학교에서 김명호 교수님의 지도하에 진행 된 프로젝트입니다.</p>
 </blockquote>
 
@@ -31,7 +31,7 @@
 
 <p>OpenStack 환경을 구성하는 모든 노드에서 진행합니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone http://git.dotstack.io/crisis513/ssustack.git
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -46,7 +46,7 @@ $ cp -r &lt;your_controller_path&gt;/ssustack/ .
 
 <p>모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/network/interfaces
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/network/interfaces
 auto &lt;INTERFACE_NAME_1&gt;
 iface &lt;INTERFACE_NAME_1&gt; inet static
     address &lt;PUBLIC_IP&gt;
@@ -65,7 +65,7 @@ down ip link set dev $IFACE down
 
 <p>Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/network/interfaces
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/network/interfaces
 auto &lt;INTERFACE_NAME_1&gt;
 iface &lt;INTERFACE_NAME_1&gt; inet static
     address &lt;PUBLIC_IP&gt;
@@ -84,7 +84,7 @@ iface &lt;INTERFACE_NAME_2&gt; inet static
 
 <p>위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/hosts
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -101,7 +101,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 <p>ssustack_installer는 Controller node에서 실행시킵니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ssustack_installer/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ssustack_installer/
 $ ./app.sh
 </code></pre></div></div>
 

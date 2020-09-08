@@ -5,358 +5,9 @@
     <description>s6i's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 06 Sep 2020 20:54:15 +0900</pubDate>
-    <lastBuildDate>Sun, 06 Sep 2020 20:54:15 +0900</lastBuildDate>
-    <generator>Jekyll v4.0.0</generator>
-    
-      <item>
-        <title>[Docker] 도커 이미지 제작</title>
-        <description>&lt;hr /&gt;
-
-&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 이미지 제작 &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. &lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/cccr/2020/09/01/docker1.html#list2&quot;&gt;실습환경참고&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;1-도커-네트워크---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. 도커 네트워크&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;네트워크 드라이버&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ol&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker network ls    → 네트워크 드라이버 목록 확인&lt;/p&gt;
-
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker network &lt;span class=&quot;nb&quot;&gt;ls
- &lt;/span&gt;NETWORK ID          NAME                DRIVER              SCOPE
- b3b9ff62fe49        bridge              bridge              &lt;span class=&quot;nb&quot;&gt;local
- &lt;/span&gt;aeca1add77f7        host                host                &lt;span class=&quot;nb&quot;&gt;local
- &lt;/span&gt;766cc2ddc934        none                null                &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;bridge&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;컨테이너가 사용하는 프라이빗 네트워크&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;같은 bridge에 연결되어 있으면 컨테이너의 IP주소로 통신 가능&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;외부와 통신도 가능함 → NAPT 통신 사용, 외부와 통신하기 위해서 포트포워딩 사용&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - bridge&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;ol&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker network create   → 네트워크 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect bridge
- → 해당 네트워크의 대역과 연결되어 있는 컨테이너의 목록 및 IP 주소 확인 가능 
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker network create &lt;span class=&quot;nt&quot;&gt;--subnet&lt;/span&gt; 172.18.0.0/16 &lt;span class=&quot;nt&quot;&gt;--gateway&lt;/span&gt; 172.18.0.1 net1
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker network &lt;span class=&quot;nb&quot;&gt;ls
- &lt;/span&gt;NETWORK ID          NAME                DRIVER              SCOPE
- b3b9ff62fe49        bridge              bridge              &lt;span class=&quot;nb&quot;&gt;local
- &lt;/span&gt;aeca1add77f7        host                host                &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;7854534b99b2      net1                bridge              &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;
- 766cc2ddc934        none                null                &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;net1을 사용하는 컨테이너 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os5 &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; net1 centos:latest
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os5 ip a s
- 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-     &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-     inet 127.0.0.1/8 scope host lo
-     valid_lft forever preferred_lft forever
- 12: eth0@if13: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default 
-     &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/ether 02:42:ac:12:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-     inet &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;172.18.0.2/16&lt;span class=&quot;k&quot;&gt;**&lt;/span&gt; brd 172.18.255.255 scope global eth0
-     valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;host&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;호스트에서 컨테이너의 네트워크 격리를 해제하여 호스트의 네트워크 정보를 공유해서 사용하는 방법&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - host&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web4 &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; host httpd:latest 
-  06f5be6f136862da2df9ee875c71167820eabd29c489c934b2834db859258762
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost
-  &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; host &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os6 &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; centos:latest
-  → 원래 호스트의 ip가 나옴
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker stop web4
-  web4
-
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; httpd 설치
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;httpd
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start httpd
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl status httpd
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost
-
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; host 네트워크를 사용하는 webserver2 컨테이너 생성
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; webserver2 &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; host httpd:latest
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost
-  → 호스트 OS에 있는 httpd.service가 출력
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;null(none)&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;컨테이너의 네트워크 기능을 사용 X&lt;/p&gt;
-
-        &lt;p&gt;→ Interface를 할당하지 않을 때 사용&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - null(none)&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os6 &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; none centos:latest ip a s
-  1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-      &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-      inet 127.0.0.1/8 scope host lo
-         valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;overlay&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;서로 다른 도커 호스트를 연결하여 통신&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;도커 스웜과 같은 클러스터 서비스에 사용&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;macvlan&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;MAC 주소를 컨테이너에 할당 → 물리적인 네트워크에서 같이 사용 가능&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;실제 네트워크에 직접 연결해야할 때 사용&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - macvlan&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;ol&gt;
-          &lt;li&gt;IP 확인
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ip a show enp0s8
-     enp0s8: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-     &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/ether 08:00:27:dd:11:95 brd ff:ff:ff:ff:ff:ff
-     inet 192.168.56.100/24 brd 192.168.56.255 scope global noprefixroute enp0s8
-         valid_lft forever preferred_lft forever
-     inet6 fe80::d31:5047:a77b:837e/64 scope &lt;span class=&quot;nb&quot;&gt;link &lt;/span&gt;noprefixroute 
-         valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;NIC의 promisc모드를 활성화&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;enp0s8 promisc on
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ip a show enp0s8
- enp0s8: &amp;lt;BROADCAST,MULTICAST,&lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;PROMISC&lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;,UP,LOWER_UP&amp;gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
- &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/ether 08:00:27:dd:11:95 brd ff:ff:ff:ff:ff:ff
- inet 192.168.56.100/24 brd 192.168.56.255 scope global noprefixroute enp0s8
-     valid_lft forever preferred_lft forever
- inet6 fe80::d31:5047:a77b:837e/64 scope &lt;span class=&quot;nb&quot;&gt;link &lt;/span&gt;noprefixroute 
-     valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;macvlan 네트워크 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker network create &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; macvlan &lt;span class=&quot;nt&quot;&gt;--subnet&lt;/span&gt; 192.168.56.0/24 
- &lt;span class=&quot;nt&quot;&gt;--gateway&lt;/span&gt; 192.168.56.1 &lt;span class=&quot;nt&quot;&gt;--ip-range&lt;/span&gt; 192.168.56.128/25 &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;enp0s8 macvlan1
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker network &lt;span class=&quot;nb&quot;&gt;ls
- &lt;/span&gt;NETWORK ID          NAME                DRIVER              SCOPE
- b3b9ff62fe49        bridge              bridge              &lt;span class=&quot;nb&quot;&gt;local
- &lt;/span&gt;aeca1add77f7        host                host                &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;309515f14dde        macvlan1            macvlan             &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;macvlan 드라이버를 사용하는 컨테이너 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; macvlan1 &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; centos:latest
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@da574e50dae8 /]# ip a
- lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-     &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-     inet 127.0.0.1/8 scope host lo
-     valid_lft forever preferred_lft forever
- eth0@if3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UNKNOWN group default 
-     &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;/ether 02:42:c0:a8:38:80 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-     inet 192.168.56.128/24 brd 192.168.56.255 scope global eth0
-     valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;컨테이너의 통신&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;링크&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;컨테이너 간 이름 또는 Alias으로 통신해야 하는 경우에 링크 기능 사용&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 링크&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;ol&gt;
-          &lt;li&gt;
-            &lt;p&gt;web3 컨테이너 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web3 httpd:latest
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;link 사용 → ping 테스트&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os7 &lt;span class=&quot;nt&quot;&gt;--link&lt;/span&gt; web3 centos:latest
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker attach os7
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@c3efaa711015 /]# ping web3
- PING web3 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;172.17.0.2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 56&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;84&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; bytes of data.
- 64 bytes from web3 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;172.17.0.2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.089 ms
- 64 bytes from web3 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;172.17.0.2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.099 ms
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;/etc/hosts 파일 확인&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@c3efaa711015 /]# &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/hosts
- 172.17.0.2	web3 029780c37d77
- 172.17.0.3	c3efaa711015
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;컨테이너 이름 or 별칭 사용 가능&lt;/p&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;포트 포워딩&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;브릿지 네트워크를 사용하는 컨테이너는 외부에서 접근할 때 포트 포워딩해야 함&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 포트 포워딩&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;ol&gt;
-          &lt;li&gt;
-            &lt;p&gt;호스트의 8080포트로 접근할때 컨테이너의 80번 포트로 전달하는 포트포워딩 설정&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web5 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 8080:80 httpd:latest
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker ps 명령&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps 
- CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
- f0929f220e86        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   29 seconds ago      Up 28 seconds       0.0.0.0:8080-&amp;gt;80/tcp   web5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;접근 확인 (CentOS 7 - docker)&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost:8080
- &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;접근 확인 (Ubuntu)&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; student@CCCR11:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl 192.168.56.100:8080
- &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 03 Sep 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/cccr/2020/09/03/docker3-copy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/03/docker3-copy.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>cccr</category>
-        
-        <category>docker</category>
-        
-        <category>image</category>
-        
-        
-        <category>Cccr</category>
-        
-      </item>
+    <pubDate>Wed, 09 Sep 2020 04:01:49 +0900</pubDate>
+    <lastBuildDate>Wed, 09 Sep 2020 04:01:49 +0900</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>[Docker] 도커 네트워크</title>
@@ -366,13 +17,23 @@
 
 &lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 네트워크 &lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. 네트워크 드라이버&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. bridge&lt;/a&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. host&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/cccr/2020/09/01/docker1.html#list2&quot;&gt;실습환경참고&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_4&quot;&gt;   1.4. none&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_5&quot;&gt;   1.5. overlay&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_6&quot;&gt;   1.6. macvlan&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. 컨테이너의 통신 &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_1&quot;&gt;   2.1. 링크&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. 포트 포워딩&lt;/a&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -382,7 +43,7 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;네트워크 드라이버&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;네트워크 드라이버&lt;/strong&gt; &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ol&gt;
       &lt;li&gt;
@@ -398,7 +59,7 @@
     &lt;/ol&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;bridge&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;bridge&lt;/strong&gt;    &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -411,7 +72,7 @@
         &lt;p&gt;외부와 통신도 가능함 → NAPT 통신 사용, 외부와 통신하기 위해서 포트포워딩 사용&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - bridge&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;bridge 네트워크 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
@@ -451,14 +112,14 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;host&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;host&lt;/strong&gt;  &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
         &lt;p&gt;호스트에서 컨테이너의 네트워크 격리를 해제하여 호스트의 네트워크 정보를 공유해서 사용하는 방법&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - host&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;host 네트워크 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web4 &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; host httpd:latest 
   06f5be6f136862da2df9ee875c71167820eabd29c489c934b2834db859258762
@@ -488,7 +149,7 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;null(none)&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;none&lt;/strong&gt;  &lt;a name=&quot;list1_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -497,7 +158,7 @@
         &lt;p&gt;→ Interface를 할당하지 않을 때 사용&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - null(none)&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;none 네트워크 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os6 &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; none centos:latest ip a s
   1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -509,7 +170,7 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;overlay&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;overlay&lt;/strong&gt;   &lt;a name=&quot;list1_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -521,7 +182,7 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;macvlan&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;macvlan&lt;/strong&gt;   &lt;a name=&quot;list1_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -531,7 +192,7 @@
         &lt;p&gt;실제 네트워크에 직접 연결해야할 때 사용&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - macvlan&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;macvlan 네트워크 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;IP 확인
@@ -595,18 +256,20 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;컨테이너의 통신&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;컨테이너의-통신---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;컨테이너의 통신&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;링크&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;링크&lt;/strong&gt;  &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
         &lt;p&gt;컨테이너 간 이름 또는 Alias으로 통신해야 하는 경우에 링크 기능 사용&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 링크&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;링크 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
@@ -642,14 +305,14 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;포트 포워딩&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;포트 포워딩&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
         &lt;p&gt;브릿지 네트워크를 사용하는 컨테이너는 외부에서 접근할 때 포트 포워딩해야 함&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 포트 포워딩&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;포트 포워딩 실습&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
@@ -659,7 +322,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;docker ps 명령&lt;/p&gt;
+            &lt;p&gt;docker ps&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps 
  CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
@@ -667,18 +330,21 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;접근 확인 (CentOS 7 - docker)&lt;/p&gt;
+            &lt;p&gt;접근 확인&lt;/p&gt;
+
+            &lt;p&gt;&lt;a href=&quot;https://crisis513.github.io/cccr/2020/09/01/docker1.html#list2_1&quot;&gt;실습환경확인&lt;/a&gt;&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost:8080
  &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;접근 확인 (Ubuntu)&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; student@CCCR11:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl 192.168.56.100:8080
+            &lt;p&gt;현재 도커가 설치되어 있는 CentOS 7에서 curl 명령어를 통해 8080 포트로의 접근이 가능한지 확인합니다.&lt;/p&gt;
+
+            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; son@ubuntu:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl 192.168.56.100:8080
  &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;현재 Virtualbox를 통해 CentOS를 구동시키고 있는 Ubuntu(Host OS)에서 curl 명령어를 통해 8080 포트로의 접근이 가능한지 확인합니다.&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
@@ -689,41 +355,47 @@
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 02 Sep 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/cccr/2020/09/02/docker3.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/02/docker3.html</guid>
+        <link>http://localhost:4000/infra/2020/09/02/docker3.html</link>
+        <guid isPermaLink="true">http://localhost:4000/infra/2020/09/02/docker3.html</guid>
         
         <category>son</category>
         
         <category>blog</category>
         
-        <category>cccr</category>
+        <category>infra</category>
         
         <category>docker</category>
         
         <category>network</category>
         
         
-        <category>Cccr</category>
+        <category>Infra</category>
         
       </item>
     
       <item>
-        <title>[Docker] 도커 이미지 및 볼륨</title>
+        <title>[Docker] 도커 이미지와 컨테이너 및 볼륨 기초</title>
         <description>&lt;hr /&gt;
 
 &lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 이미지 &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 도커 이미지(Docker Image)&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. 도커 허브(Docker Hub)&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. 도커 이미지 관련 명령어 실습&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. 도커 볼륨&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. 도커 컨테이너(Docker Container)&lt;/a&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_1&quot;&gt;   2.1. 컨테이너 관련 명령어 실습&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/cccr/2020/09/01/docker1.html#list2&quot;&gt;실습환경참고&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. 도커 볼륨(Docker Volume)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_1&quot;&gt;   3.1. 도커에서 데이터 관리&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_2&quot;&gt;   3.2. Bind Mount 사용&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_3&quot;&gt;   3.3. 볼륨 사용 실습&lt;/a&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -733,150 +405,266 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;도커 허브(docker hub)&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;도커 허브(Docker Hub)&lt;/strong&gt; &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;자신의 계정이 있다면 프로젝트를 Push/Pull 할 수 있는 Github와 같이 도커에서도 도커 허브라는 컨테이너 이미지 저장소를 제공하고 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;Github와 마찬가지로 도커 계정이 있다면 누구나 Push/Pull 할 수 있다는 점에서 비슷합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub&lt;/a&gt; 사이트에서 회원가입하여 사용하실 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/docker_image.png&quot; alt=&quot;docker_image&quot; width=&quot;760&quot; height=&quot;330&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] 깃허브와 도커 허브&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
-        &lt;p&gt;도커의 기본 이미지 저장소&lt;/p&gt;
+        &lt;p&gt;도커에서 운영하고 있는 컨테이너 이미지 저장소&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;도커 허브에서 이미지를 검색하거나 특정 이미지를 사용하여 컨테이너를 실행하는 방법에 대해 알 수 있다.&lt;/p&gt;
+        &lt;p&gt;도커 허브에 저장된 이미지의 이름은 &lt;strong&gt;저장소 이름:태그&lt;/strong&gt; 형태&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;도커 허브의 기본적인 기능 : 이미지의 공유&lt;/p&gt;
+        &lt;p&gt;Inactive 이미지(6개월간 Push나 Pull이 한 번도 일어나지 않은 이미지)는 삭제 대상이 됨&lt;/p&gt;
       &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;도커 허브에 저장된 이미지의 이름 “저장소 이름:태그” 형태&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
+    &lt;/ul&gt;
 
-        &lt;ol&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker search   → 이미지 검색&lt;/p&gt;
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker search centos
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker pull    → 이미지를 다운로드할 때 사용&lt;/p&gt;
+    &lt;p&gt;이 외의 자세한 정보는 아래의 도커의 FAQ 문서를 참고해주세요.&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull centos
+    &lt;p&gt;&lt;a href=&quot;https://www.docker.com/pricing/resource-consumption-updates&quot;&gt;Resource Consumption Updates FAQ&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://www.docker.com/legal/docker-terms-service&quot;&gt;Docker Terms of Service&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;도커 이미지 관련 명령어 실습&lt;/strong&gt;  &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker search&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker search centos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;p&gt;도커 이미지를 검색하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker search&lt;/code&gt; 명령어를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker pull&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull httpd
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull centos:7
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull mysql:5.7
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker image   → 이미지 목록 나열&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker images
+        &lt;p&gt;이미지를 다운로드하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker pull 이미지명:태그명&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+
+        &lt;p&gt;태그를 생략하면 가장 최신 버전(latest)를 자동으로 받게 되고, 태그를 지정하면 해당 태그의 이미지를 다운로드 하게 됩니다.&lt;/p&gt;
+
+        &lt;p&gt;위의 명령어를 수행하면 최신버전의 httpd 이미지, 7 태그(버전)에 해당하는 centos 이미지와 5.7 태그(버전)에 해당하는 mysql 이미지를 다운로드 받을 수 있습니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker image&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker images
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker image &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker rmi     → 이미지 삭제&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker image &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;hello-world:latest
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi hello-world:latest
-        
- → 컨테이너가 있으면 삭제되지 않음 
+        &lt;p&gt;이미지 목록을 보기 위한 명령어로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker images&lt;/code&gt;를 사용합니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker rmi&lt;/strong&gt;&lt;/p&gt;
 
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi hello-world:latest
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi mysql:5.7
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
- &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; 옵션 → 권장하지 않음
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi hello-world:latest &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker inspect    → 도커 오브젝트의 정보를 자세히 확인할 때 사용&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;레이어가 여러 개인 이미지 다운로드 &amp;amp; 정보 확인&lt;/p&gt;
+        &lt;p&gt;이미지를 삭제하기 위해&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker rmi&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull httpd:latest
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect httpd:latest
- &lt;span class=&quot;s2&quot;&gt;&quot;RootFS&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;s2&quot;&gt;&quot;Type&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;layers&quot;&lt;/span&gt;,
- &lt;span class=&quot;s2&quot;&gt;&quot;Layers&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
-     &lt;span class=&quot;s2&quot;&gt;&quot;sha256:d0f104dc0a1f9c744b65b23b3fd4d4d3236b4656e67f776fe13f8ad8423b955c&quot;&lt;/span&gt;,
-     &lt;span class=&quot;s2&quot;&gt;&quot;sha256:c865989f86f7664a3ea0574f65b5a53822673d8dc246830b5a4017ed4f5c0022&quot;&lt;/span&gt;,
-     &lt;span class=&quot;s2&quot;&gt;&quot;sha256:3ba8a4f66ba2e80ddd029ed0d36ff3609968cc78ab6fc801742b96fba019d916&quot;&lt;/span&gt;,
-     &lt;span class=&quot;s2&quot;&gt;&quot;sha256:843c3701e6221c43cbd86dbe4f38de8cc172c56654a4096da531258408989048&quot;&lt;/span&gt;,
-     &lt;span class=&quot;s2&quot;&gt;&quot;sha256:88b680b1fdfcc61598563dceba6638a7eb4f436d6ba5c51e54f3bc3bd12ab499&quot;&lt;/span&gt;
-     &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
- &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker save / load  → 호스트에 저장된 이미지를 아카이브로 복사/아카이브 파일 불러오기&lt;/p&gt;
+        &lt;p&gt;기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker save &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; img.tar centos:latest httpd:latest
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;docker images &lt;span class=&quot;nt&quot;&gt;-aq&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;p&gt;나아가 모든 이미지를 한번에 삭제하고자 한다면 다음과 같이 docker images 명령의 -a, -q 옵션을 사용하여 이미지 ID를 구한 뒤 docker rmi 명령에 넘겨주는 방법이 있습니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker inspect&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect httpd:latest
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;s2&quot;&gt;&quot;Id&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;8aadfb1607e5065070b96cbe5e3259312038cc0e51b2ba62e4ea9da802691574&quot;&lt;/span&gt;,
+         &lt;span class=&quot;s2&quot;&gt;&quot;Created&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2020-08-18T07:16:27.598216826Z&quot;&lt;/span&gt;,
+         &lt;span class=&quot;s2&quot;&gt;&quot;Path&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;,
+         &lt;span class=&quot;s2&quot;&gt;&quot;Args&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;,
+         &lt;span class=&quot;s2&quot;&gt;&quot;State&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+             &lt;span class=&quot;s2&quot;&gt;&quot;Status&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;running&quot;&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Running&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Paused&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Restarting&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;OOMKilled&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Dead&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Pid&quot;&lt;/span&gt;: 4925,
+             &lt;span class=&quot;s2&quot;&gt;&quot;ExitCode&quot;&lt;/span&gt;: 0,
+             &lt;span class=&quot;s2&quot;&gt;&quot;Error&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;StartedAt&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2020-08-18T07:20:00.233063636Z&quot;&lt;/span&gt;,
+             &lt;span class=&quot;s2&quot;&gt;&quot;FinishedAt&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2020-08-18T07:19:49.732866179Z&quot;&lt;/span&gt;
+         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+     ...&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;중략&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;p&gt;도커 오브젝트의 정보를 자세하게 확인하고싶을 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; 형태입니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;docker save&lt;/strong&gt; / &lt;strong&gt;docker load&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker save &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; img.tar centos:7 httpd:latest
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;tar &lt;/span&gt;tf img.tar
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; img.tar 
  &lt;span class=&quot;nt&quot;&gt;-rw-------&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 user user 393334272  8월 10 13:56 img.tar
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi centos:latest httpd:latest
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi centos:7 httpd:latest
 
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker load &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; img.tar
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker images
  REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ centos              7                   831691599b88        4 days ago          215MB
  httpd               latest              a6ea92c35c43        4 days ago          166MB
- centos              latest              831691599b88        7 weeks ago         215MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;p&gt;호스트에 저장된 이미지를 아카이브로 복사하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker save&lt;/code&gt; 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker load&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+
+        &lt;p&gt;2번에서 생성한 centos:7 이미지와 httpd:latest 이미지를 img.tar라는 이름으로 저장하고나서 두 이미지를 삭제한 후에 img.tar 파일으로 이미지를 불러오는 것을 확인할 수 있습니다.&lt;/p&gt;
       &lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;/ol&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;2-도커-컨테이너docker-container---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;2. 도커 컨테이너(Docker Container)&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker version
+Client: Docker Engine - Community
+    Version:           19.03.12
+    API version:       1.40
+    Go version:        go1.13.10
+    Git commit:        48a66213fe
+    Built:             Mon Jun 22 15:46:54 2020
+    OS/Arch:           linux/amd64
+    Experimental:      &lt;span class=&quot;nb&quot;&gt;false
+
+&lt;/span&gt;Server: Docker Engine - Community
+    Version:           19.03.12
+    API version:       1.40
+    Go version:        go1.13.10
+    Git commit:        48a66213fe
+    Built:             Mon Jun 22 15:46:54 2020
+    OS/Arch:           linux/amd64
+    Experimental:      &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;도커 버전을 확인하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker version&lt;/code&gt; 명령어를 입력하면 도커의 버전 정보가 클라이언트와 서버로 나뉘어져 있습니다. 도커는 하나의 명령어로 실행되지만 실제로는 클라이언트와 서버 역할을 각각 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/docker_client_host.png&quot; alt=&quot;docker_client_host&quot; width=&quot;523&quot; height=&quot;228&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] 도커 클라이언트와 호스트&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;도커 명령어를 입력하면 도커 클라이언트가 도커 서버로 명령을 전송하고 결과를 받아 터미널에 출력해줍니다. 기본값이 도커 서버의 소켓을 바라보고 있기 때문에 사용자는 의식하지 않고 마치 바로 명령을 내리는 것 같은 느낌을 받습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;컨테이너 실행&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;컨테이너 관련 명령어 실습&lt;/strong&gt; &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 컨테이너 생성 및 확인&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너 생성 및 확인&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
-            &lt;p&gt;docker ps   → 컨테이너 목록 확인&lt;/p&gt;
+            &lt;p&gt;docker ps&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;            
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker container &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
-
+            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;→ 현재 호스트에 존재하는 모든 컨테이너를 출력&lt;/p&gt;
+            &lt;p&gt;컨테이너 목록을 확인하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker ps&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+
+            &lt;p&gt;현재 호스트에 존재하는 모든 컨테이너를 출력하고 싶다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-a&lt;/code&gt; 옵션을 추가하면 됩니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;이름이 web1인 컨테이너 생성&lt;/p&gt;
+            &lt;p&gt;web1 컨테이너 생성&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker create &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web1 httpd:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;컨테이너를 생성하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+
+            &lt;p&gt;생성할 컨테이너의 이름은 web1 이고 httpd:latest 이미지를 사용하여 컨테이너를 생성합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;이름이 os1인 컨테이너 생성&lt;/p&gt;
+            &lt;p&gt;os1 컨테이너 생성&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker create &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os1 centos:latest 
- 1457915352d8967c6a9c0d102481120b731329819d258144637302b321da2c3e
+ 1457915352d8967c6a910d102481120b731329219d258144637302b321da2c3e
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-it&lt;/code&gt; 옵션은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t&lt;/code&gt;를 동시에 사용한 것으로 터미널 입력을 위해 자주 사용되는 옵션입니다.&lt;/p&gt;
+
+            &lt;p&gt;-i, –interactive=false: &lt;strong&gt;표준 입력(stdin)을 활성화&lt;/strong&gt;하며 컨테이너와 연결(attach)되어 있지 않더라도 표준 입력을 유지합니다. 보통 이 옵션을 사용하여 Bash에 명령을 입력합니다.&lt;/p&gt;
+
+            &lt;p&gt;-t, –tty=false: &lt;strong&gt;TTY 모드(pseudo-TTY)를 사용&lt;/strong&gt;합니다. &lt;strong&gt;Bash를 사용하려면 이 옵션을 설정&lt;/strong&gt;해야 합니다. 이 옵션을 설정하지 않으면 명령을 입력할 수는 있지만 셸이 표시되지 않습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;web1 start&lt;/p&gt;
+            &lt;p&gt;web1 컨테이너 시작&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker start web1
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect web1 
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect web1 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;IPAddress
+         &lt;span class=&quot;s2&quot;&gt;&quot;SecondaryIPAddresses&quot;&lt;/span&gt;: null,
+         &lt;span class=&quot;s2&quot;&gt;&quot;IPAddress&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;172.17.0.2&quot;&lt;/span&gt;,
+                 &lt;span class=&quot;s2&quot;&gt;&quot;IPAddress&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;172.17.0.2&quot;&lt;/span&gt;,
 
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl 172.17.0.2
  &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령으로 생성한 컨테이너를 사용하려면 다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker start&lt;/code&gt; 명령으로 컨테이너를 시작해주어야 합니다.&lt;/p&gt;
+
+            &lt;p&gt;web1 이름의 컨테이너를 시작하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 통해 web1 컨테이너의 ip 주소를 확인하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt; 명령을 통해 해당 ip 주소의 웹서버가 정상적으로 동작하는지 확인합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;os1 start&lt;/p&gt;
+            &lt;p&gt;os1 컨테이너 시작&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker start &lt;span class=&quot;nt&quot;&gt;-ai&lt;/span&gt; os1
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@1457915352d8 /]#
@@ -884,14 +672,22 @@
  exit&lt;/span&gt;
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps
  CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
- 4a0638e6bea2        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   15 minutes ago      Up 9 minutes        80/tcp              web1
+ 4a0638e6bea2        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   10 minutes ago      Up 4 minutes        80/tcp              web1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;컨테이너를 시작할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-a&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i&lt;/code&gt; 옵션을 추가하면 컨테이너를 시작시킨 후에 Bash 화면을 연결해줍니다. -a 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
+
+            &lt;p&gt;-a, –attach=[]: 컨테이너에 표준 입력(stdin), 표준 출력(stdout), 표준 에러(stderr)를 연결합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;docker run 명령으로 web2 컨테이너 실행&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web2 httpd:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;이미지로 컨테이너를 생성할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run&lt;/code&gt; 명령어를 사용합니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-d&lt;/code&gt; 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
+
+            &lt;p&gt;-d, –detach=false: &lt;strong&gt;Detached 모드&lt;/strong&gt;입니다. 보통 데몬 모드라고 부르며 컨테이너가 백그라운드로 실행됩니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;os2 컨테이너 실행&lt;/p&gt;
@@ -906,19 +702,23 @@
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os3 centos:latest &lt;span class=&quot;nb&quot;&gt;hostname&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;→ hostname : 한번 실행하고 종료되는 프로세스&lt;/p&gt;
+            &lt;p&gt;위 명령어는 os3 컨테이너의 hostname을 한 번 출력하고 프로세스가 종료됩니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;os4 컨테이너 실행 후 삭제&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os4 &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; centos:latest &lt;span class=&quot;nb&quot;&gt;hostname&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;위 명령어는 os4 컨테이너의 hostname을 한 번 출력하고 프로세스가 종료된 후에 컨테이너가 삭제됩니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;컨테이너 삭제&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;os3
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;컨테이너를 삭제하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker rm&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;실행되는 컨테이너 외 전부 삭제&lt;/p&gt;
@@ -931,31 +731,38 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 1457915352d8        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/bin/bash&quot;&lt;/span&gt;          44 minutes ago      Up 30 minutes                           os1
 4a0638e6bea2        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   47 minutes ago      Up 41 minutes       80/tcp              web1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;실행되는 컨테이너 외의 모든 컨테이너를 삭제하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker container prune&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;docker stats    → 컨테이너의 실시간 상태 확인&lt;/p&gt;
+            &lt;p&gt;docker stats&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker stats 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;컨테이너의 실시간 상태를 확인하기 위해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker stats&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 컨테이너 중지 및 제거&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너 중지 및 제거&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
             &lt;p&gt;os2 컨테이너 중지&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker stop os2
- os2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;os2 컨테이너 삭제&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;os2
- os2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
           &lt;/li&gt;
           &lt;li&gt;
@@ -966,8 +773,13 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습 - 컨테이너 실행 시 유용한 설정&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너 실행 시 유용한 설정&lt;/strong&gt;&lt;/p&gt;
 
         &lt;ol&gt;
           &lt;li&gt;
@@ -983,21 +795,18 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;p&gt;cpu 제한&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os3 &lt;span class=&quot;nt&quot;&gt;--cpus&lt;/span&gt; 0.3 centos:latest
- → 30% 사용 제한 
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@c2df3a13921e /]# &lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/null &amp;amp;
-
- &amp;lt;새로운 터미널&amp;gt;
- &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh user@192.168.56.100
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker stats 
-
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@c2df3a13921e /]# &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--cpus 0.3&lt;/code&gt; 명령을 통해 컨테이너의 cpu 사용을 30%로 제한할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;메모리 제한&lt;/p&gt;
 
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os5 &lt;span class=&quot;nt&quot;&gt;--memory&lt;/span&gt; 1024m centos:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--memory 1024m&lt;/code&gt; 명령을 통해 메모리 사용을 1GB로 제한할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;자원 제한 변경&lt;/p&gt;
@@ -1008,153 +817,153 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  os5
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker attach os5
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@50c259122bc9 /]# &lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/null &amp;amp;
-
- → 터미널 cpu 확인 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker update&lt;/code&gt; 명령을 통해 cpu 혹은 메모리의 제한을 변경할 수 있습니다.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너 접근 및 실행&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker attach&lt;/p&gt;
+
+            &lt;p&gt;표준 입력, 표준 출력/에러를 포함하는 컨테이너에 연결이 가능합니다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker exec&lt;/p&gt;
+
+            &lt;p&gt;실행중인 컨테이너에서 명령을 실행이 가능합니다.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너 프로세스 및 로그 확인&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;p&gt;컨테이너에서 실행 중인 프로세스와 로그를 확인할 수 있습니다.&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker top&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;컨테이너에서 실행되는 프로세스의 정보를 확인 가능&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;리눅스의 ps 옵션을 그대로 사용 가능함&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker logs&lt;/p&gt;
+
+            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; db1 mysql:5.7
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker logs db1
+ 2020-08-10 06:54:13+00:00 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ERROR] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Entrypoint]: Database is uninitialized and password option is not specified
+     You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
+
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; db2 &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MYSQL_ROOT_PASSWORD=1234&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; mysql:5.7
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker logs&lt;/code&gt; 명령어를 통해 컨테이너의 로그를 확인할 수 있습니다.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;strong&gt;컨테이너에 파일 복사 및 확인&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker cp&lt;/p&gt;
+
+            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /etc/passwd os5:/tmp
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os5 &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /tmp/passwd
+ &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 root root 2304 Aug 10 02:15 /tmp/passwd
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;os5:/tmp/passwd /home/user/
+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; passwd
+ &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 user user 2304  8월 10 11:15 passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker cp&lt;/code&gt; 명령어를 통해 호스트 파일을 컨테이너로 복사하거나 컨테이너의 파일을 호스트에 복사할 수 있습니다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;docker diff&lt;/p&gt;
+
+            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker diff os5
+ C /tmp
+ A /tmp/passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;컨테이너에서의 파일의 변경 상태를 체크하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker diff&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;docker diff 명령으로 출력되는 파일의 상태&lt;/p&gt;
+
+                &lt;ul&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;A : 파일이 추가됨&lt;/p&gt;
+                  &lt;/li&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;C : 파일이 변경됨&lt;/p&gt;
+                  &lt;/li&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;D : 파일이 삭제됨&lt;/p&gt;
+                  &lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;컨테이너 접근 및 실행&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ol&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker attach&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;표준 입력, 표준 출력/에러를 포함하는 컨테이너에 연결 가능&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker exec&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;실행중인 컨테이너에서 명령을 실행 가능&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;컨테이너 프로세스 및 로그 확인&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;컨테이너에서 실행 중인 프로세스와 로그를 확인 가능&lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;ol&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker top&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;컨테이너에서 실행되는 프로세스의 정보를 확인 가능&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;리눅스의 ps 옵션을 그대로 사용 가능함&lt;/p&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker logs&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;컨테이너의 로그를 확인 가능&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; db1 mysql:5.7
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker logs db1
-  2020-08-10 06:54:13+00:00 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ERROR] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Entrypoint]: Database is uninitialized and password option is not specified
-  	You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; db2 &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MYSQL_ROOT_PASSWORD=1234&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; mysql:5.7
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;컨테이너에 파일 복사 및 확인&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ol&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker cp&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;호스트 파일을 컨테이너로 복사 or 컨테이너의 파일을 호스트에 복사&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /etc/passwd os5:/tmp
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os5 &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /tmp/passwd
-  &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 root root 2304 Aug 10 02:15 /tmp/passwd
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;os5:/tmp/passwd /home/user/
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; passwd
-  &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 user user 2304  8월 10 11:15 passwd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;docker diff&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;컨테이너에서의 파일의 변경 상태를 체크&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker diff os5
-  C /tmp
-  A /tmp/passwd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;docker diff 명령으로 출력되는 파일의 상태&lt;/p&gt;
-
-            &lt;ul&gt;
-              &lt;li&gt;
-                &lt;p&gt;A : 파일이 추가됨&lt;/p&gt;
-              &lt;/li&gt;
-              &lt;li&gt;
-                &lt;p&gt;C : 파일이 변경됨&lt;/p&gt;
-              &lt;/li&gt;
-              &lt;li&gt;
-                &lt;p&gt;D : 파일이 삭제됨&lt;/p&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;docker 볼륨&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;3-도커-볼륨docker-volume---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;3. 도커 볼륨(Docker Volume)&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;도커에서 데이터 관리&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;도커에서 데이터 관리&lt;/strong&gt;  &lt;a name=&quot;list3_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
         &lt;p&gt;기본적으로 컨테이너에 생성되는 모든 파일은 컨테이너 레이어에 저장됨&lt;/p&gt;
 
-        &lt;p&gt;→ 컨테이너와 함께 삭제되는 런타임 데이터&lt;/p&gt;
-
-        &lt;p&gt;→ 이 데이터를 영구적으로 저장하려면 반드시 볼륨을 사용해야 함&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;컨테이너와 함께 삭제되는 런타임 데이터&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;이 데이터를 영구적으로 저장하려면 반드시 볼륨을 사용해야 함&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
     &lt;ol&gt;
       &lt;li&gt;
@@ -1198,46 +1007,48 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
       &lt;/li&gt;
     &lt;/ol&gt;
   &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Bind Mount 사용&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Bind Mount 사용&lt;/strong&gt; &lt;a name=&quot;list3_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ```bash
+  [user@docker ~]$ mkdir ~/bm1
+  [user@docker ~]$ touch ~/bm1/fileA.txt
 
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; ~/bm1
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; ~/bm1/fileA.txt
+  [user@docker ~]$ docker run -dit --name os3 -v ~/bm1:/tmp/mount centos:latest
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-dit&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os3 &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; ~/bm1:/tmp/mount centos:latest
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os3 &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /tmp/mount
+  [user@docker ~]$ docker exec os3 ls -l /tmp/mount
   total 0
-  &lt;span class=&quot;nt&quot;&gt;-rw-rw-r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 1000 1000 0 Aug 10 07:23 fileA.txt
+  -rw-rw-r--. 1 1000 1000 0 Aug 10 07:23 fileA.txt
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; user의 암호: 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@docker ~]# &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /var/lib/docker/volumes/
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@docker volumes]# &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
+  [user@docker ~]$ sudo -i
+  [sudo] user의 암호: 
+  [root@docker ~]# cd /var/lib/docker/volumes/
+  [root@docker volumes]# ls -l
+  ```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;볼륨 사용&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;볼륨 사용 실습&lt;/strong&gt;    &lt;a name=&quot;list3_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;ul&gt;
+    &lt;ol&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;실습&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;vol1 볼륨 생성&lt;/p&gt;
 
-        &lt;ol&gt;
-          &lt;li&gt;
-            &lt;p&gt;vol1 볼륨 생성&lt;/p&gt;
-
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker volume create vol1
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker volume create vol1
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker inspect vol1 
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
      &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;s2&quot;&gt;&quot;CreatedAt&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2020-08-10T16:28:04+09:00&quot;&lt;/span&gt;,
+         &lt;span class=&quot;s2&quot;&gt;&quot;CreatedAt&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2020-08-18T16:28:04+09:00&quot;&lt;/span&gt;,
          &lt;span class=&quot;s2&quot;&gt;&quot;Driver&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;local&quot;&lt;/span&gt;,
          &lt;span class=&quot;s2&quot;&gt;&quot;Labels&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;,
          &lt;span class=&quot;s2&quot;&gt;&quot;Mountpoint&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;/var/lib/docker/volumes/vol1/_data&quot;&lt;/span&gt;,
@@ -1250,12 +1061,12 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt;
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@docker ~]# &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /var/lib/docker/volumes/
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@docker volumes]# &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;vol1 볼륨을 os4의 /tmp/volume에 연결&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;vol1 볼륨을 os4의 /tmp/volume에 연결&lt;/p&gt;
 
-            &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os4 &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; vol1:/tmp/volume centos:latest
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os4 &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; vol1:/tmp/volume centos:latest
 
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os4 &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /tmp/volume
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;os4 &lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /tmp/volume/fileB.txt
@@ -1285,33 +1096,33 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
                      &lt;span class=&quot;s2&quot;&gt;&quot;IPAddress&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;172.17.0.7&quot;&lt;/span&gt;,
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl 172.17.0.7
  Hello World! 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-            &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+        &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
       &lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;/ol&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 01 Sep 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/cccr/2020/09/01/docker2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/01/docker2.html</guid>
+        <link>http://localhost:4000/infra/2020/09/01/docker2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/infra/2020/09/01/docker2.html</guid>
         
         <category>son</category>
         
         <category>blog</category>
         
-        <category>cccr</category>
+        <category>infra</category>
         
         <category>docker</category>
         
         <category>image</category>
         
+        <category>container</category>
+        
         <category>volume</category>
         
         
-        <category>Cccr</category>
+        <category>Infra</category>
         
       </item>
     
@@ -1389,10 +1200,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS의 자원을 할당받아&lt;/code&gt; 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host OS의 자원을 할당받아&lt;/code&gt; 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;속도저하&lt;/code&gt;의 단점이 존재&lt;/p&gt;
+            &lt;p&gt;Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;속도저하&lt;/code&gt;의 단점이 존재&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1401,13 +1212,13 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS를 공유&lt;/code&gt;하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립적으로 실행&lt;/code&gt;되어 &lt;code class=&quot;highlighter-rouge&quot;&gt;가벼움&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host OS를 공유&lt;/code&gt;하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;독립적으로 실행&lt;/code&gt;되어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가벼움&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;VM과의 가장 큰 차이점은 &lt;code class=&quot;highlighter-rouge&quot;&gt;프로세스를 격리&lt;/code&gt; 하는 것&lt;/p&gt;
+            &lt;p&gt;VM과의 가장 큰 차이점은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;프로세스를 격리&lt;/code&gt; 하는 것&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;오버헤드가 적음&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;오버헤드가 적음&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1444,7 +1255,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;p&gt;개발 환경, 테스트 환경, 서비스 환경을 모두 동일하게 사용 가능&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;도커 컨테이너의 기반이 되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지&lt;/code&gt;가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다&lt;/p&gt;
+            &lt;p&gt;도커 컨테이너의 기반이 되는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;도커 이미지&lt;/code&gt;가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1456,7 +1267,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;p&gt;다양한 벤더의 시스템 및 오픈소스와 연계하여 사용 가능&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본으로 탑재&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기본으로 탑재&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;AWS에서도 Amazon EC2 Container Service를 통해 도커 실행 환경 운영 서비스를 제공&lt;/p&gt;
@@ -1521,10 +1332,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지를 저장&lt;/code&gt;하기 위해 사용&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;도커 이미지를 저장&lt;/code&gt;하기 위해 사용&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Hub&lt;/code&gt;라는 퍼블릭 레지스트리로 설정되어 있고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Harbor&lt;/code&gt;와 같은 프라이빗 레지스트리도 사용 가능&lt;/p&gt;
+            &lt;p&gt;기본적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Docker Hub&lt;/code&gt;라는 퍼블릭 레지스트리로 설정되어 있고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Harbor&lt;/code&gt;와 같은 프라이빗 레지스트리도 사용 가능&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1537,10 +1348,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
             &lt;ul&gt;
               &lt;li&gt;
-                &lt;p&gt;컨테이너를 생성하기 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Read Only&lt;/code&gt; 템플릿&lt;/p&gt;
+                &lt;p&gt;컨테이너를 생성하기 위한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Read Only&lt;/code&gt; 템플릿&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;을 통해 빌드 가능&lt;/p&gt;
+                &lt;p&gt;도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;을 통해 빌드 가능&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
                 &lt;p&gt;새로운 컨테이너를 생성하면 변경된 레이어만 따로 체크하는 형태로 가볍고 빠름&lt;/p&gt;
@@ -1555,7 +1366,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
                 &lt;p&gt;이미지의 실행 형태, 이미지를 실행하여 메모리에 올려 동작하는 것&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 컨테이너&lt;/code&gt;에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 애플리케이션&lt;/code&gt;만 실행하는 것을 &lt;strong&gt;권장&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;하나의 컨테이너&lt;/code&gt;에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;하나의 애플리케이션&lt;/code&gt;만 실행하는 것을 &lt;strong&gt;권장&lt;/strong&gt;&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
                 &lt;p&gt;기본적으로 호스트 머신의 네트워크 연결을 통해 외부 네트워크와 연결 가능&lt;/p&gt;
@@ -1571,15 +1382,15 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
                 &lt;p&gt;1) Bridge&lt;/p&gt;
 
-                &lt;p&gt;컨테이너의 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본 네트워크 드라이버&lt;/code&gt;입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.&lt;/p&gt;
+                &lt;p&gt;컨테이너의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기본 네트워크 드라이버&lt;/code&gt;입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.&lt;/p&gt;
 
                 &lt;p&gt;2) Host&lt;/p&gt;
 
-                &lt;p&gt;이 드라이버는 도커 컨테이너와 도커 호스트 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;네트워크 격리를 제거&lt;/code&gt;합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.&lt;/p&gt;
+                &lt;p&gt;이 드라이버는 도커 컨테이너와 도커 호스트 간의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;네트워크 격리를 제거&lt;/code&gt;합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.&lt;/p&gt;
 
                 &lt;p&gt;3) Overlay&lt;/p&gt;
 
-                &lt;p&gt;이 네트워크는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Swarm 서비스가 서로 통신&lt;/code&gt; 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.&lt;/p&gt;
+                &lt;p&gt;이 네트워크는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Swarm 서비스가 서로 통신&lt;/code&gt; 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.&lt;/p&gt;
 
                 &lt;p&gt;4) None&lt;/p&gt;
 
@@ -1587,7 +1398,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
                 &lt;p&gt;5) macvlan&lt;/p&gt;
 
-                &lt;p&gt;이 드라이버는 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨테이너에 MAC 주소를 할당&lt;/code&gt;하여 물리 장치처럼 보이게합니다. &lt;strong&gt;Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅&lt;/strong&gt;합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.&lt;/p&gt;
+                &lt;p&gt;이 드라이버는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컨테이너에 MAC 주소를 할당&lt;/code&gt;하여 물리 장치처럼 보이게합니다. &lt;strong&gt;Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅&lt;/strong&gt;합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.&lt;/p&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
@@ -1599,7 +1410,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
                 &lt;p&gt;여러가지 도커 데몬들로 구성 및 확장 가능&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Swarm&lt;/code&gt;과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임&lt;/p&gt;
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Docker Swarm&lt;/code&gt;과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임&lt;/p&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
@@ -1765,7 +1576,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;p&gt;기본적으로 docker 명령어를 사용하기 위해서는 root 권한이 필요합니다.&lt;/p&gt;
 
-        &lt;p&gt;$USER에는 현재 사용 중인 유저인 user가 들어가고, &lt;code class=&quot;highlighter-rouge&quot;&gt;docker 그룹에 user를 추가&lt;/code&gt;하여 &lt;strong&gt;권한 상승 없이도 docker 명령을 사용&lt;/strong&gt;할 수 있도록 해줍니다.&lt;/p&gt;
+        &lt;p&gt;$USER에는 현재 사용 중인 유저인 user가 들어가고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker 그룹에 user를 추가&lt;/code&gt;하여 &lt;strong&gt;권한 상승 없이도 docker 명령을 사용&lt;/strong&gt;할 수 있도록 해줍니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;docker 버전 확인&lt;/p&gt;
@@ -1821,14 +1632,14 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Sep 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/cccr/2020/09/01/docker1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cccr/2020/09/01/docker1.html</guid>
+        <link>http://localhost:4000/infra/2020/09/01/docker1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/infra/2020/09/01/docker1.html</guid>
         
         <category>son</category>
         
         <category>blog</category>
         
-        <category>cccr</category>
+        <category>infra</category>
         
         <category>docker</category>
         
@@ -1839,7 +1650,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
         <category>install</category>
         
         
-        <category>Cccr</category>
+        <category>Infra</category>
         
       </item>
     
@@ -1878,7 +1689,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -1893,7 +1704,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -1912,7 +1723,7 @@ down ip link set dev $IFACE down
 
 &lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -1931,7 +1742,7 @@ iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
 
 &lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -1948,7 +1759,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
 $ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2083,7 +1894,7 @@ $ ./app.sh
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
@@ -2097,7 +1908,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -2112,7 +1923,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
 $ vi local.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2120,14 +1931,14 @@ $ vi local.conf
 
 &lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -2152,7 +1963,7 @@ $ ./compute_3.sh
 
 &lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2161,7 +1972,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2170,7 +1981,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
@@ -2214,7 +2025,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;p&gt;naver-news-scraper 소스를 다운로드 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2224,7 +2035,7 @@ $ cd naver-news-scraper
 
 &lt;p&gt;nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2680,8 +2491,8 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
+&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -2713,7 +2524,7 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
@@ -2748,14 +2559,14 @@ _＼_Tom＼__&lt;/p&gt;
         <title>code snippet test</title>
         <description>&lt;p&gt;This is a raw snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
 123
 This is a text snippet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This is a JavaScript snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
 const minus = (a, b) =&amp;gt; a - b
 
 console.log(add(100,200))  // 300
@@ -2764,7 +2575,7 @@ console.log(minus(100,200))  // -100
 
 &lt;p&gt;This is a Python snippet:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
     print(&quot;hello world!&quot;)
 
 say_hello()   // &quot;hello world!&quot;
@@ -2795,7 +2606,7 @@ say_hello()   // &quot;hello world!&quot;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
 
     &lt;p&gt;&lt;!-- ![edit](/crisis513.github.io/static/assets/img/blog/3steps/edit.gif) --&gt;
  &lt;img src=&quot;/crisis513.github.io/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
@@ -2814,10 +2625,10 @@ say_hello()   // &quot;hello world!&quot;
         &lt;p&gt;&lt;strong&gt;_data/index/&lt;/strong&gt;: edit sections’ data to yours at index page, please notice comment at each file.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;Go to repo’s settings panel, config &lt;strong&gt;GitHub Pages&lt;/strong&gt; section to make sure website is released.&lt;/p&gt;
@@ -2829,7 +2640,7 @@ say_hello()   // &quot;hello world!&quot;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
+&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
 
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
@@ -2908,7 +2719,7 @@ time.sleep(1)&lt;/p&gt;
     global num
     btns = driver.find_elements_by_xpath(‘//&lt;em&gt;[@id=”grid”]/div[&lt;/em&gt;]’)&lt;/p&gt;
 
-  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
     print(btn.text, end='\t')
     if btn.text == str(num):
         btn.click()

@@ -1,0 +1,633 @@
+I"�|<hr />
+
+<h3 id="목차">목차</h3>
+
+<p><a href="#list1">1. 도커 이미지 </a></p>
+
+<p><a href="#list1_1">   1.1. 도커 허브(docker hub)</a></p>
+
+<p><a href="#list1_2">   1.2. </a></p>
+
+<p><a href="#list2">2. 도커 볼륨</a></p>
+
+<hr />
+
+<h2 id="1-도커-이미지---"><span style="color:purple"><strong>1. 도커 이미지</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>도커 허브(docker hub)</strong></p>
+
+    <p>자신의 계정이 있다면 프로젝트를 Push/Pull 할 수 있는 Github와 같이 도커에서도 도커 허브라는 컨테이너 이미지 저장소를 제공하고 있습니다.</p>
+
+    <p>Github와 마찬가지로 도커 계정이 있다면 누구나 Push/Pull 할 수 있다는 점에서 비슷합니다.</p>
+
+    <p><a href="https://hub.docker.com/">Docker Hub</a> 사이트에서 회원가입하여 사용하실 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/docker_image.png" alt="docker_image" width="760" height="330" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] 깃허브와 도커 허브</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <ul>
+      <li>
+        <p>도커에서 운영하고 있는 컨테이너 이미지 저장소</p>
+      </li>
+      <li>
+        <p>도커 허브에 저장된 이미지의 이름은 <strong>저장소 이름:태그</strong> 형태</p>
+      </li>
+      <li>
+        <p>Inactive 이미지(6개월간 Push나 Pull이 한 번도 일어나지 않은 이미지)는 삭제 대상이 됨</p>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>이 외의 자세한 정보는 아래의 도커의 FAQ 문서를 참고해주세요.</p>
+
+    <p><a href="https://www.docker.com/pricing/resource-consumption-updates">Resource Consumption Updates FAQ</a></p>
+
+    <p><a href="https://www.docker.com/legal/docker-terms-service">Docker Terms of Service</a></p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>도커 이미지 관련 명령어 실습</strong></p>
+
+    <ol>
+      <li>
+        <p><strong>docker search</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker search centos
+</code></pre></div>        </div>
+
+        <p>도커 이미지를 검색하는 명령어로 <code class="language-plaintext highlighter-rouge">docker search</code>를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.</p>
+      </li>
+      <li>
+        <p><strong>docker pull</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker pull httpd
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker pull centos:7
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker pull mysql:5.7
+</code></pre></div>        </div>
+
+        <p>이미지를 다운로드할 때 사용하는 명령어로 <code class="language-plaintext highlighter-rouge">docker pull 이미지명:태그명</code>을 사용합니다.</p>
+
+        <p>태그를 생략하면 가장 최신 버전(latest)를 자동으로 받게 되고, 태그를 지정하면 해당 태그의 이미지를 다운로드 하게 됩니다.</p>
+
+        <p>위의 명령어를 수행하면 최신버전의 httpd 이미지, 7 태그(버전)에 해당하는 centos 이미지와 5.7 태그(버전)에 해당하는 mysql 이미지를 다운로드 받을 수 있습니다.</p>
+      </li>
+      <li>
+        <p><strong>docker image</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker images
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker image <span class="nb">ls</span>
+</code></pre></div>        </div>
+
+        <p>이미지 목록을 보기 위한 명령어로 <code class="language-plaintext highlighter-rouge">docker images</code>를 사용합니다.</p>
+      </li>
+      <li>
+        <p><strong>docker rmi</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi hello-world:latest
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi mysql:5.7
+</code></pre></div>        </div>
+
+        <p>이미지를 삭제하기 위한 명령어로 <code class="language-plaintext highlighter-rouge">docker rmi</code> 명령어를 사용합니다.</p>
+
+        <p>기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 <code class="language-plaintext highlighter-rouge">-f</code> 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi <span class="sb">`</span>docker images <span class="nt">-aq</span><span class="sb">`</span>
+</code></pre></div>        </div>
+
+        <p>나아가 모든 이미지를 한번에 삭제하고자 한다면 다음과 같이 docker images 명령의 -a, -q 옵션을 사용하여 이미지 ID를 구한 뒤 docker rmi 명령에 넘겨주는 방법이 있습니다.</p>
+      </li>
+      <li>
+        <p><strong>docker inspect</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker inspect httpd:latest
+ <span class="o">[</span>
+     <span class="o">{</span>
+         <span class="s2">"Id"</span>: <span class="s2">"8aadfb1607e5065070b96cbe5e3259312038cc0e51b2ba62e4ea9da802691574"</span>,
+         <span class="s2">"Created"</span>: <span class="s2">"2020-08-18T07:16:27.598216826Z"</span>,
+         <span class="s2">"Path"</span>: <span class="s2">"httpd-foreground"</span>,
+         <span class="s2">"Args"</span>: <span class="o">[]</span>,
+         <span class="s2">"State"</span>: <span class="o">{</span>
+             <span class="s2">"Status"</span>: <span class="s2">"running"</span>,
+             <span class="s2">"Running"</span>: <span class="nb">true</span>,
+             <span class="s2">"Paused"</span>: <span class="nb">false</span>,
+             <span class="s2">"Restarting"</span>: <span class="nb">false</span>,
+             <span class="s2">"OOMKilled"</span>: <span class="nb">false</span>,
+             <span class="s2">"Dead"</span>: <span class="nb">false</span>,
+             <span class="s2">"Pid"</span>: 4925,
+             <span class="s2">"ExitCode"</span>: 0,
+             <span class="s2">"Error"</span>: <span class="s2">""</span>,
+             <span class="s2">"StartedAt"</span>: <span class="s2">"2020-08-18T07:20:00.233063636Z"</span>,
+             <span class="s2">"FinishedAt"</span>: <span class="s2">"2020-08-18T07:19:49.732866179Z"</span>
+         <span class="o">}</span>,
+     ...<span class="o">(</span>중략<span class="o">)</span>
+</code></pre></div>        </div>
+
+        <p>도커 오브젝트의 정보를 자세하게 확인하고싶을 때 <code class="language-plaintext highlighter-rouge">docker inspect</code> 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 <code class="language-plaintext highlighter-rouge">json</code> 형태입니다.</p>
+      </li>
+      <li>
+        <p><strong>docker save</strong> / <strong>docker load</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker save <span class="nt">-o</span> img.tar centos:7 httpd:latest
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">tar </span>tf img.tar
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span> img.tar 
+ <span class="nt">-rw-------</span><span class="nb">.</span> 1 user user 393334272  8월 10 13:56 img.tar
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi centos:7 httpd:latest
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker load <span class="nt">-i</span> img.tar
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker images
+ REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ centos              7                   831691599b88        4 days ago          215MB
+ httpd               latest              a6ea92c35c43        4 days ago          166MB
+</code></pre></div>        </div>
+
+        <p>호스트에 저장된 이미지를 아카이브로 복사하기 위해 <code class="language-plaintext highlighter-rouge">docker save</code> 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 <code class="language-plaintext highlighter-rouge">docker load</code> 명령어를 사용합니다.</p>
+
+        <p>2번에서 생성한 centos:7 이미지와 httpd:latest 이미지를 img.tar라는 이름으로 저장하고나서 두 이미지를 삭제한 후에 img.tar 파일으로 이미지를 불러오는 것을 확인할 수 있습니다.</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>컨테이너 실행</strong></p>
+
+    <ul>
+      <li>
+        <p><strong>실습 - 컨테이너 생성 및 확인</strong></p>
+
+        <ol>
+          <li>
+            <p>docker ps   → 컨테이너 목록 확인</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker ps
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker container <span class="nb">ls</span>
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker ps <span class="nt">-a</span>
+</code></pre></div>            </div>
+
+            <p>→ 현재 호스트에 존재하는 모든 컨테이너를 출력</p>
+          </li>
+          <li>
+            <p>이름이 web1인 컨테이너 생성</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker create <span class="nt">--name</span> web1 httpd:latest
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>이름이 os1인 컨테이너 생성</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker create <span class="nt">-it</span> <span class="nt">--name</span> os1 centos:latest 
+ 1457915352d8967c6a9c0d102481120b731329819d258144637302b321da2c3e
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>web1 start</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker start web1
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker inspect web1 
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>curl 172.17.0.2
+ &lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>os1 start</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker start <span class="nt">-ai</span> os1
+ <span class="o">[</span>root@1457915352d8 /]#
+ <span class="o">[</span>root@1457915352d8 /]# <span class="nb">exit
+ exit</span>
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker ps
+ CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
+ 4a0638e6bea2        httpd:latest        <span class="s2">"httpd-foreground"</span>   15 minutes ago      Up 9 minutes        80/tcp              web1
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>docker run 명령으로 web2 컨테이너 실행</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> web2 httpd:latest
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>os2 컨테이너 실행</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> os2 centos:latest 
+ <span class="o">[</span>root@f20ddba876c2 /]#
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>os3 컨테이너 실행하면서 hostname 명령 실행</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">--name</span> os3 centos:latest <span class="nb">hostname</span>
+</code></pre></div>            </div>
+
+            <p>→ hostname : 한번 실행하고 종료되는 프로세스</p>
+          </li>
+          <li>
+            <p>os4 컨테이너 실행 후 삭제</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">--name</span> os4 <span class="nt">--rm</span> centos:latest <span class="nb">hostname</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>컨테이너 삭제</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">rm </span>os3
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>실행되는 컨테이너 외 전부 삭제</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker container prune
+<span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker ps <span class="nt">-a</span>
+CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
+f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>          6 minutes ago       Up 6 minutes                            os2
+60c84d29c6dc        httpd:latest        <span class="s2">"httpd-foreground"</span>   6 minutes ago       Up 6 minutes        80/tcp              web2
+1457915352d8        centos:latest       <span class="s2">"/bin/bash"</span>          44 minutes ago      Up 30 minutes                           os1
+4a0638e6bea2        httpd:latest        <span class="s2">"httpd-foreground"</span>   47 minutes ago      Up 41 minutes       80/tcp              web1
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>docker stats    → 컨테이너의 실시간 상태 확인</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker stats 
+</code></pre></div>            </div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>실습 - 컨테이너 중지 및 제거</strong></p>
+
+        <ol>
+          <li>
+            <p>os2 컨테이너 중지</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker stop os2
+ os2
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>os2 컨테이너 삭제</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">rm </span>os2
+ os2
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>실행중인 컨테이너 삭제</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">rm </span>os1 <span class="nt">-f</span>
+</code></pre></div>            </div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>실습 - 컨테이너 실행 시 유용한 설정</strong></p>
+
+        <ol>
+          <li>
+            <p>환경변수</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> os3 <span class="nt">-e</span> <span class="s2">"LAB=docker"</span> centos:latest
+ <span class="o">[</span>root@38b6ed0b4cdb /]# <span class="nb">echo</span> <span class="nv">$LAB</span>
+ docker
+ <span class="o">[</span>root@38b6ed0b4cdb /]# <span class="nb">exit</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>cpu 제한</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> os3 <span class="nt">--cpus</span> 0.3 centos:latest
+ → 30% 사용 제한 
+ <span class="o">[</span>root@c2df3a13921e /]# <span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/null &amp;
+
+ &lt;새로운 터미널&gt;
+ <span class="nv">$ </span>ssh user@192.168.56.100
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker stats 
+
+ <span class="o">[</span>root@c2df3a13921e /]# <span class="nb">exit</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>메모리 제한</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--name</span> os5 <span class="nt">--memory</span> 1024m centos:latest
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>자원 제한 변경</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker update <span class="nt">--memory</span> 2048m os5
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker update <span class="nt">--cpus</span> 0.05 os5
+ os5
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker attach os5
+ <span class="o">[</span>root@50c259122bc9 /]# <span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/null &amp;
+
+ → 터미널 cpu 확인 
+</code></pre></div>            </div>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>컨테이너 접근 및 실행</strong></p>
+
+    <ol>
+      <li>
+        <p>docker attach</p>
+
+        <ul>
+          <li>표준 입력, 표준 출력/에러를 포함하는 컨테이너에 연결 가능</li>
+        </ul>
+      </li>
+      <li>
+        <p>docker exec</p>
+
+        <ul>
+          <li>실행중인 컨테이너에서 명령을 실행 가능</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>컨테이너 프로세스 및 로그 확인</strong></p>
+
+    <ul>
+      <li>컨테이너에서 실행 중인 프로세스와 로그를 확인 가능</li>
+    </ul>
+
+    <ol>
+      <li>
+        <p>docker top</p>
+
+        <ul>
+          <li>
+            <p>컨테이너에서 실행되는 프로세스의 정보를 확인 가능</p>
+          </li>
+          <li>
+            <p>리눅스의 ps 옵션을 그대로 사용 가능함</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>docker logs</p>
+
+        <ul>
+          <li>
+            <p>컨테이너의 로그를 확인 가능</p>
+          </li>
+          <li>
+            <p><strong>실습</strong></p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> db1 mysql:5.7
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker logs db1
+  2020-08-10 06:54:13+00:00 <span class="o">[</span>ERROR] <span class="o">[</span>Entrypoint]: Database is uninitialized and password option is not specified
+  	You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
+
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">--name</span> db2 <span class="nt">-e</span> <span class="s2">"MYSQL_ROOT_PASSWORD=1234"</span> <span class="nt">-d</span> mysql:5.7
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>컨테이너에 파일 복사 및 확인</strong></p>
+
+    <ol>
+      <li>
+        <p>docker cp</p>
+
+        <ul>
+          <li>
+            <p>호스트 파일을 컨테이너로 복사 or 컨테이너의 파일을 호스트에 복사</p>
+          </li>
+          <li>
+            <p><strong>실습</strong></p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">cp</span> /etc/passwd os5:/tmp
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">exec </span>os5 <span class="nb">ls</span> <span class="nt">-l</span> /tmp/passwd
+  <span class="nt">-rw-r--r--</span><span class="nb">.</span> 1 root root 2304 Aug 10 02:15 /tmp/passwd
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">cp </span>os5:/tmp/passwd /home/user/
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span> passwd
+  <span class="nt">-rw-r--r--</span><span class="nb">.</span> 1 user user 2304  8월 10 11:15 passwd
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>docker diff</p>
+
+        <ul>
+          <li>
+            <p>컨테이너에서의 파일의 변경 상태를 체크</p>
+          </li>
+          <li>
+            <p><strong>실습</strong></p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker diff os5
+  C /tmp
+  A /tmp/passwd
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>docker diff 명령으로 출력되는 파일의 상태</p>
+
+            <ul>
+              <li>
+                <p>A : 파일이 추가됨</p>
+              </li>
+              <li>
+                <p>C : 파일이 변경됨</p>
+              </li>
+              <li>
+                <p>D : 파일이 삭제됨</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+
+<p><strong>docker 볼륨</strong></p>
+
+<ul>
+  <li>
+    <p><strong>도커에서 데이터 관리</strong></p>
+
+    <ul>
+      <li>
+        <p>기본적으로 컨테이너에 생성되는 모든 파일은 컨테이너 레이어에 저장됨</p>
+
+        <p>→ 컨테이너와 함께 삭제되는 런타임 데이터</p>
+
+        <p>→ 이 데이터를 영구적으로 저장하려면 반드시 볼륨을 사용해야 함</p>
+      </li>
+    </ul>
+
+    <ol>
+      <li>
+        <p>Bind Mount</p>
+
+        <ul>
+          <li>
+            <p>초기 도커부터 사용했던 방식</p>
+          </li>
+          <li>
+            <p>호스트의 특정 디렉토리와 컨테이너의 디렉토리를 연결하는 방식</p>
+          </li>
+          <li>
+            <p>따로 기록하지 않으면 관리하기 쉽지 않음</p>
+          </li>
+          <li>
+            <p>성능이 뛰어나지만 호스트의 파일 시스템에 대한 의존도가 높음</p>
+          </li>
+          <li>
+            <p>호스트의 민감한 파일까지 접근할 수 있음으로 보안 측면인 문제가 발생 가능함</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>볼륨</p>
+
+        <ul>
+          <li>
+            <p>도커에 의해 관리되는 스토리지</p>
+          </li>
+          <li>
+            <p>docker 명령을 사용하여 생성 가능, 사용되지 않으면 한꺼번에 삭제 가능</p>
+          </li>
+          <li>
+            <p>이미지의 Volumes 부분에 어떤 값이 지정되어 있는 경우, 컨테이너로 실행할 때 볼륨을 지정해야 함</p>
+          </li>
+          <li>
+            <p>다양한 드라이버를 지원</p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>Bind Mount 사용</strong></p>
+
+    <ul>
+      <li>
+        <p><strong>실습</strong></p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">mkdir</span> ~/bm1
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">touch</span> ~/bm1/fileA.txt
+
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-dit</span> <span class="nt">--name</span> os3 <span class="nt">-v</span> ~/bm1:/tmp/mount centos:latest
+
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">exec </span>os3 <span class="nb">ls</span> <span class="nt">-l</span> /tmp/mount
+  total 0
+  <span class="nt">-rw-rw-r--</span><span class="nb">.</span> 1 1000 1000 0 Aug 10 07:23 fileA.txt
+
+  <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-i</span>
+  <span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> user의 암호: 
+  <span class="o">[</span>root@docker ~]# <span class="nb">cd</span> /var/lib/docker/volumes/
+  <span class="o">[</span>root@docker volumes]# <span class="nb">ls</span> <span class="nt">-l</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>볼륨 사용</strong></p>
+
+    <ul>
+      <li>
+        <p><strong>실습</strong></p>
+
+        <ol>
+          <li>
+            <p>vol1 볼륨 생성</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker volume create vol1
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker inspect vol1 
+ <span class="o">[</span>
+     <span class="o">{</span>
+         <span class="s2">"CreatedAt"</span>: <span class="s2">"2020-08-10T16:28:04+09:00"</span>,
+         <span class="s2">"Driver"</span>: <span class="s2">"local"</span>,
+         <span class="s2">"Labels"</span>: <span class="o">{}</span>,
+         <span class="s2">"Mountpoint"</span>: <span class="s2">"/var/lib/docker/volumes/vol1/_data"</span>,
+         <span class="s2">"Name"</span>: <span class="s2">"vol1"</span>,
+         <span class="s2">"Options"</span>: <span class="o">{}</span>,
+         <span class="s2">"Scope"</span>: <span class="s2">"local"</span>
+     <span class="o">}</span>
+ <span class="o">]</span>
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-i</span>
+ <span class="o">[</span>root@docker ~]# <span class="nb">cd</span> /var/lib/docker/volumes/
+ <span class="o">[</span>root@docker volumes]# <span class="nb">ls</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>vol1 볼륨을 os4의 /tmp/volume에 연결</p>
+
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--name</span> os4 <span class="nt">-v</span> vol1:/tmp/volume centos:latest
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">exec </span>os4 <span class="nb">ls</span> <span class="nt">-l</span> /tmp/volume
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">exec </span>os4 <span class="nb">touch</span> /tmp/volume/fileB.txt
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-i</span>
+ <span class="o">[</span>root@docker ~]# <span class="nb">cd</span> /var/lib/docker/volumes/vol1/_data/
+ <span class="o">[</span>root@docker _data]# <span class="nb">ls
+ </span>fileB.txt
+
+ <span class="o">[</span>root@docker _data]# <span class="nb">exit
+ logout</span>
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker attach os4
+ <span class="o">[</span>root@f083223357e9 /]# <span class="nb">cd</span> /tmp/volume/
+ <span class="o">[</span>root@f083223357e9 volume]# <span class="nb">ls</span> <span class="nt">-l</span>
+ total 0
+ <span class="nt">-rw-r--r--</span><span class="nb">.</span> 1 root root 0 Aug 10 07:31 fileB.txt
+ <span class="o">[</span>root@f083223357e9 volume]# <span class="nb">cat</span> <span class="o">&gt;</span> index.html
+ Hello World!
+
+ <span class="o">[</span>root@f083223357e9 volume]# <span class="nb">read </span>escape sequence <span class="o">(</span>Ctrl + p + q<span class="o">)</span>
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> web3 <span class="nt">-v</span> vol1:/usr/local/apache2/htdocs
+
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> web3 <span class="nt">-v</span> vol1:/usr/local/apache2/htdocs:ro httpd:latest
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker inspect web3 | <span class="nb">grep</span> <span class="nt">-i</span> ipaddress
+             <span class="s2">"SecondaryIPAddresses"</span>: null,
+             <span class="s2">"IPAddress"</span>: <span class="s2">"172.17.0.7"</span>,
+                     <span class="s2">"IPAddress"</span>: <span class="s2">"172.17.0.7"</span>,
+ <span class="o">[</span>user@docker ~]<span class="nv">$ </span>curl 172.17.0.7
+ Hello World! 
+</code></pre></div>            </div>
+            <p><br /></p>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

@@ -3,24 +3,16 @@
     "data" : [
      
     {
-        "title" : "[Docker] 도커 이미지 제작 - 2020-09-03",
-        "url" : "/cccr/2020/09/03/docker3-copy.html"
-    }
-    
-    ,
-    
-    
-    {
         "title" : "[Docker] 도커 네트워크 - 2020-09-02",
-        "url" : "/cccr/2020/09/02/docker3.html"
+        "url" : "/infra/2020/09/02/docker3.html"
     }
     
     ,
     
     
     {
-        "title" : "[Docker] 도커 이미지 및 볼륨 - 2020-09-01",
-        "url" : "/cccr/2020/09/01/docker2.html"
+        "title" : "[Docker] 도커 이미지와 컨테이너 및 볼륨 기초 - 2020-09-01",
+        "url" : "/infra/2020/09/01/docker2.html"
     }
     
     ,
@@ -28,7 +20,7 @@
     
     {
         "title" : "[Docker] 도커 개요 및 설치 - CentOS 7 - 2020-09-01",
-        "url" : "/cccr/2020/09/01/docker1.html"
+        "url" : "/infra/2020/09/01/docker1.html"
     }
     
     ,
