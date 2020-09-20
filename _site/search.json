@@ -27,7 +27,15 @@
     
     
     {
-        "title" : "[Project]ssustack_installer - 2020-04-30",
+        "title" : "[Project] GCP를 활용한 웹사이트 구축과 모너터링 및 부하테스트 - 2020-08-16",
+        "url" : "/project/2020/08/16/gcp_project.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Project] ssustack_installer - 2020-04-30",
         "url" : "/project/2020/04/30/ssustack_installer.html"
     }
     
@@ -35,7 +43,7 @@
     
     
     {
-        "title" : "[Project]ssustack - 2020-04-29",
+        "title" : "[Project] ssustack - 2020-04-29",
         "url" : "/project/2020/04/29/ssustack.html"
     }
     
@@ -43,7 +51,7 @@
     
     
     {
-        "title" : "[Project]naver-news-scraper - 2020-04-08",
+        "title" : "[Project] naver-news-scraper - 2020-04-08",
         "url" : "/project/2020/04/08/nn_scraper.html"
     }
     
@@ -51,7 +59,7 @@
     
     
     {
-        "title" : "[Patent]히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체 - 2020-04-03",
+        "title" : "[Patent] 히스토그램을 이용한 영상 처리 방법 및 이를 수행하기 위한 기록매체 - 2020-04-03",
         "url" : "/patent/2020/04/03/patent2.html"
     }
     
@@ -59,7 +67,7 @@
     
     
     {
-        "title" : "[Patent]타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체 - 2020-04-03",
+        "title" : "[Patent] 타이핑 속도 정보를 이용한 사용자 인증 시스템 및 방법, 이를 수행하기 위한 기록매체 - 2020-04-03",
         "url" : "/patent/2020/04/03/patent1.html"
     }
     
@@ -67,7 +75,7 @@
     
     
     {
-        "title" : "[Thesis]클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 - 2020-04-01",
+        "title" : "[Thesis] 클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 - 2020-04-01",
         "url" : "/thesis/2020/04/01/bkms.html"
     }
     

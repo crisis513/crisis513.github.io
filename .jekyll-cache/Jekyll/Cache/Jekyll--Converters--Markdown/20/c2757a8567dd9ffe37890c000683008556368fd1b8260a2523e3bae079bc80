@@ -1,0 +1,185 @@
+I"<p>본 프로젝트는 CCCR에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.</p>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 프로젝트 개요</a></p>
+
+<p><a href="#list2">2. 프로젝트 구현</a></p>
+
+<p><a href="#list2_1">   2.1. Cloud SQL 구성</a></p>
+
+<p><a href="#list2_2">   2.2. 인스턴스 생성</a></p>
+
+<p><a href="#list2_3">   2.3. Wordpress 구축 및 Cloud SQL 연동</a></p>
+
+<p><a href="#list2_4">   2.4. 스냅샷을 통한 복제 및 NFS 설정</a></p>
+
+<p><a href="#list2_5">   2.5. 비관리형 로드밸런싱 구성</a></p>
+
+<p><a href="#list2_6">   2.6. Bucket 생성 및 백업 설정</a></p>
+
+<p><a href="#list2_7">   2.7. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축</a></p>
+
+<p><a href="#list3">3. 프로젝트 테스트</a></p>
+
+<p><a href="#list3_1">   3.1. NFS 테스트</a></p>
+
+<p><a href="#list3_2">   3.2. Cloud SQL 로깅 테스트</a></p>
+
+<p><a href="#list3_3">   3.3. 오토스케일링 및 부하테스트</a></p>
+
+<hr />
+
+<h2 id="1-프로젝트-개요---"><span style="color:purple"><strong>1. 프로젝트 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<p>먼저, 프로젝트 진행 당시에 notion을 통해 정리했었던 프로젝트 진행 순서는 다음 [그림 1]과 같습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_1.png" alt="What_we_did" width="560" height="310" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[그림 1] 프로젝트 진행 순서</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<p>웹서비스는 CentOS 인스턴스를 생성하여 워드프레스(Wordpress)를 구축하였고, 구축한 웹서비스에 GCP의 기능을 최대한 활용하는 형태로 프로젝트를 진행했습니다.</p>
+
+<p>GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고 싶었지만, 도메인을 구입하고 등록하는 과정이 필요하여 생략했습니다.</p>
+
+<p>다음 [그림 2]는 본 프로젝트의 구조를 쉽게 나타낼 수 있도록 아키텍처를 그린 것입니다.</p>
+
+<p><br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_2.png" alt="project_architecture" width="850" height="400" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[그림 2] 프로젝트 아키텍처</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="2-프로젝트-구현---"><span style="color:purple"><strong>2. 프로젝트 구현</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<h3 id="cloud-sql-구성---">Cloud SQL 구성   <a name="list2_1"></a></h3>
+
+<p>GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.</p>
+
+<p>해당 검색창에서 <code class="highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_3.png" alt="enable_cloudsql" width="380" height="163" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[그림 3] Cloud SQL Admin API 활성화</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<p>Cloud SQL Admin API를 활성화 했다면 GCP 콘솔 페이지의 왼쪽 상단에 있는 탐색 메뉴에서 <strong>SQL 탭</strong>을 눌러 다음 [그림 4]와 같이 <strong>Cloud SQL 인스턴스를 생성</strong>했습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_4.png" alt="create_cloudsql_instance" width="500" height="600" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[그림 4] Cloud SQL 인스턴스 생성</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<p>본 프로젝트에서는 MySQL 5.7을 선택하여 데이터베이스를 생성하였고, 리전은 성능 향상을 위해 비교적 가까운 서울 리전을 선택하였습니다.</p>
+
+<p>다음으로 GCP 콘솔 기능인 Cloud Shell 화면에서 웹서버에서 사용할 데이터베이스의 설정을 진행합니다.</p>
+
+<pre><code class="language-mysql">crisis51526@cloudshell:~ (cccr-gcp-project)$ gcloud sql connect mysql-wordpress --user=root --quiet
+Allowlisting your IP for incoming connection for 5 minutes...done.
+Connecting to database with SQL user [root].Enter password: **dkagh1.**
+
+Your MySQL connection id is 187
+Server version: 5.7.25-google-log (Google)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'dkagh1.' WITH GRANT OPTION;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql&gt; CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+Query OK, 1 row affected (0.05 sec)
+
+mysql&gt; GRANT ALL ON wordpress.* TO 'wordpressuser'@'%' IDENTIFIED BY 'dkagh1.';
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql&gt; FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.06 sec)
+</code></pre>
+
+<p><br /></p>
+
+<h3 id="인스턴스-생성---">인스턴스 생성   <a name="list2_2"></a></h3>
+
+<p>웹서버로 사용할 인스턴스를 선택할 때 같은 리전을 선택하도록 합니다.</p>
+
+<p><br /></p>
+
+<h3 id="wordpress-구축-및-cloud-sql-연동---">Wordpress 구축 및 Cloud SQL 연동   <a name="list2_3"></a></h3>
+
+<h3 id="스냅샷을-통한-복제-및-nfs-설정---">스냅샷을 통한 복제 및 NFS 설정   <a name="list2_4"></a></h3>
+
+<h3 id="비관리형-로드밸런싱-구성---">비관리형 로드밸런싱 구성   <a name="list2_5"></a></h3>
+
+<h3 id="bucket-생성-및-백업-설정---">Bucket 생성 및 백업 설정   <a name="list2_6"></a></h3>
+
+<h3 id="stack-driver를-활용한-모니터링-및-로깅-시스템-구축---">Stack Driver를 활용한 모니터링 및 로깅 시스템 구축   <a name="list2_7"></a></h3>
+
+<hr />
+
+<h2 id="3-프로젝트-테스트---"><span style="color:purple"><strong>3. 프로젝트 테스트</strong></span>   <a name="list3"></a></h2>
+
+<p><br /></p>
+
+<h3 id="nfs-테스트---">NFS 테스트   <a name="list3_1"></a></h3>
+
+<h3 id="cloud-sql-로깅-테스트---">Cloud SQL 로깅 테스트   <a name="list3_2"></a></h3>
+
+<h3 id="오토스케일링-및-부하테스트---">오토스케일링 및 부하테스트   <a name="list3_3"></a></h3>
+
+:ET

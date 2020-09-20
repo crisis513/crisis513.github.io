@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Project]naver-news-scraper"
+title: "[Project] naver-news-scraper"
 date: 2020-04-08
-desc: "[Project]naver-news-scraper"
+desc: "[Project] naver-news-scraper"
 keywords: "son,blog,project,nn-scraper"
 categories: [Project]
 tags: [son,blog,project,nn-scraper]

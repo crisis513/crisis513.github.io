@@ -1,4 +1,4 @@
-I"�<h3 id="목차">목차</h3>
+I"�<h3 id="목차">목차</h3>
 
 <p><a href="#list1">1. 헤더(Header)</a></p>
 
@@ -146,8 +146,8 @@ in the future than in the past.</p>
 
 <h3 id="인라인-코드inline-code----">인라인 코드(Inline code)    <a name="list9"></a></h3>
 
-<p>문단 중간에 <code class="language-plaintext highlighter-rouge">Code</code>를 넣을 수 있습니다. 
-예를 들어 <code class="language-plaintext highlighter-rouge">printf("hello world!");</code> 이런 식으로 들어갑니다.</p>
+<p>문단 중간에 <code class="highlighter-rouge">Code</code>를 넣을 수 있습니다. 
+예를 들어 <code class="highlighter-rouge">printf("hello world!");</code> 이런 식으로 들어갑니다.</p>
 
 <hr />
 
@@ -179,7 +179,7 @@ _＼_Tom＼__</p>
 
 <h3 id="코드-블록code-blocks----">코드 블록(Code Blocks)    <a name="list13"></a></h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>코드 내용
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>코드 내용
 </code></pre></div></div>
 
 <hr />
