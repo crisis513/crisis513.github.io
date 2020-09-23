@@ -1,4 +1,4 @@
-I""<h1 id="naver-news-scraper">naver-news-scraper</h1>
+I"�<h1 id="naver-news-scraper">naver-news-scraper</h1>
 
 <p>nn-scraper 프로젝트는 원하는 키워드에 해당하는 네이버 뉴스 속보를 스크랩하여 텔레그램 봇 혹은 카카오톡 봇으로 알림받을 수 있습니다.</p>
 
@@ -20,7 +20,7 @@
 
 <p>naver-news-scraper 소스를 다운로드 합니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/crisis513/naver-news-scraper.git
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 </code></pre></div></div>
 
@@ -30,7 +30,7 @@ $ cd naver-news-scraper
 
 <p>nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get install -y python python-pip
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 </code></pre></div></div>
 

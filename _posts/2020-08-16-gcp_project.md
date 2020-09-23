@@ -25,21 +25,17 @@ icon: icon-html
 
 [&nbsp;&nbsp; 2.3. VM 인스턴스와 Cloud SQL 연동](#list2_3)
 
-[&nbsp;&nbsp; 2.4. 스냅샷을 통한 복제 및 NFS 설정](#list2_4)
+[&nbsp;&nbsp; 2.4. 관리형 로드 밸런싱 구성](#list2_4)
 
-[&nbsp;&nbsp; 2.5. 비관리형 로드밸런싱 구성](#list2_5)
+[&nbsp;&nbsp; 2.5. Bucket 생성 및 백업 설정](#list2_5)
 
-[&nbsp;&nbsp; 2.6. Bucket 생성 및 백업 설정](#list2_6)
-
-[&nbsp;&nbsp; 2.7. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축](#list2_7)
+[&nbsp;&nbsp; 2.6. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축](#list2_6)
 
 [3. 프로젝트 테스트](#list3)
 
-[&nbsp;&nbsp; 3.1. NFS 테스트](#list3_1)
+[&nbsp;&nbsp; 3.1. Cloud SQL 로깅 테스트](#list3_1)
 
-[&nbsp;&nbsp; 3.2. Cloud SQL 로깅 테스트](#list3_2)
-
-[&nbsp;&nbsp; 3.3. 오토스케일링 및 부하테스트](#list3_3)
+[&nbsp;&nbsp; 3.2. 오토스케일링 및 부하테스트](#list3_2)
 
 ---
 
@@ -63,7 +59,7 @@ GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고
 
 <br>
 
-| ![project_architecture](/static/assets/img/landing/gcp_toyproject_2.png){: width="850" height="400"} |
+| ![project_architecture](/static/assets/img/landing/gcp_toyproject_2.png){: width="850" height="470"} |
 |:--:| 
 | [그림 2] 프로젝트 아키텍처 |
 
@@ -81,7 +77,7 @@ GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고
 
     해당 검색창에서 `Cloud SQL Admin API`를 입력하여 다음 [그림 3]에 보이는 **사용** 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.
 
-    | ![enable_cloudsql](/static/assets/img/landing/gcp_toyproject_3.png){: width="380" height="163"} |
+    | ![enable_cloudsql](/static/assets/img/landing/gcp_toyproject_3.png){: width="320" height="132"} |
     |:--:| 
     | [그림 3] Cloud SQL Admin API 활성화 |
 
@@ -89,7 +85,7 @@ GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고
 
     Cloud SQL Admin API를 활성화 했다면 GCP 콘솔 페이지의 왼쪽 상단에 있는 탐색 메뉴에서 **[SQL] 탭**을 눌러 다음 [그림 4]와 같이 **Cloud SQL 인스턴스를 생성**했습니다.
 
-    | ![create_cloudsql_instance](/static/assets/img/landing/gcp_toyproject_4.png){: width="500" height="600"} |
+    | ![create_cloudsql_instance](/static/assets/img/landing/gcp_toyproject_4.png){: width="450" height="552"} |
     |:--:| 
     | [그림 4] Cloud SQL 인스턴스 생성 |
 
@@ -436,54 +432,255 @@ GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고
 
     <br>
 
-- **스냅샷을 통한 복제 및 NFS 설정**   <a name="list2_4"></a>
+- **관리형 로드 밸런싱 구성**   <a name="list2_4"></a>
 
-    - instance-wordpress-lb1 (nfs-server)
+    GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 **오토 스케일링(Auto-scaling)을 위한** `관리형 인스턴스 그룹`과 **템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는** `비관리형 인스턴스 그룹`으로 나뉩니다.
+
+    <br>
+
+    본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.
+
+    먼저 VM 인스턴스에 대한 `스냅샷을 생성`하고, 생성한 스냅샷으로 `이미지를 생성`합니다. 
+
+    | ![create_snapshot](/static/assets/img/landing/gcp_toyproject_10.png){: width="400" height="566"} |
+    |:--:| 
+    | [그림 10] 스냅샷 생성 |
+
+    <br>
+
+    | ![create_image](/static/assets/img/landing/gcp_toyproject_11.png){: width="400" height="689"} |
+    |:--:| 
+    | [그림 11] 이미지 생성 |
+
+    <br>
+
+    이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 `인스턴스 템플릿을 생성`합니다. 
+    
+    그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.
+
+    | ![create_instance_template](/static/assets/img/landing/gcp_toyproject_12.png){: width="400" height="881"} |
+    |:--:| 
+    | [그림 12] 인스턴스 템플릿 생성 |
+
+    <br>
+
+    인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 `관리형 인스턴스 그룹을 생성`합니다.
+
+    | ![create_instance_group](/static/assets/img/landing/gcp_toyproject_13.png){: width="700" height="1114"} |
+    |:--:| 
+    | [그림 13] 인스턴스 그룹 생성 |
+
+    <br>
+
+    인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다. 
+
+    탐색 메뉴에서 **[네트워크 서비스] - [부하 분산]** 탭에 들어와서 `부하 분산기 만들기`를 눌러줍니다.
+
+    HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 `HTTP(S) 부하 분산기`를 선택하고 `인터넷 트래픽을 VM으로 분산`을 눌러줍니다.
+
+    <br>
+
+    다음 단계로 넘어오면 백엔드 서비스와 프런트엔드 서비스를 생성하는 화면으로 넘어오게 됩니다.
+
+
+    | ![create_lb_backend](/static/assets/img/landing/gcp_toyproject_14.png){: width="400" height="589"} |
+    |:--:| 
+    | [그림 14] 백엔드 서비스 생성 |
+
+    <br>
+
+    기존에 만들어둔 백엔드 서비스가 없기 때문에 새로운 서비스 생성을 선택하고 백앤드 서비스의 이름과 앞에서 생성한 인스턴스 그룹을 선택하면 됩니다. 다음으로는 로드밸런서에서 들어온 트래픽을 인스턴스 그룹의 인스턴스들의 어느 포트로 전달할 것인지를 포트 번호에 정의하는데, 여기서는 HTTP 트래픽을 전달하는 것이기 때문에 80을 선택합니다.
+
+    <br>
+    
+    백엔드 서비스를 생성할 때 상태 확인(Health check)을 선택하는 항목이 있는데 마찬가지로 기존에 만들어둔 상태 확인이 없기 때문에 새로 생성합니다.
+
+    | ![create_lb_check](/static/assets/img/landing/gcp_toyproject_15.png){: width="400" height="465"} |
+    |:--:| 
+    | [그림 15] 상태 확인 생성 |
+
+    <br>
+
+    상태 확인은 인스턴스 그룹 내의 인스턴스가 양호한지를 체크하고 만약에 정상적이지 않으면 비정상 노드는 부하 분산에서 빼버리는 기능을 수행합니다. 프로토콜은 HTTP를 입력하고, 포트에는 HTTP 포트인 80포트, 그리고 서비스가 정상인지를 확인하는 확인 간격은 체크 주기이고, 제한 시간은 이 시간(초)내에 응답이 없으면 장애라고 판단을 합니다.
+
+    <br>
+
+    | ![create_lb_frontend](/static/assets/img/landing/gcp_toyproject_16.png){: width="400" height="493"} |
+    |:--:| 
+    | [그림 16] 프런트엔드 서비스 생성 |
+
+    <br>
+
+    마지막으로 프런트엔드 서비스를 설정하는데, 여기서는 어떤 프로토콜을 어떤 IP와 포트로 받을 것인지, HTTPS의 경우에는 SSL 인증서를 설정하는 작업을 합니다. 본 프로젝트에서는 HTTP 프로토콜을 80 포트로 설정하기 때문에 [그림 16]과 같이 설정하고, 부하 분산 이름을 입력하여 생성을 완료합니다.
+
+    <br>
+
+    정상적으로 부하 분산기가 생성이 되면 다음 [그림 17]과 같이 백엔드 서비스에 지정된 인스턴스 그룹에 해당하는 인스턴스가 모두 정상 동작하는 화면을 볼 수 있습니다.
+
+    | ![lb_detail](/static/assets/img/landing/gcp_toyproject_17.png){: width="800" height="404"} |
+    |:--:| 
+    | [그림 17] 부하 분산기 세부 정보 |
+
+    <br>
+
+- **Bucket 생성 및 백업 설정**   <a name="list2_5"></a>
+
+    탐색 메뉴에서 **[Storage] - [브라우저]** 탭을 눌러 **버킷 생성** 버튼을 클릭하여 버킷을 생성합니다.
+
+    | ![create_bucket](/static/assets/img/landing/gcp_toyproject_18.png){: width="900" height="145"} |
+    |:--:| 
+    | [그림 18] 버킷 생성 |
+
+    <br>
+
+    버킷 이름을 입력하고 리전을 아시아로 설정한 후에 나머지는 기본 값으로 생성하게 되면 위의 [그림 18]과 같이 버킷이 생성된 모습을 확인할 수 있습니다.
+
+    <br>
+
+    생성한 버킷의 권한 탭에 들어오면 버킷에 접근 가능한 구성원들과 역할을 확인할 수 있습니다.
+
+    다음 [그림 19]에서 보이는 **추가** 버튼을 클릭하여 새로운 구성원을 추가해줍니다.
+
+    <br>
+
+    | ![bucket_allUsers](/static/assets/img/landing/gcp_toyproject_19.png){: width="500" height="223"} |
+    |:--:| 
+    | [그림 19] 버킷 allUsers 구성원 추가 |
+    
+    <br>
+
+    `allUsers` 구성원에 `저장소 개체 관리자` 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.
+
+    <br>
+
+    다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 `mysqldump`하여 `crontab`을 통해 주기적으로 백업하기 위한 명령어입니다.
 
     ```bash
-    [root@instance-wordpress-lb1 ~]# yum -y install nfs-utils
+    [root@instance-wordpress ~]# vim /etc/my.cnf
+    [mysqldump]
+    user=root
+    password=Input Your Password
 
-    [root@instance-wordpress-lb1 ~]# chmod 775 /var/www/html/wordpress
-    [root@instance-wordpress-lb1 ~]# vim /etc/exports
-    /var/www/html/wordpress         10.178.0.11(rw,sync,sec=sys)
-    [root@instance-wordpress-lb1 ~]# exportfs -r
+    [root@instance-wordpress ~]# vim cloudsql_backup.sh
+    #!/bin/bash
+    db_instance=mysql-wordpress
+    db_name=wordpress
+    db_user=root
+    bucket_name=gs://bucket-mysql-wordpress
+    socket_path=/cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
+    date_YYYYMMDDHHMMSS=`date '+%Y%m%d%H%M%S'`
+    backupfile_name=wordpress_${date_YYYYMMDDHHMMSS}.sql
 
-    [root@instance-wordpress-lb1 ~]# systemctl start nfs-server
-    [root@instance-wordpress-lb1 ~]# systemctl enable nfs-server
+    echo "Cloud SQLl daily backup start.."
 
-    [root@instance-wordpress-lb1 ~]# firewall-cmd --permanent --add-service=nfs
-    [root@instance-wordpress-lb1 ~]# firewall-cmd --permanent --add-service=mountd
-    [root@instance-wordpress-lb1 ~]# firewall-cmd --reload
-    success
+    #gcloud sql export csv $db_instance $bucket_name/test.csv --database=$db_name --query=$sql_query
+    mysqldump -u $db_user -S $socket_path --databases $db_name --hex-blob --single-transaction --default-character-set=utf8mb4 > $backupfile_name
+
+    gsutil mv $backupfile_name $bucket_name
+
+    echo "Cloud SQL daily backup stop.."
+
+    [root@instance-wordpress ~]# crontab -e
+    0 */3 * * * /root/cloudsql_backup.sh
     ```
+    <br>
 
-    - instance-wordpress-lb2 (nfs-client)
+    Cloud SQL을 백업하는 쉘 스크립트를 작성하여 crontab에 등록하여 3시간 주기로 mysqldump가 실행되도록 설정해두고 일정 시간이 지난 후에 버킷에 정상적으로 백업되어 저장됐는지 확인하였습니다.
+
+    | ![cloudsql_bucket_backup1](/static/assets/img/landing/gcp_toyproject_20.png){: width="800" height="323"} |
+    |:--:| 
+    | [그림 20] crontab을 사용한 Cloud SQL의 주기적인 백업 |
+
+    <br>
+
+    위의 [그림 20]에서 최종 수정 날짜를 확인해보면 3시간 주기로 저장되어 있는 것을 확인할 수 있습니다.
+
+    <br>
+
+    같은 형태로 이번에는 syslog를 백업하는 쉘 스크립트를 작성하여 crontab에 등록합니다.
 
     ```bash
-    [root@instance-wordpress-lb2 ~]# yum -y install showmount
-    [root@instance-wordpress-lb2 ~]# showmount -e 10.178.0.10
-    Export list for 10.178.0.10:
-    /var/www/html/wordpress 10.178.0.11
+    [root@instance-wordpress ~]# vim apache_log_backup.sh
+    #!/bin/bash
 
-    [root@instance-wordpress-lb2 ~]# mount -o rw,sync,sec=sys 10.178.0.10:/var/www/html/wordpress /var/www/html/wordpress/
-    [root@instance-wordpress-lb2 ~]# mount | grep wordpress
-    10.178.0.10:/var/www/html/wordpress on /var/www/html/wordpress type nfs4 (rw,relatime,sync,vers=4.1,rsize=524288,wsize=524288,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.178.0.11,local_lock=none,addr=10.178.0.10)
-    [root@instance-wordpress-lb2 ~]# vim /etc/fstab
-    10.178.0.10:/var/www/html/wordpress     /var/www/html/wordpress nfs     rw,sync,sec=sys 0 0
-    [root@instance-wordpress-lb2 ~]# mount -a
+    echo "syslog daily backup start.."
+
+    cat /var/log/messages | grep -iE "apache|wordpress" >> /root/apache_log_backup_$(date '+%y-%m-%d').log
+    gsutil cp /root/apache_log_backup_*.log gs://bucket-mysql-wordpress/apache_log_backup/
+    rm -rf /root/*.log
+
+    echo "syslog daily backup stop.."
+
+    [root@instance-wordpress ~]# crontab -e
+    * * * * * /root/apache_log_backup.sh
     ```
 
-- **비관리형 로드밸런싱 구성**   <a name="list2_5"></a>
+    <br>
+    
+    이번에는 매 분마다 쉘 스크립트를 실행하도록 crontab에 등록하고 버킷을 확인해보았습니다.
 
+    <br>
 
+    | ![syslog_bucket_backup](/static/assets/img/landing/gcp_toyproject_21.png){: width="800" height="383"} |
+    |:--:| 
+    | [그림 21] crontab을 사용한 syslog의 주기적인 백업 |
 
-- **Bucket 생성 및 백업 설정**   <a name="list2_6"></a>
+    <br>
 
+- **Stack Driver를 활용한 모니터링 및 로깅 시스템 구축**   <a name="list2_6"></a>
 
+    - VM 인스턴스에 monitoring-agent 설치
+    
+        ```bash
+        $ curl -sSO https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+        $ sudo bash add-monitoring-agent-repo.sh
+        $ sudo yum -y update
+        $ sudo yum -y install stackdriver-agent
 
-- **Stack Driver를 활용한 모니터링 및 로깅 시스템 구축**   <a name="list2_7"></a>
+        $ sudo systemctl start stackdriver-agent
+        $ sudo systemctl enable stackdriver-agent
+        ```
 
+    - VM 인스턴스에 logging-agent 설치
 
+        ```bash
+        $ curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+        $ sudo bash add-logging-agent-repo.sh
+        $ sudo yum -y update
+        $ sudo yum -y install google-fluentd
+        $ sudo yum -y install google-fluentd-catch-all-config-structured
+
+        $ sudo systemctl start google-fluentd
+        $ sudo systemctl enable google-fluentd
+        ```
+    
+    <br>
+
+    모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 **[모니터링] - [대시보드]** 탭을 눌러 들어갑니다.
+
+    대시보드 페이지에 들어오면 `Create Dashboard` 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.
+
+    원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 `Add Chart` 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.
+
+    | ![add_chart](/static/assets/img/landing/gcp_toyproject_22.png){: width="800" height="402"} |
+    |:--:| 
+    | [그림 22] 대시보드 차트 추가 |
+
+    <br>
+
+    위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 `Metric`과 Instance, Group 등 `Resource 타입`을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.
+
+    | ![monitoring_dashboard](/static/assets/img/landing/gcp_toyproject_23.png){: width="1000" height="744"} |
+    |:--:| 
+    | [그림 23] 모니터링 대시보드 완성 |
+
+    <br>
+
+    다음으로 로깅 시스템은 **[로그 기록] - [로그 뷰어]** 탭에 들어오면 logging-agent를 통해 수집된 로그들을 확인할 수 있습니다.
+
+    | ![log_viewer](/static/assets/img/landing/gcp_toyproject_24.png){: width="900" height="294"} |
+    |:--:| 
+    | [그림 24] 로그 뷰어 필터링 |
 
 ---
 
@@ -491,16 +688,10 @@ GCP에서 제공해주는 Cloud DNS를 이용하여 도메인을 설정해보고
 
 <br>
 
-
-
-- **NFS 테스트**   <a name="list3_1"></a>
-
-
-
-- **Cloud SQL 로깅 테스트**   <a name="list3_2"></a>
+- **Cloud SQL 로깅 테스트**   <a name="list3_1"></a>
 
 
 
-- **오토스케일링 및 부하테스트**   <a name="list3_3"></a>
+- **오토스케일링 및 부하테스트**   <a name="list3_2"></a>
 
 

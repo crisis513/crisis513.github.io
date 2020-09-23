@@ -1,4 +1,4 @@
-I"	�<p>본 프로젝트는 CCCR에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.</p>
+I"�<p>본 프로젝트는 CCCR에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.</p>
 
 <hr />
 
@@ -14,13 +14,11 @@
 
 <p><a href="#list2_3">   2.3. VM 인스턴스와 Cloud SQL 연동</a></p>
 
-<p><a href="#list2_4">   2.4. 스냅샷을 통한 복제 및 NFS 설정</a></p>
+<p><a href="#list2_4">   2.4. 관리형 로드 밸런싱 구성</a></p>
 
-<p><a href="#list2_5">   2.5. 비관리형 로드밸런싱 구성</a></p>
+<p><a href="#list2_5">   2.5. Bucket 생성 및 백업 설정</a></p>
 
-<p><a href="#list2_6">   2.6. Bucket 생성 및 백업 설정</a></p>
-
-<p><a href="#list2_7">   2.7. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축</a></p>
+<p><a href="#list2_6">   2.6. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축</a></p>
 
 <p><a href="#list3">3. 프로젝트 테스트</a></p>
 
@@ -64,7 +62,7 @@
 <table>
   <thead>
     <tr>
-      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_2.png" alt="project_architecture" width="850" height="400" /></th>
+      <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_2.png" alt="project_architecture" width="850" height="470" /></th>
     </tr>
   </thead>
   <tbody>
@@ -88,7 +86,7 @@
 
     <p>GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.</p>
 
-    <p>해당 검색창에서 <code class="language-plaintext highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.</p>
+    <p>해당 검색창에서 <code class="highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.</p>
 
     <table>
       <thead>
@@ -178,11 +176,11 @@
 
     <p><br /></p>
 
-    <p>먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - <code class="language-plaintext highlighter-rouge">asia-northeast3-a</code>)을 선택하도록 합니다.</p>
+    <p>먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - <code class="highlighter-rouge">asia-northeast3-a</code>)을 선택하도록 합니다.</p>
 
-    <p>flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 <code class="language-plaintext highlighter-rouge">n1-standard-1</code>을 선택하였고,</p>
+    <p>flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 <code class="highlighter-rouge">n1-standard-1</code>을 선택하였고,</p>
 
-    <p>OS는 <code class="language-plaintext highlighter-rouge">CentOS 7</code>, 웹서버의 <code class="language-plaintext highlighter-rouge">HTTP 트래픽을 허용</code>해주도록 체크하였습니다.</p>
+    <p>OS는 <code class="highlighter-rouge">CentOS 7</code>, 웹서버의 <code class="highlighter-rouge">HTTP 트래픽을 허용</code>해주도록 체크하였습니다.</p>
 
     <p><br /></p>
 
@@ -280,7 +278,7 @@
       <span class="s">"auth_uri"</span><span class="p">:</span> <span class="s">"&lt;https://accounts.google.com/o/oauth2/auth&gt;"</span><span class="p">,</span>
       <span class="s">"token_uri"</span><span class="p">:</span> <span class="s">"&lt;https://oauth2.googleapis.com/token&gt;"</span><span class="p">,</span>
       <span class="s">"auth_provider_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/oauth2/v1/certs&gt;"</span><span class="p">,</span>
-      <span class="s">"client_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager%40cccr-gcp-project.iam.gserviceaccount.com&gt;"</span>
+      <span class="s">"client_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager</span><span class="si">%40</span><span class="s">cccr-gcp-project.iam.gserviceaccount.com&gt;"</span>
   <span class="p">}</span>
 </code></pre></div>    </div>
 
@@ -470,13 +468,13 @@
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="n">instance</span><span class="o">-</span><span class="n">wordpress</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mysql -u root -p -S /cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
 </span>  <span class="n">Enter</span> <span class="n">password</span><span class="p">:</span> 
-  <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MariaDB</span> <span class="n">monitor</span><span class="p">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="k">with</span> <span class="p">;</span> <span class="ow">or</span> \\<span class="n">g</span><span class="p">.</span>
+  <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MariaDB</span> <span class="n">monitor</span><span class="o">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="k">with</span> <span class="p">;</span> <span class="ow">or</span> \\<span class="n">g</span><span class="o">.</span>
   <span class="n">Your</span> <span class="n">MySQL</span> <span class="n">connection</span> <span class="nb">id</span> <span class="ow">is</span> <span class="mi">1478</span>
-  <span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.7</span><span class="p">.</span><span class="mi">25</span><span class="o">-</span><span class="n">google</span><span class="o">-</span><span class="n">log</span> <span class="p">(</span><span class="n">Google</span><span class="p">)</span>
+  <span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.7.25</span><span class="o">-</span><span class="n">google</span><span class="o">-</span><span class="n">log</span> <span class="p">(</span><span class="n">Google</span><span class="p">)</span>
 
-  <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">MariaDB</span> <span class="n">Corporation</span> <span class="n">Ab</span> <span class="ow">and</span> <span class="n">others</span><span class="p">.</span>
+  <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">MariaDB</span> <span class="n">Corporation</span> <span class="n">Ab</span> <span class="ow">and</span> <span class="n">others</span><span class="o">.</span>
 
-  <span class="n">Type</span> <span class="s">'help;'</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\\</span><span class="s">h'</span> <span class="k">for</span> <span class="n">help</span><span class="p">.</span> <span class="n">Type</span> <span class="s">'</span><span class="se">\\</span><span class="s">c'</span> <span class="n">to</span> <span class="n">clear</span> <span class="n">the</span> <span class="n">current</span> <span class="nb">input</span> <span class="n">statement</span><span class="p">.</span>
+  <span class="n">Type</span> <span class="s">'help;'</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\\</span><span class="s">h'</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span> <span class="n">Type</span> <span class="s">'</span><span class="se">\\</span><span class="s">c'</span> <span class="n">to</span> <span class="n">clear</span> <span class="n">the</span> <span class="n">current</span> <span class="nb">input</span> <span class="n">statement</span><span class="o">.</span>
 
   <span class="n">MySQL</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">use</span> <span class="n">wordpress</span>
   <span class="n">Reading</span> <span class="n">table</span> <span class="n">information</span> <span class="k">for</span> <span class="n">completion</span> <span class="n">of</span> <span class="n">table</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">names</span>
@@ -506,53 +504,138 @@
     <p><br /></p>
   </li>
   <li>
-    <p><strong>스냅샷을 통한 복제 및 NFS 설정</strong>   <a name="list2_4"></a></p>
+    <p><strong>관리형 로드 밸런싱 구성</strong>   <a name="list2_4"></a></p>
 
-    <ul>
-      <li>instance-wordpress-lb1 (nfs-server)</li>
-    </ul>
+    <p>GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 <strong>오토 스케일링(Auto-scaling)을 위한</strong> <code class="highlighter-rouge">관리형 인스턴스 그룹</code>과 <strong>템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는</strong> <code class="highlighter-rouge">비관리형 인스턴스 그룹</code>으로 나뉩니다.</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@instance-wordpress-lb1 ~]# yum <span class="nt">-y</span> <span class="nb">install </span>nfs-utils
+    <p><br /></p>
 
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# <span class="nb">chmod </span>775 /var/www/html/wordpress
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# vim /etc/exports
-  /var/www/html/wordpress         10.178.0.11<span class="o">(</span>rw,sync,sec<span class="o">=</span>sys<span class="o">)</span>
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# exportfs <span class="nt">-r</span>
+    <p>본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.</p>
 
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# systemctl start nfs-server
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# systemctl <span class="nb">enable </span>nfs-server
+    <p>먼저 VM 인스턴스에 대한 <code class="highlighter-rouge">스냅샷을 생성</code>하고, 생성한 스냅샷으로 <code class="highlighter-rouge">이미지를 생성</code>합니다.</p>
 
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-service</span><span class="o">=</span>nfs
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-service</span><span class="o">=</span>mountd
-  <span class="o">[</span>root@instance-wordpress-lb1 ~]# firewall-cmd <span class="nt">--reload</span>
-  success
-</code></pre></div>    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_10.png" alt="create_snapshot" width="400" height="566" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 10] 스냅샷 생성</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <ul>
-      <li>instance-wordpress-lb2 (nfs-client)</li>
-    </ul>
+    <p><br /></p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@instance-wordpress-lb2 ~]# yum <span class="nt">-y</span> <span class="nb">install </span>showmount
-  <span class="o">[</span>root@instance-wordpress-lb2 ~]# showmount <span class="nt">-e</span> 10.178.0.10
-  Export list <span class="k">for </span>10.178.0.10:
-  /var/www/html/wordpress 10.178.0.11
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_11.png" alt="create_image" width="400" height="689" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 11] 이미지 생성</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <span class="o">[</span>root@instance-wordpress-lb2 ~]# mount <span class="nt">-o</span> rw,sync,sec<span class="o">=</span>sys 10.178.0.10:/var/www/html/wordpress /var/www/html/wordpress/
-  <span class="o">[</span>root@instance-wordpress-lb2 ~]# mount | <span class="nb">grep </span>wordpress
-  10.178.0.10:/var/www/html/wordpress on /var/www/html/wordpress <span class="nb">type </span>nfs4 <span class="o">(</span>rw,relatime,sync,vers<span class="o">=</span>4.1,rsize<span class="o">=</span>524288,wsize<span class="o">=</span>524288,namlen<span class="o">=</span>255,hard,proto<span class="o">=</span>tcp,timeo<span class="o">=</span>600,retrans<span class="o">=</span>2,sec<span class="o">=</span>sys,clientaddr<span class="o">=</span>10.178.0.11,local_lock<span class="o">=</span>none,addr<span class="o">=</span>10.178.0.10<span class="o">)</span>
-  <span class="o">[</span>root@instance-wordpress-lb2 ~]# vim /etc/fstab
-  10.178.0.10:/var/www/html/wordpress     /var/www/html/wordpress nfs     rw,sync,sec<span class="o">=</span>sys 0 0
-  <span class="o">[</span>root@instance-wordpress-lb2 ~]# mount <span class="nt">-a</span>
-</code></pre></div>    </div>
+    <p><br /></p>
+
+    <p>이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 <code class="highlighter-rouge">인스턴스 템플릿을 생성</code>합니다.</p>
+
+    <p>그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_12.png" alt="create_instance_template" width="400" height="881" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 12] 인스턴스 템플릿 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 <code class="highlighter-rouge">관리형 인스턴스 그룹을 생성</code>합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_13.png" alt="create_instance_group" width="700" height="1114" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 13] 인스턴스 그룹 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다.</p>
+
+    <p>탐색 메뉴에서 <strong>[네트워크 서비스] - [부하 분산]</strong> 탭에 들어와서 <code class="highlighter-rouge">부하 분산기 만들기</code>를 눌러줍니다.</p>
+
+    <p>HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 <code class="highlighter-rouge">HTTP(S) 부하 분산기</code>를 선택하고 <code class="highlighter-rouge">인터넷 트래픽을 VM으로 분산</code>을 눌러줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_14.png" alt="create_lb_backend" width="400" height="589" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 14] 백엔드 서비스 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_15.png" alt="create_lb_check" width="700" height="1114" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 15] 상태 확인 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/gcp_toyproject_16.png" alt="create_lb_frontend" width="700" height="1114" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 16] 프론트엔드 서비스 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
   </li>
   <li>
-    <p><strong>비관리형 로드밸런싱 구성</strong>   <a name="list2_5"></a></p>
+    <p><strong>Bucket 생성 및 백업 설정</strong>   <a name="list2_5"></a></p>
   </li>
   <li>
-    <p><strong>Bucket 생성 및 백업 설정</strong>   <a name="list2_6"></a></p>
-  </li>
-  <li>
-    <p><strong>Stack Driver를 활용한 모니터링 및 로깅 시스템 구축</strong>   <a name="list2_7"></a></p>
+    <p><strong>Stack Driver를 활용한 모니터링 및 로깅 시스템 구축</strong>   <a name="list2_6"></a></p>
   </li>
 </ul>
 

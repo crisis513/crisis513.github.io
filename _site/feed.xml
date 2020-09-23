@@ -5,9 +5,9 @@
     <description>s6i's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 21 Sep 2020 09:50:10 +0900</pubDate>
-    <lastBuildDate>Mon, 21 Sep 2020 09:50:10 +0900</lastBuildDate>
-    <generator>Jekyll v4.1.1</generator>
+    <pubDate>Tue, 22 Sep 2020 19:21:16 +0900</pubDate>
+    <lastBuildDate>Tue, 22 Sep 2020 19:21:16 +0900</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
     
       <item>
         <title>[Docker] 도커 네트워크</title>
@@ -458,7 +458,7 @@
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker search centos
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;도커 이미지를 검색하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker search&lt;/code&gt; 명령어를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.&lt;/p&gt;
+        &lt;p&gt;도커 이미지를 검색하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker search&lt;/code&gt; 명령어를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;&lt;strong&gt;docker pull&lt;/strong&gt;&lt;/p&gt;
@@ -468,7 +468,7 @@
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull mysql:5.7
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;이미지를 다운로드하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker pull 이미지명:태그명&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+        &lt;p&gt;이미지를 다운로드하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker pull 이미지명:태그명&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
         &lt;p&gt;태그를 생략하면 가장 최신 버전(latest)를 자동으로 받게 되고, 태그를 지정하면 해당 태그의 이미지를 다운로드 하게 됩니다.&lt;/p&gt;
 
@@ -481,7 +481,7 @@
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker image &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;이미지 목록을 보기 위한 명령어로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker images&lt;/code&gt;를 사용합니다.&lt;/p&gt;
+        &lt;p&gt;이미지 목록을 보기 위한 명령어로 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker images&lt;/code&gt;를 사용합니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;&lt;strong&gt;docker rmi&lt;/strong&gt;&lt;/p&gt;
@@ -490,9 +490,9 @@
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi mysql:5.7
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;이미지를 삭제하기 위해&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker rmi&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+        &lt;p&gt;이미지를 삭제하기 위해&lt;code class=&quot;highlighter-rouge&quot;&gt;docker rmi&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
-        &lt;p&gt;기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.&lt;/p&gt;
+        &lt;p&gt;기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt; 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.&lt;/p&gt;
 
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker rmi &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;docker images &lt;span class=&quot;nt&quot;&gt;-aq&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
@@ -525,7 +525,7 @@
      ...&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;중략&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;도커 오브젝트의 정보를 자세하게 확인하고싶을 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; 형태입니다.&lt;/p&gt;
+        &lt;p&gt;도커 오브젝트의 정보를 자세하게 확인하고싶을 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; 형태입니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;&lt;strong&gt;docker save&lt;/strong&gt; / &lt;strong&gt;docker load&lt;/strong&gt;&lt;/p&gt;
@@ -543,7 +543,7 @@
  httpd               latest              a6ea92c35c43        4 days ago          166MB
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;호스트에 저장된 이미지를 아카이브로 복사하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker save&lt;/code&gt; 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker load&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+        &lt;p&gt;호스트에 저장된 이미지를 아카이브로 복사하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker save&lt;/code&gt; 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker load&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
         &lt;p&gt;2번에서 생성한 centos:7 이미지와 httpd:latest 이미지를 img.tar라는 이름으로 저장하고나서 두 이미지를 삭제한 후에 img.tar 파일으로 이미지를 불러오는 것을 확인할 수 있습니다.&lt;/p&gt;
       &lt;/li&gt;
@@ -578,7 +578,7 @@ Client: Docker Engine - Community
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;도커 버전을 확인하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker version&lt;/code&gt; 명령어를 입력하면 도커의 버전 정보가 클라이언트와 서버로 나뉘어져 있습니다. 도커는 하나의 명령어로 실행되지만 실제로는 클라이언트와 서버 역할을 각각 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;도커 버전을 확인하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker version&lt;/code&gt; 명령어를 입력하면 도커의 버전 정보가 클라이언트와 서버로 나뉘어져 있습니다. 도커는 하나의 명령어로 실행되지만 실제로는 클라이언트와 서버 역할을 각각 할 수 있습니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -617,9 +617,9 @@ Client: Docker Engine - Community
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너 목록을 확인하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker ps&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너 목록을 확인하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker ps&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
-            &lt;p&gt;현재 호스트에 존재하는 모든 컨테이너를 출력하고 싶다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-a&lt;/code&gt; 옵션을 추가하면 됩니다.&lt;/p&gt;
+            &lt;p&gt;현재 호스트에 존재하는 모든 컨테이너를 출력하고 싶다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; 옵션을 추가하면 됩니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;web1 컨테이너 생성&lt;/p&gt;
@@ -627,7 +627,7 @@ Client: Docker Engine - Community
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker create &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web1 httpd:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너를 생성하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너를 생성하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
             &lt;p&gt;생성할 컨테이너의 이름은 web1 이고 httpd:latest 이미지를 사용하여 컨테이너를 생성합니다.&lt;/p&gt;
           &lt;/li&gt;
@@ -638,7 +638,7 @@ Client: Docker Engine - Community
  1457915352d8967c6a910d102481120b731329219d258144637302b321da2c3e
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-it&lt;/code&gt; 옵션은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t&lt;/code&gt;를 동시에 사용한 것으로 터미널 입력을 위해 자주 사용되는 옵션입니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-it&lt;/code&gt; 옵션은 &lt;code class=&quot;highlighter-rouge&quot;&gt;-i&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;-t&lt;/code&gt;를 동시에 사용한 것으로 터미널 입력을 위해 자주 사용되는 옵션입니다.&lt;/p&gt;
 
             &lt;p&gt;-i, –interactive=false: &lt;strong&gt;표준 입력(stdin)을 활성화&lt;/strong&gt;하며 컨테이너와 연결(attach)되어 있지 않더라도 표준 입력을 유지합니다. 보통 이 옵션을 사용하여 Bash에 명령을 입력합니다.&lt;/p&gt;
 
@@ -657,9 +657,9 @@ Client: Docker Engine - Community
  &amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;It works!&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령으로 생성한 컨테이너를 사용하려면 다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker start&lt;/code&gt; 명령으로 컨테이너를 시작해주어야 합니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker create&lt;/code&gt; 명령으로 생성한 컨테이너를 사용하려면 다음과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker start&lt;/code&gt; 명령으로 컨테이너를 시작해주어야 합니다.&lt;/p&gt;
 
-            &lt;p&gt;web1 이름의 컨테이너를 시작하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 통해 web1 컨테이너의 ip 주소를 확인하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt; 명령을 통해 해당 ip 주소의 웹서버가 정상적으로 동작하는지 확인합니다.&lt;/p&gt;
+            &lt;p&gt;web1 이름의 컨테이너를 시작하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker inspect&lt;/code&gt; 명령을 통해 web1 컨테이너의 ip 주소를 확인하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt; 명령을 통해 해당 ip 주소의 웹서버가 정상적으로 동작하는지 확인합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;os1 컨테이너 시작&lt;/p&gt;
@@ -673,7 +673,7 @@ Client: Docker Engine - Community
  4a0638e6bea2        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   10 minutes ago      Up 4 minutes        80/tcp              web1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너를 시작할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-a&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i&lt;/code&gt; 옵션을 추가하면 컨테이너를 시작시킨 후에 Bash 화면을 연결해줍니다. -a 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너를 시작할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;-i&lt;/code&gt; 옵션을 추가하면 컨테이너를 시작시킨 후에 Bash 화면을 연결해줍니다. -a 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
 
             &lt;p&gt;-a, –attach=[]: 컨테이너에 표준 입력(stdin), 표준 출력(stdout), 표준 에러(stderr)를 연결합니다.&lt;/p&gt;
           &lt;/li&gt;
@@ -683,7 +683,7 @@ Client: Docker Engine - Community
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; web2 httpd:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;이미지로 컨테이너를 생성할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run&lt;/code&gt; 명령어를 사용합니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-d&lt;/code&gt; 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
+            &lt;p&gt;이미지로 컨테이너를 생성할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker run&lt;/code&gt; 명령어를 사용합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; 옵션의 설명은 다음과 같습니다.&lt;/p&gt;
 
             &lt;p&gt;-d, –detach=false: &lt;strong&gt;Detached 모드&lt;/strong&gt;입니다. 보통 데몬 모드라고 부르며 컨테이너가 백그라운드로 실행됩니다.&lt;/p&gt;
           &lt;/li&gt;
@@ -716,7 +716,7 @@ Client: Docker Engine - Community
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;os3
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너를 삭제하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker rm&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너를 삭제하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker rm&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;실행되는 컨테이너 외 전부 삭제&lt;/p&gt;
@@ -730,7 +730,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 4a0638e6bea2        httpd:latest        &lt;span class=&quot;s2&quot;&gt;&quot;httpd-foreground&quot;&lt;/span&gt;   47 minutes ago      Up 41 minutes       80/tcp              web1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;실행되는 컨테이너 외의 모든 컨테이너를 삭제하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker container prune&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;실행되는 컨테이너 외의 모든 컨테이너를 삭제하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker container prune&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;docker stats&lt;/p&gt;
@@ -738,7 +738,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker stats 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너의 실시간 상태를 확인하기 위해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker stats&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너의 실시간 상태를 확인하기 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker stats&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
@@ -796,7 +796,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@c2df3a13921e /]# &lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/null &amp;amp;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--cpus 0.3&lt;/code&gt; 명령을 통해 컨테이너의 cpu 사용을 30%로 제한할 수 있습니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--cpus 0.3&lt;/code&gt; 명령을 통해 컨테이너의 cpu 사용을 30%로 제한할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;메모리 제한&lt;/p&gt;
@@ -804,7 +804,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-itd&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; os5 &lt;span class=&quot;nt&quot;&gt;--memory&lt;/span&gt; 1024m centos:latest
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--memory 1024m&lt;/code&gt; 명령을 통해 메모리 사용을 1GB로 제한할 수 있습니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--memory 1024m&lt;/code&gt; 명령을 통해 메모리 사용을 1GB로 제한할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;자원 제한 변경&lt;/p&gt;
@@ -817,7 +817,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@50c259122bc9 /]# &lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/null &amp;amp;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker update&lt;/code&gt; 명령을 통해 cpu 혹은 메모리의 제한을 변경할 수 있습니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker update&lt;/code&gt; 명령을 통해 cpu 혹은 메모리의 제한을 변경할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
@@ -876,7 +876,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user@docker ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; db2 &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MYSQL_ROOT_PASSWORD=1234&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; mysql:5.7
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker logs&lt;/code&gt; 명령어를 통해 컨테이너의 로그를 확인할 수 있습니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker logs&lt;/code&gt; 명령어를 통해 컨테이너의 로그를 확인할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
@@ -900,7 +900,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; 1 user user 2304  8월 10 11:15 passwd
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker cp&lt;/code&gt; 명령어를 통해 호스트 파일을 컨테이너로 복사하거나 컨테이너의 파일을 호스트에 복사할 수 있습니다.&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker cp&lt;/code&gt; 명령어를 통해 호스트 파일을 컨테이너로 복사하거나 컨테이너의 파일을 호스트에 복사할 수 있습니다.&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;docker diff&lt;/p&gt;
@@ -910,7 +910,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
  A /tmp/passwd
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
 
-            &lt;p&gt;컨테이너에서의 파일의 변경 상태를 체크하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker diff&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
+            &lt;p&gt;컨테이너에서의 파일의 변경 상태를 체크하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker diff&lt;/code&gt; 명령어를 사용합니다.&lt;/p&gt;
 
             &lt;ul&gt;
               &lt;li&gt;
@@ -1013,7 +1013,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Bind Mount 사용&lt;/strong&gt; &lt;a name=&quot;list3_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ```bash
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ```bash
   [user@docker ~]$ mkdir ~/bm1
   [user@docker ~]$ touch ~/bm1/fileA.txt
 
@@ -1198,10 +1198,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host OS의 자원을 할당받아&lt;/code&gt; 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS의 자원을 할당받아&lt;/code&gt; 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;속도저하&lt;/code&gt;의 단점이 존재&lt;/p&gt;
+            &lt;p&gt;Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;속도저하&lt;/code&gt;의 단점이 존재&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1210,13 +1210,13 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host OS를 공유&lt;/code&gt;하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;독립적으로 실행&lt;/code&gt;되어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가벼움&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host OS를 공유&lt;/code&gt;하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립적으로 실행&lt;/code&gt;되어 &lt;code class=&quot;highlighter-rouge&quot;&gt;가벼움&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;VM과의 가장 큰 차이점은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;프로세스를 격리&lt;/code&gt; 하는 것&lt;/p&gt;
+            &lt;p&gt;VM과의 가장 큰 차이점은 &lt;code class=&quot;highlighter-rouge&quot;&gt;프로세스를 격리&lt;/code&gt; 하는 것&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;오버헤드가 적음&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;오버헤드가 적음&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1253,7 +1253,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;p&gt;개발 환경, 테스트 환경, 서비스 환경을 모두 동일하게 사용 가능&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;도커 컨테이너의 기반이 되는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;도커 이미지&lt;/code&gt;가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다&lt;/p&gt;
+            &lt;p&gt;도커 컨테이너의 기반이 되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지&lt;/code&gt;가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1265,7 +1265,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
             &lt;p&gt;다양한 벤더의 시스템 및 오픈소스와 연계하여 사용 가능&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기본으로 탑재&lt;/code&gt;&lt;/p&gt;
+            &lt;p&gt;예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본으로 탑재&lt;/code&gt;&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;p&gt;AWS에서도 Amazon EC2 Container Service를 통해 도커 실행 환경 운영 서비스를 제공&lt;/p&gt;
@@ -1330,10 +1330,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;도커 이미지를 저장&lt;/code&gt;하기 위해 사용&lt;/p&gt;
+            &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;도커 이미지를 저장&lt;/code&gt;하기 위해 사용&lt;/p&gt;
           &lt;/li&gt;
           &lt;li&gt;
-            &lt;p&gt;기본적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Docker Hub&lt;/code&gt;라는 퍼블릭 레지스트리로 설정되어 있고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Harbor&lt;/code&gt;와 같은 프라이빗 레지스트리도 사용 가능&lt;/p&gt;
+            &lt;p&gt;기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Hub&lt;/code&gt;라는 퍼블릭 레지스트리로 설정되어 있고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Harbor&lt;/code&gt;와 같은 프라이빗 레지스트리도 사용 가능&lt;/p&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
@@ -1346,10 +1346,10 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
             &lt;ul&gt;
               &lt;li&gt;
-                &lt;p&gt;컨테이너를 생성하기 위한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Read Only&lt;/code&gt; 템플릿&lt;/p&gt;
+                &lt;p&gt;컨테이너를 생성하기 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Read Only&lt;/code&gt; 템플릿&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;을 통해 빌드 가능&lt;/p&gt;
+                &lt;p&gt;도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;을 통해 빌드 가능&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
                 &lt;p&gt;새로운 컨테이너를 생성하면 변경된 레이어만 따로 체크하는 형태로 가볍고 빠름&lt;/p&gt;
@@ -1364,7 +1364,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
                 &lt;p&gt;이미지의 실행 형태, 이미지를 실행하여 메모리에 올려 동작하는 것&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;하나의 컨테이너&lt;/code&gt;에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;하나의 애플리케이션&lt;/code&gt;만 실행하는 것을 &lt;strong&gt;권장&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 컨테이너&lt;/code&gt;에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 애플리케이션&lt;/code&gt;만 실행하는 것을 &lt;strong&gt;권장&lt;/strong&gt;&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
                 &lt;p&gt;기본적으로 호스트 머신의 네트워크 연결을 통해 외부 네트워크와 연결 가능&lt;/p&gt;
@@ -1380,15 +1380,15 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
                 &lt;p&gt;1) Bridge&lt;/p&gt;
 
-                &lt;p&gt;컨테이너의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기본 네트워크 드라이버&lt;/code&gt;입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.&lt;/p&gt;
+                &lt;p&gt;컨테이너의 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본 네트워크 드라이버&lt;/code&gt;입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.&lt;/p&gt;
 
                 &lt;p&gt;2) Host&lt;/p&gt;
 
-                &lt;p&gt;이 드라이버는 도커 컨테이너와 도커 호스트 간의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;네트워크 격리를 제거&lt;/code&gt;합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.&lt;/p&gt;
+                &lt;p&gt;이 드라이버는 도커 컨테이너와 도커 호스트 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;네트워크 격리를 제거&lt;/code&gt;합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.&lt;/p&gt;
 
                 &lt;p&gt;3) Overlay&lt;/p&gt;
 
-                &lt;p&gt;이 네트워크는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Swarm 서비스가 서로 통신&lt;/code&gt; 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.&lt;/p&gt;
+                &lt;p&gt;이 네트워크는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Swarm 서비스가 서로 통신&lt;/code&gt; 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.&lt;/p&gt;
 
                 &lt;p&gt;4) None&lt;/p&gt;
 
@@ -1396,7 +1396,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
                 &lt;p&gt;5) macvlan&lt;/p&gt;
 
-                &lt;p&gt;이 드라이버는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컨테이너에 MAC 주소를 할당&lt;/code&gt;하여 물리 장치처럼 보이게합니다. &lt;strong&gt;Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅&lt;/strong&gt;합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.&lt;/p&gt;
+                &lt;p&gt;이 드라이버는 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨테이너에 MAC 주소를 할당&lt;/code&gt;하여 물리 장치처럼 보이게합니다. &lt;strong&gt;Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅&lt;/strong&gt;합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.&lt;/p&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
@@ -1408,7 +1408,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
                 &lt;p&gt;여러가지 도커 데몬들로 구성 및 확장 가능&lt;/p&gt;
               &lt;/li&gt;
               &lt;li&gt;
-                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Docker Swarm&lt;/code&gt;과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임&lt;/p&gt;
+                &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Docker Swarm&lt;/code&gt;과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임&lt;/p&gt;
               &lt;/li&gt;
             &lt;/ul&gt;
           &lt;/li&gt;
@@ -1574,7 +1574,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
         &lt;p&gt;기본적으로 docker 명령어를 사용하기 위해서는 root 권한이 필요합니다.&lt;/p&gt;
 
-        &lt;p&gt;$USER에는 현재 사용 중인 유저인 user가 들어가고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker 그룹에 user를 추가&lt;/code&gt;하여 &lt;strong&gt;권한 상승 없이도 docker 명령을 사용&lt;/strong&gt;할 수 있도록 해줍니다.&lt;/p&gt;
+        &lt;p&gt;$USER에는 현재 사용 중인 유저인 user가 들어가고, &lt;code class=&quot;highlighter-rouge&quot;&gt;docker 그룹에 user를 추가&lt;/code&gt;하여 &lt;strong&gt;권한 상승 없이도 docker 명령을 사용&lt;/strong&gt;할 수 있도록 해줍니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;docker 버전 확인&lt;/p&gt;
@@ -1670,13 +1670,11 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
 &lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. VM 인스턴스와 Cloud SQL 연동&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2_4&quot;&gt;   2.4. 스냅샷을 통한 복제 및 NFS 설정&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_4&quot;&gt;   2.4. 관리형 로드 밸런싱 구성&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2_5&quot;&gt;   2.5. 비관리형 로드밸런싱 구성&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_5&quot;&gt;   2.5. Bucket 생성 및 백업 설정&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2_6&quot;&gt;   2.6. Bucket 생성 및 백업 설정&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2_7&quot;&gt;   2.7. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_6&quot;&gt;   2.6. Stack Driver를 활용한 모니터링 및 로깅 시스템 구축&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. 프로젝트 테스트&lt;/a&gt;&lt;/p&gt;
 
@@ -1720,7 +1718,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_2.png&quot; alt=&quot;project_architecture&quot; width=&quot;850&quot; height=&quot;400&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_2.png&quot; alt=&quot;project_architecture&quot; width=&quot;850&quot; height=&quot;470&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -1744,12 +1742,12 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
     &lt;p&gt;GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;해당 검색창에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cloud SQL Admin API&lt;/code&gt;를 입력하여 다음 [그림 3]에 보이는 &lt;strong&gt;사용&lt;/strong&gt; 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.&lt;/p&gt;
+    &lt;p&gt;해당 검색창에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Cloud SQL Admin API&lt;/code&gt;를 입력하여 다음 [그림 3]에 보이는 &lt;strong&gt;사용&lt;/strong&gt; 버튼을 눌러 Cloud SQL를 활성화 시켜줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_3.png&quot; alt=&quot;enable_cloudsql&quot; width=&quot;380&quot; height=&quot;163&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_3.png&quot; alt=&quot;enable_cloudsql&quot; width=&quot;320&quot; height=&quot;132&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1766,7 +1764,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_4.png&quot; alt=&quot;create_cloudsql_instance&quot; width=&quot;500&quot; height=&quot;600&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_4.png&quot; alt=&quot;create_cloudsql_instance&quot; width=&quot;450&quot; height=&quot;552&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1834,11 +1832,11 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asia-northeast3-a&lt;/code&gt;)을 선택하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - &lt;code class=&quot;highlighter-rouge&quot;&gt;asia-northeast3-a&lt;/code&gt;)을 선택하도록 합니다.&lt;/p&gt;
 
-    &lt;p&gt;flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n1-standard-1&lt;/code&gt;을 선택하였고,&lt;/p&gt;
+    &lt;p&gt;flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 &lt;code class=&quot;highlighter-rouge&quot;&gt;n1-standard-1&lt;/code&gt;을 선택하였고,&lt;/p&gt;
 
-    &lt;p&gt;OS는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt;, 웹서버의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP 트래픽을 허용&lt;/code&gt;해주도록 체크하였습니다.&lt;/p&gt;
+    &lt;p&gt;OS는 &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt;, 웹서버의 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP 트래픽을 허용&lt;/code&gt;해주도록 체크하였습니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1936,7 +1934,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
       &lt;span class=&quot;s&quot;&gt;&quot;auth_uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://accounts.google.com/o/oauth2/auth&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s&quot;&gt;&quot;token_uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://oauth2.googleapis.com/token&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s&quot;&gt;&quot;auth_provider_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/oauth2/v1/certs&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;&quot;client_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager%40cccr-gcp-project.iam.gserviceaccount.com&amp;gt;&quot;&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;&quot;client_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%40&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cccr-gcp-project.iam.gserviceaccount.com&amp;gt;&quot;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
@@ -2126,13 +2124,13 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
     &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordpress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# mysql -u root -p -S /cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
 &lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Enter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;Welcome&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Commands&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; \\&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Welcome&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Commands&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; \\&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;Your&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connection&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1478&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Google&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.7.25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Google&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;Copyright&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Oracle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Corporation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ab&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;others&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Copyright&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Oracle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Corporation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ab&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;others&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'help;'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;h'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'help;'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;h'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordpress&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;Reading&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;information&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;
@@ -2162,53 +2160,392 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;스냅샷을 통한 복제 및 NFS 설정&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;관리형 로드 밸런싱 구성&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;ul&gt;
-      &lt;li&gt;instance-wordpress-lb1 (nfs-server)&lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;p&gt;GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 &lt;strong&gt;오토 스케일링(Auto-scaling)을 위한&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;관리형 인스턴스 그룹&lt;/code&gt;과 &lt;strong&gt;템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;비관리형 인스턴스 그룹&lt;/code&gt;으로 나뉩니다.&lt;/p&gt;
 
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;nfs-utils
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# &lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;775 /var/www/html/wordpress
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# vim /etc/exports
-  /var/www/html/wordpress         10.178.0.11&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;rw,sync,sec&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sys&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# exportfs &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
+    &lt;p&gt;본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.&lt;/p&gt;
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# systemctl start nfs-server
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;nfs-server
+    &lt;p&gt;먼저 VM 인스턴스에 대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;스냅샷을 생성&lt;/code&gt;하고, 생성한 스냅샷으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;이미지를 생성&lt;/code&gt;합니다.&lt;/p&gt;
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# firewall-cmd &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--add-service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;nfs
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# firewall-cmd &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--add-service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mountd
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb1 ~]# firewall-cmd &lt;span class=&quot;nt&quot;&gt;--reload&lt;/span&gt;
-  success
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_10.png&quot; alt=&quot;create_snapshot&quot; width=&quot;400&quot; height=&quot;566&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 10] 스냅샷 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_11.png&quot; alt=&quot;create_image&quot; width=&quot;400&quot; height=&quot;689&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 11] 이미지 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스 템플릿을 생성&lt;/code&gt;합니다.&lt;/p&gt;
+
+    &lt;p&gt;그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_12.png&quot; alt=&quot;create_instance_template&quot; width=&quot;400&quot; height=&quot;881&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 12] 인스턴스 템플릿 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리형 인스턴스 그룹을 생성&lt;/code&gt;합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_13.png&quot; alt=&quot;create_instance_group&quot; width=&quot;700&quot; height=&quot;1114&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 13] 인스턴스 그룹 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다.&lt;/p&gt;
+
+    &lt;p&gt;탐색 메뉴에서 &lt;strong&gt;[네트워크 서비스] - [부하 분산]&lt;/strong&gt; 탭에 들어와서 &lt;code class=&quot;highlighter-rouge&quot;&gt;부하 분산기 만들기&lt;/code&gt;를 눌러줍니다.&lt;/p&gt;
+
+    &lt;p&gt;HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP(S) 부하 분산기&lt;/code&gt;를 선택하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;인터넷 트래픽을 VM으로 분산&lt;/code&gt;을 눌러줍니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음 단계로 넘어오면 백엔드 서비스와 프런트엔드 서비스를 생성하는 화면으로 넘어오게 됩니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_14.png&quot; alt=&quot;create_lb_backend&quot; width=&quot;400&quot; height=&quot;589&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 14] 백엔드 서비스 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;기존에 만들어둔 백엔드 서비스가 없기 때문에 새로운 서비스 생성을 선택하고 백앤드 서비스의 이름과 앞에서 생성한 인스턴스 그룹을 선택하면 됩니다. 다음으로는 로드밸런서에서 들어온 트래픽을 인스턴스 그룹의 인스턴스들의 어느 포트로 전달할 것인지를 포트 번호에 정의하는데, 여기서는 HTTP 트래픽을 전달하는 것이기 때문에 80을 선택합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;백엔드 서비스를 생성할 때 상태 확인(Health check)을 선택하는 항목이 있는데 마찬가지로 기존에 만들어둔 상태 확인이 없기 때문에 새로 생성합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_15.png&quot; alt=&quot;create_lb_check&quot; width=&quot;400&quot; height=&quot;465&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 15] 상태 확인 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;상태 확인은 인스턴스 그룹 내의 인스턴스가 양호한지를 체크하고 만약에 정상적이지 않으면 비정상 노드는 부하 분산에서 빼버리는 기능을 수행합니다. 프로토콜은 HTTP를 입력하고, 포트에는 HTTP 포트인 80포트, 그리고 서비스가 정상인지를 확인하는 확인 간격은 체크 주기이고, 제한 시간은 이 시간(초)내에 응답이 없으면 장애라고 판단을 합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_16.png&quot; alt=&quot;create_lb_frontend&quot; width=&quot;400&quot; height=&quot;493&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 16] 프런트엔드 서비스 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;마지막으로 프런트엔드 서비스를 설정하는데, 여기서는 어떤 프로토콜을 어떤 IP와 포트로 받을 것인지, HTTPS의 경우에는 SSL 인증서를 설정하는 작업을 합니다. 본 프로젝트에서는 HTTP 프로토콜을 80 포트로 설정하기 때문에 [그림 16]과 같이 설정하고, 부하 분산 이름을 입력하여 생성을 완료합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;정상적으로 부하 분산기가 생성이 되면 다음 [그림 17]과 같이 백엔드 서비스에 지정된 인스턴스 그룹에 해당하는 인스턴스가 모두 정상 동작하는 화면을 볼 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_17.png&quot; alt=&quot;lb_detail&quot; width=&quot;800&quot; height=&quot;404&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 17] 부하 분산기 세부 정보&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Bucket 생성 및 백업 설정&lt;/strong&gt;   &lt;a name=&quot;list2_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;탐색 메뉴에서 &lt;strong&gt;[Storage] - [브라우저]&lt;/strong&gt; 탭을 눌러 &lt;strong&gt;버킷 생성&lt;/strong&gt; 버튼을 클릭하여 버킷을 생성합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_18.png&quot; alt=&quot;create_bucket&quot; width=&quot;900&quot; height=&quot;145&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 18] 버킷 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;버킷 이름을 입력하고 리전을 아시아로 설정한 후에 나머지는 기본 값으로 생성하게 되면 위의 [그림 18]과 같이 버킷이 생성된 모습을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;생성한 버킷의 권한 탭에 들어오면 버킷에 접근 가능한 구성원들과 역할을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;다음 [그림 19]에서 보이는 &lt;strong&gt;추가&lt;/strong&gt; 버튼을 클릭하여 새로운 구성원을 추가해줍니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_19.png&quot; alt=&quot;bucket_allUsers&quot; width=&quot;500&quot; height=&quot;223&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 19] 버킷 allUsers 구성원 추가&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;allUsers&lt;/code&gt; 구성원에 &lt;code class=&quot;highlighter-rouge&quot;&gt;저장소 개체 관리자&lt;/code&gt; 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 &lt;code class=&quot;highlighter-rouge&quot;&gt;mysqldump&lt;/code&gt;하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;crontab&lt;/code&gt;을 통해 주기적으로 백업하기 위한 명령어입니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# vim /etc/my.cnf
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mysqldump]
+  &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;root
+  &lt;span class=&quot;nv&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Input Your Password
+
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# vim cloudsql_backup.sh
+  &lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;db_instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mysql-wordpress
+  &lt;span class=&quot;nv&quot;&gt;db_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;wordpress
+  &lt;span class=&quot;nv&quot;&gt;db_user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;root
+  &lt;span class=&quot;nv&quot;&gt;bucket_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;gs://bucket-mysql-wordpress
+  &lt;span class=&quot;nv&quot;&gt;socket_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
+  &lt;span class=&quot;nv&quot;&gt;date_YYYYMMDDHHMMSS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'+%Y%m%d%H%M%S'&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;backupfile_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;wordpress_&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;date_YYYYMMDDHHMMSS&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.sql
+
+  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Cloud SQLl daily backup start..&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;#gcloud sql export csv $db_instance $bucket_name/test.csv --database=$db_name --query=$sql_query&lt;/span&gt;
+  mysqldump &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$db_user&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-S&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$socket_path&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--databases&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$db_name&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--hex-blob&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--single-transaction&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--default-character-set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;utf8mb4 &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$backupfile_name&lt;/span&gt;
+
+  gsutil &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$backupfile_name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$bucket_name&lt;/span&gt;
+
+  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Cloud SQL daily backup stop..&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# crontab &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+  0 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/3 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; /root/cloudsql_backup.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Cloud SQL을 백업하는 쉘 스크립트를 작성하여 crontab에 등록하여 3시간 주기로 mysqldump가 실행되도록 설정해두고 일정 시간이 지난 후에 버킷에 정상적으로 백업되어 저장됐는지 확인하였습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_20.png&quot; alt=&quot;cloudsql_bucket_backup1&quot; width=&quot;800&quot; height=&quot;323&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 20] crontab을 사용한 Cloud SQL의 주기적인 백업&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위의 [그림 20]에서 최종 수정 날짜를 확인해보면 3시간 주기로 저장되어 있는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;같은 형태로 이번에는 syslog를 백업하는 쉘 스크립트를 작성하여 crontab에 등록합니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# vim apache_log_backup.sh
+  &lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;syslog daily backup start..&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /var/log/messages | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-iE&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;apache|wordpress&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; /root/apache_log_backup_&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'+%y-%m-%d'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;.log
+  gsutil &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /root/apache_log_backup_&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.log gs://bucket-mysql-wordpress/apache_log_backup/
+  &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; /root/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.log
+
+  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;syslog daily backup stop..&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# crontab &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; /root/apache_log_backup.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;이번에는 매 분마다 쉘 스크립트를 실행하도록 crontab에 등록하고 버킷을 확인해보았습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_21.png&quot; alt=&quot;syslog_bucket_backup&quot; width=&quot;800&quot; height=&quot;383&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 21] crontab을 사용한 syslog의 주기적인 백업&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Stack Driver를 활용한 모니터링 및 로깅 시스템 구축&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
     &lt;ul&gt;
-      &lt;li&gt;instance-wordpress-lb2 (nfs-client)&lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;VM 인스턴스에 monitoring-agent 설치&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSO&lt;/span&gt; https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;bash add-monitoring-agent-repo.sh
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; update
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;stackdriver-agent
+
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start stackdriver-agent
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;stackdriver-agent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;VM 인스턴스에 logging-agent 설치&lt;/p&gt;
+
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSO&lt;/span&gt; https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;bash add-logging-agent-repo.sh
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; update
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;google-fluentd
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;google-fluentd-catch-all-config-structured
+
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start google-fluentd
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;google-fluentd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
     &lt;/ul&gt;
 
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;showmount
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# showmount &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; 10.178.0.10
-  Export list &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;10.178.0.10:
-  /var/www/html/wordpress 10.178.0.11
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# mount &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; rw,sync,sec&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sys 10.178.0.10:/var/www/html/wordpress /var/www/html/wordpress/
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# mount | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;wordpress
-  10.178.0.10:/var/www/html/wordpress on /var/www/html/wordpress &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nfs4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;rw,relatime,sync,vers&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4.1,rsize&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;524288,wsize&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;524288,namlen&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;255,hard,proto&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tcp,timeo&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;600,retrans&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2,sec&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sys,clientaddr&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10.178.0.11,local_lock&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;none,addr&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10.178.0.10&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# vim /etc/fstab
-  10.178.0.10:/var/www/html/wordpress     /var/www/html/wordpress nfs     rw,sync,sec&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sys 0 0
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress-lb2 ~]# mount &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;비관리형 로드밸런싱 구성&lt;/strong&gt;   &lt;a name=&quot;list2_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Bucket 생성 및 백업 설정&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stack Driver를 활용한 모니터링 및 로깅 시스템 구축&lt;/strong&gt;   &lt;a name=&quot;list2_7&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 &lt;strong&gt;[모니터링] - [대시보드]&lt;/strong&gt; 탭을 눌러 들어갑니다.&lt;/p&gt;
+
+    &lt;p&gt;대시보드 페이지에 들어오면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Create Dashboard&lt;/code&gt; 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Chart&lt;/code&gt; 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_22.png&quot; alt=&quot;add_chart&quot; width=&quot;800&quot; height=&quot;402&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 22] 대시보드 차트 추가&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Metric&lt;/code&gt;과 Instance, Group 등 &lt;code class=&quot;highlighter-rouge&quot;&gt;Resource 타입&lt;/code&gt;을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_23.png&quot; alt=&quot;monitoring_dashboard&quot; width=&quot;1000&quot; height=&quot;744&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 23] 모니터링 대시보드 완성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음으로 로깅 시스템은 &lt;strong&gt;[로그 기록] - [로그 뷰어]&lt;/strong&gt; 탭에 들어오면 logging-agent를 통해 수집된 로그들을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/gcp_toyproject_24.png&quot; alt=&quot;log_viewer&quot; width=&quot;900&quot; height=&quot;294&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 24] 로그 뷰어 필터링&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2281,7 +2618,7 @@ f20ddba876c2        centos:latest       &lt;span class=&quot;s2&quot;&gt;&quot;/
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -2296,7 +2633,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -2315,7 +2652,7 @@ down ip link set dev $IFACE down
 
 &lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -2334,7 +2671,7 @@ iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
 
 &lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -2351,7 +2688,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
 $ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2484,7 +2821,7 @@ $ ./app.sh
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
@@ -2498,7 +2835,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -2513,7 +2850,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
 $ vi local.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2521,14 +2858,14 @@ $ vi local.conf
 
 &lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -2553,7 +2890,7 @@ $ ./compute_3.sh
 
 &lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2562,7 +2899,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2571,7 +2908,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
@@ -2615,7 +2952,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;p&gt;naver-news-scraper 소스를 다운로드 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2625,7 +2962,7 @@ $ cd naver-news-scraper
 
 &lt;p&gt;nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -3081,8 +3418,8 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
+&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -3114,7 +3451,7 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
@@ -3149,14 +3486,14 @@ _＼_Tom＼__&lt;/p&gt;
         <title>code snippet test</title>
         <description>&lt;p&gt;This is a raw snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hello world
 123
 This is a text snippet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This is a JavaScript snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const add = (a, b) =&amp;gt; a + b
 const minus = (a, b) =&amp;gt; a - b
 
 console.log(add(100,200))  // 300
@@ -3165,7 +3502,7 @@ console.log(minus(100,200))  // -100
 
 &lt;p&gt;This is a Python snippet:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def say_hello():
     print(&quot;hello world!&quot;)
 
 say_hello()   // &quot;hello world!&quot;
@@ -3196,7 +3533,7 @@ say_hello()   // &quot;hello world!&quot;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Fork &lt;a href=&quot;https://github.com/jarrekk/Jalpc&quot;&gt;this project – Jalpc&lt;/a&gt; at &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;. If you want to edit website at github, do it as following gif or clone forked repository. &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone git@github.com:github_username/Jalpc.git&lt;/code&gt;.&lt;/p&gt;
 
     &lt;p&gt;&lt;!-- ![edit](/crisis513.github.io/static/assets/img/blog/3steps/edit.gif) --&gt;
  &lt;img src=&quot;/crisis513.github.io/static/assets/img/blog/3steps/edit.gif&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
@@ -3215,10 +3552,10 @@ say_hello()   // &quot;hello world!&quot;
         &lt;p&gt;&lt;strong&gt;_data/index/&lt;/strong&gt;: edit sections’ data to yours at index page, please notice comment at each file.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;_data/blog.yml&lt;/strong&gt;: edit navbar(categories) of blog page, if you have different/more blog page, copy &lt;code class=&quot;highlighter-rouge&quot;&gt;blog/python.html&lt;/code&gt; and change it to your category HTML file, and edit &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;/python/&lt;/strong&gt; to your category name at items &lt;strong&gt;title&lt;/strong&gt; and &lt;strong&gt;permalink&lt;/strong&gt;, make sure title is the same as permalink but capitalized first letter(except HTML).&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: If you wanna release website at your own domain name: edit it and create &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch; if you want to use &lt;em&gt;github_username.github.io&lt;/em&gt;: leave it blank.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;Go to repo’s settings panel, config &lt;strong&gt;GitHub Pages&lt;/strong&gt; section to make sure website is released.&lt;/p&gt;
@@ -3230,7 +3567,7 @@ say_hello()   // &quot;hello world!&quot;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
+&lt;p&gt;From now on, you can post your blog to this website by creating md files at &lt;code class=&quot;highlighter-rouge&quot;&gt;post/&lt;/code&gt; directory and push it to GitHub, you can clear files at this directory before you post blogs.&lt;/p&gt;
 
 &lt;p&gt;If you like this repository, I appreciate you star this repository. Please don’t hesitate to mail me or post issues on GitHub if you have any questions. Hope you have a happy blog time!😊&lt;/p&gt;
 </description>
@@ -3309,7 +3646,7 @@ time.sleep(1)&lt;/p&gt;
     global num
     btns = driver.find_elements_by_xpath(‘//&lt;em&gt;[@id=”grid”]/div[&lt;/em&gt;]’)&lt;/p&gt;
 
-  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
+  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for btn in btns:
     print(btn.text, end='\t')
     if btn.text == str(num):
         btn.click()
