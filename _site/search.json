@@ -27,7 +27,15 @@
     
     
     {
-        "title" : "[Project] GCP를 활용한 웹사이트 구축과 모너터링 및 부하테스트 - 2020-08-16",
+        "title" : "[Project] Linux 취약점 진단 및 평가와 로깅 - 2020-08-30",
+        "url" : "/project/2020/08/30/linux_vulnerability_diagnosis_project.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Project] GCP를 활용한 웹사이트 구축과 모너터링 및 부하 테스트 - 2020-08-16",
         "url" : "/project/2020/08/16/gcp_project.html"
     }
     

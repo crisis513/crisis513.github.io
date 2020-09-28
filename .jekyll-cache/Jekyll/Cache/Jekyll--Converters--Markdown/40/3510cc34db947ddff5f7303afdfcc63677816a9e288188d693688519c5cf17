@@ -1,0 +1,155 @@
+I"�<p>본 프로젝트는 CCCR에서 세미 프로젝트입니다.</p>
+
+<p>구현 과정 및 설정까지 작성하여 글이 다소 길 수 있지만 하나의 프로젝트로 진행되어 포스팅을 따로 나누지 않았습니다.</p>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 프로젝트 개요</a></p>
+
+<p><a href="#list1_2">   1.1. 프로젝트 목적</a></p>
+
+<p><a href="#list1_2">   1.2. 프로젝트 아키텍처</a></p>
+
+<p><a href="#list2">2. 프로젝트 구현</a></p>
+
+<p><a href="#list2_1">   2.1. Cloud SQL 구성</a></p>
+
+<p><a href="#list2_2">   2.2. VM 인스턴스 생성 및 워드프레스 구축</a></p>
+
+<p><a href="#list2_3">   2.3. VM 인스턴스와 Cloud SQL 연동</a></p>
+
+<p><a href="#list3">3. 프로젝트 테스트</a></p>
+
+<p><a href="#list3_1">   3.1. Cloud SQL 로깅 테스트</a></p>
+
+<p><a href="#list3_2">   3.2. 오토 스케일링 및 부하 테스트</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-프로젝트-개요---"><span style="color:purple"><strong>1. 프로젝트 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>프로젝트 목적</strong>   <a name="list1_1"></a></p>
+
+    <p>본 프로젝트는 KISA에서 작성된 <a href="https://www.kisa.or.kr/public/laws/laws3_View.jsp?cPage=6&amp;mode=view&amp;p_No=259&amp;b_No=259&amp;d_No=106&amp;ST=T&amp;SV=">주요정보통신기반시설 기술적 취약점 분석 평가 상세 가이드</a> 문서를 참고하여 기술적인 취약 여부를 검함으로써 악성코드 유포, 해킹 등 사이버 위협에 대응하기 위해 시작하게 된 프로젝트입니다.</p>
+
+    <p>가이드의 문서를 숙지하기 어려운 부분이 많기 때문에 보안 담당자들이 취약점 점검을 자동으로 손쉽게 취약점 진단을 진행할 수 있도록 운영체제 취약점 진단 자동화 스크립트를 개발하고 배포한다. 취약한 항목에 대해서는 [Info] 태그를 통해 가이드를 제시한다. 점검을 완료한 호스트는 ELK(Elasticsearch-Logstash-Kibana) Stack을 통해 가시화된 점검 결과 데이터를 확인할 수 있다.</p>
+
+    <p>구축된 워드프레스 서버를 Google Cloud Console을 사용해 서비스와 상호작용하는 방법 등 GCP의 기본적인 기능들을 사용해보는 것을 목표로 진행된 프로젝트입니다.</p>
+
+    <p><br /></p>
+
+    <p>프로젝트 진행 당시에 notion을 통해 정리했었던 프로젝트 진행 순서는 다음 [그림 1]과 같습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/gcp_toyproject_1.png" alt="What_we_did" width="560" height="310" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] 프로젝트 진행 순서</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>프로젝트 아키텍처</strong>   <a name="list1_2"></a></p>
+
+    <p>웹서비스는 CentOS 인스턴스를 생성하여 워드프레스를 구축하였고, 구축한 웹서비스에 GCP의 기능을 최대한 활용하는 형태로 프로젝트를 진행했습니다.</p>
+
+    <p>다음 [그림 2]는 본 프로젝트의 구조를 쉽게 나타낼 수 있도록 아키텍처를 그린 것입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/gcp_toyproject_2.png" alt="project_architecture" width="850" height="470" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] 프로젝트 아키텍처</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위와 같이 Compute Engine을 통한 인스턴스 생성, 로드 밸런싱, Cloud SQL 및 Bucket 연동, Stack Driver를 통한 로깅과 모니터링하는 부분까지 진행하였습니다.</p>
+
+    <p>Cloud DNS를 이용하여 도메인을 설정해보고 싶었지만, 도메인을 구입하고 등록하는 과정이 필요하여 생략하였습니다.</p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-프로젝트-구현---"><span style="color:purple"><strong>2. 프로젝트 구현</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Cloud SQL 구성</strong>   <a name="list2_1"></a></p>
+
+    <p>GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.</p>
+
+    <p>해당 검색창에서 <code class="language-plaintext highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 <strong>Cloud SQL를 활성화</strong> 시켜줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/gcp_toyproject_3.png" alt="enable_cloudsql" width="320" height="132" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] Cloud SQL Admin API 활성화</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="3-프로젝트-테스트---"><span style="color:purple"><strong>3. 프로젝트 테스트</strong></span>   <a name="list3"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Cloud SQL 로깅 테스트</strong>   <a name="list3_1"></a></p>
+
+    <p>서비스 중인 워드프레스 서버에서 Cloud SQL에 대한 접속을 시도하는데 다음 [그림 26]과 같이 패스워드를 잘못 입력한 상황입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/gcp_toyproject_26.png" alt="cloudsql_connection_failure" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 26] Cloud SQL 접속 실패</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+</ul>
+:ET

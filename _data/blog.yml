@@ -15,8 +15,8 @@
 - name: Infra
   href: /infra/
 
-- name: Sample
-  href: /sample/
+# - name: Sample
+#   href: /sample/
 
 # Don't display donation page: change donation to off at file '_config.yml'
 - name: Donate
