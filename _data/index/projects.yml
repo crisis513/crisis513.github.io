@@ -9,18 +9,26 @@
   img: /static/assets/img/landing/ssustack.png
   desc: ssustack 프로젝트는 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다.
 
-- name: bkms
-  i18n: bkms
-  gh_user: crisis513
-  repo: crisis513
-  url: http://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&control_no=648f5d72e457c232ffe0bdc3ef48d419
-  img: /static/assets/img/landing/bkms.png
-  desc: BKMS(Blockchain-based Key Management System)은 손한기의 석사학위논문 작성에 개발되었습니다. 
-
 - name: naver-news-scraper
   i18n: naver-news-scraper
   gh_user: crisis513
   repo: naver-news-scraper
   img: /static/assets/img/landing/nn-logo.png
   desc: naver-news-scraper 프로젝트는 네이버뉴스 속보에서 원하는 키워드에 해당하는 뉴스를 스크랩하여 카카오톡 혹은 텔레그램봇으로 받아보기 위해 사용됩니다.
+
+- name: Web Service using GCP
+  i18n: Web Service using GCP
+  gh_user: crisis513
+  repo: crisis513
+  url: https://crisis513.github.io/project/2020/08/16/gcp_project.html
+  img: /static/assets/img/landing/gcp_logo.png
+  desc: GCP 환경에서 웹 서버를 구축 및 운영해보기 위해 시작된 프로젝트입니다. GCP의 기본적인 기능들인 Cloud SQL, Bucket, Stack Driver를 구성하여 로드밸런싱 된 워드프레스에 연동시켰고, 데이터베이스, 백업, 로깅 및 모니터링까지 정상적으로 테스트하였습니다.
+
+- name: Linux Vulnerability Diagnosis
+  i18n: Linux Vulnerability Diagnosis
+  gh_user: crisis513
+  repo: crisis513
+  url: https://crisis513.github.io/project/2020/08/30/linux_vulnerability_diagnosis_project.html
+  img: /static/assets/img/landing/diagnosis_logo.png
+  desc: KISA에서 작성된 '주요정보통신기반시설 기술적 취약점 분석 평가 상세 가이드' 문서를 참고하여 CentOS 환경에서 자동으로 취약점 진단을 진행할 수 있도록 취약점 진단 자동화 스크립트를 개발하고 ELK Stack을 통해 진단 결과를 가시화하여 보여줍니다.
 

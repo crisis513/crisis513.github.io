@@ -1,13 +1,13 @@
-I"]<p>This is a raw snippet:</p>
+I"$<p>This is a raw snippet:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hello world
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hello world
 123
 This is a text snippet
 </code></pre></div></div>
 
 <p>This is a JavaScript snippet:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const add = (a, b) =&gt; a + b
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const add = (a, b) =&gt; a + b
 const minus = (a, b) =&gt; a - b
 
 console.log(add(100,200))  // 300
@@ -16,7 +16,7 @@ console.log(minus(100,200))  // -100
 
 <p>This is a Python snippet:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def say_hello():
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def say_hello():
     print("hello world!")
 
 say_hello()   // "hello world!"
