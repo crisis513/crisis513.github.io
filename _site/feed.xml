@@ -5,12 +5,302 @@
     <description>s6i's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 20 Oct 2020 03:03:52 +0900</pubDate>
-    <lastBuildDate>Tue, 20 Oct 2020 03:03:52 +0900</lastBuildDate>
+    <pubDate>Tue, 20 Oct 2020 06:05:58 +0900</pubDate>
+    <lastBuildDate>Tue, 20 Oct 2020 06:05:58 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
-        <title>[Project] DevSecOps 프로젝트 개요 및 환경 구성</title>
+        <title>[Project] DevSecOps 프로젝트 - CI 구성</title>
+        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
+
+&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. CI(Continuous Integration) 구성&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.2. CI 란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. Gitlab - Jenkins 연동&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. Gitlab - Jenkins 웹훅 설정&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_4&quot;&gt;   1.4. Pipeline 설정&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-cicontinuous-integration-구성---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. CI(Continuous Integration) 구성&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;CI 란?&lt;/strong&gt;   &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;CI 란 팀의 구성원들이 작업한 내용을 정기적으로 통합하는 것을 의미합니다.&lt;/p&gt;
+
+    &lt;p&gt;개발자들은 소스 코드를 정기적으로 Git, SVN 과 같은 SCM(Source Code Management, 형상 관리 시스템)에 Push 하는데, &lt;strong&gt;각각의 개발자들로부터 Push된 소스 코드들을 정기적으로 통합하는 것을 CI&lt;/strong&gt;라고 합니다.&lt;/p&gt;
+
+    &lt;p&gt;CI를 구축하지 않은 경우 개발자들이 각자 개발한 소스 코드를 형상 관리 서버에 Commit 하면 별도의 품질관리를 거치지 않고 대부분 개발이 끝난 막바지에 통합을 하여 테스트를 진행하게 됩니다.&lt;/p&gt;
+
+    &lt;p&gt;이럴경우, 개발 중 별도의 품질 관리를 수행하지 않았기 때문에 잘못된 소스 코드를 형상관리 시스템에 반영하였을 경우 발생되는 문제가 개발 후반에 모두 장애로 발견됩니다.&lt;/p&gt;
+
+    &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Gitlab - Jenkins 연동&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;SCM 툴인 Gitlab과 CI/CD Server 툴로 사용할 Jenkins를 연동하는 작업을 시작하겠습니다.&lt;/p&gt;
+
+    &lt;p&gt;먼저 [그림 1]과 같이 관리자 계정에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Area &amp;gt; Network&lt;/code&gt; 탭으로 들어와 아웃바운드를 설정합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_1.png&quot; alt=&quot;gitlab_outbound&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] Gitlab 네트워크 아웃바운드 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;웹훅 및 서비스가 액세스 할 수 있는 IP, 즉 Jenkins 서버의 IP를 적어줍니다.&lt;/p&gt;
+
+    &lt;p&gt;다음으로 &lt;strong&gt;Gitlab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_2.png&quot; alt=&quot;gitlab_access_token&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] Gitlab Access Token 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위의 [그림 2]와 같이 토큰 명과 만료일을 설정하고 액세스 토큰을 생성하면 토큰 값이 나옵니다.&lt;/p&gt;
+
+    &lt;p&gt;토큰 값은 Jenkins에서 credentials를 생성할 때 필요하기 때문에 따로 기록해둡니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음으로 Jenkins의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_3.png&quot; alt=&quot;jenkins_gitlab_config&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] Jenkins에서 Gitlab 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Gitlab 호스트의 URL 및 포트를 적어주고 Credentials는 Add 버튼을 눌러 다음 [그림 4]와 같이 생성하여 줍니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_4.png&quot; alt=&quot;jenkins_gitlab_credentials&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] Jenkins에서 Gitlab Credentials 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Gitlab - Jenkins 웹훅 설정&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_5.png&quot; alt=&quot;jenkins_new_item&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 5] Jenkins Item 생성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위의 [그림 5]와 같이 파이프라인을 선택하고 아이템의 이름을 명시하고 OK 버튼을 눌러 아이템을 만들어줍니다.&lt;/p&gt;
+
+    &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;devsecops-pipeline&lt;/code&gt;라는 이름의 아이템을 만들어주었습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Webhooks&lt;/code&gt; 탭으로 들어옵니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_6.png&quot; alt=&quot;gitlab_webhook&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 6] Gitlab 웹훅 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위의 [그림 6]와 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName&lt;/code&gt;의 형태로 URL을 작성해줍니다.&lt;/p&gt;
+
+    &lt;p&gt;일단 설정은 푸시 이벤트에 대한 트리거만 걸어놓고 차후 멀티 브랜치에 대한 파이프라인 구성도 진행해볼 것입니다.&lt;/p&gt;
+
+    &lt;p&gt;웹훅 설정을 마치고 아래로 내리면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test&lt;/code&gt; 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Push events&lt;/code&gt;에 대한 테스트를 진행해봅니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hook executed successfully: HTTP 200&lt;/code&gt; 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Pipeline 설정 및 테스트&lt;/strong&gt;   &lt;a name=&quot;list1_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;[그림 5]에서 생성한 파이프라인의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_7.png&quot; alt=&quot;gitlab_webhook&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 7] Gitlab 웹훅 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;아래로 쭉 내리면 [그림 8]과 같이 파이프라인 스크립트를 작성할 수 있는 공간이 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_8.png&quot; alt=&quot;echo_hello_world&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 8] Hello World 파이프라인 스크립트 작성&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Gitlab에 푸시했을 때 정상적으로 파이프라인이 작동하는지만 확인해보기 위해 ‘Hello World’를 출력하는 간단한 스크립트를 작성하여 설정을 저장했습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;그러고나서 깃 푸시 이벤트를 보내면 다음 [그림 9]와 같이 자동으로 설정해둔 파이프라인이 정상적으로 실행되는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_9.png&quot; alt=&quot;pipeline_result&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 9] 파이프라인 실행 결과 확인&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Console Output&lt;/code&gt; 탭을 눌러 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_10.png&quot; alt=&quot;build_console&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 10] 파이프라인 실행 콘솔 로그 확인&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;[그림 10]에서 볼 수 있듯이 정상적으로 파이프라인이 실행되어 콘솔에 ‘Hello World’ 문구가 출력된 것을 확인할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 08 Oct 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/2020/10/08/devsecops2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/2020/10/08/devsecops2.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>project</category>
+        
+        <category>devsecops</category>
+        
+        <category>devops</category>
+        
+        <category>gcp</category>
+        
+        <category>gitlab</category>
+        
+        <category>jenkins</category>
+        
+        <category>ci</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
+    
+      <item>
+        <title>[Project] DevSecOps 프로젝트 - 개요 및 환경 구성</title>
         <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
 
 &lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
@@ -37,7 +327,9 @@
 
 &lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. 쿠버네티스 구성&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. Gitlab 및 Jenkins 구성&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. Gitlab 구성&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_4&quot;&gt;   2.4. Jenkins 구성&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -74,7 +366,7 @@
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1.png&quot; alt=&quot;devops_architecture&quot; width=&quot;778&quot; height=&quot;513&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_1.png&quot; alt=&quot;devops_architecture&quot; width=&quot;778&quot; height=&quot;513&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -117,7 +409,7 @@
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1_2.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -379,9 +671,13 @@
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Gitlab 및 Jenkins 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Gitlab 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
+
+    &lt;p&gt;GitLab은 자체 CI를 무료로 제공하고 있어 외부 CI 서비스를 사용할 필요가 없습니다.&lt;/p&gt;
+
+    &lt;p&gt;하지만 Jenkins에서 제공되는 플러그인이 많기 때문에 보안을 적용한 파이프라인을 구축하기에는 외부 CI/CD 서비스인 Jenkins를 사용할 것이고, 기존의 서비스 중인 Github 혹은 Gitlab을 사용해도 무방합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -460,7 +756,7 @@
         &lt;table&gt;
           &lt;thead&gt;
             &lt;tr&gt;
-              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_3.png&quot; alt=&quot;gcp_firewall&quot; /&gt;&lt;/th&gt;
+              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1_3.png&quot; alt=&quot;gcp_firewall&quot; /&gt;&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
           &lt;tbody&gt;
@@ -477,7 +773,7 @@
         &lt;table&gt;
           &lt;thead&gt;
             &lt;tr&gt;
-              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_4.png&quot; alt=&quot;gitlab_new_password&quot; width=&quot;569&quot; height=&quot;385&quot; /&gt;&lt;/th&gt;
+              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1_4.png&quot; alt=&quot;gitlab_new_password&quot; width=&quot;569&quot; height=&quot;385&quot; /&gt;&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
           &lt;tbody&gt;
@@ -490,6 +786,9 @@
     &lt;/ul&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jenkins 구성&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -562,7 +861,7 @@
         &lt;table&gt;
           &lt;thead&gt;
             &lt;tr&gt;
-              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5.png&quot; alt=&quot;jenkins_install&quot; width=&quot;520&quot; height=&quot;462&quot; /&gt;&lt;/th&gt;
+              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1_5.png&quot; alt=&quot;jenkins_install&quot; width=&quot;520&quot; height=&quot;462&quot; /&gt;&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
           &lt;tbody&gt;
@@ -595,7 +894,7 @@
         &lt;table&gt;
           &lt;thead&gt;
             &lt;tr&gt;
-              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_6.png&quot; alt=&quot;jenkins_main&quot; width=&quot;563&quot; height=&quot;389&quot; /&gt;&lt;/th&gt;
+              &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_1_6.png&quot; alt=&quot;jenkins_main&quot; width=&quot;563&quot; height=&quot;389&quot; /&gt;&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
           &lt;tbody&gt;
@@ -629,7 +928,13 @@
         
         <category>devops</category>
         
-        <category>cp</category>
+        <category>gcp</category>
+        
+        <category>kubernetes</category>
+        
+        <category>gitlab</category>
+        
+        <category>jenkins</category>
         
         
         <category>Project</category>

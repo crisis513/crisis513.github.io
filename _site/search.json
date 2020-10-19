@@ -3,7 +3,15 @@
     "data" : [
      
     {
-        "title" : "[Project] DevSecOps 프로젝트 개요 및 환경 구성 - 2020-10-03",
+        "title" : "[Project] DevSecOps 프로젝트 - CI 구성 - 2020-10-08",
+        "url" : "/project/2020/10/08/devsecops2.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Project] DevSecOps 프로젝트 - 개요 및 환경 구성 - 2020-10-03",
         "url" : "/project/2020/10/03/devsecops1.html"
     }
     
