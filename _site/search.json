@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "[Project] DevSecOps 프로젝트 개요 및 환경 구성 - 2020-10-03",
+        "url" : "/project/2020/10/03/devsecops1.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "[Docker] 도커 이미지 - 2020-09-03",
         "url" : "/infra/2020/09/03/docker4.html"
     }

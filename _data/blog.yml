@@ -12,8 +12,8 @@
 - name: Patent
   href: /patent/
 
-- name: Infra
-  href: /infra/
+# - name: Infra
+#   href: /infra/
 
 # - name: Sample
 #   href: /sample/

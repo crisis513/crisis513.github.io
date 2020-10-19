@@ -1,0 +1,150 @@
+I"s<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 프로젝트 개요</a></p>
+
+<p><a href="#list1_2">   1.1. 프로젝트 소개</a></p>
+
+<p><a href="#list1_2">   1.2. 프로젝트 목적</a></p>
+
+<p><a href="#list1_3">   1.3. 프로젝트 아키텍처</a></p>
+
+<p><a href="#list2">2. 환경 구성</a></p>
+
+<p><a href="#list2_1">   2.1. GCP(Google Cloud Platform) 구성</a></p>
+
+<p><a href="#list2_2">   2.2. 쿠버네티스 구성</a></p>
+
+<p><a href="#list2_3">   2.3. Gitlab 및 Jenkins 구성</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-프로젝트-개요---"><span style="color:purple"><strong>1. 프로젝트 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>프로젝트 소개</strong>   <a name="list1_1"></a></p>
+
+    <p>많은 기업들이 클라우드 환경으로의 디지털 트랜스포메이션을 진행하면서, 기존의 보안 쳬계와 다른 클라우드 네이티브 환경에서의 보안을 어렵게 생각하는 경우가 많습니다.</p>
+
+    <p>온프레미스와는 전혀 다른 방식으로 보안을 구현해야하는 필요성이 대두되었고, 클라우드 환경에서는 기업마다 다른 개발환경과 개발문화로 인한 변화의 폭이 훨씬 크므로, 자동화되고 가시화된 개발보안방법론인 DevSecOps 쳬계를 적용하므로써 빠르게 변화하는 서비스 개발 속도에 발맞춰 보안의 속도도 따라가야 할 필요가 있습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>프로젝트 목적</strong>   <a name="list1_2"></a></p>
+
+    <p>본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, <code class="language-plaintext highlighter-rouge">보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축</code>하고자 합니다.</p>
+
+    <p><strong>클라우드 네이티브 환경에서의 DevSecOps 쳬계와 CI/CD 체계를 이해</strong>하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 <strong>실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인 구축하는 것이 목적</strong>입니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>프로젝트 아키텍처</strong>   <a name="list1_3"></a></p>
+
+    <p>본 프로젝트의 아키텍처는 다음 [그림 1]과 같습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1.png" alt="devops_architecture" width="778" height="513" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] DevOps 아키텍처</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Gitlab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, argoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deploy) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.</p>
+
+    <p>그리고 서비스 운영에 필요한 로깅 시스템은 EFK(Elasticsearch-Fluentd-Kibana)를, 모니터링 시스템은 Prometheus, Grafana를 쿠버네티스의 서비스 형태로 구축하였습니다.</p>
+
+    <p><br /></p>
+
+    <blockquote>
+      <p>[그림 1]은 현재(2020-10-17)까지 진행된 부분이며, Security에 대한 파이프라인은 미완성으로 추후 아키텍처를 업데이트 할 예정입니다.</p>
+    </blockquote>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-환경-구성---"><span style="color:purple"><strong>2. 환경 구성</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>GCP(Google Cloud Platform) 구성</strong>   <a name="list2_1"></a></p>
+
+    <p>GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 <code class="language-plaintext highlighter-rouge">kubeadm</code>을 통해 쿠버네티스를 구성할 것 입니다.</p>
+
+    <p>따라서 다음 [그림 2]와 같이 GCP 인스턴스를 생성해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2.png" alt="gcp_instance" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] GCP 인스턴스 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>인스턴스 생성할 때의 설정은 다음과 같습니다.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  - 리전: asia-northeast3(서울)
+    
+  - 머신 계열: n1-standard-2(vCPU 2개, 7.5GB 메모리)
+
+  - 부팅 디스크: CentOS 7
+
+  - 액세스 범위: 모든 Cloud API에 대한 전체 액세스 허용
+
+  - 방화벽: HTTP/HTTPS 트래픽 허용
+</code></pre></div>    </div>
+
+    <p>추가로</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>쿠버네티스 구성</strong>   <a name="list2_2"></a></p>
+
+    <p>위에서 언급하였듯 생성한 인스턴스에 kubeadm 명령을 통해 쿠버네티스를 구성합니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Gitlab 및 Jenkins 구성</strong>   <a name="list2_3"></a></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+:ET
