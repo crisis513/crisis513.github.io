@@ -1,0 +1,436 @@
+I"�e<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 모니터링 시스템 구성</a></p>
+
+<p><a href="#list1_1">   1.1. Helm 개요와 설치</a></p>
+
+<p><a href="#list1_2">   1.2. Prometheus와 Grafana 구성</a></p>
+
+<p><a href="#list2">2. 로깅 시스템 구성</a></p>
+
+<p><a href="#list2_1">   2.1. EFK(Elasticsearch-Fluent Bit-Kibana) 구성</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-모니터링-시스템-구성---"><span style="color:purple"><strong>1. 모니터링 시스템 구성</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Helm 개요와 설치</strong>   <a name="list1_1"></a></p>
+
+    <p>Helm은 쿠버네티스 패키지를 관리해주는 도구입니다.</p>
+
+    <p>Helm에서 사용되는 차트는 리소스를 하나로 묶은 패키지에 해당하며, Helm으로 차트를 관리하는 목적은 자칫 번잡해지기 쉬운 매니페스트 파일을 관리하기 쉽게 하기 위함입니다.</p>
+
+    <p>그리고 설치할 때마다 릴리스 버전이 생성되고 새로운 차트를 찾을때에는 Helm chart repository에서 찾을 수 있습니다.</p>
+
+    <p>Helm 다음 명령어로 간단하게 설치가 가능합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>curl <span class="nt">-fsSL</span> <span class="nt">-o</span> get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  <span class="nv">$ </span><span class="nb">chmod </span>700 get_helm.sh
+  <span class="nv">$ </span>./get_helm.sh
+</code></pre></div>    </div>
+
+    <p>Helm이 정상적으로 설치되면 차트 레포지토리를 추가하고 업데이트해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+  <span class="s2">"stable"</span> has been added to your repositories
+
+  <span class="nv">$ </span>helm repo update
+  Hang tight <span class="k">while </span>we grab the latest from your chart repositories...
+  ...Successfully got an update from the <span class="s2">"stable"</span> chart repository
+  Update Complete. ⎈Happy Helming!⎈
+</code></pre></div>    </div>
+
+    <p>여기까지만 해주어도 Helm을 사용할 준비가 끝난 것입니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Prometheus와 Grafana 구성</strong>   <a name="list1_2"></a></p>
+
+    <p>모니터링 환경을 구축하기 위해 앞서 설치한 Helm을 사용하여 Prometheus와 Grafana를 쿠버네티스에 설치할 것입니다.</p>
+
+    <p>먼저 모니터링을 위한 네임스페이스를 생성해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace monitoring
+  namespace/monitoring created
+</code></pre></div>    </div>
+
+    <p>생성된 네임스페이스에 다음 명령어를 통해 prometheus-operator를 설치해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm <span class="nb">install </span>prometheus stable/prometheus-operator <span class="nt">--namespace</span> monitoring
+  WARNING: This chart is deprecated
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  NAME: prometheus
+  LAST DEPLOYED: Sun Oct  4 07:36:07 2020
+  NAMESPACE: monitoring
+  STATUS: deployed
+  REVISION: 1
+  NOTES:
+  <span class="k">*******************</span>
+  <span class="k">***</span> DEPRECATED <span class="k">****</span>
+  <span class="k">*******************</span>
+  <span class="k">*</span> stable/prometheus-operator chart is deprecated.
+  <span class="k">*</span> Further development has moved to https://github.com/prometheus-community/helm-charts
+  <span class="k">*</span> The chart has been renamed kube-prometheus-stack to more clearly reflect
+  <span class="k">*</span> that it installs the <span class="sb">`</span>kube-prometheus<span class="sb">`</span> project stack, within which Prometheus
+  <span class="k">*</span> Operator is only one component.
+
+  The Prometheus Operator has been installed. Check its status by running:
+  kubectl <span class="nt">--namespace</span> monitoring get pods <span class="nt">-l</span> <span class="s2">"release=prometheus"</span>
+
+  Visit https://github.com/coreos/prometheus-operator <span class="k">for </span>instructions on how
+  to create &amp; configure Alertmanager and Prometheus instances using the Operator.
+</code></pre></div>    </div>
+
+    <p>Prometheus와 Grafana가 재대로 동작하는지 확인해봅니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> monitoring
+  NAME                                                         READY   STATUS    RESTARTS   AGE
+  pod/alertmanager-prometheus-prometheus-oper-alertmanager-0   2/2     Running   0          10m
+  pod/prometheus-grafana-7db88cd4c6-nff9b                      2/2     Running   0          10m
+  pod/prometheus-kube-state-metrics-6b46f67bf6-n8pxk           1/1     Running   0          10m
+  pod/prometheus-prometheus-node-exporter-d4zfh                1/1     Running   0          10m
+  pod/prometheus-prometheus-node-exporter-dkjrj                1/1     Running   0          10m
+  pod/prometheus-prometheus-node-exporter-zv7t9                1/1     Running   0          10m
+  pod/prometheus-prometheus-oper-operator-7c75ff5864-z85j8     2/2     Running   0          10m
+  pod/prometheus-prometheus-prometheus-oper-prometheus-0       3/3     Running   0          10m
+
+  NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>                      AGE
+  service/alertmanager-operated                     ClusterIP   None             &lt;none&gt;        9093/TCP,9094/TCP,9094/UDP   10m
+  service/prometheus-grafana                        ClusterIP   10.104.145.38    &lt;none&gt;        80/TCP                       10m
+  service/prometheus-kube-state-metrics             ClusterIP   10.109.220.132   &lt;none&gt;        8080/TCP                     10m
+  service/prometheus-operated                       ClusterIP   None             &lt;none&gt;        9090/TCP                     10m
+  service/prometheus-prometheus-node-exporter       ClusterIP   10.104.66.36     &lt;none&gt;        9100/TCP                     10m
+  service/prometheus-prometheus-oper-alertmanager   ClusterIP   10.100.159.72    &lt;none&gt;        9093/TCP                     10m
+  service/prometheus-prometheus-oper-operator       ClusterIP   10.99.75.140     &lt;none&gt;        8080/TCP,443/TCP             10m
+  service/prometheus-prometheus-oper-prometheus     NodePort    10.107.124.62    &lt;none&gt;        9090/TCP                     10m
+
+  NAME                                                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+  daemonset.apps/prometheus-prometheus-node-exporter   3         3         3       3            3           &lt;none&gt;          10m
+</code></pre></div>    </div>
+
+    <p>Prometheus와 Grafana가 정상적으로 동작하면 <code class="highlighter-rouge">NodePort를 생성</code>하여 생성된 Prometheus와 Grafana 서비스에 접근할 수 있습니다.</p>
+
+    <p>본 프로젝트에서는 Prometheus의 포트번호를 31111, Grafana의 포트번호를 31112로 정하였고, <strong>GCP 방화벽에서도 해당 포트를 열어줍니다.</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim prometheus_nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: prometheus
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app: prometheus
+      prometheus: prometheus-prometheus-oper-prometheus
+  ports:
+      - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 31111
+
+  <span class="nv">$ </span>vim grafana_nodeport.yaml 
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: grafana
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app.kubernetes.io/instance: prometheus
+      app.kubernetes.io/name: grafana
+  ports:
+      - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 31112
+
+  <span class="nv">$ </span>kubectl create <span class="nt">-f</span> prometheus_nodeport.yaml <span class="nt">-n</span> monitoring
+  <span class="nv">$ </span>kubectl create <span class="nt">-f</span> grafana_nodeport.yaml <span class="nt">-n</span> monitoring
+</code></pre></div>    </div>
+
+    <p><code class="highlighter-rouge">kube-masterIP:31111</code> URL로 접속하여 상단 메뉴의 <code class="highlighter-rouge">Status &gt; Targets</code>에 들어가보면 다음 [그림 1]과 같이 에러가 나 있을 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_4_1.png" alt="proxy_etcd_error" width="858" height="254" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] kube-proxy와 kube-etcd 에러</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>kube-proxy는 메트릭 바인드 주소가 기본적으로 localhost로 잡혀있을 것입니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl edit cm/kube-proxy <span class="nt">-n</span> kube-system
+  ...<span class="o">(</span>중략<span class="o">)</span>
+  kind: KubeProxyConfiguration
+  metricsBindAddress: 0.0.0.0:10249
+  ...<span class="o">(</span>중략<span class="o">)</span>
+
+  <span class="nv">$ </span>kubectl delete pod <span class="nt">-l</span> k8s-app<span class="o">=</span>kube-proxy <span class="nt">-n</span> kube-system
+</code></pre></div>    </div>
+
+    <p>metricsBindAddress 값을 위와 같이 0.0.0.0으로 바꿔주고 기존의 kube-proxy 파드를 제거하여 재생성되되록 해주면 Prometheus에서 kube-proxy가 정상적으로 작동할 것입니다.</p>
+
+    <p>다음으로 kube-etcd는 https 인증서 설정이 재대로 되어있지 않아서 생기는 문제입니다.</p>
+
+    <p>prometheus-operator를 배포할 때 Helm 차트의 values.yaml 파일을 다음과 같이 수정합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim values.yaml
+  serviceMonitor:
+      scheme: https
+      insecureSkipVerify: <span class="nb">false
+      </span>serverName: localhost
+      caFile: /etc/prometheus/secrets/etcd-client-cert/etcd-ca
+      certFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client
+      keyFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
+
+      secrets:
+      - <span class="s2">"etcd-client-cert"</span>
+</code></pre></div>    </div>
+
+    <p>values.yaml 파일을 수정하고 caFile, certFile, keyFile에 맞는 시크릿을 생성해주어야 합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ POD_NAME</span><span class="o">=</span><span class="si">$(</span>kubectl get pods <span class="nt">-o</span><span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span> <span class="nt">-l</span> <span class="nv">component</span><span class="o">=</span>kube-apiserver <span class="nt">-n</span> kube-system<span class="si">)</span>
+  <span class="nv">$ </span>kubectl create secret generic etcd-client-cert <span class="nt">-n</span> monitoring <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span>etcd-ca<span class="o">=</span><span class="s2">"</span><span class="si">$(</span>kubectl <span class="nb">exec</span> <span class="nv">$POD_NAME</span> <span class="nt">-n</span> kube-system <span class="nt">--</span> <span class="nb">cat</span> /etc/kubernetes/pki/etcd/ca.crt<span class="si">)</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span>etcd-client<span class="o">=</span><span class="s2">"</span><span class="si">$(</span>kubectl <span class="nb">exec</span> <span class="nv">$POD_NAME</span> <span class="nt">-n</span> kube-system <span class="nt">--</span> <span class="nb">cat</span> /etc/kubernetes/pki/etcd/healthcheck-client.crt<span class="si">)</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span>etcd-client-key<span class="o">=</span><span class="s2">"</span><span class="si">$(</span>kubectl <span class="nb">exec</span> <span class="nv">$POD_NAME</span> <span class="nt">-n</span> kube-system <span class="nt">--</span> <span class="nb">cat</span> /etc/kubernetes/pki/etcd/healthcheck-client.key<span class="si">)</span><span class="s2">"</span>
+  secret/etcd-client-cert created
+</code></pre></div>    </div>
+
+    <p>etcd-client-cert 시크릿을 만들어주고 수정된 values.yaml 파일을 바탕으로 다시 prometheus-operator를 배포하면 etcd의 통신 에러도 해결 될 것입니다.</p>
+
+    <p>Helm에 value.xml 파일을 따로 수정하지 않으면 기본적으로 Grafana의 ID는 <code class="highlighter-rouge">admin</code>, 패스워드는 <code class="highlighter-rouge">prom-operator</code>로 설정되어 있습니다.</p>
+
+    <p>참고로 초기 패스워드는 values.yaml 파일에서 수정할 수 있습니다.</p>
+
+    <p><code class="highlighter-rouge">kube-masterIP:31112</code> URL로 접속하여 Grafana 대시보드가 Prometheus에서 수집된 메트릭을 잘 수집하여 시각화되어지는지 확인해봅니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_4_2.png" alt="grafana_dashboard" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Grafana 대시보드 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위의 [그림 2]에서와 같이 쿠버네티스 클러스터에 대한 메트릭이 잘 수집되어 시각화해주는 것을 확인할 수 있습니다.</p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-로깅-시스템-구성---"><span style="color:purple"><strong>2. 로깅 시스템 구성</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>EFK(Elasticsearch-Fluent Bit-Kibana) 구성</strong>   <a name="list2_1"></a></p>
+
+    <p>로깅 환경을 구축하기 위해 Helm을 사용하여 EFK를 쿠버네티스에 설치할 것입니다.</p>
+
+    <p>먼저 EFK 차트 레포지토리를 추가 및 업데이트를 해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add akomljen-charts https://raw.githubusercontent.com/komljen/helm-charts/master/charts/
+  <span class="nv">$ </span>helm repo update
+</code></pre></div>    </div>
+
+    <p>그런 다음 모니터링과 마찬가지로 로깅을 위한 네임스페이스를 생성해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace logging
+</code></pre></div>    </div>
+
+    <p>elasticsearch-master와 elasticsearch-data에서 사용할 PV를 미리 각각 생성해주어야 PVC가 정상적으로 바인딩 되어 Elasticsearch 노드들이 정상적으로 동작됩니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim elastic-pv.yaml
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+  name: es-data-es-master-efk-cluster-default-0
+  labels:
+      cluster: efk-cluster
+      component: elasticsearch-efk-cluster
+      name: es-master-efk-cluster-default
+      role: master
+  spec:
+  capacity:
+      storage: 10Gi
+  accessModes:
+      - ReadWriteOnce
+  hostPath:
+      path: <span class="s2">"/mnt/data"</span>
+
+  <span class="nt">---</span>
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+  name: es-data-es-data-efk-cluster-default-0
+  labels:
+      cluster: efk-cluster
+      component: elasticsearch-efk-cluster
+      name: es-data-efk-cluster-default
+      role: data
+  spec:
+  capacity:
+      storage: 10Gi
+  accessModes:
+      - ReadWriteOnce
+  hostPath:
+      path: <span class="s2">"/mnt/data"</span>
+
+  <span class="nv">$ </span>kubectl create <span class="nt">-f</span> elastic-pv.yaml <span class="nt">-n</span> logging
+
+  <span class="nv">$ </span>kubectl get pv,pvc <span class="nt">-n</span> logging
+  NAME                                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                             STORAGECLASS   REASON   AGE
+  persistentvolume/es-data-es-data-efk-cluster-default-0     10Gi       RWO            Retain           Bound    logging/es-data-es-data-efk-cluster-default-0                             15m
+  persistentvolume/es-data-es-master-efk-cluster-default-0   10Gi       RWO            Retain           Bound    logging/es-data-es-master-efk-cluster-default-0                           15m
+
+  NAME                                                            STATUS   VOLUME                                    CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+  persistentvolumeclaim/es-data-es-data-efk-cluster-default-0     Bound    es-data-es-data-efk-cluster-default-0     10Gi       RWO                           15m
+  persistentvolumeclaim/es-data-es-master-efk-cluster-default-0   Bound    es-data-es-master-efk-cluster-default-0   10Gi       RWO                           15m
+</code></pre></div>    </div>
+
+    <p>PV를 정상적으로 생성하고 PVC가 바운드된 것이 확인되면 다음 명령어를 통해 efk를 설치해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm <span class="nb">install </span>efk <span class="nt">--namespace</span> logging akomljen-charts/efk
+
+  <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> logging
+  NAME                                                    READY   STATUS      RESTARTS   AGE
+  pod/efk-elasticsearch-curator-1602579600-rcwk8          0/1     Completed   0          15m
+  pod/efk-kibana-676fb9dbd4-rx5xv                         1/1     Running     0          15m
+  pod/elasticsearch-operator-sysctl-fl7jd                 1/1     Running     0          15m
+  pod/elasticsearch-operator-sysctl-mgsxp                 1/1     Running     0          15m
+  pod/es-client-efk-cluster-5f65d7f687-hpm65              1/1     Running     0          15m
+  pod/es-data-efk-cluster-default-0                       1/1     Running     0          15m
+  pod/es-master-efk-cluster-default-0                     1/1     Running     0          15m
+  pod/es-operator-elasticsearch-operator-876b46db-s84t8   1/1     Running     0          15m
+  pod/fluent-bit-s5j8z                                    1/1     Running     0          15m
+  pod/fluent-bit-spwj2                                    1/1     Running     0          15m
+
+
+  NAME                                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>         AGE
+  service/efk-kibana                            ClusterIP   10.111.218.138   &lt;none&gt;        443/TCP         15m
+  service/elasticsearch-discovery-efk-cluster   ClusterIP   10.103.53.150    &lt;none&gt;        9300/TCP        15m
+  service/elasticsearch-efk-cluster             ClusterIP   10.108.108.5     &lt;none&gt;        9200/TCP        15m
+  service/es-data-svc-efk-cluster               ClusterIP   10.107.231.1     &lt;none&gt;        9300/TCP        15m
+
+  NAME                                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
+  daemonset.apps/elasticsearch-operator-sysctl   2         2         2       2            2           beta.kubernetes.io/os<span class="o">=</span>linux   15m
+  daemonset.apps/fluent-bit                      2         2         2       2            2           &lt;none&gt;                        15m
+
+  NAME                                                 READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/efk-kibana                           1/1     1            1           15m
+  deployment.apps/es-client-efk-cluster                1/1     1            1           15m
+  deployment.apps/es-operator-elasticsearch-operator   1/1     1            1           15m
+
+  NAME                                                          DESIRED   CURRENT   READY   AGE
+  replicaset.apps/efk-kibana-676fb9dbd4                         1         1         1       15m
+  replicaset.apps/es-client-efk-cluster-5f65d7f687              1         1         1       15m
+  replicaset.apps/es-operator-elasticsearch-operator-876b46db   1         1         1       15m
+
+  NAME                                             READY   AGE
+  statefulset.apps/es-data-efk-cluster-default     1/1     15m
+  statefulset.apps/es-master-efk-cluster-default   1/1     15m
+
+  NAME                                             COMPLETIONS   DURATION   AGE
+  job.batch/efk-elasticsearch-curator-1602579600   1/1           2s         15m
+
+  NAME                                      SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+  cronjob.batch/efk-elasticsearch-curator   0 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>   False     0        15m             15m
+</code></pre></div>    </div>
+
+    <p>EFK가 정상적으로 설치되면 NodePort 서비스를 생성하여 외부에서 접근가능하도록 해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim kibana-nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: kibana
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app: kibana
+      release: efk
+  ports:
+      - protocol: TCP
+      port: 443
+      targetPort: 5601
+      nodePort: 30443
+
+  <span class="nv">$ </span>kubectl create <span class="nt">-f</span> kibana-nodeport.yaml <span class="nt">-n</span> logging
+</code></pre></div>    </div>
+
+    <p>마찬가지로 <strong>Kibana에 접근할 30443 포트는 GCP 방화벽에서도 열어주어야 접근이 가능합니다.</strong></p>
+
+    <p><br /></p>
+
+    <p>이렇게 Kibana에 접근하더라도 문제가 한 가지 더 있습니다.</p>
+
+    <p>Fluent Bit에서 쿠버네티스 클러스터의 로그를 수집할 때 <code class="highlighter-rouge">/var/log/containers</code>에 존재하는 로그 파일을 읽어들이는데, journald 드라이버를 사용하여 컨테이너 로그를 수집하게 되어 있어 /var/log/containers 폴더에 로그가 쌓이지 않는 문제가 있습니다.</p>
+
+    <p>그래서 Kibana에 접속하더라도 생성할 인덱스 패턴이 존재하지 않았었는데, 문제를 해결하기 위해 다음과 같이 수정해야 합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim /etc/sysconfig/docker
+  <span class="nv">OPTIONS</span><span class="o">=</span><span class="s1">'--selinux-enabled --signature-verification=false'</span>
+</code></pre></div>    </div>
+
+    <p>모든 쿠버네티스 클러스터에서 /etc/sysconfig/docker 파일에 존재하는 <code class="highlighter-rouge">--log-driver = journald 부분을 제거</code>해야 도커 컨테이너 로그가 /var/log/containers 경로에 쌓이게 되고, Fluent Bit에서 해당 로그들을 수집하여 Kibana에서 인덱스 패턴을 생성할 수가 이쎅 됩니다.</p>
+
+    <p>정상적으로 로그가 쌓이게 되면 다시 Kibana에 접속하여 <code class="highlighter-rouge">Kubernetes_cluster-*</code>이라는 인덱스 패턴을 생성해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_4_3.png" alt="kibana_index_pattern" width="1066" height="618" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] Kibana 인덱스 패턴 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+</ul>
+:ET

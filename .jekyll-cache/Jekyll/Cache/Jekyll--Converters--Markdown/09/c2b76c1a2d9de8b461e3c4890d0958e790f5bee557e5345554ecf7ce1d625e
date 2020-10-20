@@ -1,0 +1,97 @@
+I"M<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 모니터링 시스템 구성</a></p>
+
+<p><a href="#list1_1">   1.1. Helm 개요와 설치</a></p>
+
+<p><a href="#list1_2">   1.2. Prometheus와 Grafana 구성</a></p>
+
+<p><a href="#list2">2. 로깅 시스템 구성</a></p>
+
+<p><a href="#list2_1">   2.1. EFK(Elasticsearch-Fluent Bit-Kibana) 구성</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-모니터링-시스템-구성---"><span style="color:purple"><strong>1. 모니터링 시스템 구성</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Helm 개요와 설치</strong>   <a name="list1_1"></a></p>
+
+    <p>Helm은 쿠버네티스 패키지를 관리해주는 도구입니다.</p>
+
+    <p>Helm에서 사용되는 차트는 리소스를 하나로 묶은 패키지에 해당하며, Helm으로 차트를 관리하는 목적은 자칫 번잡해지기 쉬운 매니페스트 파일을 관리하기 쉽게 하기 위함입니다.</p>
+
+    <p>그리고 설치할때마다 릴리스 버전이 생성되고 새로운 차트를 찾을때에는 Helm chart repository에서 찾을 수 있습니다.</p>
+
+    <p>Helm 다음 명령어로 간단하게 설치가 가능합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>curl <span class="nt">-fsSL</span> <span class="nt">-o</span> get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  <span class="nv">$ </span><span class="nb">chmod </span>700 get_helm.sh
+  <span class="nv">$ </span>./get_helm.sh
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p>Helm이 정상적으로 설치되면 차트 레포지토리를 추가하고 업데이트해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+  <span class="s2">"stable"</span> has been added to your repositories
+
+  <span class="nv">$ </span>helm repo update
+  Hang tight <span class="k">while </span>we grab the latest from your chart repositories...
+  ...Successfully got an update from the <span class="s2">"stable"</span> chart repository
+  Update Complete. ⎈Happy Helming!⎈
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p>여기까지만 해주어도 Helm을 사용할 준비가 끝난 것입니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Prometheus와 Grafana 구성</strong>   <a name="list1_2"></a></p>
+
+    <p>모니터링 환경을 구겅하기 위해 앞서 설치한 Helm을 사용하여 Prometheus와 Grafana를 쿠버네티스에 설치할 것입니다.</p>
+
+    <p>먼저 모니터링을 위한 네임스페이스를 생성해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace monitoring
+  namespace/monitoring created
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-로깅-시스템-구성---"><span style="color:purple"><strong>2. 로깅 시스템 구성</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>EFK(Elasticsearch-Fluent Bit-Kibana) 구성</strong>   <a name="list2_1"></a></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+:ET

@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "[Project] DevSecOps 프로젝트 - Helm을 통한 모니터링과 로깅 시스템 구축 - 2020-10-13",
+        "url" : "/project/2020/10/13/devsecops4.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "[Project] DevSecOps 프로젝트 - CD 구성 - 2020-10-11",
         "url" : "/project/2020/10/11/devsecops3.html"
     }
