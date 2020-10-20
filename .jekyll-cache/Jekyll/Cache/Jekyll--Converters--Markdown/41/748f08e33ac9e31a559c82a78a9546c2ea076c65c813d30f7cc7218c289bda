@@ -1,0 +1,614 @@
+I"��<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. 프로젝트 개요</a></p>
+
+<p><a href="#list1_2">   1.1. 프로젝트 소개</a></p>
+
+<p><a href="#list1_2">   1.2. 프로젝트 목적</a></p>
+
+<p><a href="#list1_3">   1.3. 프로젝트 아키텍처</a></p>
+
+<p><a href="#list2">2. 환경 구성</a></p>
+
+<p><a href="#list2_1">   2.1. GCP(Google Cloud Platform) 구성</a></p>
+
+<p><a href="#list2_2">   2.2. 쿠버네티스 구성</a></p>
+
+<p><a href="#list2_3">   2.3. Gitlab 구성</a></p>
+
+<p><a href="#list2_4">   2.4. Jenkins 구성</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-프로젝트-개요---"><span style="color:purple"><strong>1. 프로젝트 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>프로젝트 소개</strong>   <a name="list1_1"></a></p>
+
+    <p>많은 기업들이 클라우드 환경으로의 디지털 트랜스포메이션을 진행하면서, 기존의 보안 쳬계와 다른 클라우드 네이티브 환경에서의 보안을 어렵게 생각하는 경우가 많습니다.</p>
+
+    <p>온프레미스와는 전혀 다른 방식으로 보안을 구현해야하는 필요성이 대두되었고, 클라우드 환경에서는 기업마다 다른 개발환경과 개발문화로 인한 변화의 폭이 훨씬 크므로, 자동화되고 가시화된 개발보안방법론인 DevSecOps 쳬계를 적용하므로써 빠르게 변화하는 서비스 개발 속도에 발맞춰 보안의 속도도 따라가야 할 필요가 있습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>프로젝트 목적</strong>   <a name="list1_2"></a></p>
+
+    <p>본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, <code class="highlighter-rouge">보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축</code>하고자 합니다.</p>
+
+    <p><strong>클라우드 네이티브 환경에서의 DevSecOps 쳬계와 CI/CD 체계를 이해</strong>하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 <strong>실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인 구축하는 것이 목적</strong>입니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>프로젝트 아키텍처</strong>   <a name="list1_3"></a></p>
+
+    <p>본 프로젝트의 아키텍처는 다음 [그림 1]과 같습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_1.png" alt="devops_architecture" width="778" height="513" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] DevOps 아키텍처</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Gitlab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, argoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deployment) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.</p>
+
+    <p>그리고 서비스 운영에 필요한 로깅 시스템은 EFK(Elasticsearch-Fluentd-Kibana)를, 모니터링 시스템은 Prometheus, Grafana를 쿠버네티스의 서비스 형태로 구축하였습니다.</p>
+
+    <p><br /></p>
+
+    <blockquote>
+      <p>[그림 1]은 현재(2020-10-17)까지 진행된 부분이며, Security에 대한 파이프라인은 미완성으로 추후 아키텍처를 업데이트 할 예정입니다.</p>
+    </blockquote>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-환경-구성---"><span style="color:purple"><strong>2. 환경 구성</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>GCP(Google Cloud Platform) 구성</strong>   <a name="list2_1"></a></p>
+
+    <p>GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 <code class="highlighter-rouge">kubeadm</code>을 통해 쿠버네티스를 구성할 것 입니다.</p>
+
+    <p>따라서 다음 [그림 2]와 같이 GCP 인스턴스를 생성해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_2.png" alt="gcp_instance" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] GCP 인스턴스 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>인스턴스 생성할 때의 설정은 다음과 같습니다.</p>
+
+    <ul>
+      <li>
+        <p>리전: asia-northeast3(서울)</p>
+      </li>
+      <li>
+        <p>머신 계열: n1-standard-2(vCPU 2개, 7.5GB 메모리)</p>
+      </li>
+      <li>
+        <p>부팅 디스크: CentOS 7</p>
+      </li>
+      <li>
+        <p>액세스 범위: 모든 Cloud API에 대한 전체 액세스 허용</p>
+      </li>
+      <li>
+        <p>방화벽: HTTP/HTTPS 트래픽 허용</p>
+      </li>
+    </ul>
+
+    <p>추가로 [VPC 네트워크] - [외부 IP 주소] 탭에 들어가 각 인스턴스들의 IP를 고정으로 바꿔주었습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>쿠버네티스 구성</strong>   <a name="list2_2"></a></p>
+
+    <p>위에서 언급하였듯 생성한 인스턴스에 kubeadm 명령을 통해 쿠버네티스를 구성합니다.</p>
+
+    <p>먼저 <code class="highlighter-rouge">kube-master, kube-worker1, kube-worker2 모두</code> 동일하게 아래의 명령을 실행하도록 합니다.</p>
+
+    <ul>
+      <li>
+        <p>쿠버네티스 설치를 위한 모든 과정은 root 권한으로 진행합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">sudo </span>su -
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>스왑 메모리 사용 중지합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>swapoff <span class="nt">-a</span>
+  <span class="nv">$ </span><span class="nb">echo </span>0 <span class="o">&gt;</span> /proc/sys/vm/swappiness
+  <span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-e</span> <span class="s1">'/swap/ s/^#*/#/'</span> <span class="nt">-i</span> /etc/fstab
+</code></pre></div>        </div>
+
+        <p>Swap은 디스크의 일부 공간을 메모리처럼 사용하는 기능입니다. 
+  Kubelet이 정상 동작할 수 있도록 swap 디바이스와 파일 모두 disable 합니다.</p>
+      </li>
+      <li>
+        <p>각 노드의 통신을 원활하게 하기 위해 방화벽을 해제하고 SELinux를 비활성화 시켜줍니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>systemctl disable firewalld
+  <span class="nv">$ </span>systemctl stop firewalld
+
+  <span class="nv">$ </span>setenforce 0
+  <span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/^SELINUX=enforcing$/SELINUX=permissive/'</span> /etc/selinux/config
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>RHEL과 CentOS 7에서 iptables 관련 이슈가 있어 커널 매개변수를 다음과 같이 수정하고 적용합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;  /etc/sysctl.d/k8s.conf
+  net.bridge.bridge-nf-call-ip6tables = 1
+  net.bridge.bridge-nf-call-iptables = 1
+</span><span class="no">  EOF
+
+</span>  <span class="nv">$ </span>sysctl <span class="nt">--system</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>br_netfilter 모듈을 활성화합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>modprobe br_netfilter
+</code></pre></div>        </div>
+
+        <p>br_netfilter 모듈을 명시적으로 추가한 후에 <code class="highlighter-rouge">lsmod | grep br_netfilter</code> 명령어로 추가 여부를 확인할 수 있습니다.</p>
+      </li>
+      <li>
+        <p>도커 및 쿠버네티스 설치 후 서비스 시작</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>yum <span class="nt">-y</span> update
+  <span class="nv">$ </span>yum <span class="nb">install </span>docker <span class="nt">-y</span>
+  <span class="nv">$ </span>systemctl <span class="nb">enable </span>docker <span class="o">&amp;&amp;</span> systemctl start docker.service
+
+  <span class="nv">$ </span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; /etc/yum.repos.d/kubernetes.repo
+  [kubernetes]
+  name=Kubernetes
+  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+  enabled=1
+  gpgcheck=1
+  repo_gpgcheck=1
+  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+  exclude=kube*
+</span><span class="no">  EOF
+
+</span>  <span class="nv">$ </span>yum <span class="nt">-y</span> update
+  <span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils device-mapper-persistent-data lvm2
+  <span class="nv">$ </span>yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo 
+  <span class="nv">$ </span>yum update <span class="o">&amp;&amp;</span> yum <span class="nb">install </span>docker-ce-18.06.2.ce
+  <span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> <span class="nt">--disableexcludes</span><span class="o">=</span>kubernetes kubeadm-1.15.5-0.x86_64 kubectl-1.15.5-0.x86_64 kubelet-1.15.5-0.x86_64
+  <span class="nv">$ </span>systemctl <span class="nb">enable </span>kubelet <span class="o">&amp;&amp;</span> systemctl start kubelet
+</code></pre></div>        </div>
+
+        <p>본 프로젝트에서는 <code class="highlighter-rouge">헬스체크 이슈</code>, <code class="highlighter-rouge">대쉬보드 호환성</code>의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.</p>
+
+        <blockquote>
+          <p>처음에 1.19 버전으로 설치했었다가 쿠버네티스 클러스터의 매트릭을 수집해주는 <strong>kube-state-metrics</strong>이 정상적으로 작동하지 않아 1.15버전으로 재설치한 것입니다.</p>
+        </blockquote>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>다음으로 <code class="highlighter-rouge">kube-master</code>에서만 아래의 명령을 실행하도록 합니다.</p>
+
+    <ul>
+      <li>
+        <p>컨트롤 구성 요소들의 이미지를 설치합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubeadm config images pull
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>kube-master 노드를 초기화 해줍니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubeadm init
+  <span class="o">[</span>init] Using Kubernetes version: v1.15.5
+  <span class="o">[</span>preflight] Running pre-flight checks
+          <span class="o">[</span>WARNING Service-Kubelet]: kubelet service is not enabled, please run <span class="s1">'systemctl enable kubelet.service'</span>
+  <span class="o">[</span>preflight] Pulling images required <span class="k">for </span>setting up a Kubernetes cluster
+  <span class="o">[</span>preflight] This might take a minute or two, depending on the speed of your internet connection
+  <span class="o">[</span>preflight] You can also perform this action <span class="k">in </span>beforehand using <span class="s1">'kubeadm config images pull'</span>
+  <span class="o">[</span>kubelet-start] Writing kubelet environment file with flags to file <span class="s2">"/var/lib/kubelet/kubeadm-flags.env"</span>
+  <span class="o">[</span>kubelet-start] Writing kubelet configuration to file <span class="s2">"/var/lib/kubelet/config.yaml"</span>
+  <span class="o">[</span>kubelet-start] Activating the kubelet service
+  <span class="o">[</span>certs] Using certificateDir folder <span class="s2">"/etc/kubernetes/pki"</span>
+  <span class="o">[</span>certs] Generating <span class="s2">"ca"</span> certificate and key
+
+  ...<span class="o">(</span>중략<span class="o">)</span>
+
+  Your Kubernetes control-plane has initialized successfully!
+  To start using your cluster, you need to run the following as a regular user:
+  <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$HOME</span>/.kube
+  <span class="nb">sudo cp</span> <span class="nt">-i</span> /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+  <span class="nb">sudo chown</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">-g</span><span class="si">)</span> <span class="nv">$HOME</span>/.kube/config
+  You should now deploy a pod network to the cluster.
+  Run <span class="s2">"kubectl apply -f [podnetwork].yaml"</span> with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+  Then you can <span class="nb">join </span>any number of worker nodes by running the following on each as root:
+  kubeadm <span class="nb">join </span>10.178.0.19:6443 <span class="nt">--token</span> tcqjev.d775p70aj3dseele <span class="se">\</span>
+      <span class="nt">--discovery-token-ca-cert-hash</span> sha256:d9f67f85ea3e5ca8821dd311cf0c3c886d9637c14814b61f15f67e06f732b200
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>kubeadm init의 결과에서 나온 것 처럼 일반 사용자가 kubectl 명령을 사용할 수 있도록 환경변수를 설정합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$HOME</span>/.kube
+  <span class="nv">$ </span><span class="nb">sudo cp</span> <span class="nt">-i</span> /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+  <span class="nv">$ </span><span class="nb">sudo chown</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">-g</span><span class="si">)</span> <span class="nv">$HOME</span>/.kube/config
+</code></pre></div>        </div>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>다음은 kubeadm init의 결과에서 나온 것 처럼 <code class="highlighter-rouge">kube-worker 노드들</code>에서만 아래의 명령을 실행하도록 합니다.</p>
+
+    <ul>
+      <li>
+        <p>컨트롤 구성 요소들의 이미지를 설치합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubeadm <span class="nb">join </span>10.178.0.19:6443 <span class="nt">--token</span> tcqjev.d775p70aj3dseele <span class="se">\</span>
+      <span class="nt">--discovery-token-ca-cert-hash</span> sha256:d9f67f85ea3e5ca8821dd311cf0c3c886d9637c14814b61f15f67e06f732b200
+  <span class="o">[</span>preflight] Running pre-flight checks
+  <span class="o">[</span>preflight] Reading configuration from the cluster...
+  <span class="o">[</span>preflight] FYI: You can look at this config file with <span class="s1">'kubectl -n kube-system get cm kubead
+  m-config -oyaml'</span>
+  <span class="o">[</span>kubelet-start] Downloading configuration <span class="k">for </span>the kubelet from the <span class="s2">"kubelet-config-1.15"</span> Con
+  figMap <span class="k">in </span>the kube-system namespace
+  <span class="o">[</span>kubelet-start] Writing kubelet configuration to file <span class="s2">"/var/lib/kubelet/config.yaml"</span>
+  <span class="o">[</span>kubelet-start] Writing kubelet environment file with flags to file <span class="s2">"/var/lib/kubelet/kubead
+  m-flags.env"</span>
+  <span class="o">[</span>kubelet-start] Activating the kubelet service
+  <span class="o">[</span>kubelet-start] Waiting <span class="k">for </span>the kubelet to perform the TLS Bootstrap...
+  This node has joined the cluster:
+  <span class="k">*</span> Certificate signing request was sent to apiserver and a response was received.
+  <span class="k">*</span> The Kubelet was informed of the new secure connection details.
+  Run <span class="s1">'kubectl get nodes'</span> on the control-plane to see this node <span class="nb">join </span>the cluster.
+</code></pre></div>        </div>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>마지막으로 <code class="highlighter-rouge">kube-master</code>에서 weave를 설치합니다.</p>
+
+    <ul>
+      <li>
+        <p>kubectl apply를 통해 weave 생성</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl apply <span class="nt">-f</span> <span class="s2">"https://cloud.weave.works/k8s/net?k8s-version=</span><span class="si">$(</span>kubectl version | <span class="nb">base64</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span><span class="si">)</span><span class="s2">"</span>
+  serviceaccount/weave-net created
+  clusterrole.rbac.authorization.k8s.io/weave-net created
+  clusterrolebinding.rbac.authorization.k8s.io/weave-net created
+  role.rbac.authorization.k8s.io/weave-net created
+  rolebinding.rbac.authorization.k8s.io/weave-net created
+  daemonset.apps/weave-net created
+</code></pre></div>        </div>
+
+        <p>CNI(Container Network Interface)를 설치하면 CoreDNS Pod가 정상적으로 동작하게 됩니다.</p>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>쿠버네티스 클러스터가 정상적으로 구성되었는지 확인해봅니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get nodes
+  NAME           STATUS   ROLES    AGE   VERSION
+  kube-master    Ready    master   1d   v1.15.5
+  kube-worker1   Ready    &lt;none&gt;   1d   v1.15.5
+  kube-worker2   Ready    &lt;none&gt;   1d   v1.15.5
+</code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get cs
+  NAME                 STATUS    MESSAGE             ERROR
+  controller-manager   Healthy   ok                  
+  scheduler            Healthy   ok                  
+  etcd-0               Healthy   <span class="o">{</span><span class="s2">"health"</span>:<span class="s2">"true"</span><span class="o">}</span>
+</code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get po <span class="nt">-o</span> custom-columns<span class="o">=</span>POD:metadata.name,NODE:spec.nodeName <span class="nt">--sort-by</span> spec.nodeName <span class="nt">-n</span> kube-system
+  POD                                   NODE
+  kube-proxy-ks9ss                      kube-master
+  etcd-kube-master                      kube-master
+  kube-apiserver-kube-master            kube-master
+  kube-controller-manager-kube-master   kube-master
+  kube-scheduler-kube-master            kube-master
+  weave-net-4g8fj                       kube-master
+  kube-proxy-mg5z5                      kube-worker1
+  weave-net-rjqk5                       kube-worker1
+  coredns-5c98db65d4-xd8lw              kube-worker1
+  coredns-5c98db65d4-zf5kx              kube-worker2
+  weave-net-gvwqv                       kube-worker2
+  kube-proxy-7jd9r                      kube-worker2
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Gitlab 구성</strong>   <a name="list2_3"></a></p>
+
+    <p>Gitlab과 Jenkins 설치는 [그림 2]의 <code class="highlighter-rouge">servers 인스턴스</code>에서 진행합니다.</p>
+
+    <p>GitLab은 자체 CI를 무료로 제공하고 있어 외부 CI 서비스를 사용할 필요가 없습니다.</p>
+
+    <p>하지만 Jenkins에서 제공되는 플러그인이 많기 때문에 보안을 적용한 파이프라인을 구축하기에는 외부 CI/CD 서비스인 Jenkins를 사용할 것이고, 기존의 서비스 중인 Github 혹은 Gitlab을 사용해도 무방합니다.</p>
+
+    <ul>
+      <li>
+        <p>Gitlab 설치 및 설정</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># openssh 설치</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> curl policycoreutils-python openssh-server openssh-clients
+
+  <span class="c"># 서버 부팅 시 sshd 실행</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>sshd <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>systemctl start sshd
+
+  <span class="c"># 방화벽 해제</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-service</span><span class="o">=</span>http
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-service</span><span class="o">=</span>https
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--reload</span>
+
+  <span class="c"># 메일서버 설치</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> postfix
+
+  <span class="c"># 서버 부팅 시 메일서버 실행</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>postfix <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>systemctl start postfix
+
+  <span class="c"># gitlab 패키치 저장소 등록 및 설치</span>
+  <span class="nv">$ </span>curl <span class="nt">-sS</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | <span class="nb">sudo </span>bash
+  <span class="nv">$ </span><span class="nb">sudo </span><span class="nv">EXTERNAL_URL</span><span class="o">=</span><span class="s2">"servers IP:8001"</span> yum <span class="nb">install</span> <span class="nt">-y</span> gitlab-ce
+  gitlab Reconfigured!
+
+      <span class="k">*</span><span class="nb">.</span>                  <span class="k">*</span><span class="nb">.</span>
+      <span class="k">***</span>                 <span class="k">***</span>
+      <span class="k">*****</span>               <span class="k">*****</span>
+      .<span class="k">******</span>             <span class="k">*******</span>
+      <span class="k">********</span>            <span class="k">********</span>
+  ,,,,,,,,,<span class="k">***********</span>,,,,,,,,,
+  ,,,,,,,,,,,<span class="k">*********</span>,,,,,,,,,,,
+  .,,,,,,,,,,,<span class="k">*******</span>,,,,,,,,,,,,
+      ,,,,,,,,,<span class="k">*****</span>,,,,,,,,,.
+          ,,,,,,,<span class="k">****</span>,,,,,,
+              .,,,<span class="k">***</span>,,,,
+                  ,<span class="k">*</span>,.
+
+
+      _______ __  __          __
+      / ____<span class="o">(</span>_<span class="o">)</span> /_/ /   ____ _/ /_
+  / / __/ / __/ /   / __ <span class="sb">`</span>/ __ <span class="se">\</span>
+  / /_/ / / /_/ /___/ /_/ / /_/ /
+  <span class="se">\_</span>___/_/<span class="se">\_</span>_/_____/<span class="se">\_</span>_,_/_.___/
+
+
+  Thank you <span class="k">for </span>installing GitLab!
+  GitLab should be available at http://servers IP:8001
+</code></pre></div>        </div>
+
+        <p>Gitlab이 정상적으로 설치되면 Gitlab에서 사용할 포트 및 기타 설정을 해줍니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># Gitlab 설정파일에서 해당 라인 주석 해제 혹은 추가</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>vi /etc/gitlab/gitlab.rb
+  32 external_url <span class="s1">'http://servers IP:8001'</span>
+  ...<span class="o">(</span>중략<span class="o">)</span>
+  1215 nginx[<span class="s1">'enable'</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true 
+  </span>1216 nginx[<span class="s1">'client_max_body_size'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'2G'</span>
+
+  <span class="c"># 변경된 설정 적용</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>gitlab-ctl reconfigure
+
+  <span class="c"># 8001 방화벽 해제</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-port</span><span class="o">=</span>8001/tcp
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--reload</span>
+</code></pre></div>        </div>
+
+        <p><br /></p>
+
+        <p>Gitlab의 설정을 끝내고 Gitlab에 접속하기 전에 <strong>GCP의 방화벽도 열어주어야 외부에서 접근이 가능</strong>합니다.</p>
+
+        <p>다음 [그림 3]과 같이 <strong>[VPC 네트워크] - [방화벽] 탭</strong>에서 servers에서 사용할 포트들을 열어주기 위한 방화벽 규칙을 생성해줍니다.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_3.png" alt="gcp_firewall" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">[그림 3] GCP 방화벽 포트 오픈</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><br /></p>
+
+        <p>GCP 방화벽까지 열어주고나서 <code class="highlighter-rouge">servers IP:8001</code> URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_4.png" alt="gitlab_new_password" width="569" height="385" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">[그림 4] Gitlab 접속 후 패스워드 변경</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins 구성</strong>   <a name="list2_4"></a></p>
+
+    <ul>
+      <li>
+        <p>Jenkins 설치 및 설정</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># Java 설치</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> java-1.8.0-openjdk-devel.x86_64
+
+  <span class="c"># JAVA_HOME 환경변수 확인</span>
+  <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
+
+  <span class="nv">$ </span>which javac
+  /usr/bin/javac
+  <span class="nv">$ </span><span class="nb">readlink</span> <span class="nt">-f</span> /usr/bin/javac
+  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/bin/javac
+
+  <span class="c"># 경로 뒤의 /bin/javac는 제외하고 JAVA_HOME 환경변수 설정</span>
+  <span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64"</span> | <span class="nb">sudo tee</span> <span class="nt">-a</span> /etc/profile
+  <span class="nv">$ </span><span class="nb">source</span> /etc/profile
+  <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
+  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64
+
+  <span class="c"># maven 설치 (http://maven.apache.org/download.cgi)</span>
+  <span class="nv">$ </span><span class="nb">sudo mkdir</span> /tools
+  <span class="nv">$ </span><span class="nb">cd</span> /tools
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>wget
+  <span class="nv">$ </span><span class="nb">sudo </span>wget http://mirror.apache-kr.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+  <span class="nv">$ </span><span class="nb">sudo tar </span>xzf apache-maven-3.6.3-bin.tar.gz
+  <span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-s</span> apache-maven-3.6.3 maven
+  <span class="nv">$ </span><span class="nb">sudo </span>vi /etc/profile.d/maven.sh
+  <span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/tools/maven
+  <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">MAVEN_HOME</span><span class="k">}</span>/bin:<span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>
+
+  <span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/maven.sh
+
+  <span class="nv">$ </span>mvn <span class="nt">-version</span>
+  Apache Maven 3.6.3 <span class="o">(</span>cecedd343002696d0abb50b32b541b8a6ba2883f<span class="o">)</span>
+  Maven home: /tools/maven
+  Java version: 1.8.0_262, vendor: Oracle Corporation, runtime: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/jre
+  Default locale: en_US, platform encoding: UTF-8
+  OS name: <span class="s2">"linux"</span>, version: <span class="s2">"3.10.0-1127.el7.x86_64"</span>, <span class="nb">arch</span>: <span class="s2">"amd64"</span>, family: <span class="s2">"unix"</span>
+
+  <span class="c"># Jenkins repo 다운로드 및 key import</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>wget <span class="nt">-O</span> /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  <span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">--import</span> https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+  <span class="c"># Jenkins 설치</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> jenkins
+
+  <span class="c"># Jenkins 기본 포트 변경</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>vi /etc/sysconfig/jenkins
+  56 <span class="nv">JENKINS_PORT</span><span class="o">=</span><span class="s2">"8002"</span>
+
+  <span class="c"># 8002 방화벽 해제</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--new-service</span><span class="o">=</span>jenkins
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--service</span><span class="o">=</span>jenkins <span class="nt">--set-short</span><span class="o">=</span><span class="s2">"Jenkins Service Ports"</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--service</span><span class="o">=</span>jenkins <span class="nt">--set-description</span><span class="o">=</span><span class="s2">"Jenkins service firewalld port exceptions"</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--service</span><span class="o">=</span>jenkins <span class="nt">--add-port</span><span class="o">=</span>8002/tcp 
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--permanent</span> <span class="nt">--add-service</span><span class="o">=</span>jenkins
+  <span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--reload</span>
+
+  <span class="c"># 서버 부팅 시 Jenkins 실행</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>systemctl start jenkins <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>systemctl <span class="nb">enable </span>jenkins
+</code></pre></div>        </div>
+
+        <p><br /></p>
+
+        <p>Jenkins에 접속하기 위한 포트는 8002로 설정하였고 GCP 방화벽에서 이미 포트를 열어둔 상태입니다.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_5.png" alt="jenkins_install" width="520" height="462" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">[그림 5] Jenkins 접속</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><br /></p>
+
+        <p><code class="highlighter-rouge">servers IP:8002</code> URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.</p>
+
+        <p>화면의 안내에 따라 <strong>/var/lib/jenkins/secrets/initialAdminPassword 파일을 확인</strong>합니다.</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">sudo cat</span> /var/lib/jenkins/secrets/initialAdminPassword
+  f05ef37257944b62a80086bbc4b047bf
+</code></pre></div>        </div>
+
+        <p>Jenkins 초기 비밀번호를 확인하고 입력하여 다음으로 넘어갑니다.</p>
+
+        <p>다음은 Customize Jenkins라는 페이지가 나오는데, 여기서는 원하는 Jenkins 플러그인을 설치할 수 있습니다.</p>
+
+        <p><strong>Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능</strong>하기 때문에 <code class="highlighter-rouge">Install suggested plugins</code>를 눌러 기본 플러그인만 설치하고 넘어갑니다.</p>
+
+        <p><br /></p>
+
+        <p>Jenkins가 정상적으로 설치되면 다음 [그림 6]과 같은 화면이 뜨게 됩니다.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_1_6.png" alt="jenkins_main" width="563" height="389" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">[그림 6] Jenkins 정상 설치 화면</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>이로써 쿠버네티스 클러스터와 Gitlab, Jenkins의 설치 및 기본 구성은 끝이 났습니다.</p>
+
+    <p>다음은 CI(Continuous Integration) 환경을 구성하는 방법에 대해 알아보겠습니다!</p>
+  </li>
+</ul>
+
+:ET
