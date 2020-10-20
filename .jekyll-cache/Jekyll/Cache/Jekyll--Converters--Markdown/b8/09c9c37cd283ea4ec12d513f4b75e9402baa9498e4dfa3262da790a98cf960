@@ -1,0 +1,380 @@
+I"NC<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. CI(Continuous Integration) 구성</a></p>
+
+<p><a href="#list1_1">   1.2. CI 란?</a></p>
+
+<p><a href="#list1_2">   1.2. Gitlab - Jenkins 연동</a></p>
+
+<p><a href="#list1_3">   1.3. Gitlab - Jenkins 웹훅 설정</a></p>
+
+<p><a href="#list2">2. Jenkins 파이프라인 설정</a></p>
+
+<p><a href="#list2_1">   2.1. 파이프라인 테스트</a></p>
+
+<p><a href="#list2_2">   2.2. Jenkins - Docker 연동 및 파이프라인 테스트</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-cicontinuous-integration-구성---"><span style="color:purple"><strong>1. CI(Continuous Integration) 구성</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>CI 란?</strong>   <a name="list1_1"></a></p>
+
+    <p>CI 란 팀의 구성원들이 작업한 내용을 정기적으로 통합하는 것을 의미합니다.</p>
+
+    <p>개발자들은 소스 코드를 정기적으로 Git, SVN 과 같은 SCM(Source Code Management, 형상 관리 시스템)에 Push 하는데, <strong>각각의 개발자들로부터 Push된 소스 코드들을 정기적으로 통합하는 것을 CI</strong>라고 합니다.</p>
+
+    <p>CI를 구축하지 않은 경우 개발자들이 각자 개발한 소스 코드를 형상 관리 서버에 Commit 하면 별도의 품질관리를 거치지 않고 대부분 개발이 끝난 막바지에 통합을 하여 테스트를 진행하게 됩니다.</p>
+
+    <p>이럴경우, 개발 중 별도의 품질 관리를 수행하지 않았기 때문에 잘못된 소스 코드를 형상관리 시스템에 반영하였을 경우 발생되는 문제가 개발 후반에 모두 장애로 발견됩니다.</p>
+
+    <p>반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 <code class="highlighter-rouge">컴파일, 단위테스트, 코드 인스펙션</code> 등의 과정을 수행하며 <strong>신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증</strong>하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.</p>
+  </li>
+  <li>
+    <p><strong>Gitlab - Jenkins 연동</strong>   <a name="list1_2"></a></p>
+
+    <p>SCM 툴인 Gitlab과 CI/CD Server 툴로 사용할 Jenkins를 연동하는 작업을 시작하겠습니다.</p>
+
+    <p>먼저 [그림 1]과 같이 관리자 계정에서 <code class="highlighter-rouge">Admin Area &gt; Network</code> 탭으로 들어와 아웃바운드를 설정합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_1.png" alt="gitlab_outbound" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Gitlab 네트워크 아웃바운드 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>웹훅 및 서비스가 액세스 할 수 있는 IP, 즉 Jenkins 서버의 IP를 적어줍니다.</p>
+
+    <p>다음으로 <strong>Gitlab 프로젝트를 생성</strong>하여 해당 프로젝트의 <code class="highlighter-rouge">Settings &gt; Access Tokens</code> 탭에 들어옵니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_2.png" alt="gitlab_access_token" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Gitlab Access Token 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위의 [그림 2]와 같이 토큰 명과 만료일을 설정하고 액세스 토큰을 생성하면 토큰 값이 나옵니다.</p>
+
+    <p>토큰 값은 Jenkins에서 credentials를 생성할 때 필요하기 때문에 따로 기록해둡니다.</p>
+
+    <p><br /></p>
+
+    <p>다음으로 Jenkins의 설정의 <code class="highlighter-rouge">Plugin Manager</code> 탭으로 Gitlab 관련한 플러그인을 모두 설치해줍니다.</p>
+
+    <p>Gitlab 플러그인이 정상적으로 설치되면 <code class="highlighter-rouge">시스템 설정</code>으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_3.png" alt="jenkins_gitlab_config" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] Jenkins에서 Gitlab 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Gitlab 호스트의 URL 및 포트를 적어주고 Credentials는 Add 버튼을 눌러 다음 [그림 4]와 같이 생성하여 줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_4.png" alt="jenkins_gitlab_credentials" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 4] Jenkins에서 Gitlab Credentials 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 Success 문구가 뜨는지 확인합니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Gitlab - Jenkins 웹훅 설정</strong>   <a name="list1_3"></a></p>
+
+    <p>Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 <code class="highlighter-rouge">새로운 Item</code> 탭을 눌러줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_5.png" alt="jenkins_new_item" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 5] Jenkins Item 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위의 [그림 5]와 같이 파이프라인을 선택하고 아이템의 이름을 명시하고 OK 버튼을 눌러 아이템을 만들어줍니다.</p>
+
+    <p>본 프로젝트에서는 <code class="highlighter-rouge">devsecops-pipeline</code>라는 이름의 아이템을 만들어주었습니다.</p>
+
+    <p><br /></p>
+
+    <p>Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 <code class="highlighter-rouge">Settings &gt; Webhooks</code> 탭으로 들어옵니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_6.png" alt="gitlab_webhook" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 6] Gitlab 웹훅 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위의 [그림 6]와 같이 <code class="highlighter-rouge">http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName</code>의 형태로 URL을 작성해줍니다.</p>
+
+    <p>일단 설정은 푸시 이벤트에 대한 트리거만 걸어놓고 차후 멀티 브랜치에 대한 파이프라인 구성도 진행해볼 것입니다.</p>
+
+    <p>웹훅 설정을 마치고 아래로 내리면 <code class="highlighter-rouge">Test</code> 버튼을 눌러 <code class="highlighter-rouge">Push events</code>에 대한 테스트를 진행해봅니다.</p>
+
+    <p><code class="highlighter-rouge">Hook executed successfully: HTTP 200</code> 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.</p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-jenkins-파이프라인-설정---"><span style="color:purple"><strong>2. Jenkins 파이프라인 설정</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Pipeline 설정 및 테스트</strong>   <a name="list2_1"></a></p>
+
+    <p>[그림 5]에서 생성한 파이프라인의 <code class="highlighter-rouge">구성</code> 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_7.png" alt="gitlab_webhook" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 7] Gitlab 웹훅 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>아래로 쭉 내리면 [그림 8]과 같이 파이프라인 스크립트를 작성할 수 있는 공간이 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_8.png" alt="echo_hello_world" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 8] Hello World 파이프라인 스크립트 작성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Gitlab에 푸시했을 때 정상적으로 파이프라인이 작동하는지만 확인해보기 위해 ‘Hello World’를 출력하는 간단한 스크립트를 작성하여 설정을 저장했습니다.</p>
+
+    <p><br /></p>
+
+    <p>그러고나서 깃 푸시 이벤트를 보내면 다음 [그림 9]와 같이 자동으로 설정해둔 파이프라인이 정상적으로 실행되는 것을 확인할 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_9.png" alt="pipeline_result" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 9] 파이프라인 실행 결과 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 <code class="highlighter-rouge">Console Output</code> 탭을 눌러 확인할 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_10.png" alt="build_console" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 10] 파이프라인 실행 콘솔 로그 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>[그림 10]에서 볼 수 있듯이 정상적으로 파이프라인이 실행되어 콘솔에 ‘Hello World’ 문구가 출력된 것을 확인할 수 있습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins - Docker 연동 및 파이프라인 테스트</strong>   <a name="list2_2"></a></p>
+
+    <p>Gitlab과 Jenkins가 정상적으로 연동되어 Git Push에 의해 자동으로 파이프라인이 실행되는 부분까지 진행하였고 다음으로 파이프라인에서 git clone하여 프로젝트 폴더의 Dockerfile을 통해 빌드하여 Docker hub에 푸시하는 부분까지 진행하겠습니다.</p>
+
+    <p>우선 Jenkins가 설치되어 있는 노드에서 Git 혹은 Docker 관련 스크립트 실행시 커맨드 에러가 발생할 수 있으므로 servers 인스턴스에서 다음 명령어를 통해 파이프라인에서 Git과 Docker 명령을 사용할 수 있도록 해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nt">-y</span> update
+  <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>docker docker-registry
+</code></pre></div>    </div>
+
+    <p>docker 명령을 입력했을 때 권한 에러를 해결하기 위한 설정도 해주어야 합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-a</span> <span class="nt">-G</span> docker <span class="nv">$USER</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>service docker restart
+  <span class="nv">$ </span><span class="nb">sudo chmod </span>777 /var/run/docker.sock
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p>그리고 Jenkins에서 [그림 11]에 보이는 Docker 관련 플러그인을 설치해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_11.png" alt="docker_plugin_installation" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 11] Jenkins에서 Docker 플러그인 설치</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>다음으로 Docker hub에 로그인 할 계정의 Credentials을 생성해야 합니다.</p>
+
+    <blockquote>
+      <p>추후 Harbor로 변경할 예정입니다.</p>
+    </blockquote>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_2_12.png" alt="docker_hub_credentials" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 12] Docker hub credentials 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위의 Docker 관련 설정이 정상적으로 완료되면 파이프라인 스크립트를 다음과 같이 작성해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  pipeline <span class="o">{</span>
+      environment <span class="o">{</span>
+          registry <span class="o">=</span> <span class="s2">"crisis513/flask-app"</span>
+          registryCredential <span class="o">=</span> <span class="s1">'crisis513'</span>
+          dockerImage <span class="o">=</span> <span class="s1">''</span>
+          releaseName <span class="o">=</span> <span class="s2">"flask-app"</span>
+          release_version <span class="o">=</span> <span class="s1">'latest'</span>
+      <span class="o">}</span>
+      agent any
+      stages <span class="o">{</span>
+          stage<span class="o">(</span><span class="s1">'Cloning our Git'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  git <span class="s1">'http://serversIP:8001/root/flask-app.git'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Building docker image'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      dockerImage <span class="o">=</span> docker.build registry + <span class="s2">":</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Deploy docker image'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      docker.withRegistry<span class="o">(</span> <span class="s1">''</span>, registryCredential <span class="o">)</span> <span class="o">{</span>
+                          dockerImage.push<span class="o">()</span>
+                      <span class="o">}</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Cleaning up'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s2">"docker rmi </span><span class="nv">$registry</span><span class="s2">:</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p>Gitlab 서버에서 flask-app 프로젝트를 가져와서 프로젝트 내의 Dockerfile을 통해 빌드하고</p>
+  </li>
+</ul>
+:ET
