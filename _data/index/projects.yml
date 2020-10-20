@@ -20,8 +20,8 @@
 - name: Linux Vulnerability Diagnosis
   i18n: Linux Vulnerability Diagnosis
   gh_user: crisis513
-  repo: crisis513
-  url: https://crisis513.github.io/project/2020/08/30/linux_vulnerability_diagnosis_project.html
+  repo: linux-diagnosis
+  url: https://github.com/crisis513/linux-diagnosis.git
   img: /static/assets/img/landing/diagnosis_logo.png
   desc: KISA에서 작성된 '주요정보통신기반시설 기술적 취약점 분석 평가 상세 가이드' 문서를 참고하여 CentOS 환경에서 자동으로 취약점 진단을 진행할 수 있도록 취약점 진단 자동화 스크립트를 개발하고 ELK Stack을 통해 진단 결과를 가시화하여 보여줍니다.
 
