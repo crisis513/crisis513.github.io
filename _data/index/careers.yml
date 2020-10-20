@@ -1,13 +1,14 @@
 # careers section data
 # if you don't have language feature(language.yml is empty), ignore "i18n" items
+
 - name:
-    detail: The master's course
+    detail: 학사 과정
     i18n: company_a
   desc:
-    detail: 숭실대학교 대학원에서 김명호 지도 교수님께 지도받아 '클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현'이라는 주제로 석사학위 논문을 작성하여 2020년 2월에 졸업
+    detail: 한국IT전문학교 융합컴퓨터보안학과에서 학점은행제를 통해 학사 학위 취득
     i18n: company_a_desc
   date:
-    detail: 2017.02 ~ 2020.02
+    detail: 2014.02 ~ 2017.03
     i18n: company_a_date
   job:
     detail: Graduated
@@ -16,15 +17,31 @@
   present: true
 
 - name:
-    detail: 한국클라우드컴퓨팅연구조합(CCCR)
+    detail: 석사 과정
     i18n: company_b
   desc:
-    detail: CCCR 기관에서 '클라우드 네이티브 환경의 DevSecOps 엔지니어 양성과정'이라는 교육 과정을 이수하는 중
+    detail: 숭실대학교 대학원에서 김명호 지도 교수님께 지도받아 '클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현'이라는 주제로 석사학위 논문을 작성하여 2020년 2월에 졸업
     i18n: company_b_desc
   date:
-    detail: 2020.06 ~ 
+    detail: 2017.03 ~ 2020.02
     i18n: company_b_date
   job:
-    detail: Jobless
-    i18n: company_b_job
+    detail: Graduated
+    i18n: company_a_job
   icon: fa-plus-square
+  present: true
+
+- name:
+    detail: 한국클라우드컴퓨팅연구조합(CCCR)
+    i18n: company_c
+  desc:
+    detail: CCCR 기관에서 '클라우드 네이티브 환경의 DevSecOps 엔지니어 양성과정'이라는 교육 과정을 이수하는 중
+    i18n: company_c_desc
+  date:
+    detail: 2020.06 ~ 
+    i18n: company_c_date
+  job:
+    detail: Jobless
+    i18n: company_c_job
+  icon: fa-plus-square
+  present: true
