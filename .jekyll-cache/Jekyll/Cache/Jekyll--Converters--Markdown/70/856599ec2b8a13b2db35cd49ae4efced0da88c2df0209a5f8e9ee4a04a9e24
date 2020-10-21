@@ -1,4 +1,4 @@
-I"L<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"7o<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -91,7 +91,7 @@
 
     <p><br /></p>
 
-    <p>여기서 <code class="language-plaintext highlighter-rouge">a separate configuration page</code>를 눌러 Configure Clouds 설정으로 들어옵니다.</p>
+    <p>여기서 <code class="highlighter-rouge">a separate configuration page</code>를 눌러 Configure Clouds 설정으로 들어옵니다.</p>
 
     <p>쿠버네티스 설정은 다음 [그림 3], [그림 4]와 같이 진행합니다.</p>
 
@@ -110,9 +110,9 @@
 
     <p><br /></p>
 
-    <p>Kubernetes URL은 kube-master 인스턴스에 접속하여 <code class="language-plaintext highlighter-rouge">~/.kube/config</code> 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.</p>
+    <p>Kubernetes URL은 kube-master 인스턴스에 접속하여 <code class="highlighter-rouge">~/.kube/config</code> 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.</p>
 
-    <p>Kubernetes URL을 입력하고 <code class="language-plaintext highlighter-rouge">Test Connection</code> 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.</p>
+    <p>Kubernetes URL을 입력하고 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">cat</span> ~/.kube/config 
   apiVersion: v1
@@ -125,7 +125,7 @@
 
     <p><br /></p>
 
-    <p>그 후 아래로 내리다보면 <code class="language-plaintext highlighter-rouge">Pod Templates</code>를 구성하는 버튼이 있습니다.</p>
+    <p>그 후 아래로 내리다보면 <code class="highlighter-rouge">Pod Templates</code>를 구성하는 버튼이 있습니다.</p>
 
     <p>그 버튼을 눌러 다음 [그림 4]와 같이 설정하고 저장합니다.</p>
 
@@ -149,9 +149,9 @@
 
     <p>Jenkins에서 쿠버네티스 클러스터와의 연동이 정상적으로 설정되었다면 다음은 Jenkins Slave를 생성 및 구성해야 합니다.</p>
 
-    <p>Jenkins의 <code class="language-plaintext highlighter-rouge">Manage Nodes</code> 설정에 들어와서 왼쪽의 <code class="language-plaintext highlighter-rouge">신규 노드</code> 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.</p>
+    <p>Jenkins의 <code class="highlighter-rouge">Manage Nodes</code> 설정에 들어와서 왼쪽의 <code class="highlighter-rouge">신규 노드</code> 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.</p>
 
-    <p>첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 <code class="language-plaintext highlighter-rouge">Permanent Agent</code>를 클릭 후 다음으로 넘어갑니다.</p>
+    <p>첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 <code class="highlighter-rouge">Permanent Agent</code>를 클릭 후 다음으로 넘어갑니다.</p>
 
     <table>
       <thead>
@@ -348,7 +348,7 @@
 
     <p>argoCD는 쿠버네티스 클러스터에 설치 한 후 애플리케이션들을 관리할 수 ​​있습니다.</p>
 
-    <p>Git 저장소에 앱을 설명하는 Kubernetes 매니페스트가 존재하는데, argoCD는 이러한 매니페스트가 항상 동기화되어 있는지 확인합니다.</p>
+    <p>Git 저장소에 앱을 설명하는 쿠버네티스 매니페스트가 존재하는데, argoCD는 이러한 매니페스트가 항상 동기화되어 있는지 확인합니다.</p>
 
     <p>모든 매니페스트와 해당 동기화 상태는 UI가 깔끔하고 시각적으로 잘 표현되어 있으면서도 가볍기 때문에 Jenkins와 같이 사용하는 것도 상당히 매력적인 선택지 중 하나입니다.</p>
 
@@ -356,7 +356,188 @@
   </li>
   <li>
     <p><strong>argoCD 설치</strong>   <a name="list2_2"></a></p>
+
+    <p><strong>argoCD는 쿠버네티스 위에서 동작하는 GitOps 지속적 배포 도구입니다.</strong></p>
+
+    <p>따라서 Helm을 사용하여 argoCD를 쿠버네티스에 배포할 것 입니다.</p>
+
+    <p>우선 argocd의 네임스페이스를 생성해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace argocd
+</code></pre></div>    </div>
+
+    <p>다음으로 argoCD의 Helm 레포지토리를 추가해주고 앞서 생성해준 argocd 네임스페이스에 Helm을 사용해 argocd를 설치해줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add argo https://argoproj.github.io/argo-helm
+  <span class="nv">$ </span>helm <span class="nb">install </span>argocd argo/argo-cd <span class="nt">-n</span> 
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  NAME: argocd
+  LAST DEPLOYED: Wed Oct 10 06:38:54 2020
+  NAMESPACE: argocd
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  In order to access the server UI you have the following options:
+
+  1. kubectl port-forward service/argocd-server <span class="nt">-n</span> argocd 8080:443
+
+      and <span class="k">then </span>open the browser on http://localhost:8080 and accept the certificate
+
+  2. <span class="nb">enable </span>ingress <span class="k">in </span>the values file <span class="sb">`</span>service.ingress.enabled<span class="sb">`</span> and either
+      - Add the annotation <span class="k">for </span>ssl passthrough: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/ingress.md#option-1-ssl-passthrough
+      - Add the <span class="sb">`</span><span class="nt">--insecure</span><span class="sb">`</span> flag to <span class="sb">`</span>server.extraArgs<span class="sb">`</span> <span class="k">in </span>the values file and terminate SSL at your ingress: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/ingress.md#option-2-multiple-ingress-objects-and-hosts
+
+
+  After reaching the UI the first <span class="nb">time </span>you can login with username: admin and the password will be the
+  name of the server pod. You can get the pod name by running:
+
+  kubectl get pods <span class="nt">-n</span> argocd <span class="nt">-l</span> app.kubernetes.io/name<span class="o">=</span>argocd-server <span class="nt">-o</span> name | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">'/'</span> <span class="nt">-f</span> 2
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>설치 시 수정 된 values.yaml을 적용하고 싶을 때는 다음의 명령어를 통해 배포하면 됩니다.
+$ helm install argocd argo/argo-cd -f ./values.yaml</p>
+    </blockquote>
+
+    <p>성공적으로 배포가 되었는지 확인해봅니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> argocd
+  NAME                                                READY   STATUS    RESTARTS   AGE
+  pod/argocd-application-controller-544c45984-26sfs   1/1     Running   0          15h
+  pod/argocd-dex-server-7cd54b9d86-6hhvw              1/1     Running   0          15h
+  pod/argocd-redis-5ddd577d68-nh867                   1/1     Running   0          15h
+  pod/argocd-repo-server-69fc78b68-8f9n2              1/1     Running   0          15h
+  pod/argocd-server-7c5f6f8d9-xkc8h                   1/1     Running   0          15h
+
+
+  NAME                            TYPE           CLUSTER-IP       EXTERNAL-IP     PORT<span class="o">(</span>S<span class="o">)</span>                      AGE
+  service/argocd-dex-server       ClusterIP      10.100.97.188    &lt;none&gt;          5556/TCP,5557/TCP,5558/TCP   15h
+  service/argocd-metrics          ClusterIP      10.108.127.86    &lt;none&gt;          8082/TCP                     15h
+  service/argocd-redis            ClusterIP      10.105.230.152   &lt;none&gt;          6379/TCP                     15h
+  service/argocd-repo-server      ClusterIP      10.104.24.97     &lt;none&gt;          8081/TCP,8084/TCP            15h
+  service/argocd-server           ClusterIP      10.104.68.51     &lt;none&gt;          80:30854/TCP,443:32178/TCP   15h
+  service/argocd-server-metrics   ClusterIP      10.103.118.105   &lt;none&gt;          8083/TCP                     15h
+
+
+  NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/argocd-application-controller   1/1     1            1           15h
+  deployment.apps/argocd-dex-server               1/1     1            1           15h
+  deployment.apps/argocd-redis                    1/1     1            1           15h
+  deployment.apps/argocd-repo-server              1/1     1            1           15h
+  deployment.apps/argocd-server                   1/1     1            1           15h
+
+  NAME                                                      DESIRED   CURRENT   READY   AGE
+  replicaset.apps/argocd-application-controller-544c45984   1         1         1       15h
+  replicaset.apps/argocd-dex-server-7cd54b9d86              1         1         1       15h
+  replicaset.apps/argocd-redis-5ddd577d68                   1         1         1       15h
+  replicaset.apps/argocd-repo-server-69fc78b68              1         1         1       15h
+  replicaset.apps/argocd-server-7c5f6f8d9                   1         1         1       15h
+</code></pre></div>    </div>
+
+    <p>서비스가 정상적으로 배포가 되었다면 argocd에 접근하기 위해 argocd-server에 대한 NodePort를 생성해줍니다.</p>
+
+    <p>본 프로젝트에서는 30093으로 정의하였고, 마찬가지로 GCP 방화벽에서도 해당 포트번호를 추가해주어야 합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim argocd-nodeport.yaml 
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: argocd
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/name: argocd-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30093
+</code></pre></div>    </div>
+
+    <p>이제 argoCD에 접속하여 로그인을 시도해봅니다.</p>
+
+    <p>Helm으로 배포했을 때 초기 아이디는 <code class="highlighter-rouge">admin</code>, 패스워드는 argoCD 파드명 즉, <code class="highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_9.png" alt="jenkins_slave_agent" width="680" height="239" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 9] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_10.png" alt="jenkins_slave_agent" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 10] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_11.png" alt="jenkins_slave_agent" width="638" height="453" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 11] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_12.png" alt="jenkins_slave_agent" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 12] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_13.png" alt="jenkins_slave_agent" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 13] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_14.png" alt="jenkins_slave_agent" width="952" height="309" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 14] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
   </li>
 </ul>
-
 :ET
