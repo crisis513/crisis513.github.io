@@ -1,4 +1,4 @@
-I"xK<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"L<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -23,6 +23,8 @@
 <p><a href="#list2">2. argoCD를 이용한 CD 구성</a></p>
 
 <p><a href="#list2_1">   2.1. argoCD 란?</a></p>
+
+<p><a href="#list2_2">   2.2. argoCD 설치</a></p>
 
 <p><br /></p>
 
@@ -310,7 +312,7 @@
     <table>
       <thead>
         <tr>
-          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_8.png" alt="pipeline_execute_result" width="716" height="332" /></th>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_8.png" alt="pipeline_execute_result" width="948" height="467" /></th>
         </tr>
       </thead>
       <tbody>
@@ -352,5 +354,9 @@
 
     <p><br /></p>
   </li>
+  <li>
+    <p><strong>argoCD 설치</strong>   <a name="list2_2"></a></p>
+  </li>
 </ul>
+
 :ET

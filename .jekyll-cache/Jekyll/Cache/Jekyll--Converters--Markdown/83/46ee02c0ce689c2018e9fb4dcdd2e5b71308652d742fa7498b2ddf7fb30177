@@ -1,4 +1,4 @@
-I"xK<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"�T<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -23,6 +23,8 @@
 <p><a href="#list2">2. argoCD를 이용한 CD 구성</a></p>
 
 <p><a href="#list2_1">   2.1. argoCD 란?</a></p>
+
+<p><a href="#list2_2">   2.2. argoCD 설치</a></p>
 
 <p><br /></p>
 
@@ -351,6 +353,28 @@
     <p>모든 매니페스트와 해당 동기화 상태는 UI가 깔끔하고 시각적으로 잘 표현되어 있으면서도 가볍기 때문에 Jenkins와 같이 사용하는 것도 상당히 매력적인 선택지 중 하나입니다.</p>
 
     <p><br /></p>
+  </li>
+  <li>
+    <p><strong>argoCD 설치</strong>   <a name="list2_2"></a></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ VERSION</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">--silent</span> <span class="s2">"https://api.github.com/repos/argoproj/argo-cd/releases/latest"</span> | <span class="nb">grep</span> <span class="s1">'"tag_name"'</span> | <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/.*"([^"]+)".*/\1/'</span><span class="si">)</span>
+  <span class="nv">$ </span><span class="nb">sudo </span>curl <span class="nt">-sSL</span> <span class="nt">-o</span> /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/<span class="nv">$VERSION</span>/argocd-linux-amd64
+  <span class="nv">$ </span><span class="nb">sudo chmod</span> +x /usr/local/bin/argocd
+
+  <span class="nv">$ </span>kubectl create namespace argocd
+  <span class="nv">$ </span>kubectl apply <span class="nt">-n</span> argocd <span class="nt">-f</span> https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  <span class="nv">$ </span>kubectl create clusterrolebinding cluster-admin-binding <span class="nt">--clusterrole</span><span class="o">=</span>cluster-admin <span class="nt">--user</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>gcloud config get-value account<span class="si">)</span><span class="s2">"</span>
+  <span class="nv">$ </span>kubectl patch svc argocd-server <span class="nt">-n</span> argocd <span class="nt">-p</span> <span class="s1">'{"spec": {"type": "LoadBalancer"}}'</span>
+
+  <span class="c"># get admin password</span>
+  <span class="nv">$ </span>kubectl get pods <span class="nt">-n</span> argocd <span class="nt">-l</span> app.kubernetes.io/name<span class="o">=</span>argocd-server <span class="nt">-o</span> name | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">'/'</span> <span class="nt">-f</span> 2
+
+  <span class="c"># check argocd server ip address</span>
+  <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> argocd
+
+  <span class="nv">$ </span>argocd login &lt;ARGOCD_SERVER&gt;
+  <span class="nv">$ </span>argocd account update-password
+</code></pre></div>    </div>
   </li>
 </ul>
 :ET
