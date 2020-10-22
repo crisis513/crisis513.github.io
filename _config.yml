@@ -26,11 +26,12 @@ author:  # change following line to your infomation.
   skill_icon2:
     - name: fa-linux
     - name: icon-apache
-  desc: "클라우드 컴퓨팅, 데브옵스, 보안 등 IT 인프라에 많은 관심을 갖고 배우며 기록하고 있습니다."  # Describe yourself.
+  desc: "개인 포트폴리오 및 블로그 작성으로 사용되는 공간입니다. 
+  현재 클라우드 컴퓨팅, 데브옵스, 보안 등 IT 인프라에 많은 관심을 갖고 배우며 기록하고 있습니다."  # Describe yourself.
 
 # comment
 disqus:  # if you wanna comment feature, go to https://disqus.com/ to get your configuration; if not, comment following two lines.
-  name: Son
+  name: s6i
 
 # analytics
 ## google analytics
