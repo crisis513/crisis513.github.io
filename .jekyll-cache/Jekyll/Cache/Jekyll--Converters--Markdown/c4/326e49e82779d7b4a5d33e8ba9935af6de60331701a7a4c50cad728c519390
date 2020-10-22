@@ -1,4 +1,4 @@
-I"y�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"��<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -49,7 +49,7 @@
   <li>
     <p><strong>프로젝트 목적</strong>   <a name="list1_2"></a></p>
 
-    <p>본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, <code class="language-plaintext highlighter-rouge">보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축</code>하고자 합니다.</p>
+    <p>본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, <code class="highlighter-rouge">보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축</code>하고자 합니다.</p>
 
     <p><strong>클라우드 네이티브 환경에서의 DevSecOps 쳬계와 CI/CD 체계를 이해</strong>하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 <strong>실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인 구축하는 것이 목적</strong>입니다.</p>
 
@@ -99,7 +99,7 @@
   <li>
     <p><strong>GCP(Google Cloud Platform) 구성</strong>   <a name="list2_1"></a></p>
 
-    <p>GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 <code class="language-plaintext highlighter-rouge">kubeadm</code>을 통해 쿠버네티스를 구성할 것 입니다.</p>
+    <p>GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 <code class="highlighter-rouge">kubeadm</code>을 통해 쿠버네티스를 구성할 것 입니다.</p>
 
     <p>따라서 다음 [그림 2]와 같이 GCP 인스턴스를 생성해줍니다.</p>
 
@@ -147,7 +147,7 @@
 
     <p>위에서 언급하였듯 생성한 인스턴스에 kubeadm 명령을 통해 쿠버네티스를 구성합니다.</p>
 
-    <p>먼저 <code class="language-plaintext highlighter-rouge">kube-master, kube-worker1, kube-worker2 모두</code> 동일하게 아래의 명령을 실행하도록 합니다.</p>
+    <p>먼저 <code class="highlighter-rouge">kube-master, kube-worker1, kube-worker2 모두</code> 동일하게 아래의 명령을 실행하도록 합니다.</p>
 
     <ul>
       <li>
@@ -194,7 +194,7 @@
         <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>modprobe br_netfilter
 </code></pre></div>        </div>
 
-        <p>br_netfilter 모듈을 명시적으로 추가한 후에 <code class="language-plaintext highlighter-rouge">lsmod | grep br_netfilter</code> 명령어로 추가 여부를 확인할 수 있습니다.</p>
+        <p>br_netfilter 모듈을 명시적으로 추가한 후에 <code class="highlighter-rouge">lsmod | grep br_netfilter</code> 명령어로 추가 여부를 확인할 수 있습니다.</p>
       </li>
       <li>
         <p>도커 및 쿠버네티스 설치 후 서비스 시작</p>
@@ -222,7 +222,7 @@
   <span class="nv">$ </span>systemctl <span class="nb">enable </span>kubelet <span class="o">&amp;&amp;</span> systemctl start kubelet
 </code></pre></div>        </div>
 
-        <p>본 프로젝트에서는 <code class="language-plaintext highlighter-rouge">헬스체크 이슈</code>, <code class="language-plaintext highlighter-rouge">대쉬보드 호환성</code>의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.</p>
+        <p>본 프로젝트에서는 <code class="highlighter-rouge">헬스체크 이슈</code>, <code class="highlighter-rouge">대쉬보드 호환성</code>의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.</p>
 
         <blockquote>
           <p>처음에 1.19 버전으로 설치했었다가 쿠버네티스 클러스터의 매트릭을 수집해주는 <strong>kube-state-metrics</strong>이 정상적으로 작동하지 않아 1.15버전으로 재설치한 것입니다.</p>
@@ -232,7 +232,7 @@
 
     <p><br /></p>
 
-    <p>다음으로 <code class="language-plaintext highlighter-rouge">kube-master</code>에서만 아래의 명령을 실행하도록 합니다.</p>
+    <p>다음으로 <code class="highlighter-rouge">kube-master</code>에서만 아래의 명령을 실행하도록 합니다.</p>
 
     <ul>
       <li>
@@ -284,7 +284,7 @@
 
     <p><br /></p>
 
-    <p>다음은 kubeadm init의 결과에서 나온 것 처럼 <code class="language-plaintext highlighter-rouge">kube-worker 노드들</code>에서만 아래의 명령을 실행하도록 합니다.</p>
+    <p>다음은 kubeadm init의 결과에서 나온 것 처럼 <code class="highlighter-rouge">kube-worker 노드들</code>에서만 아래의 명령을 실행하도록 합니다.</p>
 
     <ul>
       <li>
@@ -313,7 +313,7 @@
 
     <p><br /></p>
 
-    <p>마지막으로 <code class="language-plaintext highlighter-rouge">kube-master</code>에서 weave를 설치합니다.</p>
+    <p>마지막으로 <code class="highlighter-rouge">kube-master</code>에서 weave를 설치합니다.</p>
 
     <ul>
       <li>
@@ -370,7 +370,7 @@
   <li>
     <p><strong>Gitlab 구성</strong>   <a name="list2_3"></a></p>
 
-    <p>Gitlab과 Jenkins 설치는 [그림 2]의 <code class="language-plaintext highlighter-rouge">servers 인스턴스</code>에서 진행합니다.</p>
+    <p>Gitlab과 Jenkins 설치는 [그림 2]의 <code class="highlighter-rouge">servers 인스턴스</code>에서 진행합니다.</p>
 
     <p>GitLab은 자체 CI를 무료로 제공하고 있어 외부 CI 서비스를 사용할 필요가 없습니다.</p>
 
@@ -465,7 +465,7 @@
 
         <p><br /></p>
 
-        <p>GCP 방화벽까지 열어주고나서 <code class="language-plaintext highlighter-rouge">servers IP:8001</code> URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.</p>
+        <p>GCP 방화벽까지 열어주고나서 <code class="highlighter-rouge">servers IP:8001</code> URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.</p>
 
         <table>
           <thead>
@@ -570,7 +570,7 @@
 
         <p><br /></p>
 
-        <p><code class="language-plaintext highlighter-rouge">servers IP:8002</code> URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.</p>
+        <p><code class="highlighter-rouge">servers IP:8002</code> URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.</p>
 
         <p>화면의 안내에 따라 <strong>/var/lib/jenkins/secrets/initialAdminPassword 파일을 확인</strong>합니다.</p>
 
@@ -582,7 +582,7 @@
 
         <p>다음은 Customize Jenkins라는 페이지가 나오는데, 여기서는 원하는 Jenkins 플러그인을 설치할 수 있습니다.</p>
 
-        <p><strong>Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능</strong>하기 때문에 <code class="language-plaintext highlighter-rouge">Install suggested plugins</code>를 눌러 기본 플러그인만 설치하고 넘어갑니다.</p>
+        <p><strong>Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능</strong>하기 때문에 <code class="highlighter-rouge">Install suggested plugins</code>를 눌러 기본 플러그인만 설치하고 넘어갑니다.</p>
 
         <p><br /></p>
 

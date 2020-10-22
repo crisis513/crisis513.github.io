@@ -1,4 +1,4 @@
-I"Q�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.</p>
+I"��<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.</p>
 
 <p>구현 과정 및 설정까지 작성하여 글이 다소 길 수 있지만 하나의 프로젝트로 진행되어 포스팅을 따로 나누지 않았습니다.</p>
 
@@ -109,7 +109,7 @@
 
     <p>GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.</p>
 
-    <p>해당 검색창에서 <code class="language-plaintext highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 <strong>Cloud SQL를 활성화</strong> 시켜줍니다.</p>
+    <p>해당 검색창에서 <code class="highlighter-rouge">Cloud SQL Admin API</code>를 입력하여 다음 [그림 3]에 보이는 <strong>사용</strong> 버튼을 눌러 <strong>Cloud SQL를 활성화</strong> 시켜줍니다.</p>
 
     <table>
       <thead>
@@ -199,11 +199,11 @@
 
     <p><br /></p>
 
-    <p>먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - <code class="language-plaintext highlighter-rouge">asia-northeast3-a</code>)을 선택하도록 합니다.</p>
+    <p>먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - <code class="highlighter-rouge">asia-northeast3-a</code>)을 선택하도록 합니다.</p>
 
-    <p>flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 <code class="language-plaintext highlighter-rouge">n1-standard-1</code>을 선택하였고,</p>
+    <p>flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 <code class="highlighter-rouge">n1-standard-1</code>을 선택하였고,</p>
 
-    <p>OS는 <code class="language-plaintext highlighter-rouge">CentOS 7</code>, 웹서버의 <code class="language-plaintext highlighter-rouge">HTTP 트래픽을 허용</code>해주도록 체크하였습니다.</p>
+    <p>OS는 <code class="highlighter-rouge">CentOS 7</code>, 웹서버의 <code class="highlighter-rouge">HTTP 트래픽을 허용</code>해주도록 체크하였습니다.</p>
 
     <p><br /></p>
 
@@ -301,7 +301,7 @@
       <span class="s">"auth_uri"</span><span class="p">:</span> <span class="s">"&lt;https://accounts.google.com/o/oauth2/auth&gt;"</span><span class="p">,</span>
       <span class="s">"token_uri"</span><span class="p">:</span> <span class="s">"&lt;https://oauth2.googleapis.com/token&gt;"</span><span class="p">,</span>
       <span class="s">"auth_provider_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/oauth2/v1/certs&gt;"</span><span class="p">,</span>
-      <span class="s">"client_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager%40cccr-gcp-project.iam.gserviceaccount.com&gt;"</span>
+      <span class="s">"client_x509_cert_url"</span><span class="p">:</span> <span class="s">"&lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager</span><span class="si">%40</span><span class="s">cccr-gcp-project.iam.gserviceaccount.com&gt;"</span>
   <span class="p">}</span>
 </code></pre></div>    </div>
 
@@ -491,13 +491,13 @@
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="n">instance</span><span class="o">-</span><span class="n">wordpress</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mysql -u root -p -S /cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
 </span>  <span class="n">Enter</span> <span class="n">password</span><span class="p">:</span> 
-  <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MariaDB</span> <span class="n">monitor</span><span class="p">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="k">with</span> <span class="p">;</span> <span class="ow">or</span> \\<span class="n">g</span><span class="p">.</span>
+  <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MariaDB</span> <span class="n">monitor</span><span class="o">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="k">with</span> <span class="p">;</span> <span class="ow">or</span> \\<span class="n">g</span><span class="o">.</span>
   <span class="n">Your</span> <span class="n">MySQL</span> <span class="n">connection</span> <span class="nb">id</span> <span class="ow">is</span> <span class="mi">1478</span>
-  <span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.7</span><span class="p">.</span><span class="mi">25</span><span class="o">-</span><span class="n">google</span><span class="o">-</span><span class="n">log</span> <span class="p">(</span><span class="n">Google</span><span class="p">)</span>
+  <span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.7.25</span><span class="o">-</span><span class="n">google</span><span class="o">-</span><span class="n">log</span> <span class="p">(</span><span class="n">Google</span><span class="p">)</span>
 
-  <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">MariaDB</span> <span class="n">Corporation</span> <span class="n">Ab</span> <span class="ow">and</span> <span class="n">others</span><span class="p">.</span>
+  <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">MariaDB</span> <span class="n">Corporation</span> <span class="n">Ab</span> <span class="ow">and</span> <span class="n">others</span><span class="o">.</span>
 
-  <span class="n">Type</span> <span class="s">'help;'</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\\</span><span class="s">h'</span> <span class="k">for</span> <span class="n">help</span><span class="p">.</span> <span class="n">Type</span> <span class="s">'</span><span class="se">\\</span><span class="s">c'</span> <span class="n">to</span> <span class="n">clear</span> <span class="n">the</span> <span class="n">current</span> <span class="nb">input</span> <span class="n">statement</span><span class="p">.</span>
+  <span class="n">Type</span> <span class="s">'help;'</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\\</span><span class="s">h'</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span> <span class="n">Type</span> <span class="s">'</span><span class="se">\\</span><span class="s">c'</span> <span class="n">to</span> <span class="n">clear</span> <span class="n">the</span> <span class="n">current</span> <span class="nb">input</span> <span class="n">statement</span><span class="o">.</span>
 
   <span class="n">MySQL</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">use</span> <span class="n">wordpress</span>
   <span class="n">Reading</span> <span class="n">table</span> <span class="n">information</span> <span class="k">for</span> <span class="n">completion</span> <span class="n">of</span> <span class="n">table</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">names</span>
@@ -529,13 +529,13 @@
   <li>
     <p><strong>관리형 로드 밸런싱 구성</strong>   <a name="list2_4"></a></p>
 
-    <p>GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 <strong>오토 스케일링(Auto-scaling)을 위한</strong> <code class="language-plaintext highlighter-rouge">관리형 인스턴스 그룹</code>과 <strong>템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는</strong> <code class="language-plaintext highlighter-rouge">비관리형 인스턴스 그룹</code>으로 나뉩니다.</p>
+    <p>GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 <strong>오토 스케일링(Auto-scaling)을 위한</strong> <code class="highlighter-rouge">관리형 인스턴스 그룹</code>과 <strong>템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는</strong> <code class="highlighter-rouge">비관리형 인스턴스 그룹</code>으로 나뉩니다.</p>
 
     <p><br /></p>
 
     <p>본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.</p>
 
-    <p>먼저 VM 인스턴스에 대한 <code class="language-plaintext highlighter-rouge">스냅샷을 생성</code>하고, 생성한 스냅샷으로 <code class="language-plaintext highlighter-rouge">이미지를 생성</code>합니다.</p>
+    <p>먼저 VM 인스턴스에 대한 <code class="highlighter-rouge">스냅샷을 생성</code>하고, 생성한 스냅샷으로 <code class="highlighter-rouge">이미지를 생성</code>합니다.</p>
 
     <table>
       <thead>
@@ -567,7 +567,7 @@
 
     <p><br /></p>
 
-    <p>이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 <code class="language-plaintext highlighter-rouge">인스턴스 템플릿을 생성</code>합니다.</p>
+    <p>이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 <code class="highlighter-rouge">인스턴스 템플릿을 생성</code>합니다.</p>
 
     <p>그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.</p>
 
@@ -586,7 +586,7 @@
 
     <p><br /></p>
 
-    <p>인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 <code class="language-plaintext highlighter-rouge">관리형 인스턴스 그룹을 생성</code>합니다.</p>
+    <p>인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 <code class="highlighter-rouge">관리형 인스턴스 그룹을 생성</code>합니다.</p>
 
     <table>
       <thead>
@@ -605,9 +605,9 @@
 
     <p>인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다.</p>
 
-    <p>탐색 메뉴에서 <strong>[네트워크 서비스] - [부하 분산]</strong> 탭에 들어와서 <code class="language-plaintext highlighter-rouge">부하 분산기 만들기</code>를 눌러줍니다.</p>
+    <p>탐색 메뉴에서 <strong>[네트워크 서비스] - [부하 분산]</strong> 탭에 들어와서 <code class="highlighter-rouge">부하 분산기 만들기</code>를 눌러줍니다.</p>
 
-    <p>HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 <code class="language-plaintext highlighter-rouge">HTTP(S) 부하 분산기</code>를 선택하고 <code class="language-plaintext highlighter-rouge">인터넷 트래픽을 VM으로 분산</code>을 눌러줍니다.</p>
+    <p>HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 <code class="highlighter-rouge">HTTP(S) 부하 분산기</code>를 선택하고 <code class="highlighter-rouge">인터넷 트래픽을 VM으로 분산</code>을 눌러줍니다.</p>
 
     <p><br /></p>
 
@@ -734,11 +734,11 @@
 
     <p><br /></p>
 
-    <p><code class="language-plaintext highlighter-rouge">allUsers</code> 구성원에 <code class="language-plaintext highlighter-rouge">저장소 개체 관리자</code> 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.</p>
+    <p><code class="highlighter-rouge">allUsers</code> 구성원에 <code class="highlighter-rouge">저장소 개체 관리자</code> 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.</p>
 
     <p><br /></p>
 
-    <p>다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 <code class="language-plaintext highlighter-rouge">mysqldump</code>하여 <code class="language-plaintext highlighter-rouge">crontab</code>을 통해 주기적으로 백업하기 위한 명령어입니다.</p>
+    <p>다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 <code class="highlighter-rouge">mysqldump</code>하여 <code class="highlighter-rouge">crontab</code>을 통해 주기적으로 백업하기 위한 명령어입니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@instance-wordpress ~]# vim /etc/my.cnf
   <span class="o">[</span>mysqldump]
@@ -863,9 +863,9 @@
 
     <p>모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 <strong>[모니터링] - [대시보드]</strong> 탭을 눌러 들어갑니다.</p>
 
-    <p>대시보드 페이지에 들어오면 <code class="language-plaintext highlighter-rouge">Create Dashboard</code> 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.</p>
+    <p>대시보드 페이지에 들어오면 <code class="highlighter-rouge">Create Dashboard</code> 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.</p>
 
-    <p>원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 <code class="language-plaintext highlighter-rouge">Add Chart</code> 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.</p>
+    <p>원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 <code class="highlighter-rouge">Add Chart</code> 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.</p>
 
     <table>
       <thead>
@@ -882,7 +882,7 @@
 
     <p><br /></p>
 
-    <p>위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 <code class="language-plaintext highlighter-rouge">Metric</code>과 Instance, Group 등 <code class="language-plaintext highlighter-rouge">Resource 타입</code>을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.</p>
+    <p>위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 <code class="highlighter-rouge">Metric</code>과 Instance, Group 등 <code class="highlighter-rouge">Resource 타입</code>을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.</p>
 
     <table>
       <thead>
@@ -980,7 +980,7 @@
   <li>
     <p><strong>오토 스케일링 및 부하 테스트</strong>   <a name="list3_2"></a></p>
 
-    <p>다음으로 아파치(Apache)의 <code class="language-plaintext highlighter-rouge">JMeter</code>라는 툴을 사용하여 부하 테스트를 진행합니다.</p>
+    <p>다음으로 아파치(Apache)의 <code class="highlighter-rouge">JMeter</code>라는 툴을 사용하여 부하 테스트를 진행합니다.</p>
 
     <p>JMeter에서 핵심 기능은 웹 HTTP/HTTPS 프로토콜을 통해 클라이언트의 요청을 수행하여 부하를 발생시키는 것입니다.</p>
 
@@ -1041,7 +1041,7 @@
 
     <p>위의 [그림 30]에서 볼 수 있듯이 부하 테스트를 수행한 시점에 <strong>CPU, Memory, Network traffic이 확 늘어난 것을 확인</strong>할 수 있고, 그와 동시에 인스턴스가 각각 하나씩 생겨난 것을 확인할 수 있습니다. 메모리 사용량을 확인하는 부분에서 측정 항목(인스턴스)가 새로 생겨난 것을 쉽게 확인할 수 있습니다.</p>
 
-    <p>그 후 <strong>마지막 10분</strong>을 <code class="language-plaintext highlighter-rouge">안정화 기간</code>이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있습니다.</p>
+    <p>그 후 <strong>마지막 10분</strong>을 <code class="highlighter-rouge">안정화 기간</code>이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있습니다.</p>
 
     <table>
       <thead>
