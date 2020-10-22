@@ -5,8 +5,8 @@
     <description>s6i's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 22 Oct 2020 13:02:12 +0900</pubDate>
-    <lastBuildDate>Thu, 22 Oct 2020 13:02:12 +0900</lastBuildDate>
+    <pubDate>Thu, 22 Oct 2020 13:14:02 +0900</pubDate>
+    <lastBuildDate>Thu, 22 Oct 2020 13:14:02 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -1155,7 +1155,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_1.png&quot; alt=&quot;gitlab_outbound&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_1.png&quot; alt=&quot;gitlab_outbound&quot; width=&quot;761&quot; height=&quot;650&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1174,7 +1174,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_2.png&quot; alt=&quot;gitlab_access_token&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_2.png&quot; alt=&quot;gitlab_access_token&quot; width=&quot;671&quot; height=&quot;612&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1240,7 +1240,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_5.png&quot; alt=&quot;jenkins_new_item&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_5.png&quot; alt=&quot;jenkins_new_item&quot; width=&quot;831&quot; height=&quot;402&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1263,7 +1263,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_6.png&quot; alt=&quot;gitlab_webhook&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_6.png&quot; alt=&quot;gitlab_webhook&quot; width=&quot;754&quot; height=&quot;357&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1302,7 +1302,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_7.png&quot; alt=&quot;gitlab_webhook&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_2_7.png&quot; alt=&quot;gitlab_webhook&quot; width=&quot;846&quot; height=&quot;478&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -1376,7 +1376,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Jenkins - Docker 연동 및 파이프라인 테스트&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Gitlab과 Jenkins가 정상적으로 연동되어 Git Push에 의해 자동으로 파이프라인이 실행되는 부분까지 진행하였고 다음으로 파이프라인에서 git clone하여 프로젝트 폴더의 Dockerfile을 통해 빌드하여 Docker hub에 푸시하는 부분까지 진행하겠습니다.&lt;/p&gt;
+    &lt;p&gt;Gitlab과 Jenkins가 정상적으로 연동되어 Git Push에 의해 자동으로 파이프라인이 실행되는 부분까지 진행하였고 다음으로 파이프라인에서 &lt;strong&gt;git clone하여&lt;/strong&gt; 프로젝트 폴더의 Dockerfile을 통해 빌드하여 &lt;strong&gt;Docker hub에 푸시하는 부분까지 진행&lt;/strong&gt;하겠습니다.&lt;/p&gt;
 
     &lt;p&gt;우선 Jenkins가 설치되어 있는 노드에서 Git 혹은 Docker 관련 스크립트 실행시 커맨드 에러가 발생할 수 있으므로 servers 인스턴스에서 다음 명령어를 통해 파이프라인에서 Git과 Docker 명령을 사용할 수 있도록 해줍니다.&lt;/p&gt;
 
@@ -1497,6 +1497,10 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   EXPOSE 8080
   CMD &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;uwsgi&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;--ini&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;conf.ini&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;해당 Dockerfile이 포함된 프로젝트는 &lt;a href=&quot;https://github.com/crisis513/flask-app&quot;&gt;git - crisis513/flask-app&lt;/a&gt;에서 확인할 수 있습니다.&lt;/p&gt;
+    &lt;/blockquote&gt;
 
     &lt;p&gt;위의 파이프라인이 정상적으로 실행된 결과는 다음 [그림 13]과 같습니다.&lt;/p&gt;
 
