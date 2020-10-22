@@ -1,4 +1,4 @@
-I"�q<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"Xy<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -91,7 +91,7 @@
 
     <p><br /></p>
 
-    <p>여기서 <code class="highlighter-rouge">a separate configuration page</code>를 눌러 Configure Clouds 설정으로 들어옵니다.</p>
+    <p>여기서 <code class="language-plaintext highlighter-rouge">a separate configuration page</code>를 눌러 Configure Clouds 설정으로 들어옵니다.</p>
 
     <p>쿠버네티스 설정은 다음 [그림 3], [그림 4]와 같이 진행합니다.</p>
 
@@ -110,9 +110,9 @@
 
     <p><br /></p>
 
-    <p>Kubernetes URL은 kube-master 인스턴스에 접속하여 <code class="highlighter-rouge">~/.kube/config</code> 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.</p>
+    <p>Kubernetes URL은 kube-master 인스턴스에 접속하여 <code class="language-plaintext highlighter-rouge">~/.kube/config</code> 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.</p>
 
-    <p>Kubernetes URL을 입력하고 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.</p>
+    <p>Kubernetes URL을 입력하고 <code class="language-plaintext highlighter-rouge">Test Connection</code> 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">cat</span> ~/.kube/config 
   apiVersion: v1
@@ -125,7 +125,7 @@
 
     <p><br /></p>
 
-    <p>그 후 아래로 내리다보면 <code class="highlighter-rouge">Pod Templates</code>를 구성하는 버튼이 있습니다.</p>
+    <p>그 후 아래로 내리다보면 <code class="language-plaintext highlighter-rouge">Pod Templates</code>를 구성하는 버튼이 있습니다.</p>
 
     <p>그 버튼을 눌러 다음 [그림 4]와 같이 설정하고 저장합니다.</p>
 
@@ -149,9 +149,9 @@
 
     <p>Jenkins에서 쿠버네티스 클러스터와의 연동이 정상적으로 설정되었다면 다음은 Jenkins Slave를 생성 및 구성해야 합니다.</p>
 
-    <p>Jenkins의 <code class="highlighter-rouge">Manage Nodes</code> 설정에 들어와서 왼쪽의 <code class="highlighter-rouge">신규 노드</code> 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.</p>
+    <p>Jenkins의 <code class="language-plaintext highlighter-rouge">Manage Nodes</code> 설정에 들어와서 왼쪽의 <code class="language-plaintext highlighter-rouge">신규 노드</code> 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.</p>
 
-    <p>첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 <code class="highlighter-rouge">Permanent Agent</code>를 클릭 후 다음으로 넘어갑니다.</p>
+    <p>첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 <code class="language-plaintext highlighter-rouge">Permanent Agent</code>를 클릭 후 다음으로 넘어갑니다.</p>
 
     <table>
       <thead>
@@ -179,7 +179,7 @@
     <table>
       <thead>
         <tr>
-          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_6.png" alt="jenkins_slave_guide" width="949" height="247" /></th>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_6.png" alt="jenkins_slave_guide" width="1000" height="272" /></th>
         </tr>
       </thead>
       <tbody>
@@ -459,11 +459,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p>이제 argoCD에 접속하여 로그인을 시도해봅니다.</p>
 
-    <p>Helm으로 배포했을 때 초기 아이디는 <code class="highlighter-rouge">admin</code>, 패스워드는 argoCD 파드명 즉, <code class="highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 입니다.</p>
+    <p>Helm으로 배포했을 때 초기 아이디는 <code class="language-plaintext highlighter-rouge">admin</code>, 패스워드는 argoCD 파드명 즉, <code class="language-plaintext highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 입니다.</p>
 
     <p>정상적으로 로그인이 이루어지면 Git 레포지토리를 추가하는 작업을 해주어야 합니다.</p>
 
-    <p>왼쪽의 <code class="highlighter-rouge">settings</code> 탭에서 <code class="highlighter-rouge">Repositories</code> 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.</p>
+    <p>왼쪽의 <code class="language-plaintext highlighter-rouge">settings</code> 탭에서 <code class="language-plaintext highlighter-rouge">Repositories</code> 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.</p>
 
     <table>
       <thead>
@@ -497,7 +497,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p><br /></p>
 
-    <p>다음으로</p>
+    <p>다음으로 <code class="language-plaintext highlighter-rouge">Applications</code> 탭에 와서 <code class="language-plaintext highlighter-rouge">NEW APP</code> 버튼을 눌러 배포를 관리할 애플리케이션을 추가해줍니다.</p>
 
     <table>
       <thead>
@@ -514,6 +514,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p><br /></p>
 
+    <p>애플리케이션 이름을 정의해주고 아래로 내리면 [그림 12]와 같은 화면이 나옵니다.</p>
+
     <table>
       <thead>
         <tr>
@@ -528,6 +530,10 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
     </table>
 
     <p><br /></p>
+
+    <p>레포지토리 주소와 배포할 yaml 파일들이 들어있는 경로를 명시해주고, 배포할 쿠버네티스의 클러스터 주소와 네임스페이스까지 작성하여 애플리케이션을 만들어줍니다.</p>
+
+    <p>정상적으로 애플리케이션이 만들어지면 다음 [그림 13]과 같이 argoCD에서 Git 레포지토리와 연동된 애플리케이션을 볼 수 있습니다.</p>
 
     <table>
       <thead>
@@ -544,6 +550,10 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p><br /></p>
 
+    <p>동기화 되지 않은 상태로 <code class="language-plaintext highlighter-rouge">OutOfSync</code>라는 문구와 <strong>노란색</strong>으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 <code class="language-plaintext highlighter-rouge">Sync OK</code> 라는 문구와 함께 <strong>초록색</strong>으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.</p>
+
+    <p>argoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있습니다.</p>
+
     <table>
       <thead>
         <tr>
@@ -558,6 +568,10 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
     </table>
 
     <p><br /></p>
+
+    <p>[그림 13]에서 애플리케이션을 선택해 들어가면 [그림 14]와 같이 실행중인 애플리케이션을 지속적으로 모니터링할 수 있는 화면이 나오게 됩니다.</p>
+
+    <p>Git 레포지토리와 쿠버네티스 클러스터와의 차이점을 보고하고 시각화하는 동시에 라이브 상태를 원하는 상태로 동기화하는 기능을 제공합니다.</p>
   </li>
 </ul>
 :ET
