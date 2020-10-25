@@ -1,4 +1,4 @@
-I"�z<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"�{<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -20,11 +20,11 @@
 
 <p><a href="#list1_4">   1.4. 쿠버네티스 배포 파이프라인 추가</a></p>
 
-<p><a href="#list2">2. argoCD를 이용한 CD 구성</a></p>
+<p><a href="#list2">2. ArgoCD를 이용한 CD 구성</a></p>
 
-<p><a href="#list2_1">   2.1. argoCD 란?</a></p>
+<p><a href="#list2_1">   2.1. ArgoCD 란?</a></p>
 
-<p><a href="#list2_2">   2.2. argoCD 설치</a></p>
+<p><a href="#list2_2">   2.2. ArgoCD 설치</a></p>
 
 <p><br /></p>
 
@@ -341,37 +341,39 @@
 
 <hr />
 
-<h2 id="2-argocd를-이용한-cd-구성---"><span style="color:purple"><strong>2. argoCD를 이용한 CD 구성</strong></span>   <a name="list2"></a></h2>
+<h2 id="2-argocd를-이용한-cd-구성---"><span style="color:purple"><strong>2. ArgoCD를 이용한 CD 구성</strong></span>   <a name="list2"></a></h2>
 
 <p><br /></p>
 
 <ul>
   <li>
-    <p><strong>argoCD 란?</strong>   <a name="list2_1"></a></p>
+    <p><strong>ArgoCD 란?</strong>   <a name="list2_1"></a></p>
 
-    <p>앞서 설명한 Jenkins Slave를 구성하여 CI/CD를 모두 제어할 수 있지만, CI를 Jenkins에서 진행하고 CD를 argoCD로 진행하는 형태로도 구축할 수 있습니다.</p>
+    <p>앞서 설명한 Jenkins Slave를 구성하여 CI/CD를 모두 제어할 수 있지만, CI를 Jenkins에서 진행하고 CD를 ArgoCD로 진행하는 형태로도 구축할 수 있습니다.</p>
 
-    <p>argoCD는 쿠버네티스 클러스터에 설치 한 후 애플리케이션들을 관리할 수 ​​있습니다.</p>
+    <p>ArgoCD는 쿠버네티스 클러스터에 설치 한 후 애플리케이션들을 관리할 수 ​​있습니다.</p>
 
-    <p>Git 저장소에 앱을 설명하는 쿠버네티스 매니페스트가 존재하는데, argoCD는 이러한 매니페스트가 항상 동기화되어 있는지 확인합니다.</p>
+    <p>Git 저장소에 앱을 설명하는 쿠버네티스 매니페스트가 존재하는데, ArgoCD는 이러한 매니페스트가 항상 동기화되어 있는지 확인합니다.</p>
 
     <p>모든 매니페스트와 해당 동기화 상태는 UI가 깔끔하고 시각적으로 잘 표현되어 있으면서도 가볍기 때문에 Jenkins와 같이 사용하는 것도 상당히 매력적인 선택지 중 하나입니다.</p>
+
+    <p>애플리케이션 배포 및 수명주기 관리는 자동화되고 감사 가능하며 이해하기 쉬워야합니다. 이 모든 작업은 Argo를 사용하여 수행 할 수 있습니다.</p>
 
     <p><br /></p>
   </li>
   <li>
-    <p><strong>argoCD 설치</strong>   <a name="list2_2"></a></p>
+    <p><strong>ArgoCD 설치</strong>   <a name="list2_2"></a></p>
 
-    <p><strong>argoCD는 쿠버네티스 위에서 동작하는 GitOps 지속적 배포 도구입니다.</strong></p>
+    <p><strong>ArgoCD는 쿠버네티스 위에서 동작하는 GitOps 지속적 배포 도구입니다.</strong></p>
 
-    <p>따라서 Helm을 사용하여 argoCD를 쿠버네티스에 배포할 것 입니다.</p>
+    <p>따라서 Helm을 사용하여 ArgoCD를 쿠버네티스에 배포할 것 입니다.</p>
 
     <p>우선 argocd의 네임스페이스를 생성해줍니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace argocd
 </code></pre></div>    </div>
 
-    <p>다음으로 argoCD의 Helm 레포지토리를 추가해주고 앞서 생성해준 argocd 네임스페이스에 Helm을 사용해 argocd를 설치해줍니다.</p>
+    <p>다음으로 ArgoCD의 Helm 레포지토리를 추가해주고 앞서 생성해준 argocd 네임스페이스에 Helm을 사용해 argocd를 설치해줍니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add argo https://argoproj.github.io/argo-helm
   <span class="nv">$ </span>helm <span class="nb">install </span>argocd argo/argo-cd <span class="nt">-n</span> 
@@ -462,9 +464,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       nodePort: 30093
 </code></pre></div>    </div>
 
-    <p>이제 argoCD에 접속하여 로그인을 시도해봅니다.</p>
+    <p>이제 ArgoCD에 접속하여 로그인을 시도해봅니다.</p>
 
-    <p>Helm으로 배포했을 때 초기 아이디는 <code class="language-plaintext highlighter-rouge">admin</code>, 패스워드는 argoCD 파드명 즉, <code class="language-plaintext highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 입니다.</p>
+    <p>Helm으로 배포했을 때 초기 아이디는 <code class="language-plaintext highlighter-rouge">admin</code>, 패스워드는 ArgoCD 파드명 즉, <code class="language-plaintext highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 입니다.</p>
 
     <p>정상적으로 로그인이 이루어지면 Git 레포지토리를 추가하는 작업을 해주어야 합니다.</p>
 
@@ -478,7 +480,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 9] argoCD 레포지토리 추가</td>
+          <td style="text-align: center">[그림 9] ArgoCD 레포지토리 추가</td>
         </tr>
       </tbody>
     </table>
@@ -495,7 +497,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 10] argoCD 레포지토리 추가 확인</td>
+          <td style="text-align: center">[그림 10] ArgoCD 레포지토리 추가 확인</td>
         </tr>
       </tbody>
     </table>
@@ -512,7 +514,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 11] argoCD 애플리케이션 추가</td>
+          <td style="text-align: center">[그림 11] ArgoCD 애플리케이션 추가</td>
         </tr>
       </tbody>
     </table>
@@ -529,7 +531,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 12] argoCD 애플리케이션 추가2</td>
+          <td style="text-align: center">[그림 12] ArgoCD 애플리케이션 추가2</td>
         </tr>
       </tbody>
     </table>
@@ -538,7 +540,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p>레포지토리 주소와 배포할 yaml 파일들이 들어있는 경로를 명시해주고, 배포할 쿠버네티스의 클러스터 주소와 네임스페이스까지 작성하여 애플리케이션을 만들어줍니다.</p>
 
-    <p>정상적으로 애플리케이션이 만들어지면 다음 [그림 13]과 같이 argoCD에서 Git 레포지토리와 연동된 애플리케이션을 볼 수 있습니다.</p>
+    <p>정상적으로 애플리케이션이 만들어지면 다음 [그림 13]과 같이 ArgoCD에서 Git 레포지토리와 연동된 애플리케이션을 볼 수 있습니다.</p>
 
     <table>
       <thead>
@@ -548,7 +550,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 13] argoCD 애플리케이션 추가 확인</td>
+          <td style="text-align: center">[그림 13] ArgoCD 애플리케이션 추가 확인</td>
         </tr>
       </tbody>
     </table>
@@ -557,7 +559,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
 
     <p>동기화 되지 않은 상태로 <code class="language-plaintext highlighter-rouge">OutOfSync</code>라는 문구와 <strong>노란색</strong>으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 <code class="language-plaintext highlighter-rouge">Sync OK</code> 라는 문구와 함께 <strong>초록색</strong>으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.</p>
 
-    <p>argoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있습니다.</p>
+    <p>ArgoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있습니다.</p>
 
     <table>
       <thead>
@@ -567,7 +569,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml</p>
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center">[그림 14] argoCD 배포 동기화</td>
+          <td style="text-align: center">[그림 14] ArgoCD 배포 동기화</td>
         </tr>
       </tbody>
     </table>

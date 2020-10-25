@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "[Project] DevSecOps 프로젝트 - Jenkins와 Slack 연동 그리고 멀티 브랜치 파이프라인의 사용 - 2020-10-15",
+        "url" : "/project/2020/10/15/devsecops5.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "[Project] DevSecOps 프로젝트 - Helm을 통한 모니터링과 로깅 시스템 구축 - 2020-10-13",
         "url" : "/project/2020/10/13/devsecops4.html"
     }

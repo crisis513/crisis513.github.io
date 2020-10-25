@@ -5,7 +5,7 @@ title: s6i
 description: s6i's blog, use Jekyll and github pages.
 keywords: son,blog,Jekyll,github,s6i
 baseurl:  # if you have suburl as homepage like '/homepage', please change it to '/homepage' and your repo's name should be 'homepage'
-url: https://crisis513.github.io/  # url should be 'http://<github_username>.github.io/homepage' as before
+url: https://crisis513.github.io/blog  # url should be 'http://<github_username>.github.io/homepage' as before
 # url: http://127.0.0.1:4000
 img_path: /crisis513.github.io/static/assets/img/blog  # url should be '/homepage/static/assets/img/blog' as before
 

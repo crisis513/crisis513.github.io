@@ -1,4 +1,4 @@
-I"�G<hr />
+I"EI<hr />
 
 <h3 id="목차">목차</h3>
 
@@ -70,10 +70,10 @@
 
         <ul>
           <li>
-            <p><code class="highlighter-rouge">Host OS의 자원을 할당받아</code> 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식</p>
+            <p><code class="language-plaintext highlighter-rouge">Host OS의 자원을 할당받아</code> 하이퍼바이저를 이용해 Guest OS를 가상화 하여 사용하는 방식</p>
           </li>
           <li>
-            <p>Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 <code class="highlighter-rouge">속도저하</code>의 단점이 존재</p>
+            <p>Host OS의 리소스 분할 또는 오버헤드와 OS 위에 또 OS를 설치하는 개념이기 때문에 <code class="language-plaintext highlighter-rouge">속도저하</code>의 단점이 존재</p>
           </li>
         </ul>
       </li>
@@ -82,13 +82,13 @@
 
         <ul>
           <li>
-            <p><code class="highlighter-rouge">Host OS를 공유</code>하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 <code class="highlighter-rouge">독립적으로 실행</code>되어 <code class="highlighter-rouge">가벼움</code></p>
+            <p><code class="language-plaintext highlighter-rouge">Host OS를 공유</code>하며, 여러 개의 컨테이너들이 서로 영향을 미치지 않고 <code class="language-plaintext highlighter-rouge">독립적으로 실행</code>되어 <code class="language-plaintext highlighter-rouge">가벼움</code></p>
           </li>
           <li>
-            <p>VM과의 가장 큰 차이점은 <code class="highlighter-rouge">프로세스를 격리</code> 하는 것</p>
+            <p>VM과의 가장 큰 차이점은 <code class="language-plaintext highlighter-rouge">프로세스를 격리</code> 하는 것</p>
           </li>
           <li>
-            <p>독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 <code class="highlighter-rouge">오버헤드가 적음</code></p>
+            <p>독립적으로 Host OS의 자원을 공유하며 각각 필요한 자원들을 할당받아 실행되기 때문에 <code class="language-plaintext highlighter-rouge">오버헤드가 적음</code></p>
           </li>
         </ul>
       </li>
@@ -125,7 +125,7 @@
             <p>개발 환경, 테스트 환경, 서비스 환경을 모두 동일하게 사용 가능</p>
           </li>
           <li>
-            <p>도커 컨테이너의 기반이 되는 <code class="highlighter-rouge">도커 이미지</code>가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다</p>
+            <p>도커 컨테이너의 기반이 되는 <code class="language-plaintext highlighter-rouge">도커 이미지</code>가 있다면 애플리케이션을 동일한 환경에서 구동할 수 있다</p>
           </li>
         </ul>
       </li>
@@ -137,7 +137,7 @@
             <p>다양한 벤더의 시스템 및 오픈소스와 연계하여 사용 가능</p>
           </li>
           <li>
-            <p>예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 <code class="highlighter-rouge">기본으로 탑재</code></p>
+            <p>예를 들어, 상용 Linux 중 가장 많이 쓰이는 RHEL7에서도 도커를 <code class="language-plaintext highlighter-rouge">기본으로 탑재</code></p>
           </li>
           <li>
             <p>AWS에서도 Amazon EC2 Container Service를 통해 도커 실행 환경 운영 서비스를 제공</p>
@@ -202,10 +202,10 @@
 
         <ul>
           <li>
-            <p><code class="highlighter-rouge">도커 이미지를 저장</code>하기 위해 사용</p>
+            <p><code class="language-plaintext highlighter-rouge">도커 이미지를 저장</code>하기 위해 사용</p>
           </li>
           <li>
-            <p>기본적으로 <code class="highlighter-rouge">Docker Hub</code>라는 퍼블릭 레지스트리로 설정되어 있고 <code class="highlighter-rouge">Harbor</code>와 같은 프라이빗 레지스트리도 사용 가능</p>
+            <p>기본적으로 <code class="language-plaintext highlighter-rouge">Docker Hub</code>라는 퍼블릭 레지스트리로 설정되어 있고 <code class="language-plaintext highlighter-rouge">Harbor</code>와 같은 프라이빗 레지스트리도 사용 가능</p>
           </li>
         </ul>
       </li>
@@ -218,10 +218,10 @@
 
             <ul>
               <li>
-                <p>컨테이너를 생성하기 위한 <code class="highlighter-rouge">Read Only</code> 템플릿</p>
+                <p>컨테이너를 생성하기 위한 <code class="language-plaintext highlighter-rouge">Read Only</code> 템플릿</p>
               </li>
               <li>
-                <p>도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 <code class="highlighter-rouge">Dockerfile</code>을 통해 빌드 가능</p>
+                <p>도커 이미지를 생성하고 실행하기 까지의 단계를 정의한 <code class="language-plaintext highlighter-rouge">Dockerfile</code>을 통해 빌드 가능</p>
               </li>
               <li>
                 <p>새로운 컨테이너를 생성하면 변경된 레이어만 따로 체크하는 형태로 가볍고 빠름</p>
@@ -236,7 +236,7 @@
                 <p>이미지의 실행 형태, 이미지를 실행하여 메모리에 올려 동작하는 것</p>
               </li>
               <li>
-                <p><code class="highlighter-rouge">하나의 컨테이너</code>에는 <code class="highlighter-rouge">하나의 애플리케이션</code>만 실행하는 것을 <strong>권장</strong></p>
+                <p><code class="language-plaintext highlighter-rouge">하나의 컨테이너</code>에는 <code class="language-plaintext highlighter-rouge">하나의 애플리케이션</code>만 실행하는 것을 <strong>권장</strong></p>
               </li>
               <li>
                 <p>기본적으로 호스트 머신의 네트워크 연결을 통해 외부 네트워크와 연결 가능</p>
@@ -252,15 +252,15 @@
 
                 <p>1) Bridge</p>
 
-                <p>컨테이너의 <code class="highlighter-rouge">기본 네트워크 드라이버</code>입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.</p>
+                <p>컨테이너의 <code class="language-plaintext highlighter-rouge">기본 네트워크 드라이버</code>입니다. 애플리케이션이 독립 실행형 컨테이너, 즉 동일한 도커 호스트와 통신하는 여러 컨테이너에서 실행될 때 이 네트워크를 사용합니다.</p>
 
                 <p>2) Host</p>
 
-                <p>이 드라이버는 도커 컨테이너와 도커 호스트 간의 <code class="highlighter-rouge">네트워크 격리를 제거</code>합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.</p>
+                <p>이 드라이버는 도커 컨테이너와 도커 호스트 간의 <code class="language-plaintext highlighter-rouge">네트워크 격리를 제거</code>합니다. 호스트와 컨테이너간에 네트워크 격리가 필요하지 않을 때 사용할 수 있습니다.</p>
 
                 <p>3) Overlay</p>
 
-                <p>이 네트워크는 <code class="highlighter-rouge">Swarm 서비스가 서로 통신</code> 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.</p>
+                <p>이 네트워크는 <code class="language-plaintext highlighter-rouge">Swarm 서비스가 서로 통신</code> 할 수 있도록합니다. 컨테이너가 다른 도커 호스트에서 실행되기를 원하거나 여러 애플리케이션에서 Swarm 서비스를 구성하려는 경우에 사용합니다.</p>
 
                 <p>4) None</p>
 
@@ -268,7 +268,7 @@
 
                 <p>5) macvlan</p>
 
-                <p>이 드라이버는 <code class="highlighter-rouge">컨테이너에 MAC 주소를 할당</code>하여 물리 장치처럼 보이게합니다. <strong>Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅</strong>합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.</p>
+                <p>이 드라이버는 <code class="language-plaintext highlighter-rouge">컨테이너에 MAC 주소를 할당</code>하여 물리 장치처럼 보이게합니다. <strong>Mac 주소를 통해 컨테이너 간의 트래픽을 라우팅</strong>합니다. 예를 들어, VM 설정을 마이그레이션하는 동안 컨테이너가 물리 장치처럼 보이게 하려는 경우에 이 네트워크를 사용합니다.</p>
               </li>
             </ul>
           </li>
@@ -280,7 +280,7 @@
                 <p>여러가지 도커 데몬들로 구성 및 확장 가능</p>
               </li>
               <li>
-                <p><code class="highlighter-rouge">Docker Swarm</code>과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임</p>
+                <p><code class="language-plaintext highlighter-rouge">Docker Swarm</code>과 같은 서비스를 통해 사용자에게는 단일 애플리케이션처럼 보임</p>
               </li>
             </ul>
           </li>
@@ -446,7 +446,7 @@
 
         <p>기본적으로 docker 명령어를 사용하기 위해서는 root 권한이 필요합니다.</p>
 
-        <p>$USER에는 현재 사용 중인 유저인 user가 들어가고, <code class="highlighter-rouge">docker 그룹에 user를 추가</code>하여 <strong>권한 상승 없이도 docker 명령을 사용</strong>할 수 있도록 해줍니다.</p>
+        <p>$USER에는 현재 사용 중인 유저인 user가 들어가고, <code class="language-plaintext highlighter-rouge">docker 그룹에 user를 추가</code>하여 <strong>권한 상승 없이도 docker 명령을 사용</strong>할 수 있도록 해줍니다.</p>
       </li>
       <li>
         <p>docker 버전 확인</p>

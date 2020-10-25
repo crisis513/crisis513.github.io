@@ -1,4 +1,4 @@
-I"��<hr />
+I"�<hr />
 
 <h3 id="목차">목차</h3>
 
@@ -83,7 +83,7 @@
         <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker search centos
 </code></pre></div>        </div>
 
-        <p>도커 이미지를 검색하기 위해 <code class="highlighter-rouge">docker search</code> 명령어를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.</p>
+        <p>도커 이미지를 검색하기 위해 <code class="language-plaintext highlighter-rouge">docker search</code> 명령어를 사용합니다. 해당 명령어는 centos 공식 이미지가 있는지를 검색하게 됩니다.</p>
       </li>
       <li>
         <p>docker pull</p>
@@ -93,7 +93,7 @@
  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker pull mysql:5.7
 </code></pre></div>        </div>
 
-        <p>이미지를 다운로드하기 위해 <code class="highlighter-rouge">docker pull 이미지명:태그명</code> 명령어를 사용합니다.</p>
+        <p>이미지를 다운로드하기 위해 <code class="language-plaintext highlighter-rouge">docker pull 이미지명:태그명</code> 명령어를 사용합니다.</p>
 
         <p>태그를 생략하면 가장 최신 버전(latest)를 자동으로 받게 되고, 태그를 지정하면 해당 태그의 이미지를 다운로드 하게 됩니다.</p>
 
@@ -106,7 +106,7 @@
  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker image <span class="nb">ls</span>
 </code></pre></div>        </div>
 
-        <p>이미지 목록을 보기 위한 명령어로 <code class="highlighter-rouge">docker images</code>를 사용합니다.</p>
+        <p>이미지 목록을 보기 위한 명령어로 <code class="language-plaintext highlighter-rouge">docker images</code>를 사용합니다.</p>
       </li>
       <li>
         <p>docker rmi</p>
@@ -115,9 +115,9 @@
  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi mysql:5.7
 </code></pre></div>        </div>
 
-        <p>이미지를 삭제하기 위해<code class="highlighter-rouge">docker rmi</code> 명령어를 사용합니다.</p>
+        <p>이미지를 삭제하기 위해<code class="language-plaintext highlighter-rouge">docker rmi</code> 명령어를 사용합니다.</p>
 
-        <p>기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 <code class="highlighter-rouge">-f</code> 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.</p>
+        <p>기본적으로 컨테이너가 실행되고 있으면 삭제되지 않지만 <code class="language-plaintext highlighter-rouge">-f</code> 옵션을 사용하여 이미지를 강제로 삭제시킬 수 있습니다.</p>
 
         <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker rmi <span class="sb">`</span>docker images <span class="nt">-aq</span><span class="sb">`</span>
 </code></pre></div>        </div>
@@ -150,7 +150,7 @@
      ...<span class="o">(</span>중략<span class="o">)</span>
 </code></pre></div>        </div>
 
-        <p>도커 오브젝트의 정보를 자세하게 확인하고싶을 때 <code class="highlighter-rouge">docker inspect</code> 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 <code class="highlighter-rouge">json</code> 형태입니다.</p>
+        <p>도커 오브젝트의 정보를 자세하게 확인하고싶을 때 <code class="language-plaintext highlighter-rouge">docker inspect</code> 명령을 사용합니다. 컨테이너 혹은 이미지의 low level 정보를 확인할 수 있고, 기본적인 출력 포맷은 <code class="language-plaintext highlighter-rouge">json</code> 형태입니다.</p>
       </li>
       <li>
         <p>docker save / docker load</p>
@@ -168,7 +168,7 @@
  httpd               latest              a6ea92c35c43        4 days ago          166MB
 </code></pre></div>        </div>
 
-        <p>호스트에 저장된 이미지를 아카이브로 복사하기 위해 <code class="highlighter-rouge">docker save</code> 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 <code class="highlighter-rouge">docker load</code> 명령어를 사용합니다.</p>
+        <p>호스트에 저장된 이미지를 아카이브로 복사하기 위해 <code class="language-plaintext highlighter-rouge">docker save</code> 명령어를 사용하고, 아카이브 파일을 미이지로 불러오기 위해 <code class="language-plaintext highlighter-rouge">docker load</code> 명령어를 사용합니다.</p>
 
         <p>2번에서 생성한 centos:7 이미지와 httpd:latest 이미지를 img.tar라는 이름으로 저장하고나서 두 이미지를 삭제한 후에 img.tar 파일으로 이미지를 불러오는 것을 확인할 수 있습니다.</p>
       </li>
@@ -203,7 +203,7 @@ Client: Docker Engine - Community
 
 </code></pre></div></div>
 
-<p>도커 버전을 확인하기 위해 <code class="highlighter-rouge">docker version</code> 명령어를 입력하면 도커의 버전 정보가 클라이언트와 서버로 나뉘어져 있습니다. 도커는 하나의 명령어로 실행되지만 실제로는 클라이언트와 서버 역할을 각각 할 수 있습니다.</p>
+<p>도커 버전을 확인하기 위해 <code class="language-plaintext highlighter-rouge">docker version</code> 명령어를 입력하면 도커의 버전 정보가 클라이언트와 서버로 나뉘어져 있습니다. 도커는 하나의 명령어로 실행되지만 실제로는 클라이언트와 서버 역할을 각각 할 수 있습니다.</p>
 
 <p><br /></p>
 
@@ -242,9 +242,9 @@ Client: Docker Engine - Community
  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker ps <span class="nt">-a</span>
 </code></pre></div>            </div>
 
-            <p>컨테이너 목록을 확인하기 위해 <code class="highlighter-rouge">docker ps</code> 명령어를 사용합니다.</p>
+            <p>컨테이너 목록을 확인하기 위해 <code class="language-plaintext highlighter-rouge">docker ps</code> 명령어를 사용합니다.</p>
 
-            <p>현재 호스트에 존재하는 모든 컨테이너를 출력하고 싶다면 <code class="highlighter-rouge">-a</code> 옵션을 추가하면 됩니다.</p>
+            <p>현재 호스트에 존재하는 모든 컨테이너를 출력하고 싶다면 <code class="language-plaintext highlighter-rouge">-a</code> 옵션을 추가하면 됩니다.</p>
           </li>
           <li>
             <p>web1 컨테이너 생성</p>
@@ -252,7 +252,7 @@ Client: Docker Engine - Community
             <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker create <span class="nt">--name</span> web1 httpd:latest
 </code></pre></div>            </div>
 
-            <p>컨테이너를 생성하기 위해 <code class="highlighter-rouge">docker create</code> 명령어를 사용합니다.</p>
+            <p>컨테이너를 생성하기 위해 <code class="language-plaintext highlighter-rouge">docker create</code> 명령어를 사용합니다.</p>
 
             <p>생성할 컨테이너의 이름은 web1 이고 httpd:latest 이미지를 사용하여 컨테이너를 생성합니다.</p>
           </li>
@@ -263,7 +263,7 @@ Client: Docker Engine - Community
  1457915352d8967c6a910d102481120b731329219d258144637302b321da2c3e
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">-it</code> 옵션은 <code class="highlighter-rouge">-i</code>와 <code class="highlighter-rouge">-t</code>를 동시에 사용한 것으로 터미널 입력을 위해 자주 사용되는 옵션입니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">-it</code> 옵션은 <code class="language-plaintext highlighter-rouge">-i</code>와 <code class="language-plaintext highlighter-rouge">-t</code>를 동시에 사용한 것으로 터미널 입력을 위해 자주 사용되는 옵션입니다.</p>
 
             <p>-i, –interactive=false: <strong>표준 입력(stdin)을 활성화</strong>하며 컨테이너와 연결(attach)되어 있지 않더라도 표준 입력을 유지합니다. 보통 이 옵션을 사용하여 Bash에 명령을 입력합니다.</p>
 
@@ -282,9 +282,9 @@ Client: Docker Engine - Community
  &lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">docker create</code> 명령으로 생성한 컨테이너를 사용하려면 다음과 같이 <code class="highlighter-rouge">docker start</code> 명령으로 컨테이너를 시작해주어야 합니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">docker create</code> 명령으로 생성한 컨테이너를 사용하려면 다음과 같이 <code class="language-plaintext highlighter-rouge">docker start</code> 명령으로 컨테이너를 시작해주어야 합니다.</p>
 
-            <p>web1 이름의 컨테이너를 시작하고 <code class="highlighter-rouge">docker inspect</code> 명령을 통해 web1 컨테이너의 ip 주소를 확인하여 <code class="highlighter-rouge">curl</code> 명령을 통해 해당 ip 주소의 웹서버가 정상적으로 동작하는지 확인합니다.</p>
+            <p>web1 이름의 컨테이너를 시작하고 <code class="language-plaintext highlighter-rouge">docker inspect</code> 명령을 통해 web1 컨테이너의 ip 주소를 확인하여 <code class="language-plaintext highlighter-rouge">curl</code> 명령을 통해 해당 ip 주소의 웹서버가 정상적으로 동작하는지 확인합니다.</p>
           </li>
           <li>
             <p>os1 컨테이너 시작</p>
@@ -298,7 +298,7 @@ Client: Docker Engine - Community
  4a0638e6bea2        httpd:latest        <span class="s2">"httpd-foreground"</span>   10 minutes ago      Up 4 minutes        80/tcp              web1
 </code></pre></div>            </div>
 
-            <p>컨테이너를 시작할 때 <code class="highlighter-rouge">-a</code>, <code class="highlighter-rouge">-i</code> 옵션을 추가하면 컨테이너를 시작시킨 후에 Bash 화면을 연결해줍니다. -a 옵션의 설명은 다음과 같습니다.</p>
+            <p>컨테이너를 시작할 때 <code class="language-plaintext highlighter-rouge">-a</code>, <code class="language-plaintext highlighter-rouge">-i</code> 옵션을 추가하면 컨테이너를 시작시킨 후에 Bash 화면을 연결해줍니다. -a 옵션의 설명은 다음과 같습니다.</p>
 
             <p>-a, –attach=[]: 컨테이너에 표준 입력(stdin), 표준 출력(stdout), 표준 에러(stderr)를 연결합니다.</p>
           </li>
@@ -308,7 +308,7 @@ Client: Docker Engine - Community
             <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> web2 httpd:latest
 </code></pre></div>            </div>
 
-            <p>이미지로 컨테이너를 생성할 때는 <code class="highlighter-rouge">docker run</code> 명령어를 사용합니다. <code class="highlighter-rouge">-d</code> 옵션의 설명은 다음과 같습니다.</p>
+            <p>이미지로 컨테이너를 생성할 때는 <code class="language-plaintext highlighter-rouge">docker run</code> 명령어를 사용합니다. <code class="language-plaintext highlighter-rouge">-d</code> 옵션의 설명은 다음과 같습니다.</p>
 
             <p>-d, –detach=false: <strong>Detached 모드</strong>입니다. 보통 데몬 모드라고 부르며 컨테이너가 백그라운드로 실행됩니다.</p>
           </li>
@@ -341,7 +341,7 @@ Client: Docker Engine - Community
             <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker <span class="nb">rm </span>os3
 </code></pre></div>            </div>
 
-            <p>컨테이너를 삭제하기 위해 <code class="highlighter-rouge">docker rm</code> 명령어를 사용합니다.</p>
+            <p>컨테이너를 삭제하기 위해 <code class="language-plaintext highlighter-rouge">docker rm</code> 명령어를 사용합니다.</p>
           </li>
           <li>
             <p>실행되는 컨테이너 외 전부 삭제</p>
@@ -355,7 +355,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
 4a0638e6bea2        httpd:latest        <span class="s2">"httpd-foreground"</span>   47 minutes ago      Up 41 minutes       80/tcp              web1
 </code></pre></div>            </div>
 
-            <p>실행되는 컨테이너 외의 모든 컨테이너를 삭제하기 위해 <code class="highlighter-rouge">docker container prune</code> 명령어를 사용합니다.</p>
+            <p>실행되는 컨테이너 외의 모든 컨테이너를 삭제하기 위해 <code class="language-plaintext highlighter-rouge">docker container prune</code> 명령어를 사용합니다.</p>
           </li>
           <li>
             <p>docker stats</p>
@@ -363,7 +363,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
             <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker stats 
 </code></pre></div>            </div>
 
-            <p>컨테이너의 실시간 상태를 확인하기 위해서는 <code class="highlighter-rouge">docker stats</code> 명령어를 사용합니다.</p>
+            <p>컨테이너의 실시간 상태를 확인하기 위해서는 <code class="language-plaintext highlighter-rouge">docker stats</code> 명령어를 사용합니다.</p>
           </li>
         </ol>
       </li>
@@ -421,7 +421,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
  <span class="o">[</span>root@c2df3a13921e /]# <span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/null &amp;
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">--cpus 0.3</code> 명령을 통해 컨테이너의 cpu 사용을 30%로 제한할 수 있습니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">--cpus 0.3</code> 명령을 통해 컨테이너의 cpu 사용을 30%로 제한할 수 있습니다.</p>
           </li>
           <li>
             <p>메모리 제한</p>
@@ -429,7 +429,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
             <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--name</span> os5 <span class="nt">--memory</span> 1024m centos:latest
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">--memory 1024m</code> 명령을 통해 메모리 사용을 1GB로 제한할 수 있습니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">--memory 1024m</code> 명령을 통해 메모리 사용을 1GB로 제한할 수 있습니다.</p>
           </li>
           <li>
             <p>자원 제한 변경</p>
@@ -442,7 +442,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
  <span class="o">[</span>root@50c259122bc9 /]# <span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/null &amp;
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">docker update</code> 명령을 통해 cpu 혹은 메모리의 제한을 변경할 수 있습니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">docker update</code> 명령을 통해 cpu 혹은 메모리의 제한을 변경할 수 있습니다.</p>
           </li>
         </ol>
       </li>
@@ -501,7 +501,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
  <span class="o">[</span>user@docker ~]<span class="nv">$ </span>docker run <span class="nt">--name</span> db2 <span class="nt">-e</span> <span class="s2">"MYSQL_ROOT_PASSWORD=1234"</span> <span class="nt">-d</span> mysql:5.7
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">docker logs</code> 명령어를 통해 컨테이너의 로그를 확인할 수 있습니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">docker logs</code> 명령어를 통해 컨테이너의 로그를 확인할 수 있습니다.</p>
           </li>
         </ol>
       </li>
@@ -525,7 +525,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
  <span class="nt">-rw-r--r--</span><span class="nb">.</span> 1 user user 2304  8월 10 11:15 passwd
 </code></pre></div>            </div>
 
-            <p><code class="highlighter-rouge">docker cp</code> 명령어를 통해 호스트 파일을 컨테이너로 복사하거나 컨테이너의 파일을 호스트에 복사할 수 있습니다.</p>
+            <p><code class="language-plaintext highlighter-rouge">docker cp</code> 명령어를 통해 호스트 파일을 컨테이너로 복사하거나 컨테이너의 파일을 호스트에 복사할 수 있습니다.</p>
           </li>
           <li>
             <p>docker diff</p>
@@ -535,7 +535,7 @@ f20ddba876c2        centos:latest       <span class="s2">"/bin/bash"</span>     
  A /tmp/passwd
 </code></pre></div>            </div>
 
-            <p>컨테이너에서의 파일의 변경 상태를 체크하기 위해 <code class="highlighter-rouge">docker diff</code> 명령어를 사용합니다.</p>
+            <p>컨테이너에서의 파일의 변경 상태를 체크하기 위해 <code class="language-plaintext highlighter-rouge">docker diff</code> 명령어를 사용합니다.</p>
 
             <ul>
               <li>
