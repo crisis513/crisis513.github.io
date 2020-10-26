@@ -2,6 +2,22 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
     <url>
+      <loc>http://localhost:4000/project/2020/10/21/devsecops6.html</loc>
+      
+        <lastmod>2020-10-21T00:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/project/2020/10/15/devsecops5.html</loc>
       
         <lastmod>2020-10-15T00:00:00+09:00</lastmod>
@@ -69,70 +85,6 @@
       <loc>http://localhost:4000/project/2020/10/03/devsecops1.html</loc>
       
         <lastmod>2020-10-03T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/infra/2020/09/03/docker4.html</loc>
-      
-        <lastmod>2020-09-03T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/infra/2020/09/02/docker3.html</loc>
-      
-        <lastmod>2020-09-02T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/infra/2020/09/01/docker2.html</loc>
-      
-        <lastmod>2020-09-01T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/infra/2020/09/01/docker1.html</loc>
-      
-        <lastmod>2020-09-01T00:00:00+09:00</lastmod>
       
 
       
@@ -277,54 +229,6 @@
       <loc>http://localhost:4000/sample/2020/03/07/sample.html</loc>
       
         <lastmod>2020-03-07T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/sample/2017/12/21/test_code_snippets.html</loc>
-      
-        <lastmod>2017-12-21T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html</loc>
-      
-        <lastmod>2017-01-31T00:00:00+09:00</lastmod>
-      
-
-      
-        <changefreq>weekly</changefreq>
-      
-
-      
-          <priority>0.5</priority>
-      
-
-    </url>
-  
-    <url>
-      <loc>http://localhost:4000/2000/01/01/python_crawling.html</loc>
-      
-        <lastmod>2000-01-01T00:00:00+09:00</lastmod>
       
 
       

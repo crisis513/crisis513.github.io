@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "[Project] DevSecOps 프로젝트 - SAST 분석 및 활용 - 2020-10-21",
+        "url" : "/project/2020/10/21/devsecops6.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "[Project] DevSecOps 프로젝트 - Jenkins와 Slack 연동 그리고 멀티 브랜치 파이프라인의 사용 - 2020-10-15",
         "url" : "/project/2020/10/15/devsecops5.html"
     }
@@ -37,38 +45,6 @@
     {
         "title" : "[Project] DevSecOps 프로젝트 - 개요 및 환경 구성 - 2020-10-03",
         "url" : "/project/2020/10/03/devsecops1.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 이미지 - 2020-09-03",
-        "url" : "/infra/2020/09/03/docker4.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 네트워크 - 2020-09-02",
-        "url" : "/infra/2020/09/02/docker3.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 이미지와 컨테이너 및 볼륨 기초 - 2020-09-01",
-        "url" : "/infra/2020/09/01/docker2.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 개요 및 설치 - CentOS 7 - 2020-09-01",
-        "url" : "/infra/2020/09/01/docker1.html"
     }
     
     ,
@@ -141,30 +117,6 @@
     {
         "title" : "Blog sample - 2020-03-07",
         "url" : "/sample/2020/03/07/sample.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "code snippet test - 2017-12-21",
-        "url" : "/sample/2017/12/21/test_code_snippets.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "3 Steps (2 minutes) to Setup Your Personal Website with Jalpc - 2017-01-31",
-        "url" : "/sample/2017/01/31/3_steps_to_setup_website_with_Jalpc.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "파이썬 크롤링 - 2000-01-01",
-        "url" : "/2000/01/01/python_crawling.html"
     }
     
     

@@ -1,0 +1,76 @@
+I"�	<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. SAST(Static Application Security Testing Tools) 개요 </a></p>
+
+<p><a href="#list1_1">   1.1. </a></p>
+
+<p><a href="#list1_2">   1.2. </a></p>
+
+<p><a href="#list2">2. </a></p>
+
+<p><a href="#list2_1">   2.1. </a></p>
+
+<p><a href="#list2_2">   2.2. </a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-saststatic-application-security-testing-tools-개요---"><span style="color:purple"><strong>1. SAST(Static Application Security Testing Tools) 개요</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Slack 설정</strong>   <a name="list1_1"></a></p>
+
+    <p>먼저 Jenkins 파이프라인의 실행 결과에 대한 메시지를 받아보기 위해 Slack에서 사용할 워크스페이스와 채널을 생성해줍니다.</p>
+
+    <p>워스크페이스와 채널을 생성하고나면 <code class="language-plaintext highlighter-rouge">https://YOUR_WORKSPACE.slack.com/apps</code> URL에 접속해서 Slack에 추가 할 앱으로 <code class="language-plaintext highlighter-rouge">Jenkins CI</code>를 검색합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_1.png" alt="add_jenkins_ci" width="461" height="435" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Jenkins CI 앱 추가</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins 설정</strong>   <a name="list1_2"></a></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-멀티-브랜치-파이프라인-사용---"><span style="color:purple"><strong>2. 멀티 브랜치 파이프라인 사용</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>멀티 브랜치 설정</strong>   <a name="list2_1"></a></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+:ET
