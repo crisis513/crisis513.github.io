@@ -5,8 +5,8 @@
     <description>s6i's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 25 Oct 2020 18:45:47 +0900</pubDate>
-    <lastBuildDate>Sun, 25 Oct 2020 18:45:47 +0900</lastBuildDate>
+    <pubDate>Mon, 26 Oct 2020 15:41:47 +0900</pubDate>
+    <lastBuildDate>Mon, 26 Oct 2020 15:41:47 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -101,72 +101,80 @@
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_3.png&quot; alt=&quot;jenkins&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_3.png&quot; alt=&quot;install_slack_plugin&quot; width=&quot;667&quot; height=&quot;252&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] GCP 인스턴스 생성&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] Slack 플러그인 설치&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;Jenkins에서 Slack 플러그인을 설치하고나면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt; 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;다음 [그림 4]와 같이 워크스페이스와 Credentials, 채널 ID를 정확하게 기입해줍니다.&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_4.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_4.png&quot; alt=&quot;jenkins_slack_configuration&quot; width=&quot;713&quot; height=&quot;275&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] GCP 인스턴스 생성&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] Jenkins에서 Slack 설정&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;table&gt;
-      &lt;thead&gt;
-        &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_5.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
-        &lt;/tr&gt;
-      &lt;/thead&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 5] GCP 인스턴스 생성&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
+    &lt;p&gt;Credentials의 경우에 옆의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add&lt;/code&gt; 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;Credentials를 추가할 때 Kind는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secret text&lt;/code&gt;로 두고 Secret은 [그림 2]에서 보이는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;토큰&lt;/code&gt; 값을 입력해줍니다.&lt;/p&gt;
+
+    &lt;p&gt;그런 우측 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;Jenkins와 Slack이 정상적으로 연동되고나면 다시 파이프라인으로 돌아와서, 파이프라인이 모두 실행되고나서 Slack에 메시지를 보내는 테스트를 진행해보겠습니다.&lt;/p&gt;
+
+    &lt;p&gt;파이프라인 스크립트는 앞선 포스트에서 사용했던 스크립트에서 다음과 같이 추가만 하였습니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  pipeline &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      environment &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          SLACK_CHANNEL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#send-slack-message-from-jenkins'&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      ...&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;중략&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+      post &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+          success &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: SLACK_CHANNEL, color: &lt;span class=&quot;s1&quot;&gt;'#00FF00'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;SUCCESSFUL: Job '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          failure &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: SLACK_CHANNEL, color: &lt;span class=&quot;s1&quot;&gt;'#F01717'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;FAILURE: Job '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;파이프라인을 모두 실행하고 나서 파이프라인이 성공 혹은 실패 상태인지 확인하여 상태에 맞게 Slack 메시지를 보내도록 작성하였습니다.&lt;/p&gt;
+
+    &lt;p&gt;성공하면 ‘SUCCESSFUL’이라는 문구와 함께 초록색으로 메시지가 전달될 것이고, 실패하면 ‘FAILURE’이라는 문구와 함께 빨간색으로 메시지가 전달될 것입니다.&lt;/p&gt;
+
+    &lt;p&gt;다음 [그림 5]는 파이프라인이 정상적으로 실행되어 Slack으로 메시지가 전달 되었을 경우입니다.&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_6.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_5.png&quot; alt=&quot;slack_message&quot; width=&quot;485&quot; height=&quot;183&quot; /&gt;&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 6] GCP 인스턴스 생성&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-    &lt;table&gt;
-      &lt;thead&gt;
-        &lt;tr&gt;
-          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_7.png&quot; alt=&quot;gcp_instance&quot; /&gt;&lt;/th&gt;
-        &lt;/tr&gt;
-      &lt;/thead&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 7] GCP 인스턴스 생성&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 5] Slack 메시지 확인&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -185,14 +193,155 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;멀티 브랜치 설정&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
+    &lt;p&gt;이번에는 Jenkins에서 멀티 브랜치 파이프라인을 설정하는 방법을 알아보겠습니다.&lt;/p&gt;
+
+    &lt;p&gt;먼저 Jenkins 시스템 설정에서 다음 [그림 6]과 같이 GitLab 서버에 대해 설정해야 합니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_6.png&quot; alt=&quot;gitlab_server_configuration&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 6] Jenkins에서 GitLab 서버 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;그런 다음 Jenkins 홈에서 왼쪽 탭의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt;에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Multibranch Pipeline&lt;/code&gt;을 생성해줍니다.&lt;/p&gt;
+
+    &lt;p&gt;멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Source -&amp;gt; GitLab Project&lt;/code&gt;를 눌러 다음 [그림 7]과 같이 설정해줍니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_7.png&quot; alt=&quot;multibranch_gitlab_configuration&quot; width=&quot;653&quot; height=&quot;623&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 7] 멀티브랜치 GitLab 설정&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Server는 [그림 6]에서 정상적으로 설정했다면 자동으로 잡혀있을 것이고, Credentials는 CI 설정할 때 만들어두었던 것을 그대로 사용해주시면 됩니다.&lt;/p&gt;
+
+    &lt;p&gt;그리고 파이프라인에 연결할 프로젝트를 생성한 계정의 ID를 Owner로 두면 해당 ID에서 관리하고 있는 프로젝트들을 아래 Projects에서 선택할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;Behaviours 항목에서 Add 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter by name (with wildcards)&lt;/code&gt;를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;멀티 브랜치 파이프라인은 각 브랜치들에 Jenkinsfile을 생성하여 Jenkinsfile에서 스크립트를 작성해두어야 합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;master 브랜치에서는 CI/CD 파이프라인이 모두 동작하여 빌드부터 배포까지 모두 진행되도록 그대로 두었고,&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;release 브랜치에서는 CI 파이프라인만 동작하도록 아래와 같이 작성하였습니다.&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  pipeline &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      environment &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          registry &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;crisis513/flask-app&quot;&lt;/span&gt;
+          registryCredential &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'crisis513'&lt;/span&gt;
+          dockerImage &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;
+          releaseName &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;flask-app&quot;&lt;/span&gt;
+          helmChartRepo &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;flask-kubernetes-helm&quot;&lt;/span&gt;
+          release_version &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'latest'&lt;/span&gt;
+          SLACK_CHANNEL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#send-slack-message-from-jenkins'&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+      agent &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          label &lt;span class=&quot;s2&quot;&gt;&quot;jenkins-slave&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      stages &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Cloning our Git'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  git &lt;span class=&quot;s1&quot;&gt;'http://GITLAB_SERVER_IP:8001/root/flask-app.git'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Building docker image'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  script &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                      dockerImage &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; docker.build registry + &lt;span class=&quot;s2&quot;&gt;&quot;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;release_version&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Deploy docker image'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              when &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  branch &lt;span class=&quot;s1&quot;&gt;'master'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  script &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                      docker.withRegistry&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;, registryCredential &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                          dockerImage.push&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Cleaning up'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              when &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  branch &lt;span class=&quot;s1&quot;&gt;'master'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  sh &lt;span class=&quot;s2&quot;&gt;&quot;docker rmi &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$registry&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;release_version&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Deploy image to kubernetes'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              when &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  branch &lt;span class=&quot;s1&quot;&gt;'master'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  sh &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&quot;
+                      helm lint &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;helmChartRepo&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+                      helm upgrade &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;releaseName&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;helmChartRepo&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+                  &quot;&quot;&quot;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      post &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+          success &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: SLACK_CHANNEL, color: &lt;span class=&quot;s1&quot;&gt;'#00FF00'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;SUCCESSFUL: Job '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+          failure &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: SLACK_CHANNEL, color: &lt;span class=&quot;s1&quot;&gt;'#FF0000'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;FAILED: Job '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;멀티 브랜치 테스트&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
+    &lt;p&gt;release 파이프라인을 실행시켜 정상적으로 동작하면 다음 [그림 8]과 같은 화면을 볼 수 있습니다.&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_5_8.png&quot; alt=&quot;release_pipeline_test&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 8] release 브랜치 파이프라인 테스트&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음 포스팅에서는 Jenkins와 Slack을 연동하고 멀티 브랜치를 기반으로 작동하는 파이프라인을 생성하고 스크립트를 작성하는 부분에 대해 다뤄보겠습니다.&lt;/p&gt;
+    &lt;p&gt;Git clone하여 도커 이미지를 빌드하는 부분까지는 정상 동작하지만 도커 이미지를 배포하고 쿠버네티스 클러스터에 배포하기까지의 과정은 master 브랜치에서만 동작하도록 설정하였기 때문에 생락된 것을 확인할 수 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음 포스팅부터는 지금까지 설정해 둔 DevOps 파이프라인에서 정적/동적 분석을 통해 안전한 배포를 할 수 있도록 보안에 대한 내용을 다뤄보도록 하겠습니다.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
@@ -971,7 +1120,7 @@
       stages &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
           stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Cloning our Git'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
               steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                  git &lt;span class=&quot;s2&quot;&gt;&quot;http://34.64.153.88:8001/root/flask-app.git&quot;&lt;/span&gt;
+                  git &lt;span class=&quot;s2&quot;&gt;&quot;http://GITLAB_SERVER_IP:8001/root/flask-app.git&quot;&lt;/span&gt;
               &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
           &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
           stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Building docker image'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -1331,9 +1480,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.2. CI 란?&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. Gitlab - Jenkins 연동&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. GitLab - Jenkins 연동&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. Gitlab - Jenkins 웹훅 설정&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. GitLab - Jenkins 웹훅 설정&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. Jenkins 파이프라인 설정&lt;/a&gt;&lt;/p&gt;
 
@@ -1364,7 +1513,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Gitlab - Jenkins 연동&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 연동&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;SCM 툴인 Gitlab과 CI/CD Server 툴로 사용할 Jenkins를 연동하는 작업을 시작하겠습니다.&lt;/p&gt;
 
@@ -1378,7 +1527,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] Gitlab 네트워크 아웃바운드 설정&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] GitLab 네트워크 아웃바운드 설정&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -1387,7 +1536,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;웹훅 및 서비스가 액세스 할 수 있는 IP, 즉 Jenkins 서버의 IP를 적어줍니다.&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;strong&gt;Gitlab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;strong&gt;GitLab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1397,7 +1546,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] Gitlab Access Token 생성&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] GitLab Access Token 생성&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -1410,9 +1559,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 Gitlab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 GitLab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;Gitlab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
+    &lt;p&gt;GitLab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1422,14 +1571,14 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] Jenkins에서 Gitlab 설정&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] Jenkins에서 GitLab 설정&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Gitlab 호스트의 URL 및 포트를 적어주고 Credentials는 Add 버튼을 눌러 다음 [그림 4]와 같이 생성하여 줍니다.&lt;/p&gt;
+    &lt;p&gt;GitLab 호스트의 URL 및 포트를 적어주고 Credentials는 Add 버튼을 눌러 다음 [그림 4]와 같이 생성하여 줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1439,7 +1588,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] Jenkins에서 Gitlab Credentials 생성&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] Jenkins에서 GitLab Credentials 생성&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -1451,7 +1600,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Gitlab - Jenkins 웹훅 설정&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 웹훅 설정&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
 
@@ -1486,7 +1635,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 6] Gitlab 웹훅 설정&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 6] GitLab 웹훅 설정&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -1525,7 +1674,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 7] Gitlab 웹훅 설정&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 7] GitLab 웹훅 설정&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
@@ -1663,7 +1812,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       stages &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
           stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Cloning our Git'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
               steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                  git &lt;span class=&quot;s1&quot;&gt;'http://serversIP:8001/root/flask-app.git'&lt;/span&gt;
+                  git &lt;span class=&quot;s1&quot;&gt;'http://GITLAB_SERVER_IP:8001/root/flask-app.git'&lt;/span&gt;
               &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
           &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
           stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Building docker image'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -1691,9 +1840,13 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
+    &lt;blockquote&gt;
+      &lt;p&gt;파이프라인 스크립트의 문법에 대해 알고싶다면 &lt;a href=&quot;https://www.jenkins.io/doc/book/pipeline/syntax/&quot;&gt;Jenkins Pipeline Syntax&lt;/a&gt;에서 확인하시면 됩니다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+
     &lt;p&gt;파이프라인은 다음과 같이 실행됩니다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;strong&gt;Gitlab 서버에서 flask-app 프로젝트를 가져와서 프로젝트 내의 Dockerfile을 통해 빌드하고 ‘crisis513’ 이라는 ID를 가진 credentials를 통해 Docker hub에 로그인 하여 해당 도커 레포지토리(registry)에 release_version에 해당하는 태그를 붙여 푸시하고 로컬에 생성된 도커 이미지는 삭제됩니다.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;GitLab 서버에서 flask-app 프로젝트를 가져와서 프로젝트 내의 Dockerfile을 통해 빌드하고 ‘crisis513’ 이라는 ID를 가진 credentials를 통해 Docker hub에 로그인 하여 해당 도커 레포지토리(registry)에 release_version에 해당하는 태그를 붙여 푸시하고 로컬에 생성된 도커 이미지는 삭제됩니다.&lt;/strong&gt;&lt;/p&gt;
 
     &lt;p&gt;Dockerfile의 내용은 다음과 같습니다.&lt;/p&gt;
 
@@ -1741,7 +1894,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;여기까지 Gitlab - Jenkins - Docker를 연동하여 Git 푸시 이벤트가 발생했을 때 Git 프로젝트를 clone하여 Dockerfile을 빌드하여 Docker hub에 푸시하기까지의 과정을 모두 끝냈습니다.&lt;/p&gt;
+    &lt;p&gt;여기까지 GitLab - Jenkins - Docker를 연동하여 Git 푸시 이벤트가 발생했을 때 Git 프로젝트를 clone하여 Dockerfile을 빌드하여 Docker hub에 푸시하기까지의 과정을 모두 끝냈습니다.&lt;/p&gt;
 
     &lt;p&gt;다음은 CD(Continuous Delivery/Continuous Deployment) 환경을 구성하는 방법에 대해 알아보겠습니다!&lt;/p&gt;
   &lt;/li&gt;
@@ -1802,7 +1955,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. 쿠버네티스 구성&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. Gitlab 구성&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. GitLab 구성&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list2_4&quot;&gt;   2.4. Jenkins 구성&lt;/a&gt;&lt;/p&gt;
 
@@ -1853,7 +2006,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Gitlab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, ArgoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deployment) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.&lt;/p&gt;
+    &lt;p&gt;GitLab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, ArgoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deployment) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.&lt;/p&gt;
 
     &lt;p&gt;그리고 서비스 운영에 필요한 로깅 시스템은 EFK(Elasticsearch-Fluentd-Kibana)를, 모니터링 시스템은 Prometheus, Grafana를 쿠버네티스의 서비스 형태로 구축하였습니다.&lt;/p&gt;
 
@@ -2146,7 +2299,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Gitlab 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;GitLab 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
 
@@ -2156,7 +2309,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
-        &lt;p&gt;Gitlab 설치 및 설정&lt;/p&gt;
+        &lt;p&gt;GitLab 설치 및 설정&lt;/p&gt;
 
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# openssh 설치&lt;/span&gt;
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; curl policycoreutils-python openssh-server openssh-clients
@@ -2207,7 +2360,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;Gitlab이 정상적으로 설치되면 Gitlab에서 사용할 포트 및 기타 설정을 해줍니다.&lt;/p&gt;
 
-        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# Gitlab 설정파일에서 해당 라인 주석 해제 혹은 추가&lt;/span&gt;
+        &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;# GitLab 설정파일에서 해당 라인 주석 해제 혹은 추가&lt;/span&gt;
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vi /etc/gitlab/gitlab.rb
   32 external_url &lt;span class=&quot;s1&quot;&gt;'http://servers IP:8001'&lt;/span&gt;
   ...&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;중략&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
@@ -2253,7 +2406,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
           &lt;/thead&gt;
           &lt;tbody&gt;
             &lt;tr&gt;
-              &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] Gitlab 접속 후 패스워드 변경&lt;/td&gt;
+              &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] GitLab 접속 후 패스워드 변경&lt;/td&gt;
             &lt;/tr&gt;
           &lt;/tbody&gt;
         &lt;/table&gt;
@@ -2383,7 +2536,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;이로써 쿠버네티스 클러스터와 Gitlab, Jenkins의 설치 및 기본 구성은 끝이 났습니다.&lt;/p&gt;
+    &lt;p&gt;이로써 쿠버네티스 클러스터와 GitLab, Jenkins의 설치 및 기본 구성은 끝이 났습니다.&lt;/p&gt;
 
     &lt;p&gt;다음은 CI(Continuous Integration) 환경을 구성하는 방법에 대해 알아보겠습니다!&lt;/p&gt;
   &lt;/li&gt;

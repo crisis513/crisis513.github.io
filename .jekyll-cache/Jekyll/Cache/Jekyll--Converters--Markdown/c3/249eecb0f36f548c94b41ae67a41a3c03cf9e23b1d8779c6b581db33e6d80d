@@ -1,4 +1,4 @@
-I"y�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"y�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -24,7 +24,7 @@
 
 <p><a href="#list2_2">   2.2. 쿠버네티스 구성</a></p>
 
-<p><a href="#list2_3">   2.3. Gitlab 구성</a></p>
+<p><a href="#list2_3">   2.3. GitLab 구성</a></p>
 
 <p><a href="#list2_4">   2.4. Jenkins 구성</a></p>
 
@@ -75,7 +75,7 @@
 
     <p><br /></p>
 
-    <p>Gitlab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, ArgoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deployment) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.</p>
+    <p>GitLab, Jenkins, Harbor, Helm을 이용해 CI(Continuous Integration)를, Jenkins, ArgoCD, Kubernetes를 통해 CD(Continuous Delivery/Continuous Deployment) 환경을 구축하고 파이프라인 실행 결과를 Slack으로 전달합니다.</p>
 
     <p>그리고 서비스 운영에 필요한 로깅 시스템은 EFK(Elasticsearch-Fluentd-Kibana)를, 모니터링 시스템은 Prometheus, Grafana를 쿠버네티스의 서비스 형태로 구축하였습니다.</p>
 
@@ -368,7 +368,7 @@
     <p><br /></p>
   </li>
   <li>
-    <p><strong>Gitlab 구성</strong>   <a name="list2_3"></a></p>
+    <p><strong>GitLab 구성</strong>   <a name="list2_3"></a></p>
 
     <p>Gitlab과 Jenkins 설치는 [그림 2]의 <code class="language-plaintext highlighter-rouge">servers 인스턴스</code>에서 진행합니다.</p>
 
@@ -378,7 +378,7 @@
 
     <ul>
       <li>
-        <p>Gitlab 설치 및 설정</p>
+        <p>GitLab 설치 및 설정</p>
 
         <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># openssh 설치</span>
   <span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> curl policycoreutils-python openssh-server openssh-clients
@@ -429,7 +429,7 @@
 
         <p>Gitlab이 정상적으로 설치되면 Gitlab에서 사용할 포트 및 기타 설정을 해줍니다.</p>
 
-        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># Gitlab 설정파일에서 해당 라인 주석 해제 혹은 추가</span>
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># GitLab 설정파일에서 해당 라인 주석 해제 혹은 추가</span>
   <span class="nv">$ </span><span class="nb">sudo </span>vi /etc/gitlab/gitlab.rb
   32 external_url <span class="s1">'http://servers IP:8001'</span>
   ...<span class="o">(</span>중략<span class="o">)</span>
@@ -475,7 +475,7 @@
           </thead>
           <tbody>
             <tr>
-              <td style="text-align: center">[그림 4] Gitlab 접속 후 패스워드 변경</td>
+              <td style="text-align: center">[그림 4] GitLab 접속 후 패스워드 변경</td>
             </tr>
           </tbody>
         </table>
@@ -605,7 +605,7 @@
 
     <p><br /></p>
 
-    <p>이로써 쿠버네티스 클러스터와 Gitlab, Jenkins의 설치 및 기본 구성은 끝이 났습니다.</p>
+    <p>이로써 쿠버네티스 클러스터와 GitLab, Jenkins의 설치 및 기본 구성은 끝이 났습니다.</p>
 
     <p>다음은 CI(Continuous Integration) 환경을 구성하는 방법에 대해 알아보겠습니다!</p>
   </li>
