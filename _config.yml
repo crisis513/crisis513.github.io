@@ -1,9 +1,9 @@
 # Welcome to Jekyll!
 
 # Website settings
-title: s6i
-description: s6i's blog, use Jekyll and github pages.
-keywords: son,blog,Jekyll,github,s6i
+title: son
+description: son's blog, use Jekyll and github pages.
+keywords: son,blog,Jekyll,github
 baseurl:  # if you have suburl as homepage like '/homepage', please change it to '/homepage' and your repo's name should be 'homepage'
 url: https://crisis513.github.io/blog  # url should be 'http://<github_username>.github.io/homepage' as before
 # url: http://127.0.0.1:4000
@@ -11,9 +11,9 @@ img_path: /crisis513.github.io/static/assets/img/blog  # url should be '/homepag
 
 # author -- index page "about me" section
 author:  # change following line to your infomation.
-  name: s6i  # Be used at blog posts' author.
+  name: son  # Be used at blog posts' author.
   first_name: Han-gi  # Be used at index page about me section.
-  last_name: Son(Abbr. s6i) # Be used at index page about me section.
+  last_name: Son # Be used at index page about me section.
   avatar: /static/assets/img/landing/me.jpg  # upload your avatar at directory and edit it.
   github_username: crisis513  # Leave blank if you don't have now
   linkedin_id:  # Leave blank if you don't have now
@@ -31,7 +31,7 @@ author:  # change following line to your infomation.
 
 # comment
 disqus:  # if you wanna comment feature, go to https://disqus.com/ to get your configuration; if not, comment following two lines.
-  name: s6i
+  name: son
 
 # analytics
 ## google analytics
