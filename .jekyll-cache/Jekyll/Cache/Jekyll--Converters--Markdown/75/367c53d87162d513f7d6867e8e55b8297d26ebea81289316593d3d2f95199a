@@ -1,0 +1,409 @@
+I"�K<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+
+<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
+
+<blockquote>
+  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. DevSecOps 툴체인 보안 점검 리스트</a></p>
+
+<p><a href="#list1_1">   1.1. SANS DevSecOps Best Practice</a></p>
+
+<p><a href="#list1_2">   1.2. Pre-Commit 단계</a></p>
+
+<p><a href="#list1_3">   1.3. Commit 단계</a></p>
+
+<p><a href="#list2">2. SAST(Static Application Security Testing) 적용</a></p>
+
+<p><a href="#list2_1">   2.1. OWASP Dependency Check</a></p>
+
+<p><a href="#list2_2">   2.2. SpotBugs</a></p>
+
+<p><a href="#list2_3">   2.3. CheckStyle</a></p>
+
+<p><a href="#list2_4">   2.4. PMD(Programing Mistake Detector)</a></p>
+
+<p><a href="#list2_5">   2.5. SonarQube</a></p>
+
+<p><a href="#list2_6">   2.6. Anchore</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-devsecops-툴체인-보안-점검-리스트---"><span style="color:purple"><strong>1. DevSecOps 툴체인 보안 점검 리스트</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>SANS DevSecOps Best Practice</strong>   <a name="list1_1"></a></p>
+
+    <p>SANS 연구소(SANS Institute)는 교육에서 보안 인증 정보 소스를 보유하고 있으며 사이버 및 네트워크 방어, 침투 테스트, 사고 대응, 디지털 포렌식 등 보안 교육에 있어 국제적으로 가장 높은 신뢰를 받는 보안 기관입니다.</p>
+
+    <p>이러한 SANS 연구소에서 DevSecOps 도구들을 분류 및 정리하여 발표한 <a href="http://sans.org/u/zAi">Secure DevOps Toolchain and SWAT checklist</a> 자료를 토대로 DevSecOps 파이프라인에서 정적 분석할 도구를 선정할 것입니다.</p>
+
+    <p>도구 선정은 앞선 포스팅을 통해 구축된 DevOps 파이프라인에 쉽게 연결할 수 있고, 자동화되어 정적 분석 및 동적 분석을 수행할 수 있는 보안 도구를 선택하였습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Pre-Commit 단계</strong>   <a name="list1_2"></a></p>
+
+    <p>먼저 DevSecOps 파이프라인의 첫 번째 단계인 Pre-Commit 단계에서는 개발자가 코드를 GitLab과 같은 SCM에 Commit 되기 전에 완료해야하는 단계입니다.</p>
+
+    <p>다음 [그림 1]은 SANS 연구소에서 정리한 Pre-Commit 단계에서 사용할 수 있는 보안 도구들을 정리한 것입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_1.png" alt="pre_commit_security_tool" width="758" height="273" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Pre-Commit 단계의 보안 도구</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Pre-Commit 단계는 VSCode와 같은 IDE(Integrated Development Environment)에 보안 도구들을 플러그인으로 추가하여 개발자가 코드를 작성 및 실행하면서 보안을 검사합니다.</p>
+
+    <p>앞선 포스팅에서 구성한 DevOps 파이프라인은 GitLab에 푸시하는 이벤트로 인해 실행되는데, Pre-Commit 단계는 푸시 이전에 수행되는 작업이기 때문에 DevSecOps 파이프라인에 추가할 도구는 없습니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Commit 단계</strong>   <a name="list1_3"></a></p>
+
+    <p>다음으로 코드를 컴파일하고 빌드하는 과정에서 정적 분석을 수행해야 하는 Commit 단계입니다.</p>
+
+    <p>[그림 2]는 SANS 연구소에서 정리한 Commit 단계에서 사용할 수 있는 보안 도구들을 정리한 것입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_2.png" alt="commit_security_tool" width="714" height="308" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Commit 단계의 보안 도구</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Commit 단계는 빌드하고 테스트하는 과정에서 파이프라인의 보안 취약점을 찾기 위해 소스 코드 파일들을 스캔합니다.</p>
+
+    <p>검사할 소스 코드의 언어에 따라 사용되는 도구들은 달라질 수 있습니다.</p>
+
+    <p>본 프로젝트에서는 Java 기반의 웹 서비스에 보안을 적용해볼 것이고, 정적 분석에 사용할 도구들은 다음과 같습니다.</p>
+
+    <ol>
+      <li>
+        <p>OWASP Dependency Check</p>
+
+        <p>프로젝트의 종속성을 검사하고, 공개적으로 공개 된 취약점을 탐지하는 소프트웨어 구성 분석 도구입니다.</p>
+
+        <p>지정된 종속성에 대한 CPE(Common Platform Enumeration) 식별자가 있는지를 확인하고, 발견되면 관련 CVE 항목에 연결되는 보고서를 생성해줍니다.</p>
+
+        <p>Jenkins와 Maven 플러그인이 존재하여 연동하기 쉽습니다.</p>
+      </li>
+      <li>
+        <p>SpotBugs</p>
+
+        <p>정적 분석 도구로 사용되는 FindBugs가 이제는 SpotBugs로 바뀌어 사용되고 있습니다.</p>
+
+        <blockquote>
+          <p>관련 내용은 <a href="https://github.com/findbugsproject/findbugs/blob/master/README.md">FindBugs README</a>에서 확인할 수 있습니다.</p>
+        </blockquote>
+
+        <p>제한된 룰 셋(Rule Set)으로 정적 분석을 수행하여 결함을 확인하고 생성된 보고서를 확인할 수 있습니다.</p>
+      </li>
+      <li>
+        <p>CheckStyle</p>
+
+        <p>코딩 스타일 규칙을 정의하여 체크해줌으로써 코딩 스타일 통일할 수 있도록 도와줍니다.</p>
+
+        <p>프로젝트 완료 후 유지보수할 떄 생겨나는 많은 문제중 하나가 많은 프로그래머들이 각자의 취향에 따라 변수명, 메소드명, 작성법등이 다르기 때문에 문제가 발생할 수 있는데 이러한 문제를 해결하기 위해 만들어졌습니다.</p>
+
+        <p>[그림 2]에 보이는 SANS 연구소의 자료에는 CheckStyle이 없지만 SpotBugs와 더불어 PMD와도 같이 정적 분석 도구로 많이 쓰이고 있어 사용해보았습니다.</p>
+      </li>
+      <li>
+        <p>PMD(Programing Mistake Detector)</p>
+
+        <p>SpotBugs와 마찬가지로 응용 프로그램에서 Java 소스를 정적 분석하여 발견된 문제를 보고해줍니다.</p>
+
+        <p>기본적으로 제공되는 룰 셋(Rule Set)이 포함되어 있으며 사용자 지정 규칙을 작성할 수도 있습니다.</p>
+      </li>
+      <li>
+        <p>SonarQube</p>
+
+        <p>SonarQube는 20개 이상의 프로그래밍 언어에서 Bugs, Code Smell, 보안 취약점을 발견할 목적으로 정적 코드 분석으로 자동 리뷰를 수행하기 위한 지속적인 코드 품질 검사용 오픈 소스 플랫폼입니다.</p>
+
+        <p>SonarQube에는 <code class="highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재합니다.</p>
+
+        <ul>
+          <li>
+            <p><strong>품질 프로파일(Quality Profiles)</strong></p>
+
+            <p>코드를 분석하기 위한 룰(Rule)의 집합입니다.</p>
+
+            <p>각 언어마다 다른 품질 프로파일들이 존재합니다.</p>
+          </li>
+          <li>
+            <p><strong>품질 게이트(Quality Gates)</strong></p>
+
+            <p>프로젝트 지표들로 설정된 임계 값을 정합니다.</p>
+
+            <p>품질 게이트를 통과하기 위해서는 모든 임계값 조건을 통과해야합니다.</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>Anchore</p>
+
+        <p>Anchore는 컨테이너 이미지 스캐닝 도구입니다.</p>
+
+        <p>컨테이너 이미지를 빌드할 때마다 알려진 보안 취약점을 스캔해서 보안적인 문제가 없는지 분석합니다.</p>
+
+        <p>상업 버전도 존재하지만 오픈 소스 버전이 있어 손쉽게 사용이 가능합니다.</p>
+
+        <p>Anchore는 기본적으로 보안 CVE(Common Vulnerabilities and Exposures) 목록을 기반으로 해서 스캔하고, NPM과 루비젬에 대한 보안 취약점 피드도 가져옵니다.</p>
+
+        <p><br /></p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-saststatic-application-security-testing-적용---"><span style="color:purple"><strong>2. SAST(Static Application Security Testing) 적용</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>OWASP Dependency Check</strong>   <a name="list2_1"></a></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@jenkins ~]# wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
+  <span class="o">[</span>root@jenkins ~]# yum <span class="nt">-y</span> <span class="nb">install </span>unzip
+  <span class="o">[</span>root@jenkins ~]# unzip dependency-check-5.2.4-release.zip
+  <span class="o">[</span>root@jenkins ~]# <span class="nb">mv </span>dependency-check/ /var/lib/jenkins
+  <span class="o">[</span>root@jenkins ~]# /var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--purge</span>
+  <span class="o">[</span>INFO] Unable to purge database<span class="p">;</span> the database file does not exist: /var/lib/jenkins/dependency-check/data/odc.mv.db
+
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+  <li><strong>SpotBugs</strong>   <a name="list2_2"></a>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;com.github.spotbugs&lt;/groupId&gt;
+      &lt;artifactId&gt;spotbugs-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.1.12.2&lt;/version&gt;
+      &lt;configuration&gt;
+          &lt;effort&gt;Max&lt;/effort&gt;
+          &lt;threshold&gt;Low&lt;/threshold&gt;
+          &lt;failOnError&gt;true&lt;/failOnError&gt;
+          &lt;plugins&gt;
+              &lt;plugin&gt;
+                  &lt;groupId&gt;com.h3xstream.findsecbugs&lt;/groupId&gt;
+                  &lt;artifactId&gt;findsecbugs-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;1.10.1&lt;/version&gt;
+              &lt;/plugin&gt;
+          &lt;/plugins&gt;
+      &lt;/configuration&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>scan&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>CheckStyle</strong>   <a name="list2_3"></a></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
+      &lt;version&gt;2.17&lt;/version&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>validate&lt;/id&gt;
+              &lt;phase&gt;validate&lt;/phase&gt;
+              &lt;configuration&gt;
+                  &lt;configLocation&gt;google_checks.xml&lt;/configLocation&gt;
+                  &lt;suppressionsLocation&gt;suppressions.xml
+                  &lt;/suppressionsLocation&gt;
+                  &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                  &lt;failsOnError&gt;true&lt;/failsOnError&gt;
+                  &lt;consoleOutput&gt;true&lt;/consoleOutput&gt;
+                  &lt;includeTestSourceDirectory&gt;true
+                  &lt;/includeTestSourceDirectory&gt;
+              &lt;/configuration&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>PMD(Programing Mistake Detector)</strong>   <a name="list2_4"></a></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.13.0&lt;/version&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>pmd-scan&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>SonarQube</strong>   <a name="list2_5"></a></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>docker run <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-d</span> <span class="nt">-p</span> 9000:9000 <span class="nt">-p</span> 9092:9092 <span class="nt">--name</span> sonarqube sonarqube
+
+  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
+  &lt;settings&gt;
+      &lt;pluginGroups&gt;
+          &lt;pluginGroup&gt;org.sonarsource.scanner.maven&lt;/pluginGroup&gt;
+      &lt;/pluginGroups&gt;
+      &lt;profiles&gt;
+          &lt;profile&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>sonar&lt;/id&gt;
+              &lt;activation&gt;
+                  &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+              &lt;/activation&gt;
+              &lt;properties&gt;
+                  &lt;<span class="o">!</span><span class="nt">--</span> Optional URL to server. Default value is http://localhost:9000 <span class="nt">--</span><span class="o">&gt;</span>
+                  &lt;sonar.host.url&gt;
+                  http://34.64.237.112:9000
+                  &lt;/sonar.host.url&gt;
+              &lt;/properties&gt;
+          &lt;/profile&gt;
+      &lt;/profiles&gt;
+  &lt;/settings&gt;
+
+  <span class="nv">$ </span>mvn clean verify sonar:sonar
+</code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace sonarqube
+  namespace/sonarqube created
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm <span class="nb">install </span>sonarqube stable/sonarqube <span class="nt">-n</span> sonarqube
+  WARNING: This chart is deprecated
+  NAME: sonarqube
+  LAST DEPLOYED: Fri Oct 23 09:42:52 2020
+  NAMESPACE: sonarqube
+  STATUS: deployed
+  REVISION: 1
+  NOTES:
+  This chart has been deprecated and moved to https://github.com/oteemo/charts
+
+
+  1. Get the application URL by running these commands:
+  <span class="nb">export </span><span class="nv">POD_NAME</span><span class="o">=</span><span class="si">$(</span>kubectl get pods <span class="nt">--namespace</span> sonarqube <span class="nt">-l</span> <span class="s2">"app=sonarqube,release=sonarqube"</span> <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[0].metadata.name}"</span><span class="si">)</span>
+  apiVersion: v1
+  <span class="nb">echo</span> <span class="s2">"Visit http://127.0.0.1:8080 to use your application"</span>
+  kubectl port-forward <span class="nv">$POD_NAME</span> 8080:9000
+
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">cat </span>sonarqube-nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: sonarqube
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app: sonarqube
+      release: sonarqube
+  ports:
+      - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      nodePort: 30900
+
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create <span class="nt">-f</span> nodeport.yaml <span class="nt">-n</span> sonarqube
+
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl get all <span class="nt">-n</span> sonarqube
+  NAME                                       READY   STATUS    RESTARTS   AGE
+  pod/sonarqube-postgresql-0                 1/1     Running   0          9m18s
+  pod/sonarqube-sonarqube-7469d7849f-gfx5f   1/1     Running   0          9m19s
+
+  NAME                                    TYPE        CLUSTER-IP    EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>          AGE
+  service/sonarqube                       NodePort    10.0.17.24    &lt;none&gt;        9000:30900/TCP   5m30s
+  service/sonarqube-postgresql            ClusterIP   10.0.27.126   &lt;none&gt;        5432/TCP         9m20s
+  service/sonarqube-postgresql-headless   ClusterIP   None          &lt;none&gt;        5432/TCP         9m20s
+  service/sonarqube-sonarqube             ClusterIP   10.0.31.89    &lt;none&gt;        9000/TCP         9m20s
+
+  NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/sonarqube-sonarqube   1/1     1            1           9m20s
+
+  NAME                                             DESIRED   CURRENT   READY   AGE
+  replicaset.apps/sonarqube-sonarqube-7469d7849f   1         1         1       9m20s
+
+  NAME                                    READY   AGE
+  statefulset.apps/sonarqube-postgresql   1/1     9m20s
+
+  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
+  &lt;settings&gt;
+      &lt;pluginGroups&gt;
+          &lt;pluginGroup&gt;org.sonarsource.scanner.maven&lt;/pluginGroup&gt;
+      &lt;/pluginGroups&gt;
+      &lt;profiles&gt;
+          &lt;profile&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>sonar&lt;/id&gt;
+              &lt;activation&gt;
+                  &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+              &lt;/activation&gt;
+              &lt;properties&gt;
+                  &lt;sonar.host.url&gt;
+                  http://SONARQUBE_IP:30900
+                  &lt;/sonar.host.url&gt;
+              &lt;/properties&gt;
+          &lt;/profile&gt;
+      &lt;/profiles&gt;
+  &lt;/settings&gt;
+
+  <span class="nv">$ </span>mvn clean verify sonar:sonar
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Anchore</strong>   <a name="list2_6"></a></p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+:ET
