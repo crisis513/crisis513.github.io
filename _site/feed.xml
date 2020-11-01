@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>s6i</title>
-    <description>s6i's blog, use Jekyll and github pages.</description>
+    <title>son</title>
+    <description>son's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Oct 2020 20:15:52 +0900</pubDate>
-    <lastBuildDate>Tue, 27 Oct 2020 20:15:52 +0900</lastBuildDate>
+    <pubDate>Mon, 02 Nov 2020 00:23:20 +0900</pubDate>
+    <lastBuildDate>Mon, 02 Nov 2020 00:23:20 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -209,17 +209,37 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;OWASP Dependency Check&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;unzip
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# unzip dependency-check-5.2.4-release.zip
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;dependency-check/ /var/lib/jenkins
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# /var/lib/jenkins/dependency-check/bin/dependency-check.sh &lt;span class=&quot;nt&quot;&gt;--purge&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;INFO] Unable to purge database&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; the database file does not exist: /var/lib/jenkins/dependency-check/data/odc.mv.db
+    &lt;p&gt;Jenkins 파이프라인에서 OWASP Dependency Check를 수행하기 위해 Jenkins 인스턴스에 OWASP Dependency Check를 설치하고 실행할 수 있는 환경을 만들어줍니다.&lt;/p&gt;
 
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unzip dependency-check-5.2.4-release.zip
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;dependency-check/ /var/lib/jenkins
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/lib/jenkins&lt;/code&gt; 디렉토리로 옮겨줍니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;/var/lib/jenkins/dependency-check/bin/dependency-check.sh &lt;span class=&quot;nt&quot;&gt;--scan&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--format&lt;/span&gt; HTML &lt;span class=&quot;nt&quot;&gt;--out&lt;/span&gt; /var/lib/jenkins/reports/dependency-check-report &lt;span class=&quot;nt&quot;&gt;--prettyPrint&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행합니다.&lt;/p&gt;
+
+    &lt;p&gt;–scan 옵션에 &lt;code class=&quot;highlighter-rouge&quot;&gt;pwd&lt;/code&gt; 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/lib/jenkins/reports/dependency-check-report&lt;/code&gt;애 스캔하여 출력되는 보고서 파일이 저장됩니다.&lt;/p&gt;
+
+    &lt;p&gt;–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 파일로 보고서가 생성되도록 하였습니다.&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결되었습니다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;SpotBugs&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;SpotBugs&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Maven에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt; 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.&lt;/p&gt;
+
+    &lt;p&gt;pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.&lt;/p&gt;
+
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;plugin&amp;gt;
       &amp;lt;groupId&amp;gt;com.github.spotbugs&amp;lt;/groupId&amp;gt;
       &amp;lt;artifactId&amp;gt;spotbugs-maven-plugin&amp;lt;/artifactId&amp;gt;
@@ -303,6 +323,12 @@
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;SonarQube&lt;/strong&gt;   &lt;a name=&quot;list2_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.&lt;/p&gt;
+
+    &lt;p&gt;Sonar 자체로도 좋지만 PMD / Findbugs / Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록해주는 Analysis Collector 플러그인을 사용할 수도 있습니다. 이것의 장점은 PMD / Findbugs / Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.&lt;/p&gt;
+
+    &lt;p&gt;오래된 라이브러리(예 : Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 &lt;a href=&quot;https://redirect.sonarsource.com/plugins/java.html&quot;&gt;SonarJava&lt;/a&gt;를 분석 및 개발하는 중 입니다. 또한 &lt;a href=&quot;http://www.sonarlint.org/index.html&quot;&gt;SonarLint&lt;/a&gt; 라는 개인 IDE 용 새 플러그인 세트도 있습니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--restart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;always &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 9000:9000 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 9092:9092 &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; sonarqube sonarqube
 
@@ -414,6 +440,10 @@
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Anchore&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행합니다. 이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않습니다.&lt;/p&gt;
+
+    &lt;p&gt;Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것입니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create namespace anchore
   namespace/anchore created
@@ -757,7 +787,7 @@
 
     &lt;p&gt;먼저 Jenkins 파이프라인의 실행 결과에 대한 메시지를 받아보기 위해 Slack에서 사용할 워크스페이스와 채널을 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;워스크페이스와 채널을 생성하고나면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://YOUR_WORKSPACE.slack.com/apps&lt;/code&gt; URL에 접속해서 Slack에 추가 할 앱으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt;를 검색합니다.&lt;/p&gt;
+    &lt;p&gt;워스크페이스와 채널을 생성하고나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;https://YOUR_WORKSPACE.slack.com/apps&lt;/code&gt; URL에 접속해서 Slack에 추가 할 앱으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt;를 검색합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -774,7 +804,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Slack에 추가&lt;/code&gt; 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Slack에 추가&lt;/code&gt; 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -791,7 +821,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;정상적으로 Jenkins CI 앱이 추가되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성 편집&lt;/code&gt;에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;정상적으로 Jenkins CI 앱이 추가되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성 편집&lt;/code&gt;에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.&lt;/p&gt;
 
     &lt;p&gt;아래쪽에 보면 토큰이 발급되어 있는 것을 볼 수 있을텐데, &lt;strong&gt;이 토큰은 나중에 Jenkins credentials을 생성할 때 사용&lt;/strong&gt;됩니다.&lt;/p&gt;
 
@@ -821,7 +851,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins에서 Slack 플러그인을 설치하고나면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt; 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins에서 Slack 플러그인을 설치하고나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt; 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.&lt;/p&gt;
 
     &lt;p&gt;다음 [그림 4]와 같이 워크스페이스와 Credentials, 채널 ID를 정확하게 기입해줍니다.&lt;/p&gt;
 
@@ -840,11 +870,11 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Credentials의 경우에 옆의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add&lt;/code&gt; 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;Credentials의 경우에 옆의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add&lt;/code&gt; 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;Credentials를 추가할 때 Kind는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secret text&lt;/code&gt;로 두고 Secret은 [그림 2]에서 보이는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;토큰&lt;/code&gt; 값을 입력해줍니다.&lt;/p&gt;
+    &lt;p&gt;Credentials를 추가할 때 Kind는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Secret text&lt;/code&gt;로 두고 Secret은 [그림 2]에서 보이는 &lt;code class=&quot;highlighter-rouge&quot;&gt;토큰&lt;/code&gt; 값을 입력해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;그런 우측 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;그런 우측 하단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -920,9 +950,9 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;그런 다음 Jenkins 홈에서 왼쪽 탭의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt;에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Multibranch Pipeline&lt;/code&gt;을 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;그런 다음 Jenkins 홈에서 왼쪽 탭의 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt;에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Multibranch Pipeline&lt;/code&gt;을 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Source -&amp;gt; GitLab Project&lt;/code&gt;를 눌러 다음 [그림 7]과 같이 설정해줍니다.&lt;/p&gt;
+    &lt;p&gt;멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Source -&amp;gt; GitLab Project&lt;/code&gt;를 눌러 다음 [그림 7]과 같이 설정해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -943,7 +973,7 @@
 
     &lt;p&gt;그리고 파이프라인에 연결할 프로젝트를 생성한 계정의 ID를 Owner로 두면 해당 ID에서 관리하고 있는 프로젝트들을 아래 Projects에서 선택할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;Behaviours 항목에서 Add 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter by name (with wildcards)&lt;/code&gt;를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.&lt;/p&gt;
+    &lt;p&gt;Behaviours 항목에서 Add 버튼을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter by name (with wildcards)&lt;/code&gt;를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1652,7 +1682,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;여기서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a separate configuration page&lt;/code&gt;를 눌러 Configure Clouds 설정으로 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;여기서 &lt;code class=&quot;highlighter-rouge&quot;&gt;a separate configuration page&lt;/code&gt;를 눌러 Configure Clouds 설정으로 들어옵니다.&lt;/p&gt;
 
     &lt;p&gt;쿠버네티스 설정은 다음 [그림 3], [그림 4]와 같이 진행합니다.&lt;/p&gt;
 
@@ -1671,9 +1701,9 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Kubernetes URL은 kube-master 인스턴스에 접속하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.kube/config&lt;/code&gt; 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.&lt;/p&gt;
+    &lt;p&gt;Kubernetes URL은 kube-master 인스턴스에 접속하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.kube/config&lt;/code&gt; 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.&lt;/p&gt;
 
-    &lt;p&gt;Kubernetes URL을 입력하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;Kubernetes URL을 입력하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ~/.kube/config 
   apiVersion: v1
@@ -1686,7 +1716,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;그 후 아래로 내리다보면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pod Templates&lt;/code&gt;를 구성하는 버튼이 있습니다.&lt;/p&gt;
+    &lt;p&gt;그 후 아래로 내리다보면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pod Templates&lt;/code&gt;를 구성하는 버튼이 있습니다.&lt;/p&gt;
 
     &lt;p&gt;그 버튼을 눌러 다음 [그림 4]와 같이 설정하고 저장합니다.&lt;/p&gt;
 
@@ -1710,9 +1740,9 @@
 
     &lt;p&gt;Jenkins에서 쿠버네티스 클러스터와의 연동이 정상적으로 설정되었다면 다음은 Jenkins Slave를 생성 및 구성해야 합니다.&lt;/p&gt;
 
-    &lt;p&gt;Jenkins의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage Nodes&lt;/code&gt; 설정에 들어와서 왼쪽의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;신규 노드&lt;/code&gt; 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Manage Nodes&lt;/code&gt; 설정에 들어와서 왼쪽의 &lt;code class=&quot;highlighter-rouge&quot;&gt;신규 노드&lt;/code&gt; 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Permanent Agent&lt;/code&gt;를 클릭 후 다음으로 넘어갑니다.&lt;/p&gt;
+    &lt;p&gt;첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Permanent Agent&lt;/code&gt;를 클릭 후 다음으로 넘어갑니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2027,11 +2057,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;이제 ArgoCD에 접속하여 로그인을 시도해봅니다.&lt;/p&gt;
 
-    &lt;p&gt;Helm으로 배포했을 때 초기 아이디는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 ArgoCD 파드명 즉, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;argocd-server-7c5f6f8d9-xkc8h&lt;/code&gt; 입니다.&lt;/p&gt;
+    &lt;p&gt;Helm으로 배포했을 때 초기 아이디는 &lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 ArgoCD 파드명 즉, &lt;code class=&quot;highlighter-rouge&quot;&gt;argocd-server-7c5f6f8d9-xkc8h&lt;/code&gt; 입니다.&lt;/p&gt;
 
     &lt;p&gt;정상적으로 로그인이 이루어지면 Git 레포지토리를 추가하는 작업을 해주어야 합니다.&lt;/p&gt;
 
-    &lt;p&gt;왼쪽의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings&lt;/code&gt; 탭에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Repositories&lt;/code&gt; 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.&lt;/p&gt;
+    &lt;p&gt;왼쪽의 &lt;code class=&quot;highlighter-rouge&quot;&gt;settings&lt;/code&gt; 탭에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Repositories&lt;/code&gt; 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2065,7 +2095,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Applications&lt;/code&gt; 탭에 와서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NEW APP&lt;/code&gt; 버튼을 눌러 배포를 관리할 애플리케이션을 추가해줍니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Applications&lt;/code&gt; 탭에 와서 &lt;code class=&quot;highlighter-rouge&quot;&gt;NEW APP&lt;/code&gt; 버튼을 눌러 배포를 관리할 애플리케이션을 추가해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2118,7 +2148,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;동기화 되지 않은 상태로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OutOfSync&lt;/code&gt;라는 문구와 &lt;strong&gt;노란색&lt;/strong&gt;으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync OK&lt;/code&gt; 라는 문구와 함께 &lt;strong&gt;초록색&lt;/strong&gt;으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;동기화 되지 않은 상태로 &lt;code class=&quot;highlighter-rouge&quot;&gt;OutOfSync&lt;/code&gt;라는 문구와 &lt;strong&gt;노란색&lt;/strong&gt;으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Sync OK&lt;/code&gt; 라는 문구와 함께 &lt;strong&gt;초록색&lt;/strong&gt;으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.&lt;/p&gt;
 
     &lt;p&gt;ArgoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있습니다.&lt;/p&gt;
 
@@ -2218,14 +2248,14 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;이럴경우, 개발 중 별도의 품질 관리를 수행하지 않았기 때문에 잘못된 소스 코드를 형상관리 시스템에 반영하였을 경우 발생되는 문제가 개발 후반에 모두 장애로 발견됩니다.&lt;/p&gt;
 
-    &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 연동&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;SCM 툴인 Gitlab과 CI/CD Server 툴로 사용할 Jenkins를 연동하는 작업을 시작하겠습니다.&lt;/p&gt;
 
-    &lt;p&gt;먼저 [그림 1]과 같이 관리자 계정에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Area &amp;gt; Network&lt;/code&gt; 탭으로 들어와 아웃바운드를 설정합니다.&lt;/p&gt;
+    &lt;p&gt;먼저 [그림 1]과 같이 관리자 계정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Admin Area &amp;gt; Network&lt;/code&gt; 탭으로 들어와 아웃바운드를 설정합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2244,7 +2274,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;웹훅 및 서비스가 액세스 할 수 있는 IP, 즉 Jenkins 서버의 IP를 적어줍니다.&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;strong&gt;GitLab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;strong&gt;GitLab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2267,9 +2297,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 GitLab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 GitLab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;GitLab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
+    &lt;p&gt;GitLab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2303,14 +2333,14 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 웹훅 설정&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2329,11 +2359,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;위의 [그림 5]와 같이 파이프라인을 선택하고 아이템의 이름을 명시하고 OK 버튼을 눌러 아이템을 만들어줍니다.&lt;/p&gt;
 
-    &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;devsecops-pipeline&lt;/code&gt;라는 이름의 아이템을 만들어주었습니다.&lt;/p&gt;
+    &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;devsecops-pipeline&lt;/code&gt;라는 이름의 아이템을 만들어주었습니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Webhooks&lt;/code&gt; 탭으로 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Settings &amp;gt; Webhooks&lt;/code&gt; 탭으로 들어옵니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2350,13 +2380,13 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;위의 [그림 6]와 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName&lt;/code&gt;의 형태로 URL을 작성해줍니다.&lt;/p&gt;
+    &lt;p&gt;위의 [그림 6]와 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName&lt;/code&gt;의 형태로 URL을 작성해줍니다.&lt;/p&gt;
 
     &lt;p&gt;일단 설정은 푸시 이벤트에 대한 트리거만 걸어놓고 차후 멀티 브랜치에 대한 파이프라인 구성도 진행해볼 것입니다.&lt;/p&gt;
 
-    &lt;p&gt;웹훅 설정을 마치고 아래로 내리면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test&lt;/code&gt; 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Push events&lt;/code&gt;에 대한 테스트를 진행해봅니다.&lt;/p&gt;
+    &lt;p&gt;웹훅 설정을 마치고 아래로 내리면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test&lt;/code&gt; 버튼을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;Push events&lt;/code&gt;에 대한 테스트를 진행해봅니다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hook executed successfully: HTTP 200&lt;/code&gt; 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Hook executed successfully: HTTP 200&lt;/code&gt; 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
@@ -2372,7 +2402,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Pipeline 설정 및 테스트&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;[그림 5]에서 생성한 파이프라인의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.&lt;/p&gt;
+    &lt;p&gt;[그림 5]에서 생성한 파이프라인의 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2427,7 +2457,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Console Output&lt;/code&gt; 탭을 눌러 확인할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;Console Output&lt;/code&gt; 탭을 눌러 확인할 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2690,7 +2720,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;프로젝트 목적&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축&lt;/code&gt;하고자 합니다.&lt;/p&gt;
+    &lt;p&gt;본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축&lt;/code&gt;하고자 합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;strong&gt;클라우드 네이티브 환경에서의 DevSecOps 쳬계와 CI/CD 체계를 이해&lt;/strong&gt;하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 &lt;strong&gt;실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인 구축하는 것이 목적&lt;/strong&gt;입니다.&lt;/p&gt;
 
@@ -2740,7 +2770,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GCP(Google Cloud Platform) 구성&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm&lt;/code&gt;을 통해 쿠버네티스를 구성할 것 입니다.&lt;/p&gt;
+    &lt;p&gt;GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;kubeadm&lt;/code&gt;을 통해 쿠버네티스를 구성할 것 입니다.&lt;/p&gt;
 
     &lt;p&gt;따라서 다음 [그림 2]와 같이 GCP 인스턴스를 생성해줍니다.&lt;/p&gt;
 
@@ -2788,7 +2818,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;위에서 언급하였듯 생성한 인스턴스에 kubeadm 명령을 통해 쿠버네티스를 구성합니다.&lt;/p&gt;
 
-    &lt;p&gt;먼저 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master, kube-worker1, kube-worker2 모두&lt;/code&gt; 동일하게 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master, kube-worker1, kube-worker2 모두&lt;/code&gt; 동일하게 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2835,7 +2865,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;modprobe br_netfilter
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;br_netfilter 모듈을 명시적으로 추가한 후에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsmod | grep br_netfilter&lt;/code&gt; 명령어로 추가 여부를 확인할 수 있습니다.&lt;/p&gt;
+        &lt;p&gt;br_netfilter 모듈을 명시적으로 추가한 후에 &lt;code class=&quot;highlighter-rouge&quot;&gt;lsmod | grep br_netfilter&lt;/code&gt; 명령어로 추가 여부를 확인할 수 있습니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;도커 및 쿠버네티스 설치 후 서비스 시작&lt;/p&gt;
@@ -2863,7 +2893,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;kubelet &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; systemctl start kubelet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;헬스체크 이슈&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;대쉬보드 호환성&lt;/code&gt;의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.&lt;/p&gt;
+        &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;헬스체크 이슈&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;대쉬보드 호환성&lt;/code&gt;의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.&lt;/p&gt;
 
         &lt;blockquote&gt;
           &lt;p&gt;처음에 1.19 버전으로 설치했었다가 쿠버네티스 클러스터의 매트릭을 수집해주는 &lt;strong&gt;kube-state-metrics&lt;/strong&gt;이 정상적으로 작동하지 않아 1.15버전으로 재설치한 것입니다.&lt;/p&gt;
@@ -2873,7 +2903,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2925,7 +2955,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음은 kubeadm init의 결과에서 나온 것 처럼 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-worker 노드들&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;다음은 kubeadm init의 결과에서 나온 것 처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-worker 노드들&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2954,7 +2984,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;마지막으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서 weave를 설치합니다.&lt;/p&gt;
+    &lt;p&gt;마지막으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서 weave를 설치합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -3011,7 +3041,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
+    &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
 
     &lt;p&gt;GitLab은 자체 CI를 무료로 제공하고 있어 외부 CI 서비스를 사용할 필요가 없습니다.&lt;/p&gt;
 
@@ -3106,7 +3136,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-        &lt;p&gt;GCP 방화벽까지 열어주고나서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers IP:8001&lt;/code&gt; URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.&lt;/p&gt;
+        &lt;p&gt;GCP 방화벽까지 열어주고나서 &lt;code class=&quot;highlighter-rouge&quot;&gt;servers IP:8001&lt;/code&gt; URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.&lt;/p&gt;
 
         &lt;table&gt;
           &lt;thead&gt;
@@ -3211,7 +3241,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers IP:8002&lt;/code&gt; URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.&lt;/p&gt;
+        &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;servers IP:8002&lt;/code&gt; URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.&lt;/p&gt;
 
         &lt;p&gt;화면의 안내에 따라 &lt;strong&gt;/var/lib/jenkins/secrets/initialAdminPassword 파일을 확인&lt;/strong&gt;합니다.&lt;/p&gt;
 
@@ -3223,7 +3253,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;다음은 Customize Jenkins라는 페이지가 나오는데, 여기서는 원하는 Jenkins 플러그인을 설치할 수 있습니다.&lt;/p&gt;
 
-        &lt;p&gt;&lt;strong&gt;Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능&lt;/strong&gt;하기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install suggested plugins&lt;/code&gt;를 눌러 기본 플러그인만 설치하고 넘어갑니다.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능&lt;/strong&gt;하기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Install suggested plugins&lt;/code&gt;를 눌러 기본 플러그인만 설치하고 넘어갑니다.&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 

@@ -1,4 +1,4 @@
-I"CB<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 짧은 기간동안 진행된 세미 프로젝트입니다.</p>
+I"�A<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 짧은 기간동안 진행된 세미 프로젝트입니다.</p>
 
 <hr />
 
@@ -71,7 +71,7 @@
   <li>
     <p><strong>취약점 분석 평가 항목</strong>   <a name="list1_3"></a></p>
 
-    <p>취약점 분석은 <code class="language-plaintext highlighter-rouge">CentOS 7</code> 환경에서 진행되며 <code class="language-plaintext highlighter-rouge">항목 중요도가 상</code>인 진단 항목을 몇 가지 선택하여 진단 스크립트를 작성하였습니다.</p>
+    <p>취약점 분석은 <code class="highlighter-rouge">CentOS 7</code> 환경에서 진행되며 <code class="highlighter-rouge">항목 중요도가 상</code>인 진단 항목을 몇 가지 선택하여 진단 스크립트를 작성하였습니다.</p>
 
     <p>본 프로젝트에서 선택한 진단 항목은 다음 [그림 2]와 같습니다.</p>
 
@@ -235,7 +235,7 @@
 
     <p><br /></p>
 
-    <p>예를 들어 <code class="language-plaintext highlighter-rouge">$ sudo ./main_diagnosis.sh client</code> 라고 명령어를 입력하면 호스트의 취약점 진단이 끝난 후에 /etc/hosts에 정의된 client 호스트네임을 가진 노드로 진단에 필요한 코드를 전송하여 ssh 접속을 통해 진단을 수행하도록 하였습니다.</p>
+    <p>예를 들어 <code class="highlighter-rouge">$ sudo ./main_diagnosis.sh client</code> 라고 명령어를 입력하면 호스트의 취약점 진단이 끝난 후에 /etc/hosts에 정의된 client 호스트네임을 가진 노드로 진단에 필요한 코드를 전송하여 ssh 접속을 통해 진단을 수행하도록 하였습니다.</p>
 
     <table>
       <thead>
@@ -284,7 +284,7 @@
 
     <p>본 프로젝트에서는 <strong>인덱스 이름을 diagnosis</strong>라고 정의하였고, 진단 스크립트가 실행되면서 diagnosis 인덱스에 정형화된 컬럼 필드 내용들이 Elasticsearch로 전송되어 스크립트로 생성된 diagnosis라는 인덱스에 대한 인덱스 패턴을 생성할 수 있게 됩니다.</p>
 
-    <p>인덱스 패턴 이름을 적는 란에 <code class="language-plaintext highlighter-rouge">diagnosis*</code> 이라고 입력하여 인덱스 패턴을 생성해줍니다.</p>
+    <p>인덱스 패턴 이름을 적는 란에 <code class="highlighter-rouge">diagnosis*</code> 이라고 입력하여 인덱스 패턴을 생성해줍니다.</p>
 
     <p><br /></p>
 
