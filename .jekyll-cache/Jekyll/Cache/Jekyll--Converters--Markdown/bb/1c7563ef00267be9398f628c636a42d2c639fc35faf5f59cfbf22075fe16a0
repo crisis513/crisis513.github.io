@@ -1,4 +1,4 @@
-I"L�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I">�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -150,7 +150,18 @@
 
         <p>SonarQube는 20개 이상의 프로그래밍 언어에서 Bugs, Code Smell, 보안 취약점을 발견할 목적으로 정적 코드 분석으로 자동 리뷰를 수행하기 위한 지속적인 코드 품질 검사용 오픈 소스 플랫폼입니다.</p>
 
-        <p>SonarQube에는 <code class="highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재합니다.</p>
+        <p>SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.</p>
+
+        <p>SonarQube 자체로도 좋지만 PMD/Findbugs/Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록 해주는 Analysis Collector 플러그인을 사용할 수도 있습니다.</p>
+
+        <p>이것의 장점은 PMD/Findbugs/Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.</p>
+
+        <blockquote>
+          <p>오래된 라이브러리(예: Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 <a href="https://redirect.sonarsource.com/plugins/java.html">SonarJava</a>를 분석 및 개발하는 중 입니다. 
+또한 <a href="http://www.sonarlint.org/index.html">SonarLint</a> 라는 개인 IDE 용 새 플러그인도 있습니다.</p>
+        </blockquote>
+
+        <p>SonarQube에는 <code class="language-plaintext highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="language-plaintext highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재합니다.</p>
 
         <ul>
           <li>
@@ -203,16 +214,16 @@
   <span class="nv">$ </span><span class="nb">mv </span>dependency-check/ /var/lib/jenkins
 </code></pre></div>    </div>
 
-    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨줍니다.</p>
+    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="language-plaintext highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨줍니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--scan</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> <span class="nt">--format</span> HTML <span class="nt">--out</span> /var/lib/jenkins/reports/dependency-check-report <span class="nt">--prettyPrint</span>
 </code></pre></div>    </div>
 
     <p>스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행합니다.</p>
 
-    <p>–scan 옵션에 <code class="highlighter-rouge">pwd</code> 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 <code class="highlighter-rouge">/var/lib/jenkins/reports/dependency-check-report</code>애 스캔하여 출력되는 보고서 파일이 저장됩니다.</p>
+    <p>–scan 옵션에 <code class="language-plaintext highlighter-rouge">pwd</code> 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 <code class="language-plaintext highlighter-rouge">/var/lib/jenkins/reports/dependency-check-report</code>애 스캔하여 출력되는 보고서 파일이 저장됩니다.</p>
 
-    <p>–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 <code class="highlighter-rouge">HTML</code> 파일로 보고서가 생성되도록 하였습니다.</p>
+    <p>–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 <code class="language-plaintext highlighter-rouge">HTML</code> 파일로 보고서가 생성되도록 하였습니다.</p>
 
     <blockquote>
       <p>참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결되었습니다.</p>
@@ -223,7 +234,7 @@
   <li>
     <p><strong>SpotBugs</strong>   <a name="list2_2"></a></p>
 
-    <p>Maven에서는 <code class="highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.</p>
+    <p>Maven에서는 <code class="language-plaintext highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.</p>
 
     <p>pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
 
@@ -260,6 +271,8 @@
   <li>
     <p><strong>CheckStyle</strong>   <a name="list2_3"></a></p>
 
+    <p>SpotBugs와 마찬가지로 pom.xml 파일에 CheckStyle을 사용하도록 명시하여 프로젝트를 빌드할 때 CheckStyle을 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
       &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
@@ -290,6 +303,8 @@
   <li>
     <p><strong>PMD(Programing Mistake Detector)</strong>   <a name="list2_4"></a></p>
 
+    <p>pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
       &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
@@ -311,15 +326,14 @@
   <li>
     <p><strong>SonarQube</strong>   <a name="list2_5"></a></p>
 
-    <p>SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.</p>
-
-    <p>Sonar 자체로도 좋지만 PMD / Findbugs / Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록해주는 Analysis Collector 플러그인을 사용할 수도 있습니다. 이것의 장점은 PMD / Findbugs / Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.</p>
-
-    <p>오래된 라이브러리(예 : Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 <a href="https://redirect.sonarsource.com/plugins/java.html">SonarJava</a>를 분석 및 개발하는 중 입니다. 또한 <a href="http://www.sonarlint.org/index.html">SonarLint</a> 라는 개인 IDE 용 새 플러그인 세트도 있습니다.</p>
+    <p>SonarQube를 사용하기 위해서 여러 가지 방법으로 설치할 수 있지만 본 프로젝트에서는 Docker를 통해서 설치하는 방법을 설명할 것 입니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>docker run <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-d</span> <span class="nt">-p</span> 9000:9000 <span class="nt">-p</span> 9092:9092 <span class="nt">--name</span> sonarqube sonarqube
+</code></pre></div>    </div>
 
-  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
+    <p>Jenkins 인스턴스에서 Docker 명령을 통해 sonarqube 공식 이미지를 다운로드하여 9000번 포트를 사용하도록 설정합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
   &lt;settings&gt;
       &lt;pluginGroups&gt;
           &lt;pluginGroup&gt;org.sonarsource.scanner.maven&lt;/pluginGroup&gt;
@@ -333,7 +347,7 @@
               &lt;properties&gt;
                   &lt;<span class="o">!</span><span class="nt">--</span> Optional URL to server. Default value is http://localhost:9000 <span class="nt">--</span><span class="o">&gt;</span>
                   &lt;sonar.host.url&gt;
-                  http://34.64.237.112:9000
+                  http://JENKINS_SERVER_IP:9000
                   &lt;/sonar.host.url&gt;
               &lt;/properties&gt;
           &lt;/profile&gt;
@@ -343,217 +357,7 @@
   <span class="nv">$ </span>mvn clean verify sonar:sonar
 </code></pre></div>    </div>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace sonarqube
-  namespace/sonarqube created
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm <span class="nb">install </span>sonarqube stable/sonarqube <span class="nt">-n</span> sonarqube
-  WARNING: This chart is deprecated
-  NAME: sonarqube
-  LAST DEPLOYED: Fri Oct 23 09:42:52 2020
-  NAMESPACE: sonarqube
-  STATUS: deployed
-  REVISION: 1
-  NOTES:
-  This chart has been deprecated and moved to https://github.com/oteemo/charts
-
-
-  1. Get the application URL by running these commands:
-  <span class="nb">export </span><span class="nv">POD_NAME</span><span class="o">=</span><span class="si">$(</span>kubectl get pods <span class="nt">--namespace</span> sonarqube <span class="nt">-l</span> <span class="s2">"app=sonarqube,release=sonarqube"</span> <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[0].metadata.name}"</span><span class="si">)</span>
-  apiVersion: v1
-  <span class="nb">echo</span> <span class="s2">"Visit http://127.0.0.1:8080 to use your application"</span>
-  kubectl port-forward <span class="nv">$POD_NAME</span> 8080:9000
-
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">cat </span>sonarqube-nodeport.yaml
-  apiVersion: v1
-  kind: Service
-  metadata:
-  name: sonarqube
-  spec:
-  <span class="nb">type</span>: NodePort
-  selector:
-      app: sonarqube
-      release: sonarqube
-  ports:
-      - protocol: TCP
-      port: 9000
-      targetPort: 9000
-      nodePort: 30900
-
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create <span class="nt">-f</span> nodeport.yaml <span class="nt">-n</span> sonarqube
-
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl get all <span class="nt">-n</span> sonarqube
-  NAME                                       READY   STATUS    RESTARTS   AGE
-  pod/sonarqube-postgresql-0                 1/1     Running   0          9m18s
-  pod/sonarqube-sonarqube-7469d7849f-gfx5f   1/1     Running   0          9m19s
-
-  NAME                                    TYPE        CLUSTER-IP    EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>          AGE
-  service/sonarqube                       NodePort    10.0.17.24    &lt;none&gt;        9000:30900/TCP   5m30s
-  service/sonarqube-postgresql            ClusterIP   10.0.27.126   &lt;none&gt;        5432/TCP         9m20s
-  service/sonarqube-postgresql-headless   ClusterIP   None          &lt;none&gt;        5432/TCP         9m20s
-  service/sonarqube-sonarqube             ClusterIP   10.0.31.89    &lt;none&gt;        9000/TCP         9m20s
-
-  NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/sonarqube-sonarqube   1/1     1            1           9m20s
-
-  NAME                                             DESIRED   CURRENT   READY   AGE
-  replicaset.apps/sonarqube-sonarqube-7469d7849f   1         1         1       9m20s
-
-  NAME                                    READY   AGE
-  statefulset.apps/sonarqube-postgresql   1/1     9m20s
-
-  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
-  &lt;settings&gt;
-      &lt;pluginGroups&gt;
-          &lt;pluginGroup&gt;org.sonarsource.scanner.maven&lt;/pluginGroup&gt;
-      &lt;/pluginGroups&gt;
-      &lt;profiles&gt;
-          &lt;profile&gt;
-              &lt;<span class="nb">id</span><span class="o">&gt;</span>sonar&lt;/id&gt;
-              &lt;activation&gt;
-                  &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
-              &lt;/activation&gt;
-              &lt;properties&gt;
-                  &lt;sonar.host.url&gt;
-                  http://SONARQUBE_IP:30900
-                  &lt;/sonar.host.url&gt;
-              &lt;/properties&gt;
-          &lt;/profile&gt;
-      &lt;/profiles&gt;
-  &lt;/settings&gt;
-
-  <span class="nv">$ </span>mvn clean verify sonar:sonar
-</code></pre></div>    </div>
-
-    <p><br /></p>
-  </li>
-  <li>
-    <p><strong>Anchore</strong>   <a name="list2_6"></a></p>
-
-    <p>엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행합니다. 이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않습니다.</p>
-
-    <p>Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것입니다.</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace anchore
-  namespace/anchore created
-
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm repo add anchore https://charts.anchore.io
-  <span class="s2">"anchore"</span> has been added to your repositories
-  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm <span class="nb">install </span>anchore anchore/anchore-engine <span class="nt">-n</span> anchore
-  NAME: anchore
-  LAST DEPLOYED: Sat Oct 20 18:06:18 2020
-  NAMESPACE: anchore
-  STATUS: deployed
-  REVISION: 1
-  TEST SUITE: None
-  NOTES:
-  To use Anchore Engine you need the URL, username, and password to access the API.
-
-  Anchore Engine can be accessed via port 8228 on the following DNS name from within the cluster:
-  anchore-anchore-engine-api.anchore.svc.cluster.local
-
-  Here are the steps to configure the anchore-cli <span class="o">(</span><span class="sb">`</span>pip <span class="nb">install </span>anchorecli<span class="sb">`</span><span class="o">)</span><span class="nb">.</span> Use these same values <span class="k">for </span>direct API access as well.
-
-  To configure your anchore-cli run:
-
-      <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
-      <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
-
-  Using the service endpoint from within the cluster you can use:
-      <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
-
-
-  To verify the service is up and running, you can run container <span class="k">for </span>the Anchore Engine CLI:
-
-      kubectl run <span class="nt">-i</span> <span class="nt">--tty</span> anchore-cli <span class="nt">--restart</span><span class="o">=</span>Always <span class="nt">--image</span> anchore/engine-cli  <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="k">${</span><span class="nv">ANCHORE_CLI_PASS</span><span class="k">}</span> <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
-
-  from within the container you can use <span class="s1">'anchore-cli'</span> commands.
-
-  <span class="k">*</span> NOTE: On first startup of anchore-engine, it performs a CVE data <span class="nb">sync </span>which may take several minutes to complete. During this <span class="nb">time </span>the system status will report <span class="s1">'partially_down'</span> and any images added <span class="k">for </span>analysis will stay <span class="k">in </span>the <span class="s1">'not_analyzed'</span> state.
-  Once the <span class="nb">sync </span>is <span class="nb">complete</span>, any queued images will be analyzed and the system status will change to <span class="s1">'all_up'</span><span class="nb">.</span>
-
-  Initial setup <span class="nb">time </span>can be <span class="o">&gt;</span>120sec <span class="k">for </span>postgresql setup and readiness checks to pass <span class="k">for </span>the services as indicated by pod state. You can check with:
-      kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>anchore-anchore-engine,component<span class="o">=</span>api
-
-  A quick primer on using the Anchore Engine CLI follows. For more info see: https://github.com/anchore/anchore-engine/wiki/Getting-Started
-
-  View system status:
-
-      anchore-cli system status
-
-  Add an image to be analyzed:
-
-      anchore-cli image add &lt;imageref&gt;
-
-  List images and see the analysis status <span class="o">(</span>not_analyzed initially<span class="o">)</span>:
-
-      anchore-cli image list
-
-  Once the image is analyzed you<span class="s1">'ll see status change to '</span>analyzed<span class="s1">'. This may take some time on first execution with a new database because
-  the system must first do a CVE data sync which can take several minutes. Once complete, the image will transition to '</span>analyzing<span class="s1">' state.
-
-  When the image reaches '</span>analyzed<span class="s1">' state, you can view policy evaluation output with:
-
-      anchore-cli evaluate check &lt;imageref&gt;
-
-  List CVEs found in the image with:
-
-      anchore-cli image vuln &lt;imageref&gt; os
-
-  List OS packages found in the image with:
-      anchore-cli image content &lt;imageref&gt; os
-
-  List files found in the image with:
-      anchore-cli image content &lt;imageref&gt; files
-</span></code></pre></div>    </div>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@jenkins ~]# yum <span class="nb">install</span> <span class="nt">-y</span> epel-release
-  <span class="o">[</span>root@jenkins ~]# yum <span class="nb">install</span> <span class="nt">-y</span> python-pip
-  <span class="o">[</span>root@jenkins ~]# pip <span class="nb">install </span>anchorecli
-  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
-  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span>foobar
-  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://ANCHORE_IP:30228/v1
-
-  <span class="c"># 컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있습니다.</span>
-  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
-  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$ANCHORE_CLI_PASS</span>
-  foobar
-</code></pre></div>    </div>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>vim anchore-nodeport.yaml
-  apiVersion: v1
-  kind: Service
-  metadata:
-  name: anchore-api
-  spec:
-  <span class="nb">type</span>: NodePort
-  selector:
-      app: anchore-anchore-engine
-      component: api
-  ports:
-      - protocol: TCP
-      port: 8228
-      targetPort: 8228
-      nodePort: 30228
-
-  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create <span class="nt">-f</span> anchore-nodeport.yaml <span class="nt">-n</span> anchore
-  service/anchore-api created
-
-  <span class="o">[</span>root@jenkins cccr-dvwa]# anchore-cli image add jisunpark/cccr-dvwa-java-web <span class="nt">--dockerfile</span><span class="o">=</span>Dockerfile <span class="nt">--force</span>
-  Image Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
-  Parent Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
-  Analysis Status: not_analyzed
-  Image Type: docker
-  Analyzed At: 2020-10-20T18:43:29Z
-  Image ID: 85a4a0ea97867479bcb328c7a6c75691434d36ea0a0b75e6e453b22ff0f6fc7d
-  Dockerfile Mode: Actual
-  Distro: debian
-  Distro Version: 10
-  Size: 920176640
-  Architecture: amd64
-  Layer Count: 16
-
-  Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
-  Tag Detected At: 2020-10-20T18:40:33Z
-</code></pre></div>    </div>
+    <p>그리고 위와 같이 maven 설정 파일에서 SonarQube 플러그인에 대해 설정하고 <code class="language-plaintext highlighter-rouge">mvn clean verify</code> 명령을 통해 빌드할 때 SonarQube가 정상적으로 동작하는지 확인해봅니다.</p>
 
     <p><br /></p>
 
@@ -701,6 +505,153 @@
       <tbody>
         <tr>
           <td style="text-align: center">[그림 12] SonarQube 품질 프로파일 구성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Anchore</strong>   <a name="list2_6"></a></p>
+
+    <p>엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행합니다. 이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않습니다.</p>
+
+    <p>Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것입니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace anchore
+  namespace/anchore created
+
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm repo add anchore https://charts.anchore.io
+  <span class="s2">"anchore"</span> has been added to your repositories
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm <span class="nb">install </span>anchore anchore/anchore-engine <span class="nt">-n</span> anchore
+  NAME: anchore
+  LAST DEPLOYED: Sat Oct 20 18:06:18 2020
+  NAMESPACE: anchore
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  To use Anchore Engine you need the URL, username, and password to access the API.
+
+  Anchore Engine can be accessed via port 8228 on the following DNS name from within the cluster:
+  anchore-anchore-engine-api.anchore.svc.cluster.local
+
+  Here are the steps to configure the anchore-cli <span class="o">(</span><span class="sb">`</span>pip <span class="nb">install </span>anchorecli<span class="sb">`</span><span class="o">)</span><span class="nb">.</span> Use these same values <span class="k">for </span>direct API access as well.
+
+  To configure your anchore-cli run:
+
+      <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
+      <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
+
+  Using the service endpoint from within the cluster you can use:
+      <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+
+  To verify the service is up and running, you can run container <span class="k">for </span>the Anchore Engine CLI:
+
+      kubectl run <span class="nt">-i</span> <span class="nt">--tty</span> anchore-cli <span class="nt">--restart</span><span class="o">=</span>Always <span class="nt">--image</span> anchore/engine-cli  <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="k">${</span><span class="nv">ANCHORE_CLI_PASS</span><span class="k">}</span> <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+  from within the container you can use <span class="s1">'anchore-cli'</span> commands.
+
+  <span class="k">*</span> NOTE: On first startup of anchore-engine, it performs a CVE data <span class="nb">sync </span>which may take several minutes to complete. During this <span class="nb">time </span>the system status will report <span class="s1">'partially_down'</span> and any images added <span class="k">for </span>analysis will stay <span class="k">in </span>the <span class="s1">'not_analyzed'</span> state.
+  Once the <span class="nb">sync </span>is <span class="nb">complete</span>, any queued images will be analyzed and the system status will change to <span class="s1">'all_up'</span><span class="nb">.</span>
+
+  Initial setup <span class="nb">time </span>can be <span class="o">&gt;</span>120sec <span class="k">for </span>postgresql setup and readiness checks to pass <span class="k">for </span>the services as indicated by pod state. You can check with:
+      kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>anchore-anchore-engine,component<span class="o">=</span>api
+
+  A quick primer on using the Anchore Engine CLI follows. For more info see: https://github.com/anchore/anchore-engine/wiki/Getting-Started
+
+  View system status:
+
+      anchore-cli system status
+
+  Add an image to be analyzed:
+
+      anchore-cli image add &lt;imageref&gt;
+
+  List images and see the analysis status <span class="o">(</span>not_analyzed initially<span class="o">)</span>:
+
+      anchore-cli image list
+
+  Once the image is analyzed you<span class="s1">'ll see status change to '</span>analyzed<span class="s1">'. This may take some time on first execution with a new database because
+  the system must first do a CVE data sync which can take several minutes. Once complete, the image will transition to '</span>analyzing<span class="s1">' state.
+
+  When the image reaches '</span>analyzed<span class="s1">' state, you can view policy evaluation output with:
+
+      anchore-cli evaluate check &lt;imageref&gt;
+
+  List CVEs found in the image with:
+
+      anchore-cli image vuln &lt;imageref&gt; os
+
+  List OS packages found in the image with:
+      anchore-cli image content &lt;imageref&gt; os
+
+  List files found in the image with:
+      anchore-cli image content &lt;imageref&gt; files
+</span></code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@jenkins ~]# yum <span class="nb">install</span> <span class="nt">-y</span> epel-release
+  <span class="o">[</span>root@jenkins ~]# yum <span class="nb">install</span> <span class="nt">-y</span> python-pip
+  <span class="o">[</span>root@jenkins ~]# pip <span class="nb">install </span>anchorecli
+  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
+  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span>foobar
+  <span class="o">[</span>root@jenkins ~]# <span class="nb">export </span><span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://ANCHORE_IP:30228/v1
+
+  <span class="c"># 컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있습니다.</span>
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$ANCHORE_CLI_PASS</span>
+  foobar
+</code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>vim anchore-nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: anchore-api
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app: anchore-anchore-engine
+      component: api
+  ports:
+      - protocol: TCP
+      port: 8228
+      targetPort: 8228
+      nodePort: 30228
+
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create <span class="nt">-f</span> anchore-nodeport.yaml <span class="nt">-n</span> anchore
+  service/anchore-api created
+
+  <span class="o">[</span>root@jenkins cccr-dvwa]# anchore-cli image add jisunpark/cccr-dvwa-java-web <span class="nt">--dockerfile</span><span class="o">=</span>Dockerfile <span class="nt">--force</span>
+  Image Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Parent Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Analysis Status: not_analyzed
+  Image Type: docker
+  Analyzed At: 2020-10-20T18:43:29Z
+  Image ID: 85a4a0ea97867479bcb328c7a6c75691434d36ea0a0b75e6e453b22ff0f6fc7d
+  Dockerfile Mode: Actual
+  Distro: debian
+  Distro Version: 10
+  Size: 920176640
+  Architecture: amd64
+  Layer Count: 16
+
+  Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
+  Tag Detected At: 2020-10-20T18:40:33Z
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_13.png" alt="anchore_test" width="819" height="342" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 13] Anchore 파이프라인 테스트</td>
         </tr>
       </tbody>
     </table>

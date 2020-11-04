@@ -1,4 +1,4 @@
-I"�F<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"	H<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -36,7 +36,7 @@
 
     <p>먼저 Jenkins 파이프라인의 실행 결과에 대한 메시지를 받아보기 위해 Slack에서 사용할 워크스페이스와 채널을 생성해줍니다.</p>
 
-    <p>워스크페이스와 채널을 생성하고나면 <code class="highlighter-rouge">https://YOUR_WORKSPACE.slack.com/apps</code> URL에 접속해서 Slack에 추가 할 앱으로 <code class="highlighter-rouge">Jenkins CI</code>를 검색합니다.</p>
+    <p>워스크페이스와 채널을 생성하고나면 <code class="language-plaintext highlighter-rouge">https://YOUR_WORKSPACE.slack.com/apps</code> URL에 접속해서 Slack에 추가 할 앱으로 <code class="language-plaintext highlighter-rouge">Jenkins CI</code>를 검색합니다.</p>
 
     <table>
       <thead>
@@ -53,7 +53,7 @@
 
     <p><br /></p>
 
-    <p><code class="highlighter-rouge">Slack에 추가</code> 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.</p>
+    <p><code class="language-plaintext highlighter-rouge">Slack에 추가</code> 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.</p>
 
     <table>
       <thead>
@@ -70,7 +70,7 @@
 
     <p><br /></p>
 
-    <p>정상적으로 Jenkins CI 앱이 추가되면 <code class="highlighter-rouge">구성</code> 탭을 눌러 <code class="highlighter-rouge">구성 편집</code>에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.</p>
+    <p>정상적으로 Jenkins CI 앱이 추가되면 <code class="language-plaintext highlighter-rouge">구성</code> 탭을 눌러 <code class="language-plaintext highlighter-rouge">구성 편집</code>에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.</p>
 
     <p>아래쪽에 보면 토큰이 발급되어 있는 것을 볼 수 있을텐데, <strong>이 토큰은 나중에 Jenkins credentials을 생성할 때 사용</strong>됩니다.</p>
 
@@ -100,7 +100,7 @@
 
     <p><br /></p>
 
-    <p>Jenkins에서 Slack 플러그인을 설치하고나면 <code class="highlighter-rouge">시스템 설정</code> 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.</p>
+    <p>Jenkins에서 Slack 플러그인을 설치하고나면 <code class="language-plaintext highlighter-rouge">시스템 설정</code> 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.</p>
 
     <p>다음 [그림 4]와 같이 워크스페이스와 Credentials, 채널 ID를 정확하게 기입해줍니다.</p>
 
@@ -119,11 +119,11 @@
 
     <p><br /></p>
 
-    <p>Credentials의 경우에 옆의 <code class="highlighter-rouge">Add</code> 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.</p>
+    <p>Credentials의 경우에 옆의 <code class="language-plaintext highlighter-rouge">Add</code> 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.</p>
 
-    <p>Credentials를 추가할 때 Kind는 <code class="highlighter-rouge">Secret text</code>로 두고 Secret은 [그림 2]에서 보이는 <code class="highlighter-rouge">토큰</code> 값을 입력해줍니다.</p>
+    <p>Credentials를 추가할 때 Kind는 <code class="language-plaintext highlighter-rouge">Secret text</code>로 두고 Secret은 [그림 2]에서 보이는 <code class="language-plaintext highlighter-rouge">토큰</code> 값을 입력해줍니다.</p>
 
-    <p>그런 우측 하단의 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.</p>
+    <p>그런 우측 하단의 <code class="language-plaintext highlighter-rouge">Test Connection</code> 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.</p>
 
     <p><br /></p>
 
@@ -199,9 +199,9 @@
 
     <p><br /></p>
 
-    <p>그런 다음 Jenkins 홈에서 왼쪽 탭의 <code class="highlighter-rouge">새로운 Item</code>에서 <code class="highlighter-rouge">Multibranch Pipeline</code>을 생성해줍니다.</p>
+    <p>그런 다음 Jenkins 홈에서 왼쪽 탭의 <code class="language-plaintext highlighter-rouge">새로운 Item</code>에서 <code class="language-plaintext highlighter-rouge">Multibranch Pipeline</code>을 생성해줍니다.</p>
 
-    <p>멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 <code class="highlighter-rouge">Add Source -&gt; GitLab Project</code>를 눌러 다음 [그림 7]과 같이 설정해줍니다.</p>
+    <p>멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 <code class="language-plaintext highlighter-rouge">Add Source -&gt; GitLab Project</code>를 눌러 다음 [그림 7]과 같이 설정해줍니다.</p>
 
     <table>
       <thead>
@@ -222,7 +222,7 @@
 
     <p>그리고 파이프라인에 연결할 프로젝트를 생성한 계정의 ID를 Owner로 두면 해당 ID에서 관리하고 있는 프로젝트들을 아래 Projects에서 선택할 수 있습니다.</p>
 
-    <p>Behaviours 항목에서 Add 버튼을 눌러 <code class="highlighter-rouge">Filter by name (with wildcards)</code>를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.</p>
+    <p>Behaviours 항목에서 Add 버튼을 눌러 <code class="language-plaintext highlighter-rouge">Filter by name (with wildcards)</code>를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.</p>
 
     <p><br /></p>
 

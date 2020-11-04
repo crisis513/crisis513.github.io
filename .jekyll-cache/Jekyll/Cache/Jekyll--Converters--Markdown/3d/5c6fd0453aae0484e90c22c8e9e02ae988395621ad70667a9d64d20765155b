@@ -1,4 +1,4 @@
-I")�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"~�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -150,7 +150,18 @@
 
         <p>SonarQube는 20개 이상의 프로그래밍 언어에서 Bugs, Code Smell, 보안 취약점을 발견할 목적으로 정적 코드 분석으로 자동 리뷰를 수행하기 위한 지속적인 코드 품질 검사용 오픈 소스 플랫폼입니다.</p>
 
-        <p>SonarQube에는 <code class="highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재합니다.</p>
+        <p>SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.</p>
+
+        <p>SonarQube 자체로도 좋지만 PMD/Findbugs/Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록 해주는 Analysis Collector 플러그인을 사용할 수도 있습니다.</p>
+
+        <p>이것의 장점은 PMD/Findbugs/Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.</p>
+
+        <blockquote>
+          <p>오래된 라이브러리(예: Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 <a href="https://redirect.sonarsource.com/plugins/java.html">SonarJava</a>를 분석 및 개발하는 중 입니다. 
+또한 <a href="http://www.sonarlint.org/index.html">SonarLint</a> 라는 개인 IDE 용 새 플러그인도 있습니다.</p>
+        </blockquote>
+
+        <p>SonarQube에는 <code class="language-plaintext highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="language-plaintext highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재합니다.</p>
 
         <ul>
           <li>
@@ -203,10 +214,16 @@
   <span class="nv">$ </span><span class="nb">mv </span>dependency-check/ /var/lib/jenkins
 </code></pre></div>    </div>
 
-    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨줍니다.</p>
+    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="language-plaintext highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨줍니다.</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--scan</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> <span class="nt">--format</span> HTML <span class="nt">--out</span> /var/lib/jenkins/reports/dependency-check-report <span class="nt">--prettyPrint</span><span class="s1">'
-</span></code></pre></div>    </div>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--scan</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> <span class="nt">--format</span> HTML <span class="nt">--out</span> /var/lib/jenkins/reports/dependency-check-report <span class="nt">--prettyPrint</span>
+</code></pre></div>    </div>
+
+    <p>스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행합니다.</p>
+
+    <p>–scan 옵션에 <code class="language-plaintext highlighter-rouge">pwd</code> 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 <code class="language-plaintext highlighter-rouge">/var/lib/jenkins/reports/dependency-check-report</code>애 스캔하여 출력되는 보고서 파일이 저장됩니다.</p>
+
+    <p>–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 <code class="language-plaintext highlighter-rouge">HTML</code> 파일로 보고서가 생성되도록 하였습니다.</p>
 
     <blockquote>
       <p>참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결되었습니다.</p>
@@ -214,7 +231,13 @@
 
     <p><br /></p>
   </li>
-  <li><strong>SpotBugs</strong>   <a name="list2_2"></a>
+  <li>
+    <p><strong>SpotBugs</strong>   <a name="list2_2"></a></p>
+
+    <p>Maven에서는 <code class="language-plaintext highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.</p>
+
+    <p>pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;com.github.spotbugs&lt;/groupId&gt;
       &lt;artifactId&gt;spotbugs-maven-plugin&lt;/artifactId&gt;
@@ -248,6 +271,8 @@
   <li>
     <p><strong>CheckStyle</strong>   <a name="list2_3"></a></p>
 
+    <p>SpotBugs와 마찬가지로 pom.xml 파일에 CheckStyle을 사용하도록 명시하여 프로젝트를 빌드할 때 CheckStyle을 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
       &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
@@ -278,6 +303,8 @@
   <li>
     <p><strong>PMD(Programing Mistake Detector)</strong>   <a name="list2_4"></a></p>
 
+    <p>pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
       &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
@@ -298,12 +325,6 @@
   </li>
   <li>
     <p><strong>SonarQube</strong>   <a name="list2_5"></a></p>
-
-    <p>SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.</p>
-
-    <p>Sonar 자체로도 좋지만 PMD / Findbugs / Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록해주는 Analysis Collector 플러그인을 사용할 수도 있습니다. 이것의 장점은 PMD / Findbugs / Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.</p>
-
-    <p>오래된 라이브러리(예 : Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 <a href="https://redirect.sonarsource.com/plugins/java.html">SonarJava</a>를 분석 및 개발하는 중 입니다. 또한 <a href="http://www.sonarlint.org/index.html">SonarLint</a> 라는 개인 IDE 용 새 플러그인 세트도 있습니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>docker run <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-d</span> <span class="nt">-p</span> 9000:9000 <span class="nt">-p</span> 9092:9092 <span class="nt">--name</span> sonarqube sonarqube
 

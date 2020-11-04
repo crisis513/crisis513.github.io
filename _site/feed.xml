@@ -5,9 +5,9 @@
     <description>son's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 02 Nov 2020 00:23:20 +0900</pubDate>
-    <lastBuildDate>Mon, 02 Nov 2020 00:23:20 +0900</lastBuildDate>
-    <generator>Jekyll v4.0.0</generator>
+    <pubDate>Thu, 05 Nov 2020 06:19:04 +0900</pubDate>
+    <lastBuildDate>Thu, 05 Nov 2020 06:19:04 +0900</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - SAST 분석 및 활용</title>
@@ -163,7 +163,18 @@
 
         &lt;p&gt;SonarQube는 20개 이상의 프로그래밍 언어에서 Bugs, Code Smell, 보안 취약점을 발견할 목적으로 정적 코드 분석으로 자동 리뷰를 수행하기 위한 지속적인 코드 품질 검사용 오픈 소스 플랫폼입니다.&lt;/p&gt;
 
-        &lt;p&gt;SonarQube에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;품질 프로파일(Quality Profiles)&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;품질 게이트(Quality Gates)&lt;/code&gt;라는 정책이 존재합니다.&lt;/p&gt;
+        &lt;p&gt;SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.&lt;/p&gt;
+
+        &lt;p&gt;SonarQube 자체로도 좋지만 PMD/Findbugs/Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록 해주는 Analysis Collector 플러그인을 사용할 수도 있습니다.&lt;/p&gt;
+
+        &lt;p&gt;이것의 장점은 PMD/Findbugs/Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.&lt;/p&gt;
+
+        &lt;blockquote&gt;
+          &lt;p&gt;오래된 라이브러리(예: Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 &lt;a href=&quot;https://redirect.sonarsource.com/plugins/java.html&quot;&gt;SonarJava&lt;/a&gt;를 분석 및 개발하는 중 입니다. 
+또한 &lt;a href=&quot;http://www.sonarlint.org/index.html&quot;&gt;SonarLint&lt;/a&gt; 라는 개인 IDE 용 새 플러그인도 있습니다.&lt;/p&gt;
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;SonarQube에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;품질 프로파일(Quality Profiles)&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;품질 게이트(Quality Gates)&lt;/code&gt;라는 정책이 존재합니다.&lt;/p&gt;
 
         &lt;ul&gt;
           &lt;li&gt;
@@ -216,16 +227,16 @@
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;dependency-check/ /var/lib/jenkins
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/lib/jenkins&lt;/code&gt; 디렉토리로 옮겨줍니다.&lt;/p&gt;
+    &lt;p&gt;dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/lib/jenkins&lt;/code&gt; 디렉토리로 옮겨줍니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;/var/lib/jenkins/dependency-check/bin/dependency-check.sh &lt;span class=&quot;nt&quot;&gt;--scan&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--format&lt;/span&gt; HTML &lt;span class=&quot;nt&quot;&gt;--out&lt;/span&gt; /var/lib/jenkins/reports/dependency-check-report &lt;span class=&quot;nt&quot;&gt;--prettyPrint&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
     &lt;p&gt;스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행합니다.&lt;/p&gt;
 
-    &lt;p&gt;–scan 옵션에 &lt;code class=&quot;highlighter-rouge&quot;&gt;pwd&lt;/code&gt; 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/lib/jenkins/reports/dependency-check-report&lt;/code&gt;애 스캔하여 출력되는 보고서 파일이 저장됩니다.&lt;/p&gt;
+    &lt;p&gt;–scan 옵션에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pwd&lt;/code&gt; 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/lib/jenkins/reports/dependency-check-report&lt;/code&gt;애 스캔하여 출력되는 보고서 파일이 저장됩니다.&lt;/p&gt;
 
-    &lt;p&gt;–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 파일로 보고서가 생성되도록 하였습니다.&lt;/p&gt;
+    &lt;p&gt;–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 파일로 보고서가 생성되도록 하였습니다.&lt;/p&gt;
 
     &lt;blockquote&gt;
       &lt;p&gt;참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결되었습니다.&lt;/p&gt;
@@ -236,7 +247,7 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;SpotBugs&lt;/strong&gt;   &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Maven에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt; 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.&lt;/p&gt;
+    &lt;p&gt;Maven에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt; 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.&lt;/p&gt;
 
     &lt;p&gt;pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.&lt;/p&gt;
 
@@ -273,6 +284,8 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;CheckStyle&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
+    &lt;p&gt;SpotBugs와 마찬가지로 pom.xml 파일에 CheckStyle을 사용하도록 명시하여 프로젝트를 빌드할 때 CheckStyle을 통해 정적 분석을 진행할 수 있도록 합니다.&lt;/p&gt;
+
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;plugin&amp;gt;
       &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
       &amp;lt;artifactId&amp;gt;maven-checkstyle-plugin&amp;lt;/artifactId&amp;gt;
@@ -303,6 +316,8 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;PMD(Programing Mistake Detector)&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
+    &lt;p&gt;pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 합니다.&lt;/p&gt;
+
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;plugin&amp;gt;
       &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
       &amp;lt;artifactId&amp;gt;maven-pmd-plugin&amp;lt;/artifactId&amp;gt;
@@ -324,15 +339,14 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;SonarQube&lt;/strong&gt;   &lt;a name=&quot;list2_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있습니다.&lt;/p&gt;
-
-    &lt;p&gt;Sonar 자체로도 좋지만 PMD / Findbugs / Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록해주는 Analysis Collector 플러그인을 사용할 수도 있습니다. 이것의 장점은 PMD / Findbugs / Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것 입니다.&lt;/p&gt;
-
-    &lt;p&gt;오래된 라이브러리(예 : Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 &lt;a href=&quot;https://redirect.sonarsource.com/plugins/java.html&quot;&gt;SonarJava&lt;/a&gt;를 분석 및 개발하는 중 입니다. 또한 &lt;a href=&quot;http://www.sonarlint.org/index.html&quot;&gt;SonarLint&lt;/a&gt; 라는 개인 IDE 용 새 플러그인 세트도 있습니다.&lt;/p&gt;
+    &lt;p&gt;SonarQube를 사용하기 위해서 여러 가지 방법으로 설치할 수 있지만 본 프로젝트에서는 Docker를 통해서 설치하는 방법을 설명할 것 입니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;--restart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;always &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 9000:9000 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 9092:9092 &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; sonarqube sonarqube
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim /usr/local/maven/conf/settings.xml
+    &lt;p&gt;Jenkins 인스턴스에서 Docker 명령을 통해 sonarqube 공식 이미지를 다운로드하여 9000번 포트를 사용하도록 설정합니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim /usr/local/maven/conf/settings.xml
   &amp;lt;settings&amp;gt;
       &amp;lt;pluginGroups&amp;gt;
           &amp;lt;pluginGroup&amp;gt;org.sonarsource.scanner.maven&amp;lt;/pluginGroup&amp;gt;
@@ -346,7 +360,7 @@
               &amp;lt;properties&amp;gt;
                   &amp;lt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; Optional URL to server. Default value is http://localhost:9000 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
                   &amp;lt;sonar.host.url&amp;gt;
-                  http://34.64.237.112:9000
+                  http://JENKINS_SERVER_IP:9000
                   &amp;lt;/sonar.host.url&amp;gt;
               &amp;lt;/properties&amp;gt;
           &amp;lt;/profile&amp;gt;
@@ -356,217 +370,7 @@
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mvn clean verify sonar:sonar
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create namespace sonarqube
-  namespace/sonarqube created
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;helm &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;sonarqube stable/sonarqube &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; sonarqube
-  WARNING: This chart is deprecated
-  NAME: sonarqube
-  LAST DEPLOYED: Fri Oct 23 09:42:52 2020
-  NAMESPACE: sonarqube
-  STATUS: deployed
-  REVISION: 1
-  NOTES:
-  This chart has been deprecated and moved to https://github.com/oteemo/charts
-
-
-  1. Get the application URL by running these commands:
-  &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;POD_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get pods &lt;span class=&quot;nt&quot;&gt;--namespace&lt;/span&gt; sonarqube &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;app=sonarqube,release=sonarqube&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;{.items[0].metadata.name}&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-  apiVersion: v1
-  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Visit http://127.0.0.1:8080 to use your application&quot;&lt;/span&gt;
-  kubectl port-forward &lt;span class=&quot;nv&quot;&gt;$POD_NAME&lt;/span&gt; 8080:9000
-
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;sonarqube-nodeport.yaml
-  apiVersion: v1
-  kind: Service
-  metadata:
-  name: sonarqube
-  spec:
-  &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;: NodePort
-  selector:
-      app: sonarqube
-      release: sonarqube
-  ports:
-      - protocol: TCP
-      port: 9000
-      targetPort: 9000
-      nodePort: 30900
-
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; nodeport.yaml &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; sonarqube
-
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; sonarqube
-  NAME                                       READY   STATUS    RESTARTS   AGE
-  pod/sonarqube-postgresql-0                 1/1     Running   0          9m18s
-  pod/sonarqube-sonarqube-7469d7849f-gfx5f   1/1     Running   0          9m19s
-
-  NAME                                    TYPE        CLUSTER-IP    EXTERNAL-IP   PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;          AGE
-  service/sonarqube                       NodePort    10.0.17.24    &amp;lt;none&amp;gt;        9000:30900/TCP   5m30s
-  service/sonarqube-postgresql            ClusterIP   10.0.27.126   &amp;lt;none&amp;gt;        5432/TCP         9m20s
-  service/sonarqube-postgresql-headless   ClusterIP   None          &amp;lt;none&amp;gt;        5432/TCP         9m20s
-  service/sonarqube-sonarqube             ClusterIP   10.0.31.89    &amp;lt;none&amp;gt;        9000/TCP         9m20s
-
-  NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/sonarqube-sonarqube   1/1     1            1           9m20s
-
-  NAME                                             DESIRED   CURRENT   READY   AGE
-  replicaset.apps/sonarqube-sonarqube-7469d7849f   1         1         1       9m20s
-
-  NAME                                    READY   AGE
-  statefulset.apps/sonarqube-postgresql   1/1     9m20s
-
-  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim /usr/local/maven/conf/settings.xml
-  &amp;lt;settings&amp;gt;
-      &amp;lt;pluginGroups&amp;gt;
-          &amp;lt;pluginGroup&amp;gt;org.sonarsource.scanner.maven&amp;lt;/pluginGroup&amp;gt;
-      &amp;lt;/pluginGroups&amp;gt;
-      &amp;lt;profiles&amp;gt;
-          &amp;lt;profile&amp;gt;
-              &amp;lt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;sonar&amp;lt;/id&amp;gt;
-              &amp;lt;activation&amp;gt;
-                  &amp;lt;activeByDefault&amp;gt;true&amp;lt;/activeByDefault&amp;gt;
-              &amp;lt;/activation&amp;gt;
-              &amp;lt;properties&amp;gt;
-                  &amp;lt;sonar.host.url&amp;gt;
-                  http://SONARQUBE_IP:30900
-                  &amp;lt;/sonar.host.url&amp;gt;
-              &amp;lt;/properties&amp;gt;
-          &amp;lt;/profile&amp;gt;
-      &amp;lt;/profiles&amp;gt;
-  &amp;lt;/settings&amp;gt;
-
-  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mvn clean verify sonar:sonar
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Anchore&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행합니다. 이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않습니다.&lt;/p&gt;
-
-    &lt;p&gt;Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것입니다.&lt;/p&gt;
-
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create namespace anchore
-  namespace/anchore created
-
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;helm repo add anchore https://charts.anchore.io
-  &lt;span class=&quot;s2&quot;&gt;&quot;anchore&quot;&lt;/span&gt; has been added to your repositories
-  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;helm &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchore anchore/anchore-engine &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; anchore
-  NAME: anchore
-  LAST DEPLOYED: Sat Oct 20 18:06:18 2020
-  NAMESPACE: anchore
-  STATUS: deployed
-  REVISION: 1
-  TEST SUITE: None
-  NOTES:
-  To use Anchore Engine you need the URL, username, and password to access the API.
-
-  Anchore Engine can be accessed via port 8228 on the following DNS name from within the cluster:
-  anchore-anchore-engine-api.anchore.svc.cluster.local
-
-  Here are the steps to configure the anchore-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchorecli&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; Use these same values &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;direct API access as well.
-
-  To configure your anchore-cli run:
-
-      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin
-      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get secret &lt;span class=&quot;nt&quot;&gt;--namespace&lt;/span&gt; anchore anchore-anchore-engine &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;{.data.ANCHORE_ADMIN_PASSWORD}&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;base64&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-
-  Using the service endpoint from within the cluster you can use:
-      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
-
-
-  To verify the service is up and running, you can run container &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the Anchore Engine CLI:
-
-      kubectl run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; anchore-cli &lt;span class=&quot;nt&quot;&gt;--restart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Always &lt;span class=&quot;nt&quot;&gt;--image&lt;/span&gt; anchore/engine-cli  &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
-
-  from within the container you can use &lt;span class=&quot;s1&quot;&gt;'anchore-cli'&lt;/span&gt; commands.
-
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; NOTE: On first startup of anchore-engine, it performs a CVE data &lt;span class=&quot;nb&quot;&gt;sync &lt;/span&gt;which may take several minutes to complete. During this &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;the system status will report &lt;span class=&quot;s1&quot;&gt;'partially_down'&lt;/span&gt; and any images added &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;analysis will stay &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the &lt;span class=&quot;s1&quot;&gt;'not_analyzed'&lt;/span&gt; state.
-  Once the &lt;span class=&quot;nb&quot;&gt;sync &lt;/span&gt;is &lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt;, any queued images will be analyzed and the system status will change to &lt;span class=&quot;s1&quot;&gt;'all_up'&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-
-  Initial setup &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;can be &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;120sec &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;postgresql setup and readiness checks to pass &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the services as indicated by pod state. You can check with:
-      kubectl get pods &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;anchore-anchore-engine,component&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;api
-
-  A quick primer on using the Anchore Engine CLI follows. For more info see: https://github.com/anchore/anchore-engine/wiki/Getting-Started
-
-  View system status:
-
-      anchore-cli system status
-
-  Add an image to be analyzed:
-
-      anchore-cli image add &amp;lt;imageref&amp;gt;
-
-  List images and see the analysis status &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;not_analyzed initially&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
-
-      anchore-cli image list
-
-  Once the image is analyzed you&lt;span class=&quot;s1&quot;&gt;'ll see status change to '&lt;/span&gt;analyzed&lt;span class=&quot;s1&quot;&gt;'. This may take some time on first execution with a new database because
-  the system must first do a CVE data sync which can take several minutes. Once complete, the image will transition to '&lt;/span&gt;analyzing&lt;span class=&quot;s1&quot;&gt;' state.
-
-  When the image reaches '&lt;/span&gt;analyzed&lt;span class=&quot;s1&quot;&gt;' state, you can view policy evaluation output with:
-
-      anchore-cli evaluate check &amp;lt;imageref&amp;gt;
-
-  List CVEs found in the image with:
-
-      anchore-cli image vuln &amp;lt;imageref&amp;gt; os
-
-  List OS packages found in the image with:
-      anchore-cli image content &amp;lt;imageref&amp;gt; os
-
-  List files found in the image with:
-      anchore-cli image content &amp;lt;imageref&amp;gt; files
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; python-pip
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchorecli
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;foobar
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins ~]# &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://ANCHORE_IP:30228/v1
-
-  &lt;span class=&quot;c&quot;&gt;# 컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있습니다.&lt;/span&gt;
-  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get secret &lt;span class=&quot;nt&quot;&gt;--namespace&lt;/span&gt; anchore anchore-anchore-engine &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;{.data.ANCHORE_ADMIN_PASSWORD}&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;base64&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ANCHORE_CLI_PASS&lt;/span&gt;
-  foobar
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim anchore-nodeport.yaml
-  apiVersion: v1
-  kind: Service
-  metadata:
-  name: anchore-api
-  spec:
-  &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;: NodePort
-  selector:
-      app: anchore-anchore-engine
-      component: api
-  ports:
-      - protocol: TCP
-      port: 8228
-      targetPort: 8228
-      nodePort: 30228
-
-  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; anchore-nodeport.yaml &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; anchore
-  service/anchore-api created
-
-  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins cccr-dvwa]# anchore-cli image add jisunpark/cccr-dvwa-java-web &lt;span class=&quot;nt&quot;&gt;--dockerfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Dockerfile &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
-  Image Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
-  Parent Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
-  Analysis Status: not_analyzed
-  Image Type: docker
-  Analyzed At: 2020-10-20T18:43:29Z
-  Image ID: 85a4a0ea97867479bcb328c7a6c75691434d36ea0a0b75e6e453b22ff0f6fc7d
-  Dockerfile Mode: Actual
-  Distro: debian
-  Distro Version: 10
-  Size: 920176640
-  Architecture: amd64
-  Layer Count: 16
-
-  Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
-  Tag Detected At: 2020-10-20T18:40:33Z
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;그리고 위와 같이 maven 설정 파일에서 SonarQube 플러그인에 대해 설정하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mvn clean verify&lt;/code&gt; 명령을 통해 빌드할 때 SonarQube가 정상적으로 동작하는지 확인해봅니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -720,6 +524,242 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Anchore&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행합니다. &lt;/p&gt;
+
+    &lt;p&gt;이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않습니다.&lt;/p&gt;
+
+    &lt;p&gt;Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것 입니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create namespace anchore
+  namespace/anchore created
+
+  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;helm repo add anchore https://charts.anchore.io
+  &lt;span class=&quot;s2&quot;&gt;&quot;anchore&quot;&lt;/span&gt; has been added to your repositories
+  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;helm &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchore anchore/anchore-engine &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; anchore
+  NAME: anchore
+  LAST DEPLOYED: Sat Oct 20 18:06:18 2020
+  NAMESPACE: anchore
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  To use Anchore Engine you need the URL, username, and password to access the API.
+
+  Anchore Engine can be accessed via port 8228 on the following DNS name from within the cluster:
+  anchore-anchore-engine-api.anchore.svc.cluster.local
+
+  Here are the steps to configure the anchore-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchorecli&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; Use these same values &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;direct API access as well.
+
+  To configure your anchore-cli run:
+
+      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin
+      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get secret &lt;span class=&quot;nt&quot;&gt;--namespace&lt;/span&gt; anchore anchore-anchore-engine &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;{.data.ANCHORE_ADMIN_PASSWORD}&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;base64&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+  Using the service endpoint from within the cluster you can use:
+      &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+
+  To verify the service is up and running, you can run container &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the Anchore Engine CLI:
+
+      kubectl run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; anchore-cli &lt;span class=&quot;nt&quot;&gt;--restart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Always &lt;span class=&quot;nt&quot;&gt;--image&lt;/span&gt; anchore/engine-cli  &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--env&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+  from within the container you can use &lt;span class=&quot;s1&quot;&gt;'anchore-cli'&lt;/span&gt; commands.
+
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; NOTE: On first startup of anchore-engine, it performs a CVE data &lt;span class=&quot;nb&quot;&gt;sync &lt;/span&gt;which may take several minutes to complete. During this &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;the system status will report &lt;span class=&quot;s1&quot;&gt;'partially_down'&lt;/span&gt; and any images added &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;analysis will stay &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the &lt;span class=&quot;s1&quot;&gt;'not_analyzed'&lt;/span&gt; state.
+  Once the &lt;span class=&quot;nb&quot;&gt;sync &lt;/span&gt;is &lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt;, any queued images will be analyzed and the system status will change to &lt;span class=&quot;s1&quot;&gt;'all_up'&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+
+  Initial setup &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;can be &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;120sec &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;postgresql setup and readiness checks to pass &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the services as indicated by pod state. You can check with:
+      kubectl get pods &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;anchore-anchore-engine,component&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;api
+
+  A quick primer on using the Anchore Engine CLI follows. For more info see: https://github.com/anchore/anchore-engine/wiki/Getting-Started
+
+  View system status:
+
+      anchore-cli system status
+
+  Add an image to be analyzed:
+
+      anchore-cli image add &amp;lt;imageref&amp;gt;
+
+  List images and see the analysis status &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;not_analyzed initially&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+
+      anchore-cli image list
+
+  Once the image is analyzed you&lt;span class=&quot;s1&quot;&gt;'ll see status change to '&lt;/span&gt;analyzed&lt;span class=&quot;s1&quot;&gt;'. This may take some time on first execution with a new database because
+  the system must first do a CVE data sync which can take several minutes. Once complete, the image will transition to '&lt;/span&gt;analyzing&lt;span class=&quot;s1&quot;&gt;' state.
+
+  When the image reaches '&lt;/span&gt;analyzed&lt;span class=&quot;s1&quot;&gt;' state, you can view policy evaluation output with:
+
+      anchore-cli evaluate check &amp;lt;imageref&amp;gt;
+
+  List CVEs found in the image with:
+
+      anchore-cli image vuln &amp;lt;imageref&amp;gt; os
+
+  List OS packages found in the image with:
+      anchore-cli image content &amp;lt;imageref&amp;gt; os
+
+  List files found in the image with:
+      anchore-cli image content &amp;lt;imageref&amp;gt; files
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; python-pip
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchorecli
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;foobar
+  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://ANCHORE_IP:30228/v1
+
+  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANCHORE_CLI_PASS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get secret &lt;span class=&quot;nt&quot;&gt;--namespace&lt;/span&gt; anchore anchore-anchore-engine &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;{.data.ANCHORE_ADMIN_PASSWORD}&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;base64&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ANCHORE_CLI_PASS&lt;/span&gt;
+  foobar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있습니다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim anchore-nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: anchore-api
+  spec:
+  &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;: NodePort
+  selector:
+      app: anchore-anchore-engine
+      component: api
+  ports:
+      - protocol: TCP
+      port: 8228
+      targetPort: 8228
+      nodePort: 30228
+
+  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; anchore-nodeport.yaml &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; anchore
+  service/anchore-api created
+
+  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@jenkins cccr-dvwa]# anchore-cli image add jisunpark/cccr-dvwa-java-web &lt;span class=&quot;nt&quot;&gt;--dockerfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Dockerfile &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
+  Image Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Parent Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Analysis Status: not_analyzed
+  Image Type: docker
+  Analyzed At: 2020-10-20T18:43:29Z
+  Image ID: 85a4a0ea97867479bcb328c7a6c75691434d36ea0a0b75e6e453b22ff0f6fc7d
+  Dockerfile Mode: Actual
+  Distro: debian
+  Distro Version: 10
+  Size: 920176640
+  Architecture: amd64
+  Layer Count: 16
+
+  Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
+  Tag Detected At: 2020-10-20T18:40:33Z
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  properties&lt;span class=&quot;o&quot;&gt;([&lt;/span&gt;
+      parameters&lt;span class=&quot;o&quot;&gt;([&lt;/span&gt;
+          string&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;name: &lt;span class=&quot;s1&quot;&gt;'sonar.projectKey'&lt;/span&gt;, defaultValue: &lt;span class=&quot;s1&quot;&gt;'cccr-dvwa'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+          string&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;name: &lt;span class=&quot;s1&quot;&gt;'sonar.host.url'&lt;/span&gt;, defaultValue: &lt;span class=&quot;s1&quot;&gt;'http://JENKINS_SERVER_IP:9000'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+          string&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;name: &lt;span class=&quot;s1&quot;&gt;'sonar.login'&lt;/span&gt;, defaultValue: &lt;span class=&quot;s1&quot;&gt;'265c24760ec4f5cf1f28b87981c7bbe55c3bdffc'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,
+      &lt;span class=&quot;o&quot;&gt;])&lt;/span&gt; 
+  &lt;span class=&quot;o&quot;&gt;])&lt;/span&gt;
+  pipeline &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      environment &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          SLACK_CHANNEL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#send-slack-message-from-jenkins'&lt;/span&gt;
+          REGISTRY &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'crisis513/cccr-dvwa-java-web'&lt;/span&gt; 
+          REGISTRYCREDENTIAL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'dockerhub'&lt;/span&gt; 
+          DOCKER_IMAGE &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      agent any
+      tools &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+          maven &lt;span class=&quot;s1&quot;&gt;'mvn'&lt;/span&gt; 
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      stages &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Git clone'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  git &lt;span class=&quot;s1&quot;&gt;'https://github.com/JisunParkRea/cccr-dvwa.git'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Docker image build and push to Dockerhub'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+              steps&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  script &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                      DOCKER_IMAGE &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; docker.build registry
+                      docker.withRegistry&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;, REGISTRYCREDENTIAL&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                          DOCKER_IMAGE.push&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;latest&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Anchore Analysis'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  sh &lt;span class=&quot;s1&quot;&gt;'echo &quot;$REGISTRY:latest `pwd`/Dockerfile&quot; &amp;gt; anchore_images'&lt;/span&gt;
+                  anchore name: &lt;span class=&quot;s1&quot;&gt;'anchore_images'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Clean local docker image'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              agent any
+                  steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+                  sh &lt;span class=&quot;s1&quot;&gt;'docker rmi $REGISTRY:latest'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Static Analysis(PMD, SpotBugs, CheckStyle)'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  sh &lt;span class=&quot;s1&quot;&gt;'mvn pmd:pmd spotbugs:spotbugs checkstyle:checkstyle'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Dependency-Check Analysis'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  sh &lt;span class=&quot;s1&quot;&gt;'/var/lib/jenkins/dependency-check/bin/dependency-check.sh --scan `pwd` --format HTML --out /var/lib/jenkins/reports/dependency-check-report --prettyPrint'&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          stage&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Sonarqube and Quality gate'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              options &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  &lt;span class=&quot;nb&quot;&gt;timeout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: 5, unit: &lt;span class=&quot;s1&quot;&gt;'MINUTES'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                  retry&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              steps &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  withSonarQubeEnv&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'SonarQube Server'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                      sh &lt;span class=&quot;s2&quot;&gt;&quot;mvn sonar:sonar&quot;&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                  script &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                      qualitygate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; waitForQualityGate&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;qualitygate.status &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;OK&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                          currentBuild.result &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;FAILURE&quot;&lt;/span&gt;
+                          slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: &lt;span class=&quot;nv&quot;&gt;$SLACK_CHANNEL&lt;/span&gt;, color: &lt;span class=&quot;s1&quot;&gt;'#F01717'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;*&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JOB_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;*, &amp;lt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$BUILD_URL&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;|Build #&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      post &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+          success &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: &lt;span class=&quot;nv&quot;&gt;$SLACK_CHANNEL&lt;/span&gt;, color: &lt;span class=&quot;s1&quot;&gt;'#00FF00'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;SUCCESSFUL: Job '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          failure &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              slackSend &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;channel: &lt;span class=&quot;nv&quot;&gt;$SLACK_CHANNEL&lt;/span&gt;, color: &lt;span class=&quot;s1&quot;&gt;'#F01717'&lt;/span&gt;, message: &lt;span class=&quot;s2&quot;&gt;&quot;FAILURE: '&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.JOB_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; [&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_NUMBER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;]' (&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.BUILD_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/project/devsecops_6_13.png&quot; alt=&quot;anchore_test&quot; width=&quot;819&quot; height=&quot;342&quot; /&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 13] Anchore 파이프라인 테스트&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 21 Oct 2020 00:00:00 +0900</pubDate>
@@ -787,7 +827,7 @@
 
     &lt;p&gt;먼저 Jenkins 파이프라인의 실행 결과에 대한 메시지를 받아보기 위해 Slack에서 사용할 워크스페이스와 채널을 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;워스크페이스와 채널을 생성하고나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;https://YOUR_WORKSPACE.slack.com/apps&lt;/code&gt; URL에 접속해서 Slack에 추가 할 앱으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt;를 검색합니다.&lt;/p&gt;
+    &lt;p&gt;워스크페이스와 채널을 생성하고나면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://YOUR_WORKSPACE.slack.com/apps&lt;/code&gt; URL에 접속해서 Slack에 추가 할 앱으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt;를 검색합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -804,7 +844,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Slack에 추가&lt;/code&gt; 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Slack에 추가&lt;/code&gt; 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -821,7 +861,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;정상적으로 Jenkins CI 앱이 추가되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성 편집&lt;/code&gt;에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;정상적으로 Jenkins CI 앱이 추가되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성 편집&lt;/code&gt;에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.&lt;/p&gt;
 
     &lt;p&gt;아래쪽에 보면 토큰이 발급되어 있는 것을 볼 수 있을텐데, &lt;strong&gt;이 토큰은 나중에 Jenkins credentials을 생성할 때 사용&lt;/strong&gt;됩니다.&lt;/p&gt;
 
@@ -851,7 +891,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins에서 Slack 플러그인을 설치하고나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt; 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins에서 Slack 플러그인을 설치하고나면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt; 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.&lt;/p&gt;
 
     &lt;p&gt;다음 [그림 4]와 같이 워크스페이스와 Credentials, 채널 ID를 정확하게 기입해줍니다.&lt;/p&gt;
 
@@ -870,11 +910,11 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Credentials의 경우에 옆의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add&lt;/code&gt; 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;Credentials의 경우에 옆의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add&lt;/code&gt; 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;Credentials를 추가할 때 Kind는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Secret text&lt;/code&gt;로 두고 Secret은 [그림 2]에서 보이는 &lt;code class=&quot;highlighter-rouge&quot;&gt;토큰&lt;/code&gt; 값을 입력해줍니다.&lt;/p&gt;
+    &lt;p&gt;Credentials를 추가할 때 Kind는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secret text&lt;/code&gt;로 두고 Secret은 [그림 2]에서 보이는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;토큰&lt;/code&gt; 값을 입력해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;그런 우측 하단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;그런 우측 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -950,9 +990,9 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;그런 다음 Jenkins 홈에서 왼쪽 탭의 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt;에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Multibranch Pipeline&lt;/code&gt;을 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;그런 다음 Jenkins 홈에서 왼쪽 탭의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt;에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Multibranch Pipeline&lt;/code&gt;을 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Source -&amp;gt; GitLab Project&lt;/code&gt;를 눌러 다음 [그림 7]과 같이 설정해줍니다.&lt;/p&gt;
+    &lt;p&gt;멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Source -&amp;gt; GitLab Project&lt;/code&gt;를 눌러 다음 [그림 7]과 같이 설정해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -973,7 +1013,7 @@
 
     &lt;p&gt;그리고 파이프라인에 연결할 프로젝트를 생성한 계정의 ID를 Owner로 두면 해당 ID에서 관리하고 있는 프로젝트들을 아래 Projects에서 선택할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;Behaviours 항목에서 Add 버튼을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter by name (with wildcards)&lt;/code&gt;를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.&lt;/p&gt;
+    &lt;p&gt;Behaviours 항목에서 Add 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter by name (with wildcards)&lt;/code&gt;를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1246,7 +1286,7 @@
   daemonset.apps/prometheus-prometheus-node-exporter   3         3         3       3            3           &amp;lt;none&amp;gt;          10m
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;Prometheus와 Grafana가 정상적으로 동작하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;NodePort를 생성&lt;/code&gt;하여 생성된 Prometheus와 Grafana 서비스에 접근할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;Prometheus와 Grafana가 정상적으로 동작하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodePort를 생성&lt;/code&gt;하여 생성된 Prometheus와 Grafana 서비스에 접근할 수 있습니다.&lt;/p&gt;
 
     &lt;p&gt;본 프로젝트에서는 Prometheus의 포트번호를 31111, Grafana의 포트번호를 31112로 정하였고, &lt;strong&gt;GCP 방화벽에서도 해당 포트를 열어줍니다.&lt;/strong&gt;&lt;/p&gt;
 
@@ -1286,7 +1326,7 @@
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; grafana_nodeport.yaml &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; monitoring
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;kube-masterIP:31111&lt;/code&gt; URL로 접속하여 상단 메뉴의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Status &amp;gt; Targets&lt;/code&gt;에 들어가보면 다음 [그림 1]과 같이 에러가 나 있을 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-masterIP:31111&lt;/code&gt; URL로 접속하여 상단 메뉴의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Status &amp;gt; Targets&lt;/code&gt;에 들어가보면 다음 [그림 1]과 같이 에러가 나 있을 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1345,11 +1385,11 @@
 
     &lt;p&gt;etcd-client-cert 시크릿을 만들어주고 수정된 values.yaml 파일을 바탕으로 다시 prometheus-operator를 배포하면 etcd의 통신 에러도 해결 될 것입니다.&lt;/p&gt;
 
-    &lt;p&gt;Helm에 value.xml 파일을 따로 수정하지 않으면 기본적으로 Grafana의 ID는 &lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 &lt;code class=&quot;highlighter-rouge&quot;&gt;prom-operator&lt;/code&gt;로 설정되어 있습니다.&lt;/p&gt;
+    &lt;p&gt;Helm에 value.xml 파일을 따로 수정하지 않으면 기본적으로 Grafana의 ID는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prom-operator&lt;/code&gt;로 설정되어 있습니다.&lt;/p&gt;
 
     &lt;p&gt;참고로 초기 패스워드는 values.yaml 파일에서 수정할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;kube-masterIP:31112&lt;/code&gt; URL로 접속하여 Grafana 대시보드가 Prometheus에서 수집된 메트릭을 잘 수집하여 시각화되어지는지 확인해봅니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-masterIP:31112&lt;/code&gt; URL로 접속하여 Grafana 대시보드가 Prometheus에서 수집된 메트릭을 잘 수집하여 시각화되어지는지 확인해봅니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1521,7 +1561,7 @@
 
     &lt;p&gt;이렇게 Kibana에 접근하더라도 문제가 한 가지 더 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;Fluent Bit에서 쿠버네티스 클러스터의 로그를 수집할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/log/containers&lt;/code&gt;에 존재하는 로그 파일을 읽어들이는데, journald 드라이버를 사용하여 컨테이너 로그를 수집하게 되어 있어 /var/log/containers 폴더에 로그가 쌓이지 않는 문제가 있습니다.&lt;/p&gt;
+    &lt;p&gt;Fluent Bit에서 쿠버네티스 클러스터의 로그를 수집할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/log/containers&lt;/code&gt;에 존재하는 로그 파일을 읽어들이는데, journald 드라이버를 사용하여 컨테이너 로그를 수집하게 되어 있어 /var/log/containers 폴더에 로그가 쌓이지 않는 문제가 있습니다.&lt;/p&gt;
 
     &lt;p&gt;그래서 Kibana에 접속하더라도 생성할 인덱스 패턴이 존재하지 않았었는데, 문제를 해결하기 위해 다음과 같이 수정해야 합니다.&lt;/p&gt;
 
@@ -1529,9 +1569,9 @@
   &lt;span class=&quot;nv&quot;&gt;OPTIONS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'--selinux-enabled --signature-verification=false'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;모든 쿠버네티스 클러스터에서 /etc/sysconfig/docker 파일에 존재하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;--log-driver = journald 부분을 제거&lt;/code&gt;해야 도커 컨테이너 로그가 /var/log/containers 경로에 쌓이게 되고, Fluent Bit에서 해당 로그들을 수집하여 Kibana에서 인덱스 패턴을 생성할 수가 이쎅 됩니다.&lt;/p&gt;
+    &lt;p&gt;모든 쿠버네티스 클러스터에서 /etc/sysconfig/docker 파일에 존재하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--log-driver = journald 부분을 제거&lt;/code&gt;해야 도커 컨테이너 로그가 /var/log/containers 경로에 쌓이게 되고, Fluent Bit에서 해당 로그들을 수집하여 Kibana에서 인덱스 패턴을 생성할 수가 이쎅 됩니다.&lt;/p&gt;
 
-    &lt;p&gt;정상적으로 로그가 쌓이게 되면 다시 Kibana에 접속하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;Kubernetes_cluster-*&lt;/code&gt;이라는 인덱스 패턴을 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;정상적으로 로그가 쌓이게 되면 다시 Kibana에 접속하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kubernetes_cluster-*&lt;/code&gt;이라는 인덱스 패턴을 생성해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -1682,7 +1722,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;여기서 &lt;code class=&quot;highlighter-rouge&quot;&gt;a separate configuration page&lt;/code&gt;를 눌러 Configure Clouds 설정으로 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;여기서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a separate configuration page&lt;/code&gt;를 눌러 Configure Clouds 설정으로 들어옵니다.&lt;/p&gt;
 
     &lt;p&gt;쿠버네티스 설정은 다음 [그림 3], [그림 4]와 같이 진행합니다.&lt;/p&gt;
 
@@ -1701,9 +1741,9 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Kubernetes URL은 kube-master 인스턴스에 접속하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.kube/config&lt;/code&gt; 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.&lt;/p&gt;
+    &lt;p&gt;Kubernetes URL은 kube-master 인스턴스에 접속하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.kube/config&lt;/code&gt; 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 됩니다.&lt;/p&gt;
 
-    &lt;p&gt;Kubernetes URL을 입력하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;Kubernetes URL을 입력하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인합니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ~/.kube/config 
   apiVersion: v1
@@ -1716,7 +1756,7 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;그 후 아래로 내리다보면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pod Templates&lt;/code&gt;를 구성하는 버튼이 있습니다.&lt;/p&gt;
+    &lt;p&gt;그 후 아래로 내리다보면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pod Templates&lt;/code&gt;를 구성하는 버튼이 있습니다.&lt;/p&gt;
 
     &lt;p&gt;그 버튼을 눌러 다음 [그림 4]와 같이 설정하고 저장합니다.&lt;/p&gt;
 
@@ -1740,9 +1780,9 @@
 
     &lt;p&gt;Jenkins에서 쿠버네티스 클러스터와의 연동이 정상적으로 설정되었다면 다음은 Jenkins Slave를 생성 및 구성해야 합니다.&lt;/p&gt;
 
-    &lt;p&gt;Jenkins의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Manage Nodes&lt;/code&gt; 설정에 들어와서 왼쪽의 &lt;code class=&quot;highlighter-rouge&quot;&gt;신규 노드&lt;/code&gt; 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage Nodes&lt;/code&gt; 설정에 들어와서 왼쪽의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;신규 노드&lt;/code&gt; 탭을 눌러 Jenkins Slave 노드를 생성해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Permanent Agent&lt;/code&gt;를 클릭 후 다음으로 넘어갑니다.&lt;/p&gt;
+    &lt;p&gt;첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Permanent Agent&lt;/code&gt;를 클릭 후 다음으로 넘어갑니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2057,11 +2097,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;이제 ArgoCD에 접속하여 로그인을 시도해봅니다.&lt;/p&gt;
 
-    &lt;p&gt;Helm으로 배포했을 때 초기 아이디는 &lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 ArgoCD 파드명 즉, &lt;code class=&quot;highlighter-rouge&quot;&gt;argocd-server-7c5f6f8d9-xkc8h&lt;/code&gt; 입니다.&lt;/p&gt;
+    &lt;p&gt;Helm으로 배포했을 때 초기 아이디는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;admin&lt;/code&gt;, 패스워드는 ArgoCD 파드명 즉, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;argocd-server-7c5f6f8d9-xkc8h&lt;/code&gt; 입니다.&lt;/p&gt;
 
     &lt;p&gt;정상적으로 로그인이 이루어지면 Git 레포지토리를 추가하는 작업을 해주어야 합니다.&lt;/p&gt;
 
-    &lt;p&gt;왼쪽의 &lt;code class=&quot;highlighter-rouge&quot;&gt;settings&lt;/code&gt; 탭에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Repositories&lt;/code&gt; 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.&lt;/p&gt;
+    &lt;p&gt;왼쪽의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings&lt;/code&gt; 탭에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Repositories&lt;/code&gt; 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2095,7 +2135,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Applications&lt;/code&gt; 탭에 와서 &lt;code class=&quot;highlighter-rouge&quot;&gt;NEW APP&lt;/code&gt; 버튼을 눌러 배포를 관리할 애플리케이션을 추가해줍니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Applications&lt;/code&gt; 탭에 와서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NEW APP&lt;/code&gt; 버튼을 눌러 배포를 관리할 애플리케이션을 추가해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2148,7 +2188,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;동기화 되지 않은 상태로 &lt;code class=&quot;highlighter-rouge&quot;&gt;OutOfSync&lt;/code&gt;라는 문구와 &lt;strong&gt;노란색&lt;/strong&gt;으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Sync OK&lt;/code&gt; 라는 문구와 함께 &lt;strong&gt;초록색&lt;/strong&gt;으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;동기화 되지 않은 상태로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OutOfSync&lt;/code&gt;라는 문구와 &lt;strong&gt;노란색&lt;/strong&gt;으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync OK&lt;/code&gt; 라는 문구와 함께 &lt;strong&gt;초록색&lt;/strong&gt;으로 바뀌어 정상 동작하는 것을 확인할 수 있습니다.&lt;/p&gt;
 
     &lt;p&gt;ArgoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있습니다.&lt;/p&gt;
 
@@ -2248,14 +2288,14 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;이럴경우, 개발 중 별도의 품질 관리를 수행하지 않았기 때문에 잘못된 소스 코드를 형상관리 시스템에 반영하였을 경우 발생되는 문제가 개발 후반에 모두 장애로 발견됩니다.&lt;/p&gt;
 
-    &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;반면에 CI를 구축하게 되면 CI 서버는 형상 관리 서버에 Push 된 소스코드를 주기적으로 폴링하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컴파일, 단위테스트, 코드 인스펙션&lt;/code&gt; 등의 과정을 수행하며 &lt;strong&gt;신규 또는 수정된 소스 코드에 결함이 있는지에 대한 여부를 지속적으로 검증&lt;/strong&gt;하기 때문에 조기에 결함을 발견하여 해결할 수 있습니다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 연동&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
     &lt;p&gt;SCM 툴인 Gitlab과 CI/CD Server 툴로 사용할 Jenkins를 연동하는 작업을 시작하겠습니다.&lt;/p&gt;
 
-    &lt;p&gt;먼저 [그림 1]과 같이 관리자 계정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Admin Area &amp;gt; Network&lt;/code&gt; 탭으로 들어와 아웃바운드를 설정합니다.&lt;/p&gt;
+    &lt;p&gt;먼저 [그림 1]과 같이 관리자 계정에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Area &amp;gt; Network&lt;/code&gt; 탭으로 들어와 아웃바운드를 설정합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2274,7 +2314,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;웹훅 및 서비스가 액세스 할 수 있는 IP, 즉 Jenkins 서버의 IP를 적어줍니다.&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;strong&gt;GitLab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;strong&gt;GitLab 프로젝트를 생성&lt;/strong&gt;하여 해당 프로젝트의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Access Tokens&lt;/code&gt; 탭에 들어옵니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2297,9 +2337,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 GitLab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 Jenkins의 설정의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Plugin Manager&lt;/code&gt; 탭으로 GitLab 관련한 플러그인을 모두 설치해줍니다.&lt;/p&gt;
 
-    &lt;p&gt;GitLab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
+    &lt;p&gt;GitLab 플러그인이 정상적으로 설치되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시스템 설정&lt;/code&gt;으로 들어와서 [그림 3]과 같이 Gitlab을 연동하기 위한 설정을 해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2333,14 +2373,14 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
+    &lt;p&gt;Credentials 키를 정상적으로 생성 및 선택해주고 오른쪽 하단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test Connection&lt;/code&gt; 버튼을 눌러 Success 문구가 뜨는지 확인합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab - Jenkins 웹훅 설정&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins와 Gitlab을 성공적으로 연동시키고 나서 Jenkins 메인 화면에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;새로운 Item&lt;/code&gt; 탭을 눌러줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2359,11 +2399,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;위의 [그림 5]와 같이 파이프라인을 선택하고 아이템의 이름을 명시하고 OK 버튼을 눌러 아이템을 만들어줍니다.&lt;/p&gt;
 
-    &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;devsecops-pipeline&lt;/code&gt;라는 이름의 아이템을 만들어주었습니다.&lt;/p&gt;
+    &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;devsecops-pipeline&lt;/code&gt;라는 이름의 아이템을 만들어주었습니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Settings &amp;gt; Webhooks&lt;/code&gt; 탭으로 들어옵니다.&lt;/p&gt;
+    &lt;p&gt;Jenkins에서 아이템을 정상적으로 만들어준 후에 Giblab의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings &amp;gt; Webhooks&lt;/code&gt; 탭으로 들어옵니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2380,13 +2420,13 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;위의 [그림 6]와 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName&lt;/code&gt;의 형태로 URL을 작성해줍니다.&lt;/p&gt;
+    &lt;p&gt;위의 [그림 6]와 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://JenkinsID:JenkinsPassword@JenkinsIP:JenkinsPort/project/ProjectName&lt;/code&gt;의 형태로 URL을 작성해줍니다.&lt;/p&gt;
 
     &lt;p&gt;일단 설정은 푸시 이벤트에 대한 트리거만 걸어놓고 차후 멀티 브랜치에 대한 파이프라인 구성도 진행해볼 것입니다.&lt;/p&gt;
 
-    &lt;p&gt;웹훅 설정을 마치고 아래로 내리면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Test&lt;/code&gt; 버튼을 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;Push events&lt;/code&gt;에 대한 테스트를 진행해봅니다.&lt;/p&gt;
+    &lt;p&gt;웹훅 설정을 마치고 아래로 내리면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Test&lt;/code&gt; 버튼을 눌러 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Push events&lt;/code&gt;에 대한 테스트를 진행해봅니다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Hook executed successfully: HTTP 200&lt;/code&gt; 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hook executed successfully: HTTP 200&lt;/code&gt; 메시지가 뜨면 푸시 이벤트에 대한 웹훅도 정상적으로 설정되어 Jenkins를 통해 CI를 구성할 준비가 끝난 것입니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
   &lt;/li&gt;
@@ -2402,7 +2442,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Pipeline 설정 및 테스트&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;[그림 5]에서 생성한 파이프라인의 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.&lt;/p&gt;
+    &lt;p&gt;[그림 5]에서 생성한 파이프라인의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;구성&lt;/code&gt; 탭을 눌러서 다음 [그림 7]과 같이 Gitlab에 푸시되면 자동으로 파이프라인이 실행될 수 있도록 설정해줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2457,7 +2497,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;Console Output&lt;/code&gt; 탭을 눌러 확인할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;실행된 파이프라인에 대한 로그는 해당 빌드 넘버를 클릭하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Console Output&lt;/code&gt; 탭을 눌러 확인할 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -2720,7 +2760,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;프로젝트 목적&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축&lt;/code&gt;하고자 합니다.&lt;/p&gt;
+    &lt;p&gt;본 프로젝트를 통해 클라우드 네이티브 환경에서 DevSecOps 체계를 구현하는데 필요한 툴 체인들을 이해하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;보안이 적용된 다양한 툴 체인 파이프라인 방법들을 구축&lt;/code&gt;하고자 합니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;strong&gt;클라우드 네이티브 환경에서의 DevSecOps 쳬계와 CI/CD 체계를 이해&lt;/strong&gt;하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 &lt;strong&gt;실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인 구축하는 것이 목적&lt;/strong&gt;입니다.&lt;/p&gt;
 
@@ -2770,7 +2810,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GCP(Google Cloud Platform) 구성&lt;/strong&gt;   &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;kubeadm&lt;/code&gt;을 통해 쿠버네티스를 구성할 것 입니다.&lt;/p&gt;
+    &lt;p&gt;GCP의 기능으로 있는 GKE(Google Kubernetes Engine)을 사용하여 손 쉽게 쿠버네티스 환경을 구성할 수 있지만, 현재는 테스트용으로 인스턴스를 따로 생성하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm&lt;/code&gt;을 통해 쿠버네티스를 구성할 것 입니다.&lt;/p&gt;
 
     &lt;p&gt;따라서 다음 [그림 2]와 같이 GCP 인스턴스를 생성해줍니다.&lt;/p&gt;
 
@@ -2818,7 +2858,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;위에서 언급하였듯 생성한 인스턴스에 kubeadm 명령을 통해 쿠버네티스를 구성합니다.&lt;/p&gt;
 
-    &lt;p&gt;먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master, kube-worker1, kube-worker2 모두&lt;/code&gt; 동일하게 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;먼저 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master, kube-worker1, kube-worker2 모두&lt;/code&gt; 동일하게 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2865,7 +2905,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
         &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;modprobe br_netfilter
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;br_netfilter 모듈을 명시적으로 추가한 후에 &lt;code class=&quot;highlighter-rouge&quot;&gt;lsmod | grep br_netfilter&lt;/code&gt; 명령어로 추가 여부를 확인할 수 있습니다.&lt;/p&gt;
+        &lt;p&gt;br_netfilter 모듈을 명시적으로 추가한 후에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsmod | grep br_netfilter&lt;/code&gt; 명령어로 추가 여부를 확인할 수 있습니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;도커 및 쿠버네티스 설치 후 서비스 시작&lt;/p&gt;
@@ -2893,7 +2933,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;kubelet &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; systemctl start kubelet
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
 
-        &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;헬스체크 이슈&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;대쉬보드 호환성&lt;/code&gt;의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.&lt;/p&gt;
+        &lt;p&gt;본 프로젝트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;헬스체크 이슈&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;대쉬보드 호환성&lt;/code&gt;의 이유로 비교적 안정적인 쿠버네티스 1.15 버전으로 명시하여 설치하였습니다.&lt;/p&gt;
 
         &lt;blockquote&gt;
           &lt;p&gt;처음에 1.19 버전으로 설치했었다가 쿠버네티스 클러스터의 매트릭을 수집해주는 &lt;strong&gt;kube-state-metrics&lt;/strong&gt;이 정상적으로 작동하지 않아 1.15버전으로 재설치한 것입니다.&lt;/p&gt;
@@ -2903,7 +2943,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2955,7 +2995,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음은 kubeadm init의 결과에서 나온 것 처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-worker 노드들&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;다음은 kubeadm init의 결과에서 나온 것 처럼 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-worker 노드들&lt;/code&gt;에서만 아래의 명령을 실행하도록 합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -2984,7 +3024,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;마지막으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서 weave를 설치합니다.&lt;/p&gt;
+    &lt;p&gt;마지막으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kube-master&lt;/code&gt;에서 weave를 설치합니다.&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;
@@ -3041,7 +3081,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;GitLab 구성&lt;/strong&gt;   &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
+    &lt;p&gt;Gitlab과 Jenkins 설치는 [그림 2]의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers 인스턴스&lt;/code&gt;에서 진행합니다.&lt;/p&gt;
 
     &lt;p&gt;GitLab은 자체 CI를 무료로 제공하고 있어 외부 CI 서비스를 사용할 필요가 없습니다.&lt;/p&gt;
 
@@ -3136,7 +3176,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-        &lt;p&gt;GCP 방화벽까지 열어주고나서 &lt;code class=&quot;highlighter-rouge&quot;&gt;servers IP:8001&lt;/code&gt; URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.&lt;/p&gt;
+        &lt;p&gt;GCP 방화벽까지 열어주고나서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers IP:8001&lt;/code&gt; URL로 접속하면 다음 [그림 3]과 같이 root 계정의 초기 패스워드를 지정하는 화면을 볼 수 있습니다.&lt;/p&gt;
 
         &lt;table&gt;
           &lt;thead&gt;
@@ -3241,7 +3281,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-        &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;servers IP:8002&lt;/code&gt; URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.&lt;/p&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;servers IP:8002&lt;/code&gt; URL로 접속하면 위의 [그림 5]와 같이 화면이 뜹니다.&lt;/p&gt;
 
         &lt;p&gt;화면의 안내에 따라 &lt;strong&gt;/var/lib/jenkins/secrets/initialAdminPassword 파일을 확인&lt;/strong&gt;합니다.&lt;/p&gt;
 
@@ -3253,7 +3293,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
         &lt;p&gt;다음은 Customize Jenkins라는 페이지가 나오는데, 여기서는 원하는 Jenkins 플러그인을 설치할 수 있습니다.&lt;/p&gt;
 
-        &lt;p&gt;&lt;strong&gt;Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능&lt;/strong&gt;하기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Install suggested plugins&lt;/code&gt;를 눌러 기본 플러그인만 설치하고 넘어갑니다.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Jenkins 플러그인은 Jenkins가 설치된 이후에도 자유롭게 설치가 가능&lt;/strong&gt;하기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install suggested plugins&lt;/code&gt;를 눌러 기본 플러그인만 설치하고 넘어갑니다.&lt;/p&gt;
 
         &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -3384,7 +3424,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;취약점 분석 평가 항목&lt;/strong&gt;   &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;취약점 분석은 &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt; 환경에서 진행되며 &lt;code class=&quot;highlighter-rouge&quot;&gt;항목 중요도가 상&lt;/code&gt;인 진단 항목을 몇 가지 선택하여 진단 스크립트를 작성하였습니다.&lt;/p&gt;
+    &lt;p&gt;취약점 분석은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt; 환경에서 진행되며 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;항목 중요도가 상&lt;/code&gt;인 진단 항목을 몇 가지 선택하여 진단 스크립트를 작성하였습니다.&lt;/p&gt;
 
     &lt;p&gt;본 프로젝트에서 선택한 진단 항목은 다음 [그림 2]와 같습니다.&lt;/p&gt;
 
@@ -3548,7 +3588,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo ./main_diagnosis.sh client&lt;/code&gt; 라고 명령어를 입력하면 호스트의 취약점 진단이 끝난 후에 /etc/hosts에 정의된 client 호스트네임을 가진 노드로 진단에 필요한 코드를 전송하여 ssh 접속을 통해 진단을 수행하도록 하였습니다.&lt;/p&gt;
+    &lt;p&gt;예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ sudo ./main_diagnosis.sh client&lt;/code&gt; 라고 명령어를 입력하면 호스트의 취약점 진단이 끝난 후에 /etc/hosts에 정의된 client 호스트네임을 가진 노드로 진단에 필요한 코드를 전송하여 ssh 접속을 통해 진단을 수행하도록 하였습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -3597,7 +3637,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;본 프로젝트에서는 &lt;strong&gt;인덱스 이름을 diagnosis&lt;/strong&gt;라고 정의하였고, 진단 스크립트가 실행되면서 diagnosis 인덱스에 정형화된 컬럼 필드 내용들이 Elasticsearch로 전송되어 스크립트로 생성된 diagnosis라는 인덱스에 대한 인덱스 패턴을 생성할 수 있게 됩니다.&lt;/p&gt;
 
-    &lt;p&gt;인덱스 패턴 이름을 적는 란에 &lt;code class=&quot;highlighter-rouge&quot;&gt;diagnosis*&lt;/code&gt; 이라고 입력하여 인덱스 패턴을 생성해줍니다.&lt;/p&gt;
+    &lt;p&gt;인덱스 패턴 이름을 적는 란에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diagnosis*&lt;/code&gt; 이라고 입력하여 인덱스 패턴을 생성해줍니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -3805,7 +3845,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;해당 검색창에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Cloud SQL Admin API&lt;/code&gt;를 입력하여 다음 [그림 3]에 보이는 &lt;strong&gt;사용&lt;/strong&gt; 버튼을 눌러 &lt;strong&gt;Cloud SQL를 활성화&lt;/strong&gt; 시켜줍니다.&lt;/p&gt;
+    &lt;p&gt;해당 검색창에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cloud SQL Admin API&lt;/code&gt;를 입력하여 다음 [그림 3]에 보이는 &lt;strong&gt;사용&lt;/strong&gt; 버튼을 눌러 &lt;strong&gt;Cloud SQL를 활성화&lt;/strong&gt; 시켜줍니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -3895,11 +3935,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - &lt;code class=&quot;highlighter-rouge&quot;&gt;asia-northeast3-a&lt;/code&gt;)을 선택하도록 합니다.&lt;/p&gt;
+    &lt;p&gt;먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asia-northeast3-a&lt;/code&gt;)을 선택하도록 합니다.&lt;/p&gt;
 
-    &lt;p&gt;flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 &lt;code class=&quot;highlighter-rouge&quot;&gt;n1-standard-1&lt;/code&gt;을 선택하였고,&lt;/p&gt;
+    &lt;p&gt;flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n1-standard-1&lt;/code&gt;을 선택하였고,&lt;/p&gt;
 
-    &lt;p&gt;OS는 &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt;, 웹서버의 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP 트래픽을 허용&lt;/code&gt;해주도록 체크하였습니다.&lt;/p&gt;
+    &lt;p&gt;OS는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CentOS 7&lt;/code&gt;, 웹서버의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP 트래픽을 허용&lt;/code&gt;해주도록 체크하였습니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -3997,7 +4037,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
       &lt;span class=&quot;s&quot;&gt;&quot;auth_uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://accounts.google.com/o/oauth2/auth&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s&quot;&gt;&quot;token_uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://oauth2.googleapis.com/token&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;s&quot;&gt;&quot;auth_provider_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/oauth2/v1/certs&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;&quot;client_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%40&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cccr-gcp-project.iam.gserviceaccount.com&amp;gt;&quot;&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;&quot;client_x509_cert_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;https://www.googleapis.com/robot/v1/metadata/x509/wpmanager%40cccr-gcp-project.iam.gserviceaccount.com&amp;gt;&quot;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
@@ -4187,13 +4227,13 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordpress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# mysql -u root -p -S /cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
 &lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Enter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;Welcome&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Commands&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; \\&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Welcome&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Commands&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; \\&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;Your&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connection&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1478&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.7.25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Google&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Google&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;Copyright&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Oracle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Corporation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ab&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;others&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Copyright&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Oracle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MariaDB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Corporation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ab&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;others&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'help;'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;h'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'help;'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;h'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordpress&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;Reading&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;information&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;
@@ -4225,13 +4265,13 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;관리형 로드 밸런싱 구성&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 &lt;strong&gt;오토 스케일링(Auto-scaling)을 위한&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;관리형 인스턴스 그룹&lt;/code&gt;과 &lt;strong&gt;템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;비관리형 인스턴스 그룹&lt;/code&gt;으로 나뉩니다.&lt;/p&gt;
+    &lt;p&gt;GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 &lt;strong&gt;오토 스케일링(Auto-scaling)을 위한&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;관리형 인스턴스 그룹&lt;/code&gt;과 &lt;strong&gt;템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비관리형 인스턴스 그룹&lt;/code&gt;으로 나뉩니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
     &lt;p&gt;본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.&lt;/p&gt;
 
-    &lt;p&gt;먼저 VM 인스턴스에 대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;스냅샷을 생성&lt;/code&gt;하고, 생성한 스냅샷으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;이미지를 생성&lt;/code&gt;합니다.&lt;/p&gt;
+    &lt;p&gt;먼저 VM 인스턴스에 대한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;스냅샷을 생성&lt;/code&gt;하고, 생성한 스냅샷으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;이미지를 생성&lt;/code&gt;합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -4263,7 +4303,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스 템플릿을 생성&lt;/code&gt;합니다.&lt;/p&gt;
+    &lt;p&gt;이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;인스턴스 템플릿을 생성&lt;/code&gt;합니다.&lt;/p&gt;
 
     &lt;p&gt;그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.&lt;/p&gt;
 
@@ -4282,7 +4322,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리형 인스턴스 그룹을 생성&lt;/code&gt;합니다.&lt;/p&gt;
+    &lt;p&gt;인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;관리형 인스턴스 그룹을 생성&lt;/code&gt;합니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -4301,9 +4341,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다.&lt;/p&gt;
 
-    &lt;p&gt;탐색 메뉴에서 &lt;strong&gt;[네트워크 서비스] - [부하 분산]&lt;/strong&gt; 탭에 들어와서 &lt;code class=&quot;highlighter-rouge&quot;&gt;부하 분산기 만들기&lt;/code&gt;를 눌러줍니다.&lt;/p&gt;
+    &lt;p&gt;탐색 메뉴에서 &lt;strong&gt;[네트워크 서비스] - [부하 분산]&lt;/strong&gt; 탭에 들어와서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;부하 분산기 만들기&lt;/code&gt;를 눌러줍니다.&lt;/p&gt;
 
-    &lt;p&gt;HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP(S) 부하 분산기&lt;/code&gt;를 선택하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;인터넷 트래픽을 VM으로 분산&lt;/code&gt;을 눌러줍니다.&lt;/p&gt;
+    &lt;p&gt;HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP(S) 부하 분산기&lt;/code&gt;를 선택하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;인터넷 트래픽을 VM으로 분산&lt;/code&gt;을 눌러줍니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -4430,11 +4470,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;allUsers&lt;/code&gt; 구성원에 &lt;code class=&quot;highlighter-rouge&quot;&gt;저장소 개체 관리자&lt;/code&gt; 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;allUsers&lt;/code&gt; 구성원에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;저장소 개체 관리자&lt;/code&gt; 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 &lt;code class=&quot;highlighter-rouge&quot;&gt;mysqldump&lt;/code&gt;하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;crontab&lt;/code&gt;을 통해 주기적으로 백업하기 위한 명령어입니다.&lt;/p&gt;
+    &lt;p&gt;다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mysqldump&lt;/code&gt;하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;crontab&lt;/code&gt;을 통해 주기적으로 백업하기 위한 명령어입니다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@instance-wordpress ~]# vim /etc/my.cnf
   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mysqldump]
@@ -4559,9 +4599,9 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 &lt;strong&gt;[모니터링] - [대시보드]&lt;/strong&gt; 탭을 눌러 들어갑니다.&lt;/p&gt;
 
-    &lt;p&gt;대시보드 페이지에 들어오면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Create Dashboard&lt;/code&gt; 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;대시보드 페이지에 들어오면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Create Dashboard&lt;/code&gt; 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Chart&lt;/code&gt; 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Chart&lt;/code&gt; 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -4578,7 +4618,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Metric&lt;/code&gt;과 Instance, Group 등 &lt;code class=&quot;highlighter-rouge&quot;&gt;Resource 타입&lt;/code&gt;을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Metric&lt;/code&gt;과 Instance, Group 등 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Resource 타입&lt;/code&gt;을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -4676,7 +4716,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;오토 스케일링 및 부하 테스트&lt;/strong&gt;   &lt;a name=&quot;list3_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;다음으로 아파치(Apache)의 &lt;code class=&quot;highlighter-rouge&quot;&gt;JMeter&lt;/code&gt;라는 툴을 사용하여 부하 테스트를 진행합니다.&lt;/p&gt;
+    &lt;p&gt;다음으로 아파치(Apache)의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JMeter&lt;/code&gt;라는 툴을 사용하여 부하 테스트를 진행합니다.&lt;/p&gt;
 
     &lt;p&gt;JMeter에서 핵심 기능은 웹 HTTP/HTTPS 프로토콜을 통해 클라이언트의 요청을 수행하여 부하를 발생시키는 것입니다.&lt;/p&gt;
 
@@ -4737,7 +4777,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
     &lt;p&gt;위의 [그림 30]에서 볼 수 있듯이 부하 테스트를 수행한 시점에 &lt;strong&gt;CPU, Memory, Network traffic이 확 늘어난 것을 확인&lt;/strong&gt;할 수 있고, 그와 동시에 인스턴스가 각각 하나씩 생겨난 것을 확인할 수 있습니다. 메모리 사용량을 확인하는 부분에서 측정 항목(인스턴스)가 새로 생겨난 것을 쉽게 확인할 수 있습니다.&lt;/p&gt;
 
-    &lt;p&gt;그 후 &lt;strong&gt;마지막 10분&lt;/strong&gt;을 &lt;code class=&quot;highlighter-rouge&quot;&gt;안정화 기간&lt;/code&gt;이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있습니다.&lt;/p&gt;
+    &lt;p&gt;그 후 &lt;strong&gt;마지막 10분&lt;/strong&gt;을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;안정화 기간&lt;/code&gt;이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있습니다.&lt;/p&gt;
 
     &lt;table&gt;
       &lt;thead&gt;
@@ -4812,7 +4852,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ git clone http://git.dotstack.io/dotstack/ssustack_installer.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
@@ -4827,7 +4867,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;모든 노드의 네트워크 인터페이스를 수정 후 재부팅해주어야 합니다. 먼저 Controller node의 경우, 외부와의 통신을 위한 네트워크와 오픈스택 컴포넌트들이 서로 API를 호출할 때 사용하는 내부 네트워크, VM 인스턴스들이 외부와 통신하기 위한 메뉴얼 네트워크를 설정해주어야 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -4846,7 +4886,7 @@ down ip link set dev $IFACE down
 
 &lt;p&gt;Compute node의 경우, 메뉴얼 네트워크가 필요없다. 오픈스택 설치가 정상적으로 설치되고나면 외부와의 통신은 필요없어 외부 네트워크를 OSD들 간의 통신을 위한 스토리지 네트워크로 설정하여 사용해도 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/network/interfaces
 auto &amp;lt;INTERFACE_NAME_1&amp;gt;
 iface &amp;lt;INTERFACE_NAME_1&amp;gt; inet static
     address &amp;lt;PUBLIC_IP&amp;gt;
@@ -4865,7 +4905,7 @@ iface &amp;lt;INTERFACE_NAME_2&amp;gt; inet static
 
 &lt;p&gt;위의 작업이 끝나면 Controller node에서 hosts 및 SSH 설정합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -4882,7 +4922,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;p&gt;ssustack_installer는 Controller node에서 실행시킵니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ssustack_installer/
 $ ./app.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -5015,7 +5055,7 @@ $ ./app.sh
 
 &lt;p&gt;OpenStack 환경을 구성하는 모든 노드에서 진행&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone http://git.dotstack.io/crisis513/ssustack.git
 $ cd ssustack/bin
 $ ./ssustack_user_creation.sh
 $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
@@ -5029,7 +5069,7 @@ $ cp -r &amp;lt;your_controller_path&amp;gt;/ssustack/ .
 
 &lt;p&gt;위의 작업이 끝나면 controller node에서 hosts 및 SSH 설정&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/hosts
 10.10.10.11 controller-node
 10.10.10.21 compute-node1 
 10.10.10.22 compute-node2
@@ -5044,7 +5084,7 @@ ex) ./creating_ssh_keys.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;3-openstack-설치-스크립트-설정&quot;&gt;3. OpenStack 설치 스크립트 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ..
 $ vi local.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -5052,14 +5092,14 @@ $ vi local.conf
 
 &lt;h4 id=&quot;4-localconf-설정을-기반으로-각-노드별-스크립트-생성&quot;&gt;4. local.conf 설정을 기반으로 각 노드별 스크립트 생성&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./ssustack.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;5-ssustacktmp-경로에서-각-노드에-맞는-스크립트-실행&quot;&gt;5. ssustack/tmp 경로에서 각 노드에 맞는 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## controller-node Case
 $ cd tmp/controller/
 $ ./controller.sh
 
@@ -5084,7 +5124,7 @@ $ ./compute_3.sh
 
 &lt;h4 id=&quot;6-controller-node에서-ceph-추가-설정&quot;&gt;6. controller node에서 ceph 추가 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./ceph_configuration.sh [&amp;lt;host_name&amp;gt; ... ]
 ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -5093,7 +5133,7 @@ ex) ./ceph_configuration.sh compute-node1 compute-node2 compute-node3
 
 &lt;h4 id=&quot;7-각-compute-node에서-ceph-osd-및-ceph-mon-설정&quot;&gt;7. 각 compute node에서 ceph osd 및 ceph mon 설정&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd ../../bin/ # ssustack/bin/
 $ ./add_ceph_osd.sh /dev/sdb    # /dev/sdb는 각 컴퓨터 노드에서 추가할 osd 장치명
 $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 management network로 사용하는 ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -5102,7 +5142,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;h4 id=&quot;8-controller-node에서-compute-호스트를-찾도록-스크립트-실행&quot;&gt;8. controller node에서 compute 호스트를 찾도록 스크립트 실행&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./add_compute_node.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
@@ -5146,7 +5186,7 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 
 &lt;p&gt;naver-news-scraper 소스를 다운로드 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/crisis513/naver-news-scraper.git
 $ cd naver-news-scraper
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -5156,7 +5196,7 @@ $ cd naver-news-scraper
 
 &lt;p&gt;nn-scraper 실행을 위해 python 및 pip를 설치하고, 필요한 pip 패키지를 설치합니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y python python-pip
 $ pip install -r requirements.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -5612,8 +5652,8 @@ in the future than in the past.&lt;/p&gt;
 
 &lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;문단 중간에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
+&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
+예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -5645,7 +5685,7 @@ _＼_Tom＼__&lt;/p&gt;
 
 &lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
