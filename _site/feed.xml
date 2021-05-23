@@ -3,11 +3,11 @@
   <channel>
     <title>son</title>
     <description>son's blog, use Jekyll and github pages.</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 05 Nov 2020 06:19:04 +0900</pubDate>
-    <lastBuildDate>Thu, 05 Nov 2020 06:19:04 +0900</lastBuildDate>
-    <generator>Jekyll v4.1.1</generator>
+    <link>https://crisis513.github.io/blog/</link>
+    <atom:link href="https://crisis513.github.io/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 19 May 2021 12:49:24 +0900</pubDate>
+    <lastBuildDate>Wed, 19 May 2021 12:49:24 +0900</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - SAST 분석 및 활용</title>
@@ -763,8 +763,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 21 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/21/devsecops6.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/21/devsecops6.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/21/devsecops6.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/21/devsecops6.html</guid>
         
         <category>son</category>
         
@@ -1124,8 +1124,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 15 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/15/devsecops5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/15/devsecops5.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/15/devsecops5.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/15/devsecops5.html</guid>
         
         <category>son</category>
         
@@ -1597,8 +1597,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 13 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/13/devsecops4.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/13/devsecops4.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/13/devsecops4.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/13/devsecops4.html</guid>
         
         <category>son</category>
         
@@ -2214,8 +2214,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 11 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/11/devsecops3.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/11/devsecops3.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/11/devsecops3.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/11/devsecops3.html</guid>
         
         <category>son</category>
         
@@ -2679,8 +2679,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 08 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/08/devsecops2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/08/devsecops2.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/08/devsecops2.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/08/devsecops2.html</guid>
         
         <category>son</category>
         
@@ -3323,8 +3323,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 03 Oct 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/10/03/devsecops1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/10/03/devsecops1.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/10/03/devsecops1.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/10/03/devsecops1.html</guid>
         
         <category>son</category>
         
@@ -3712,8 +3712,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 &lt;p&gt;그리고 진단 결과 취약하다고 나온 결과에 대해서는 자동으로 조치할 수 있는 스크립트를 개발하는 것도 향후 과제로 남기며 본 포스트를 마칩니다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 30 Aug 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/08/30/linux_vulnerability_diagnosis_project.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/08/30/linux_vulnerability_diagnosis_project.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/08/30/linux_vulnerability_diagnosis_project.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/08/30/linux_vulnerability_diagnosis_project.html</guid>
         
         <category>son</category>
         
@@ -4803,8 +4803,8 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 16 Aug 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/08/16/gcp_project.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/08/16/gcp_project.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/08/16/gcp_project.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/08/16/gcp_project.html</guid>
         
         <category>son</category>
         
@@ -4979,8 +4979,8 @@ $ ./app.sh
 &lt;/blockquote&gt;
 </description>
         <pubDate>Thu, 30 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/04/30/ssustack_installer.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/04/30/ssustack_installer.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/04/30/ssustack_installer.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/04/30/ssustack_installer.html</guid>
         
         <category>son</category>
         
@@ -5146,8 +5146,8 @@ $ ./add_ceph_mon.sh 10.10.10.21 # 10.10.10.21은 각 컴퓨터 노드에서 mana
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 29 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/04/29/ssustack.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/04/29/ssustack.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/04/29/ssustack.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/04/29/ssustack.html</guid>
         
         <category>son</category>
         
@@ -5247,8 +5247,8 @@ $ pip install -r requirements.txt
 &lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/kakaotalkbot2.png&quot; alt=&quot;use_kakaotalkbot&quot; width=&quot;360&quot; height=&quot;780&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/project/2020/04/08/nn_scraper.html</link>
-        <guid isPermaLink="true">http://localhost:4000/project/2020/04/08/nn_scraper.html</guid>
+        <link>https://crisis513.github.io/blog/project/2020/04/08/nn_scraper.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/project/2020/04/08/nn_scraper.html</guid>
         
         <category>son</category>
         
@@ -5329,8 +5329,8 @@ $ pip install -r requirements.txt
 &lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/patent2.png&quot; alt=&quot;patent2&quot; width=&quot;675&quot; height=&quot;150&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/patent/2020/04/03/patent2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/patent/2020/04/03/patent2.html</guid>
+        <link>https://crisis513.github.io/blog/patent/2020/04/03/patent2.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/patent/2020/04/03/patent2.html</guid>
         
         <category>son</category>
         
@@ -5411,8 +5411,8 @@ $ pip install -r requirements.txt
 &lt;p&gt;&lt;img src=&quot;/static/assets/img/landing/patent.png&quot; alt=&quot;patent1&quot; width=&quot;675&quot; height=&quot;150&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/patent/2020/04/03/patent1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/patent/2020/04/03/patent1.html</guid>
+        <link>https://crisis513.github.io/blog/patent/2020/04/03/patent1.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/patent/2020/04/03/patent1.html</guid>
         
         <category>son</category>
         
@@ -5482,8 +5482,8 @@ $ pip install -r requirements.txt
 &lt;p&gt;http://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&amp;amp;control_no=648f5d72e457c232ffe0bdc3ef48d419&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/thesis/2020/04/01/bkms.html</link>
-        <guid isPermaLink="true">http://localhost:4000/thesis/2020/04/01/bkms.html</guid>
+        <link>https://crisis513.github.io/blog/thesis/2020/04/01/bkms.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/thesis/2020/04/01/bkms.html</guid>
         
         <category>son</category>
         
@@ -5704,8 +5704,8 @@ _＼_Tom＼__&lt;/p&gt;
 &lt;p&gt;AUR license: /aur/license/:packageName.svg&lt;/p&gt;
 </description>
         <pubDate>Sat, 07 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/sample/2020/03/07/sample.html</link>
-        <guid isPermaLink="true">http://localhost:4000/sample/2020/03/07/sample.html</guid>
+        <link>https://crisis513.github.io/blog/sample/2020/03/07/sample.html</link>
+        <guid isPermaLink="true">https://crisis513.github.io/blog/sample/2020/03/07/sample.html</guid>
         
         <category>Son</category>
         
