@@ -5,17 +5,75 @@
     <description>son's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 02 Nov 2020 00:23:20 +0900</pubDate>
-    <lastBuildDate>Mon, 02 Nov 2020 00:23:20 +0900</lastBuildDate>
+    <pubDate>Tue, 26 Apr 2022 02:21:05 +0900</pubDate>
+    <lastBuildDate>Tue, 26 Apr 2022 02:21:05 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
+        <title>[Idle-Talk] 군 복무 스토리</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;본 포스트는 작성 중입니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. A&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. a&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. b&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-a---&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. A&lt;/strong&gt;&lt;/span&gt;   &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;a&lt;/strong&gt;   &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;a 내용 입력&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;b&lt;/strong&gt;   &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;b 내용 입력&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 26 Apr 2022 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/idle-talk/2022/04/26/army.html</link>
+        <guid isPermaLink="true">http://localhost:4000/idle-talk/2022/04/26/army.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>idle-talk</category>
+        
+        <category>army</category>
+        
+        <category>acmd</category>
+        
+        <category>bi</category>
+        
+        
+        <category>Idle-Talk</category>
+        
+      </item>
+    
+      <item>
         <title>[Project] DevSecOps 프로젝트 - SAST 분석 및 활용</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -749,11 +807,7 @@
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - Jenkins와 Slack 연동 그리고 멀티 브랜치 파이프라인의 사용</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1114,11 +1168,7 @@
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - Helm을 통한 모니터링과 로깅 시스템 구축</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1589,11 +1639,7 @@
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - CD 구성</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -2202,11 +2248,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - CI 구성</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -2667,11 +2709,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     
       <item>
         <title>[Project] DevSecOps 프로젝트 - 개요 및 환경 구성</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -3311,11 +3349,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     
       <item>
         <title>[Project] Linux 취약점 진단 및 평가와 로깅</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 짧은 기간동안 진행된 세미 프로젝트입니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 프로젝트 개요&lt;/a&gt;&lt;/p&gt;
 
@@ -3694,9 +3728,7 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     
       <item>
         <title>[Project] GCP를 활용한 웹사이트 구축과 모너터링 및 부하 테스트</title>
-        <description>&lt;p&gt;본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 GCP(Google Cloud Platform)를 공부하며 짧은 기간 진행된 토이 프로젝트입니다.&lt;/p&gt;
-
-&lt;p&gt;구현 과정 및 설정까지 작성하여 글이 다소 길 수 있지만 하나의 프로젝트로 진행되어 포스팅을 따로 나누지 않았습니다.&lt;/p&gt;
+        <description>&lt;p&gt;구현 과정 및 설정까지 작성하여 포스팅이 다소 길지만, 프로젝트성으로 진행되어 포스팅을 따로 나누지 않았습니다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -4781,7 +4813,11 @@ $ helm install argocd argo/argo-cd -f ./values.yaml&lt;/p&gt;
     
       <item>
         <title>[Project] ssustack_installer</title>
-        <description>&lt;p&gt;본 프로젝트는 숭실대학교에서 김명호 교수님의 지도하에 진행 된 프로젝트입니다.&lt;/p&gt;
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;본 프로젝트는 2017년 숭실대학교에서 김명호 교수님의 지도하에 진행되었습니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;ssustack_installer&quot;&gt;ssustack_installer&lt;/h2&gt;
 
@@ -4959,7 +4995,11 @@ $ ./app.sh
     
       <item>
         <title>[Project] ssustack</title>
-        <description>&lt;p&gt;본 프로젝트는 숭실대학교에서 김명호 교수님, 김영종 교수님의 지도하에 진행되었습니다.&lt;/p&gt;
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;본 프로젝트는 2017년 숭실대학교에서 김명호 교수님의 지도하에 진행되었습니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;ssustack&quot;&gt;ssustack&lt;/h2&gt;
 

@@ -1,12 +1,4 @@
-I"�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
-
-<p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
-
-<blockquote>
-  <p><strong>본 포스트의 내용은 프로젝트 도중 작성되어 추후 변경될 수 있음을 알립니다.</strong></p>
-</blockquote>
-
-<hr />
+I"t�<hr />
 
 <h2 id="목차">목차</h2>
 
@@ -15,22 +7,6 @@
 <p><a href="#list1_1">   1.1. SANS DevSecOps Best Practice</a></p>
 
 <p><a href="#list1_2">   1.2. Pre-Commit 단계</a></p>
-
-<p><a href="#list1_3">   1.3. Commit 단계</a></p>
-
-<p><a href="#list2">2. SAST(Static Application Security Testing) 적용</a></p>
-
-<p><a href="#list2_1">   2.1. OWASP Dependency Check</a></p>
-
-<p><a href="#list2_2">   2.2. SpotBugs</a></p>
-
-<p><a href="#list2_3">   2.3. CheckStyle</a></p>
-
-<p><a href="#list2_4">   2.4. PMD(Programing Mistake Detector)</a></p>
-
-<p><a href="#list2_5">   2.5. SonarQube</a></p>
-
-<p><a href="#list2_6">   2.6. Anchore</a></p>
 
 <p><br /></p>
 
@@ -196,19 +172,37 @@
   <li>
     <p><strong>OWASP Dependency Check</strong>   <a name="list2_1"></a></p>
 
-    <p>Jenkins 파이프라인에서 OWASP Dependency Check를 수행하기 위해 Jenkins 인스턴스에</p>
+    <p>Jenkins 파이프라인에서 OWASP Dependency Check를 수행하기 위해 Jenkins 인스턴스에 OWASP Dependency Check를 설치하고 실행할 수 있는 환경을 만들어줍니다.</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>root@jenkins ~]# wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
-  <span class="o">[</span>root@jenkins ~]# yum <span class="nt">-y</span> <span class="nb">install </span>unzip
-  <span class="o">[</span>root@jenkins ~]# unzip dependency-check-5.2.4-release.zip
-  <span class="o">[</span>root@jenkins ~]# <span class="nb">mv </span>dependency-check/ /var/lib/jenkins
-  <span class="o">[</span>root@jenkins ~]# /var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--purge</span>
-  <span class="o">[</span>INFO] Unable to purge database<span class="p">;</span> the database file does not exist: /var/lib/jenkins/dependency-check/data/odc.mv.db
-
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
+  <span class="nv">$ </span>unzip dependency-check-5.2.4-release.zip
+  <span class="nv">$ </span><span class="nb">mv </span>dependency-check/ /var/lib/jenkins
 </code></pre></div>    </div>
+
+    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--scan</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> <span class="nt">--format</span> HTML <span class="nt">--out</span> /var/lib/jenkins/reports/dependency-check-report <span class="nt">--prettyPrint</span>
+</code></pre></div>    </div>
+
+    <p>스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행합니다.</p>
+
+    <p>–scan 옵션에 <code class="highlighter-rouge">pwd</code> 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 <code class="highlighter-rouge">/var/lib/jenkins/reports/dependency-check-report</code>애 스캔하여 출력되는 보고서 파일이 저장됩니다.</p>
+
+    <p>–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 <code class="highlighter-rouge">HTML</code> 파일로 보고서가 생성되도록 하였습니다.</p>
+
+    <blockquote>
+      <p>참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결되었습니다.</p>
+    </blockquote>
+
     <p><br /></p>
   </li>
-  <li><strong>SpotBugs</strong>   <a name="list2_2"></a>
+  <li>
+    <p><strong>SpotBugs</strong>   <a name="list2_2"></a></p>
+
+    <p>Maven에서는 <code class="highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.</p>
+
+    <p>pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
+
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;com.github.spotbugs&lt;/groupId&gt;
       &lt;artifactId&gt;spotbugs-maven-plugin&lt;/artifactId&gt;

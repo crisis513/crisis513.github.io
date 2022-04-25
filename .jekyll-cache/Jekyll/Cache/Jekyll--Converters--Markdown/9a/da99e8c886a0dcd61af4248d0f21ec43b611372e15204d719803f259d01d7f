@@ -1,4 +1,4 @@
-I"�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
+I"p�<p>본 프로젝트는 클라우드컴퓨팅연구조합(CCCR)에서 클라우드 네이티브 환경에서 DevSecOps 툴 체인 파이프라인을 구축하는 프로젝트입니다.</p>
 
 <p>9월에 시작하여 11월 27일까지 진행되고 현재 진행 중이며, 내용이 긴 만큼 여러 포스트를 나눠 기록하고자 합니다.</p>
 
@@ -15,22 +15,6 @@
 <p><a href="#list1_1">   1.1. SANS DevSecOps Best Practice</a></p>
 
 <p><a href="#list1_2">   1.2. Pre-Commit 단계</a></p>
-
-<p><a href="#list1_3">   1.3. Commit 단계</a></p>
-
-<p><a href="#list2">2. SAST(Static Application Security Testing) 적용</a></p>
-
-<p><a href="#list2_1">   2.1. OWASP Dependency Check</a></p>
-
-<p><a href="#list2_2">   2.2. SpotBugs</a></p>
-
-<p><a href="#list2_3">   2.3. CheckStyle</a></p>
-
-<p><a href="#list2_4">   2.4. PMD(Programing Mistake Detector)</a></p>
-
-<p><a href="#list2_5">   2.5. SonarQube</a></p>
-
-<p><a href="#list2_6">   2.6. Anchore</a></p>
 
 <p><br /></p>
 
@@ -222,6 +206,10 @@
   </li>
   <li>
     <p><strong>SpotBugs</strong>   <a name="list2_2"></a></p>
+
+    <p>Maven에서는 <code class="highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술합니다.</p>
+
+    <p>pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 합니다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
       &lt;groupId&gt;com.github.spotbugs&lt;/groupId&gt;

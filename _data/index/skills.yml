@@ -2,5 +2,5 @@
 
 label: Ability
 id : cs
-aspects: GitHub, Bash, Java, Python, Cloud Computing, Blockchain, DevOps, Security
-percentage: 60, 75, 65, 75, 75, 60, 80, 65
+aspects: Linux, Python, Cloud Computing, Kubernetes, DevOps, IaC, Security, Bash
+percentage: 85, 80, 80, 85, 75, 70, 60, 80

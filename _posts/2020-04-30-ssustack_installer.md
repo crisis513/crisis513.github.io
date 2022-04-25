@@ -9,7 +9,9 @@ tags: [son,blog,project,ssustack,installer]
 icon: icon-html
 ---
 
-본 프로젝트는 숭실대학교에서 김명호 교수님의 지도하에 진행 된 프로젝트입니다.
+> **본 프로젝트는 2017년 숭실대학교에서 김명호 교수님의 지도하에 진행되었습니다.**
+
+---
 
 ## ssustack_installer
 

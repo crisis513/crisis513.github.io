@@ -12,6 +12,12 @@
 - name: Patent
   href: /patent/
 
+- name: Error-Report
+  href: /error-report/
+
+- name: Idle-Talk
+  href: /idle-talk/
+
 # - name: Infra
 #   href: /infra/
 

@@ -31,31 +31,46 @@
   icon: fa-plus-square
   present: true
 
-- name:
-    detail: 한국클라우드컴퓨팅연구조합(CCCR)
-    i18n: company_c
+# - name:
+#     detail: 한국클라우드컴퓨팅연구조합(CCCR)
+#     i18n: company_c
+#   desc:
+#     detail: CCCR 기관에서 '클라우드 네이티브 환경의 DevSecOps 엔지니어 양성과정'이라는 교육 과정을 이수
+#     i18n: company_c_desc
+#   date:
+#     detail: 2020.06 ~ 2020.11
+#     i18n: company_c_date
+#   job:
+#     detail: Student
+#     i18n: company_c_job
+#   icon: fa-plus-square
+#   present: true
+
+- name: 
+    detail: 병역 복무
+    i18n: company_d
   desc:
-    detail: CCCR 기관에서 '클라우드 네이티브 환경의 DevSecOps 엔지니어 양성과정'이라는 교육 과정을 이수
-    i18n: company_c_desc
+    detail: 육군 종합정비창 정보통신실 빅데이터분석반 소속으로 빅데이터분석병이라는 직책을 맡아 BI(Business Intelligence) 업무를 주로 하였고, 현재는 병장 만기전역
+    i18n: company_d_desc
   date:
-    detail: 2020.06 ~ 2020.11
-    i18n: company_c_date
+    detail: 2020.11.09 ~ 2022.05.08
+    i18n: company_d_date
   job:
-    detail: Student
-    i18n: company_c_job
+    detail: Soldier
+    i18n: company_d_job
   icon: fa-plus-square
   present: true
 
 - name: 
-    detail: 대한민국 육군
+    detail: 자유의 몸
     i18n: company_d
   desc:
-    detail: 나라의 부름을 받아 국방의 의무를 수행하러 갈 예정
+    detail: 취업 준비 및 사회 적응 중
     i18n: company_d_desc
   date:
-    detail: 2020.11.09 ~
+    detail: 2022.05.08 ~
     i18n: company_d_date
   job:
-    detail: Soldier
+    detail: Jobless
     i18n: company_d_job
   icon: fa-plus-square
