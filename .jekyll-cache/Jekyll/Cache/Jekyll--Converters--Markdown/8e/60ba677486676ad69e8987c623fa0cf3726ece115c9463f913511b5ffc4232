@@ -1,4 +1,4 @@
-I"r	<h3 id="크롤링-관련-용어-정리">크롤링 관련 용어 정리</h3>
+I"_	<h3 id="크롤링-관련-용어-정리">크롤링 관련 용어 정리</h3>
 <ul>
   <li>스크랩핑(scraping) : 데이터를 수집하는 행위</li>
   <li>크롤링(Crawling) : 조직적 자동화된 방법으로 월드와이드웹을 탐색 하는 것</li>
@@ -58,7 +58,7 @@ time.sleep(1)</p>
     global num
     btns = driver.find_elements_by_xpath(‘//<em>[@id=”grid”]/div[</em>]’)</p>
 
-  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for btn in btns:
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for btn in btns:
     print(btn.text, end='\t')
     if btn.text == str(num):
         btn.click()
