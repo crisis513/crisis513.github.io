@@ -1,0 +1,324 @@
+I"�D<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. Jeknins와 Slack 연동</a></p>
+
+<p><a href="#list1_1">   1.1. Slack 설정</a></p>
+
+<p><a href="#list1_2">   1.2. Jenkins 설정</a></p>
+
+<p><a href="#list2">2. 멀티 브랜치 파이프라인 사용</a></p>
+
+<p><a href="#list2_1">   2.1. 멀티 브랜치 설정</a></p>
+
+<p><a href="#list2_2">   2.2. 멀티 브랜치 테스트</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-jeknins와-slack-연동---"><span style="color:purple"><strong>1. Jeknins와 Slack 연동</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Slack 설정</strong>   <a name="list1_1"></a></p>
+
+    <p>먼저 Jenkins 파이프라인의 실행 결과에 대한 메시지를 받아보기 위해 Slack에서 사용할 워크스페이스와 채널을 생성해줍니다.</p>
+
+    <p>워스크페이스와 채널을 생성하고나면 <code class="highlighter-rouge">https://YOUR_WORKSPACE.slack.com/apps</code> URL에 접속해서 Slack에 추가 할 앱으로 <code class="highlighter-rouge">Jenkins CI</code>를 검색합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_1.png" alt="add_jenkins_ci" width="461" height="435" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Jenkins CI 앱 추가</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p><code class="highlighter-rouge">Slack에 추가</code> 버튼을 누르고 앞서 생성해둔 채널을 선택하여 해당 채널에서 Jenkins의 메시지를 받아 볼 수 있도록 설정합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_2.png" alt="jenkins_ci_configure" width="632" height="569" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Jenkins CI 구성 편집</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>정상적으로 Jenkins CI 앱이 추가되면 <code class="highlighter-rouge">구성</code> 탭을 눌러 <code class="highlighter-rouge">구성 편집</code>에 들어가면 위의 [그림 2]와 같은 화면을 볼 수 있습니다.</p>
+
+    <p>아래쪽에 보면 토큰이 발급되어 있는 것을 볼 수 있을텐데, <strong>이 토큰은 나중에 Jenkins credentials을 생성할 때 사용</strong>됩니다.</p>
+
+    <p>여기까지 설정했다면 Slack에서의 설정은 끝난 것입니다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins 설정</strong>   <a name="list1_2"></a></p>
+
+    <p>다음으로 Jenkins에서 Slack과 연동하는 방법을 알아보겠습니다.</p>
+
+    <p>먼저 Jenkins 설정에서 Slack 플러그인을 설치해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_3.png" alt="install_slack_plugin" width="667" height="252" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] Slack 플러그인 설치</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Jenkins에서 Slack 플러그인을 설치하고나면 <code class="highlighter-rouge">시스템 설정</code> 탭의 맨 아래쪽에 Slack 설정 공간이 있습니다.</p>
+
+    <p>다음 [그림 4]와 같이 워크스페이스와 Credentials, 채널 ID를 정확하게 기입해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_4.png" alt="jenkins_slack_configuration" width="713" height="275" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 4] Jenkins에서 Slack 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Credentials의 경우에 옆의 <code class="highlighter-rouge">Add</code> 버튼을 눌러 Slack의 Credentials를 추가할 수 있습니다.</p>
+
+    <p>Credentials를 추가할 때 Kind는 <code class="highlighter-rouge">Secret text</code>로 두고 Secret은 [그림 2]에서 보이는 <code class="highlighter-rouge">토큰</code> 값을 입력해줍니다.</p>
+
+    <p>그런 우측 하단의 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 정상적으로 연동되어 Success 문구가 뜨는지 확인합니다.</p>
+
+    <p><br /></p>
+
+    <p>Jenkins와 Slack이 정상적으로 연동되고나면 다시 파이프라인으로 돌아와서, 파이프라인이 모두 실행되고나서 Slack에 메시지를 보내는 테스트를 진행해보겠습니다.</p>
+
+    <p>파이프라인 스크립트는 아래의 내용을 앞선 포스트에서 사용했던 스크립트에 추가하였습니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  pipeline <span class="o">{</span>
+      environment <span class="o">{</span>
+          SLACK_CHANNEL <span class="o">=</span> <span class="s1">'#send-slack-message-from-jenkins'</span>
+      <span class="o">}</span>
+      ...<span class="o">(</span>중략<span class="o">)</span> 
+      post <span class="o">{</span> 
+          success <span class="o">{</span> 
+              slackSend <span class="o">(</span>channel: SLACK_CHANNEL, color: <span class="s1">'#00FF00'</span>, message: <span class="s2">"SUCCESSFUL: Job '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span> 
+          <span class="o">}</span>
+          failure <span class="o">{</span>
+              slackSend <span class="o">(</span>channel: SLACK_CHANNEL, color: <span class="s1">'#F01717'</span>, message: <span class="s2">"FAILURE: Job '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p>파이프라인을 모두 실행하고 나서 파이프라인이 성공 혹은 실패 상태인지 확인하여 상태에 맞게 Slack 메시지를 보내도록 작성하였습니다.</p>
+
+    <p>성공하면 ‘SUCCESSFUL’이라는 문구와 함께 초록색으로 메시지가 전달될 것이고, 실패하면 ‘FAILURE’이라는 문구와 함께 빨간색으로 메시지가 전달될 것입니다.</p>
+
+    <p>다음 [그림 5]는 파이프라인이 정상적으로 실행되어 Slack으로 메시지가 전달 되었을 경우입니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_5.png" alt="slack_message" width="485" height="183" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 5] Slack 메시지 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-멀티-브랜치-파이프라인-사용---"><span style="color:purple"><strong>2. 멀티 브랜치 파이프라인 사용</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>멀티 브랜치 설정</strong>   <a name="list2_1"></a></p>
+
+    <p>이번에는 Jenkins에서 멀티 브랜치 파이프라인을 설정하는 방법을 알아보겠습니다.</p>
+
+    <p>먼저 Jenkins 시스템 설정에서 다음 [그림 6]과 같이 GitLab 서버에 대해 설정해야 합니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_6.png" alt="gitlab_server_configuration" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 6] Jenkins에서 GitLab 서버 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>그런 다음 Jenkins 홈에서 왼쪽 탭의 <code class="highlighter-rouge">새로운 Item</code>에서 <code class="highlighter-rouge">Multibranch Pipeline</code>을 생성해줍니다.</p>
+
+    <p>멀티 브랜치 파이프라인을 만들 때 Branch Sources 항목에서 <code class="highlighter-rouge">Add Source -&gt; GitLab Project</code>를 눌러 다음 [그림 7]과 같이 설정해줍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_7.png" alt="multibranch_gitlab_configuration" width="653" height="623" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 7] 멀티브랜치 GitLab 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Server는 [그림 6]에서 정상적으로 설정했다면 자동으로 잡혀있을 것이고, Credentials는 CI 설정할 때 만들어두었던 것을 그대로 사용해주시면 됩니다.</p>
+
+    <p>그리고 파이프라인에 연결할 프로젝트를 생성한 계정의 ID를 Owner로 두면 해당 ID에서 관리하고 있는 프로젝트들을 아래 Projects에서 선택할 수 있습니다.</p>
+
+    <p>Behaviours 항목에서 Add 버튼을 눌러 <code class="highlighter-rouge">Filter by name (with wildcards)</code>를 생성해주고, 위에서 선택한 프로젝트에서 파이프라인을 실행할 브랜치들의 이름을 Include에 적어두면 됩니다.</p>
+
+    <p><br /></p>
+
+    <p>멀티 브랜치 파이프라인은 각 브랜치들에 Jenkinsfile을 생성하여 Jenkinsfile에서 스크립트를 작성해두어야 합니다.</p>
+
+    <p><strong>master 브랜치에서는 CI/CD 파이프라인이 모두 동작하여 빌드부터 배포까지 모두 진행되도록 그대로 두었고,</strong></p>
+
+    <p><strong>release 브랜치에서는 CI 파이프라인만 동작하도록 아래와 같이 작성하였습니다.</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  pipeline <span class="o">{</span>
+      environment <span class="o">{</span>
+          registry <span class="o">=</span> <span class="s2">"crisis513/flask-app"</span>
+          registryCredential <span class="o">=</span> <span class="s1">'crisis513'</span>
+          dockerImage <span class="o">=</span> <span class="s1">''</span>
+          releaseName <span class="o">=</span> <span class="s2">"flask-app"</span>
+          helmChartRepo <span class="o">=</span> <span class="s2">"flask-kubernetes-helm"</span>
+          release_version <span class="o">=</span> <span class="s1">'latest'</span>
+          SLACK_CHANNEL <span class="o">=</span> <span class="s1">'#send-slack-message-from-jenkins'</span>
+      <span class="o">}</span>
+
+      agent <span class="o">{</span>
+          label <span class="s2">"jenkins-slave"</span>
+      <span class="o">}</span>
+      stages <span class="o">{</span>
+          stage<span class="o">(</span><span class="s1">'Cloning our Git'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  git <span class="s1">'http://GITLAB_SERVER_IP:8001/root/flask-app.git'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Building docker image'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      dockerImage <span class="o">=</span> docker.build registry + <span class="s2">":</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Deploy docker image'</span><span class="o">)</span> <span class="o">{</span>
+              when <span class="o">{</span>
+                  branch <span class="s1">'master'</span>
+              <span class="o">}</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      docker.withRegistry<span class="o">(</span> <span class="s1">''</span>, registryCredential <span class="o">)</span> <span class="o">{</span>
+                          dockerImage.push<span class="o">()</span>
+                      <span class="o">}</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Cleaning up'</span><span class="o">)</span> <span class="o">{</span>
+              when <span class="o">{</span>
+                  branch <span class="s1">'master'</span>
+              <span class="o">}</span>
+              steps <span class="o">{</span>
+                  sh <span class="s2">"docker rmi </span><span class="nv">$registry</span><span class="s2">:</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Deploy image to kubernetes'</span><span class="o">)</span> <span class="o">{</span>
+              when <span class="o">{</span>
+                  branch <span class="s1">'master'</span>
+              <span class="o">}</span>
+              steps <span class="o">{</span>
+                  sh <span class="s2">"""
+                      helm lint </span><span class="k">${</span><span class="nv">helmChartRepo</span><span class="k">}</span><span class="s2">
+                      helm upgrade </span><span class="k">${</span><span class="nv">releaseName</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">helmChartRepo</span><span class="k">}</span><span class="s2">
+                  """</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+      post <span class="o">{</span> 
+          success <span class="o">{</span> 
+              slackSend <span class="o">(</span>channel: SLACK_CHANNEL, color: <span class="s1">'#00FF00'</span>, message: <span class="s2">"SUCCESSFUL: Job '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span> 
+          <span class="o">}</span> 
+          failure <span class="o">{</span> 
+              slackSend <span class="o">(</span>channel: SLACK_CHANNEL, color: <span class="s1">'#FF0000'</span>, message: <span class="s2">"FAILED: Job '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span> 
+          <span class="o">}</span>
+      <span class="o">}</span> 
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>멀티 브랜치 테스트</strong>   <a name="list2_2"></a></p>
+
+    <p>release 파이프라인을 실행시켜 정상적으로 동작하면 다음 [그림 8]과 같은 화면을 볼 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_5_8.png" alt="release_pipeline_test" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 8] release 브랜치 파이프라인 테스트</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Git clone하여 도커 이미지를 빌드하는 부분까지는 정상 동작하지만 도커 이미지를 배포하고 쿠버네티스 클러스터에 배포하기까지의 과정은 master 브랜치에서만 동작하도록 설정하였기 때문에 생락된 것을 확인할 수 있습니다.</p>
+
+    <p><br /></p>
+
+    <p>다음 포스팅부터는 지금까지 설정해 둔 DevOps 파이프라인에서 정적/동적 분석을 통해 안전한 배포를 할 수 있도록 보안에 대한 내용을 다뤄보도록 하겠습니다.</p>
+  </li>
+</ul>
+:ET

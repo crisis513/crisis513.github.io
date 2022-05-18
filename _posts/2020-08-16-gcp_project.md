@@ -9,7 +9,7 @@ tags: [son,blog,project,gcp]
 icon: icon-html
 ---
 
-구현 과정 및 설정까지 작성하여 포스팅이 다소 길지만, 프로젝트성으로 진행되어 포스팅을 따로 나누지 않았습니다. 
+구현 과정 및 설정까지 작성하여 포스팅이 다소 길지만, 프로젝트성으로 진행되어 포스팅을 따로 나누지 않았음 
 
 ---
 
@@ -51,13 +51,13 @@ icon: icon-html
 
 - **프로젝트 목적**   <a name="list1_1"></a>
 
-    본 프로젝트는 GCP의 전반적인 환경을 이해하고 흔하게 사용할 수 있는 기능들을 사용하여 GCP 환경에서 워드프레스(Wordpress)를 구축합니다.
+    본 프로젝트는 GCP의 전반적인 환경을 이해하고 흔하게 사용할 수 있는 기능들을 사용하여 GCP 환경에서 워드프레스(Wordpress)를 구축한다.
 
-    구축된 워드프레스 서버를 Google Cloud Console을 사용해 서비스와 상호작용하는 방법 등 GCP의 기본적인 기능들을 사용해보는 것을 목표로 진행된 프로젝트입니다.
+    구축된 워드프레스 서버를 Google Cloud Console을 사용해 서비스와 상호작용하는 방법 등 GCP의 기본적인 기능들을 사용해보는 것을 목표로 진행된 프로젝트이다.
 
     <br>
 
-    프로젝트 진행 당시에 notion을 통해 정리했었던 프로젝트 진행 순서는 다음 [그림 1]과 같습니다.
+    프로젝트 진행 당시에 notion을 통해 정리했었던 프로젝트 진행 순서는 다음 [그림 1]과 같다.
 
     | ![What_we_did](/static/assets/img/landing/project/gcp_toyproject_1.png){: width="560" height="310"} |
     |:--:| 
@@ -67,9 +67,9 @@ icon: icon-html
 
 - **프로젝트 아키텍처**   <a name="list1_2"></a>
 
-    웹서비스는 CentOS 인스턴스를 생성하여 워드프레스를 구축하였고, 구축한 웹서비스에 GCP의 기능을 최대한 활용하는 형태로 프로젝트를 진행했습니다.
+    웹서비스는 CentOS 인스턴스를 생성하여 워드프레스를 구축하였고, 구축한 웹서비스에 GCP의 기능을 최대한 활용하는 형태로 프로젝트를 진행했다.
 
-    다음 [그림 2]는 본 프로젝트의 구조를 쉽게 나타낼 수 있도록 아키텍처를 그린 것입니다.
+    다음 [그림 2]는 본 프로젝트의 구조를 쉽게 나타낼 수 있도록 아키텍처를 그린 것이다.
 
     | ![project_architecture](/static/assets/img/landing/project/gcp_toyproject_2.png){: width="850" height="470"} |
     |:--:| 
@@ -77,9 +77,9 @@ icon: icon-html
 
     <br>
 
-    위와 같이 Compute Engine을 통한 인스턴스 생성, 로드 밸런싱, Cloud SQL 및 Bucket 연동, Stack Driver를 통한 로깅과 모니터링하는 부분까지 진행하였습니다.
+    위와 같이 Compute Engine을 통한 인스턴스 생성, 로드 밸런싱, Cloud SQL 및 Bucket 연동, Stack Driver를 통한 로깅과 모니터링하는 부분까지 진행했다.
 
-    Cloud DNS를 이용하여 도메인을 설정해보고 싶었지만, 도메인을 구입하고 등록하는 과정이 필요하여 생략하였습니다.
+    Cloud DNS를 이용하여 도메인을 설정해보고 싶었지만, 도메인을 구입하고 등록하는 과정이 필요하여 생략했다.
 
     <br>
 
@@ -91,9 +91,9 @@ icon: icon-html
 
 - **Cloud SQL 구성**   <a name="list2_1"></a>
 
-    GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있습니다. 
+    GCP 콘솔 페이지에 접속하면 상단 바에 제품 및 리소스를 검색할 수 있는 텍스트 박스가 있다. 
 
-    해당 검색창에서 `Cloud SQL Admin API`를 입력하여 다음 [그림 3]에 보이는 **사용** 버튼을 눌러 **Cloud SQL를 활성화** 시켜줍니다.
+    해당 검색창에서 `Cloud SQL Admin API`를 입력하여 다음 [그림 3]에 보이는 **사용** 버튼을 눌러 **Cloud SQL를 활성화** 시켜준다.
 
     | ![enable_cloudsql](/static/assets/img/landing/project/gcp_toyproject_3.png){: width="320" height="132"} |
     |:--:| 
@@ -101,7 +101,7 @@ icon: icon-html
 
     <br>
 
-    Cloud SQL Admin API를 활성화 했다면 GCP 콘솔 페이지의 왼쪽 상단에 있는 탐색 메뉴에서 **[SQL] 탭**을 눌러 다음 [그림 4]와 같이 **Cloud SQL 인스턴스를 생성**했습니다.
+    Cloud SQL Admin API를 활성화 했다면 GCP 콘솔 페이지의 왼쪽 상단에 있는 탐색 메뉴에서 **[SQL] 탭**을 눌러 다음 [그림 4]와 같이 **Cloud SQL 인스턴스를 생성**했다.
 
     | ![create_cloudsql_instance](/static/assets/img/landing/project/gcp_toyproject_4.png){: width="450" height="552"} |
     |:--:| 
@@ -109,11 +109,11 @@ icon: icon-html
 
     <br>
 
-    본 프로젝트에서는 MySQL 5.7을 선택하여 데이터베이스를 생성하였고, 리전은 성능 향상을 위해 비교적 가까운 **서울 리전**을 선택하였습니다. 
+    본 프로젝트에서는 MySQL 5.7을 선택하여 데이터베이스를 생성하였고, 리전은 성능 향상을 위해 비교적 가까운 **서울 리전**을 선택했다. 
 
-    다음으로 GCP 콘솔 기능인 Cloud Shell 화면에서 웹서버에서 사용할 데이터베이스의 설정을 진행합니다.
+    다음으로 GCP 콘솔 기능인 Cloud Shell 화면에서 웹서버에서 사용할 데이터베이스의 설정을 진행한다.
 
-    ```mysql
+    ```bash
     crisis51526@cloudshell:~ (cccr-gcp-project)$ gcloud sql connect mysql-wordpress --user=root --quiet
     Allowlisting your IP for incoming connection for 5 minutes...done.
     Connecting to database with SQL user [root].Enter password: Input Your Password
@@ -146,9 +146,9 @@ icon: icon-html
 
 - **VM 인스턴스 생성 및 워드프레스 구축**   <a name="list2_2"></a>
 
-    웹서버에 연동할 Cloud SQL의 구성이 모두 끝난 후에 워드프레스를 설치할 VM 인스턴스를 생성합니다.
+    웹서버에 연동할 Cloud SQL의 구성이 모두 끝난 후에 워드프레스를 설치할 VM 인스턴스를 생성한다.
 
-    탐색 메뉴에서 **[Compute Engine] - [VM 인스턴스]** 탭을 눌러 **만들기** 버튼을 클릭하여 다음 [그림 5]와 같이 인스턴스를 생성합니다.
+    탐색 메뉴에서 **[Compute Engine] - [VM 인스턴스]** 탭을 눌러 **만들기** 버튼을 클릭하여 다음 [그림 5]와 같이 인스턴스를 생성한다.
 
     | ![create_instance](/static/assets/img/landing/project/gcp_toyproject_5.png){: width="450" height="1040"} |
     |:--:| 
@@ -156,15 +156,15 @@ icon: icon-html
     
     <br>
 
-    먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - `asia-northeast3-a`)을 선택하도록 합니다.
+    먼저, 인스턴스를 생성할 때 앞서 생성한 Cloud SQL 인스턴스와 같은 리전(서울 - `asia-northeast3-a`)을 선택하도록 한다.
 
-    flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 `n1-standard-1`을 선택하였고, 
+    flavor는 실제 서비스를 운영할 목적이 아니기에 VM 사양이 낮은 `n1-standard-1`을 선택했고, 
 
-    OS는 `CentOS 7`, 웹서버의 `HTTP 트래픽을 허용`해주도록 체크하였습니다.
+    OS는 `CentOS 7`, 웹서버의 `HTTP 트래픽을 허용`해주도록 체크했다.
 
     <br>
 
-    생성한 인스턴스에 워드프레스를 설치하기 위해 터미널에 입력한 명령어는 다음과 같습니다.
+    생성한 인스턴스에 워드프레스를 설치하기 위해 터미널에 입력한 명령어는 다음과 같다.
 
      ```bash
     [crisis51526@instance-wordpress ~]$ sudo su -
@@ -229,7 +229,7 @@ icon: icon-html
 
     워드프레스를 설치한 인스턴스에서 Cloud SQL Proxy를 통해 Cloud SQL에 연결하기 위해서는 권한이 필요하다.
 
-    탐색 메뉴에서 **[IAM 및 관리자] - [IAM]** 탭을 눌러 다음 [그림 6]와 같이 새로운 구성원을 추가합니다.
+    탐색 메뉴에서 **[IAM 및 관리자] - [IAM]** 탭을 눌러 다음 [그림 6]와 같이 새로운 구성원을 추가한다.
 
     | ![iam_create](/static/assets/img/landing/project/gcp_toyproject_6.png){: width="800" height="627"} |
     |:--:| 
@@ -237,9 +237,9 @@ icon: icon-html
 
     <br>
 
-    역할에서 **Cloud SQL -> Cloud SQL 편집자**를 선택하고 서비스 키도 생성해줍니다.
+    역할에서 **Cloud SQL -> Cloud SQL 편집자**를 선택하고 서비스 키도 생성해준다.
 
-    ```python
+    ```json
     {
         "type": "service_account",
         "project_id": "cccr-gcp-project",
@@ -254,11 +254,11 @@ icon: icon-html
     }
     ```
 
-    생성된 서비스 키의 샘플입니다. Cloud SQL Proxy를 통해 Cloud SQL에 접속할 때 필요합니다.
+    생성된 서비스 키의 샘플입니다. Cloud SQL Proxy를 통해 Cloud SQL에 접속할 때 필요하다.
 
     <br>
 
-    그리고 다음 [그림 7]과 같이 Cloud SQL 인스턴스에서 접근을 허용할 네트워크를 추가해주어야 합니다.
+    그리고 다음 [그림 7]과 같이 Cloud SQL 인스턴스에서 접근을 허용할 네트워크를 추가해주어야 한다.
 
     | ![cloudsql_configuration](/static/assets/img/landing/project/gcp_toyproject_7.png){: width="650" height="442"} |
     |:--:| 
@@ -268,11 +268,11 @@ icon: icon-html
 
     연결 방식을 **공개 IP**에 체크하여 프록시를 통해 Cloud SQL에 접근할 수 있도록 설정하고,
     
-    아래쪽의 네트워크 추가 버튼을 눌러 워드프레스 **웹서버의 공개 IP 주소를 등록**합니다.
+    아래쪽의 네트워크 추가 버튼을 눌러 워드프레스 **웹서버의 공개 IP 주소를 등록**한다.
 
     <br>
 
-    다음은 워드프레스 웹서버에서 Cloud SQL에 접속하는 과정을 정리한 명령어입니다.
+    다음은 워드프레스 웹서버에서 Cloud SQL에 접속하는 과정을 정리한 명령어이다.
 
     ```bash
     [root@instance-wordpress wordpress]# yum -y install mysql
@@ -388,15 +388,15 @@ icon: icon-html
     define( 'DB_HOST', 'localhost:/cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress' );
     ```
 
-    Cloud SQL Proxy가 정상적으로 동작하는지 테스트 한 후에 데몬을 생성하여 cloudsqlproxy 서비스가 실행되도록 했습니다.
+    Cloud SQL Proxy가 정상적으로 동작하는지 테스트 한 후에 데몬을 생성하여 cloudsqlproxy 서비스가 실행되도록 했다.
     
-    wordpress-key.json 파일의 내용에는 위에서 wpmanager 서비스 계정의 키를 만들 때 생성된 json 내용을 입력하면 됩니다.
+    wordpress-key.json 파일의 내용에는 위에서 wpmanager 서비스 계정의 키를 만들 때 생성된 json 내용을 입력하면 된다.
 
-    워드프레스의 설정파일에서 데이터베이스 설정 값에 cloudsqlproxy 서비스로 생겨난 소켓 파일의 경로를 적어주고 정상적으로 연결되는지 확인합니다.
+    워드프레스의 설정파일에서 데이터베이스 설정 값에 cloudsqlproxy 서비스로 생겨난 소켓 파일의 경로를 적어주고 정상적으로 연결되는지 확인한다.
 
     <br>
 
-    Cloud SQL에 정상적으로 연결되었다면 워드프레스를 설치하고 워드프레스 데이터베이스와 테이블이 정상적으로 생성되었는지 확인하도록 합니다.
+    Cloud SQL에 정상적으로 연결되었다면 워드프레스를 설치하고 워드프레스 데이터베이스와 테이블이 정상적으로 생성되었는지 확인하도록 한다.
 
     | ![wordpress_installation](/static/assets/img/landing/project/gcp_toyproject_8.png){: width="750" height="554"} |
     |:--:| 
@@ -410,7 +410,7 @@ icon: icon-html
 
     <br>
 
-    워드프레스 설치 및 테마 적용이 정상적으로 이루어진 후에 Cloud SQL에서 워드프레스 데이터베이스의 테이블이 정상적으로 생성되었는지 확인합니다.
+    워드프레스 설치 및 테마 적용이 정상적으로 이루어진 후에 Cloud SQL에서 워드프레스 데이터베이스의 테이블이 정상적으로 생성되었는지 확인한다.
 
     ```python
     [root@instance-wordpress ~]# mysql -u root -p -S /cloudsql/cccr-gcp-project:asia-northeast3:mysql-wordpress
@@ -452,13 +452,13 @@ icon: icon-html
 
 - **관리형 로드 밸런싱 구성**   <a name="list2_4"></a>
 
-    GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 합니다. 인스턴스 그룹은 **오토 스케일링(Auto-scaling)을 위한** `관리형 인스턴스 그룹`과 **템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는** `비관리형 인스턴스 그룹`으로 나뉩니다.
+    GCLB(Google Cloud Load Balancing)을 구성하기 위해서는 기본적으로 대상으로 할 인스턴스 그룹이 존재해야 한다. 인스턴스 그룹은 **오토 스케일링(Auto-scaling)을 위한** `관리형 인스턴스 그룹`과 **템플릿을 사용하지 않고 직접 VM 인스턴스를 추가할 수 있는** `비관리형 인스턴스 그룹`으로 나뉜다.
 
     <br>
 
-    본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축합니다.
+    본 프로젝트에서는 관리형 인스턴스 그룹을 구성하고 부하 분산기를 생성하여 로스 밸런싱 환경을 구축한다.
 
-    먼저 VM 인스턴스에 대한 `스냅샷을 생성`하고, 생성한 스냅샷으로 `이미지를 생성`합니다. 
+    먼저 VM 인스턴스에 대한 `스냅샷을 생성`하고, 생성한 스냅샷으로 `이미지를 생성`한다. 
 
     | ![create_snapshot](/static/assets/img/landing/project/gcp_toyproject_10.png){: width="400" height="566"} |
     |:--:| 
@@ -472,9 +472,9 @@ icon: icon-html
 
     <br>
 
-    이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 `인스턴스 템플릿을 생성`합니다. 
+    이미지까지 정상적으로 생성되었다면 다음으로 관리형 인스턴스 그룹을 만들기 전에 다음 [그림 12]과 같이 `인스턴스 템플릿을 생성`한다. 
     
-    그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 합니다.
+    그룹에 속한 VM의 종류가 여러 개라면 모든 VM의 운영체제의 이미지를 지정해야 한다.
 
     | ![create_instance_template](/static/assets/img/landing/project/gcp_toyproject_12.png){: width="400" height="881"} |
     |:--:| 
@@ -482,7 +482,7 @@ icon: icon-html
 
     <br>
 
-    인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 `관리형 인스턴스 그룹을 생성`합니다.
+    인스턴스 템플릿을 정상적으로 생성한 후에 다음 [그림 13]과 같이 `관리형 인스턴스 그룹을 생성`한다.
 
     | ![create_instance_group](/static/assets/img/landing/project/gcp_toyproject_13.png){: width="700" height="1114"} |
     |:--:| 
@@ -490,15 +490,15 @@ icon: icon-html
 
     <br>
 
-    인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났습니다. 
+    인스턴스 그룹까지 정상적으로 생성되었다면 부하 분산기를 생성할 준비가 끝났다. 
 
-    탐색 메뉴에서 **[네트워크 서비스] - [부하 분산]** 탭에 들어와서 `부하 분산기 만들기`를 눌러줍니다.
+    탐색 메뉴에서 **[네트워크 서비스] - [부하 분산]** 탭에 들어와서 `부하 분산기 만들기`를 눌러준다.
 
-    HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 `HTTP(S) 부하 분산기`를 선택하고 `인터넷 트래픽을 VM으로 분산`을 눌러줍니다.
+    HTTP(S), TCP, UDP에 대한 부하 분산기를 만들 수 있으며 본 프로젝트에서는 워드프레스를 통한 웹서버 인스턴스를 부하 분산 시켜주기 위해 `HTTP(S) 부하 분산기`를 선택하고 `인터넷 트래픽을 VM으로 분산`을 눌러준다.
 
     <br>
 
-    다음 단계로 넘어오면 백엔드 서비스와 프런트엔드 서비스를 생성하는 화면으로 넘어오게 됩니다.
+    다음 단계로 넘어오면 백엔드 서비스와 프런트엔드 서비스를 생성하는 화면으로 넘어오게 된다.
 
 
     | ![create_lb_backend](/static/assets/img/landing/project/gcp_toyproject_14.png){: width="400" height="589"} |
@@ -507,11 +507,11 @@ icon: icon-html
 
     <br>
 
-    기존에 만들어둔 백엔드 서비스가 없기 때문에 새로운 서비스 생성을 선택하고 백앤드 서비스의 이름과 앞에서 생성한 인스턴스 그룹을 선택하면 됩니다. 다음으로는 로드밸런서에서 들어온 트래픽을 인스턴스 그룹의 인스턴스들의 어느 포트로 전달할 것인지를 포트 번호에 정의하는데, 여기서는 HTTP 트래픽을 전달하는 것이기 때문에 80을 선택합니다.
+    기존에 만들어둔 백엔드 서비스가 없기 때문에 새로운 서비스 생성을 선택하고 백앤드 서비스의 이름과 앞에서 생성한 인스턴스 그룹을 선택하면 된다. 다음으로는 로드밸런서에서 들어온 트래픽을 인스턴스 그룹의 인스턴스들의 어느 포트로 전달할 것인지를 포트 번호에 정의하는데, 여기서는 HTTP 트래픽을 전달하는 것이기 때문에 80을 선택한다.
 
     <br>
     
-    백엔드 서비스를 생성할 때 상태 확인(Health check)을 선택하는 항목이 있는데 마찬가지로 기존에 만들어둔 상태 확인이 없기 때문에 새로 생성합니다.
+    백엔드 서비스를 생성할 때 상태 확인(Health check)을 선택하는 항목이 있는데 마찬가지로 기존에 만들어둔 상태 확인이 없기 때문에 새로 생성한다.
 
     | ![create_lb_check](/static/assets/img/landing/project/gcp_toyproject_15.png){: width="400" height="465"} |
     |:--:| 
@@ -519,7 +519,7 @@ icon: icon-html
 
     <br>
 
-    상태 확인은 인스턴스 그룹 내의 인스턴스가 양호한지를 체크하고 만약에 정상적이지 않으면 비정상 노드는 부하 분산에서 빼버리는 기능을 수행합니다. 프로토콜은 HTTP를 입력하고, 포트에는 HTTP 포트인 80포트, 그리고 서비스가 정상인지를 확인하는 확인 간격은 체크 주기이고, 제한 시간은 이 시간(초)내에 응답이 없으면 장애라고 판단을 합니다.
+    상태 확인은 인스턴스 그룹 내의 인스턴스가 양호한지를 체크하고 만약에 정상적이지 않으면 비정상 노드는 부하 분산에서 빼버리는 기능을 수행한다. 프로토콜은 HTTP를 입력하고, 포트에는 HTTP 포트인 80포트, 그리고 서비스가 정상인지를 확인하는 확인 간격은 체크 주기이고, 제한 시간은 이 시간(초)내에 응답이 없으면 장애라고 판단을 한다.
 
     <br>
 
@@ -529,11 +529,11 @@ icon: icon-html
 
     <br>
 
-    마지막으로 프런트엔드 서비스를 설정하는데, 여기서는 어떤 프로토콜을 어떤 IP와 포트로 받을 것인지, HTTPS의 경우에는 SSL 인증서를 설정하는 작업을 합니다. 본 프로젝트에서는 HTTP 프로토콜을 80 포트로 설정하기 때문에 [그림 16]과 같이 설정하고, 부하 분산 이름을 입력하여 생성을 완료합니다.
+    마지막으로 프런트엔드 서비스를 설정하는데, 여기서는 어떤 프로토콜을 어떤 IP와 포트로 받을 것인지, HTTPS의 경우에는 SSL 인증서를 설정하는 작업을 한다. 본 프로젝트에서는 HTTP 프로토콜을 80 포트로 설정하기 때문에 [그림 16]과 같이 설정하고, 부하 분산 이름을 입력하여 생성을 완료한다.
 
     <br>
 
-    정상적으로 부하 분산기가 생성이 되면 다음 [그림 17]과 같이 백엔드 서비스에 지정된 인스턴스 그룹에 해당하는 인스턴스가 모두 정상 동작하는 화면을 볼 수 있습니다.
+    정상적으로 부하 분산기가 생성이 되면 다음 [그림 17]과 같이 백엔드 서비스에 지정된 인스턴스 그룹에 해당하는 인스턴스가 모두 정상 동작하는 화면을 볼 수 있다.
 
     | ![lb_detail](/static/assets/img/landing/project/gcp_toyproject_17.png){: width="800" height="404"} |
     |:--:| 
@@ -543,7 +543,7 @@ icon: icon-html
 
 - **Bucket 생성 및 백업 설정**   <a name="list2_5"></a>
 
-    탐색 메뉴에서 **[Storage] - [브라우저]** 탭을 눌러 **버킷 생성** 버튼을 클릭하여 버킷을 생성합니다.
+    탐색 메뉴에서 **[Storage] - [브라우저]** 탭을 눌러 **버킷 생성** 버튼을 클릭하여 버킷을 생성한다.
 
     | ![create_bucket](/static/assets/img/landing/project/gcp_toyproject_18.png){: width="900" height="145"} |
     |:--:| 
@@ -551,13 +551,13 @@ icon: icon-html
 
     <br>
 
-    버킷 이름을 입력하고 리전을 아시아로 설정한 후에 나머지는 기본 값으로 생성하게 되면 위의 [그림 18]과 같이 버킷이 생성된 모습을 확인할 수 있습니다.
+    버킷 이름을 입력하고 리전을 아시아로 설정한 후에 나머지는 기본 값으로 생성하게 되면 위의 [그림 18]과 같이 버킷이 생성된 모습을 확인할 수 있다.
 
     <br>
 
-    생성한 버킷의 권한 탭에 들어오면 버킷에 접근 가능한 구성원들과 역할을 확인할 수 있습니다.
+    생성한 버킷의 권한 탭에 들어오면 버킷에 접근 가능한 구성원들과 역할을 확인할 수 있다.
 
-    다음 [그림 19]에서 보이는 **추가** 버튼을 클릭하여 새로운 구성원을 추가해줍니다.
+    다음 [그림 19]에서 보이는 **추가** 버튼을 클릭하여 새로운 구성원을 추가해준다.
 
     <br>
 
@@ -567,11 +567,11 @@ icon: icon-html
     
     <br>
 
-    `allUsers` 구성원에 `저장소 개체 관리자` 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했습니다.
+    `allUsers` 구성원에 `저장소 개체 관리자` 역할을 주어 모든 사용자들이 저장소에 접근할 수 있도록 설정했다.
 
     <br>
 
-    다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 `mysqldump`하여 `crontab`을 통해 주기적으로 백업하기 위한 명령어입니다.
+    다음은 Cloud SQL에 저장된 wordpress 데이터베이스를 `mysqldump`하여 `crontab`을 통해 주기적으로 백업하기 위한 명령어이다.
 
     ```bash
     [root@instance-wordpress ~]# vim /etc/my.cnf
@@ -603,7 +603,7 @@ icon: icon-html
     ```
     <br>
 
-    Cloud SQL을 백업하는 쉘 스크립트를 작성하여 crontab에 등록하여 3시간 주기로 mysqldump가 실행되도록 설정해두고 일정 시간이 지난 후에 버킷에 정상적으로 백업되어 저장됐는지 확인하였습니다.
+    Cloud SQL을 백업하는 쉘 스크립트를 작성하여 crontab에 등록하여 3시간 주기로 mysqldump가 실행되도록 설정해두고 일정 시간이 지난 후에 버킷에 정상적으로 백업되어 저장됐는지 확인했다.
 
     | ![cloudsql_bucket_backup1](/static/assets/img/landing/project/gcp_toyproject_20.png){: width="800" height="323"} |
     |:--:| 
@@ -611,11 +611,11 @@ icon: icon-html
 
     <br>
 
-    위의 [그림 20]에서 최종 수정 날짜를 확인해보면 3시간 주기로 저장되어 있는 것을 확인할 수 있습니다.
+    위의 [그림 20]에서 최종 수정 날짜를 확인해보면 3시간 주기로 저장되어 있는 것을 확인할 수 있다.
 
     <br>
 
-    같은 형태로 이번에는 syslog를 백업하는 쉘 스크립트를 작성하여 crontab에 등록합니다.
+    같은 형태로 이번에는 syslog를 백업하는 쉘 스크립트를 작성하여 crontab에 등록한다.
 
     ```bash
     [root@instance-wordpress ~]# vim apache_log_backup.sh
@@ -635,7 +635,7 @@ icon: icon-html
 
     <br>
     
-    이번에는 매 분마다 쉘 스크립트를 실행하도록 crontab에 등록하고 버킷을 확인해보았습니다.
+    이번에는 매 분마다 쉘 스크립트를 실행하도록 crontab에 등록하고 버킷을 확인해봤다.
 
     <br>
 
@@ -674,11 +674,11 @@ icon: icon-html
     
     <br>
 
-    모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 **[모니터링] - [대시보드]** 탭을 눌러 들어갑니다.
+    모니터링과 로깅을 할 VM 인스턴스에 에이전트를 설치하고 **[모니터링] - [대시보드]** 탭을 눌러 들어간다.
 
-    대시보드 페이지에 들어오면 `Create Dashboard` 버튼을 통해 새로운 대시보드를 생성할 수 있습니다.
+    대시보드 페이지에 들어오면 `Create Dashboard` 버튼을 통해 새로운 대시보드를 생성할 수 있다.
 
-    원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 `Add Chart` 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있습니다.
+    원하는 대시보드의 이름을 입력하고 대시보드를 생성하면 우측 상단에 `Add Chart` 버튼을 눌러 원하는 차트들을 추가하여 대시보드를 커스터마이징할 수 있다.
 
     | ![add_chart](/static/assets/img/landing/project/gcp_toyproject_22.png){: width="800" height="402"} |
     |:--:| 
@@ -686,7 +686,7 @@ icon: icon-html
 
     <br>
 
-    위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 `Metric`과 Instance, Group 등 `Resource 타입`을 지정하고 차트를 생성할 수 있습니다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있습니다.
+    위의 [그림 22]와 같이 차트에 나타낼 CPU, Memory, I/O 등 모니터링할 항목들의 `Metric`과 Instance, Group 등 `Resource 타입`을 지정하고 차트를 생성할 수 있다. 원하는 차트를 추가하고 대시보드를 확인하면 다음 [그림 23]과 같이 monitoring-agent을 통해 VM 인스턴스의 Metric들을 모니터링할 수 있다.
 
     | ![monitoring_dashboard](/static/assets/img/landing/project/gcp_toyproject_23.png){: width="1000" height="744"} |
     |:--:| 
@@ -694,7 +694,7 @@ icon: icon-html
 
     <br>
 
-    다음으로 로깅 시스템은 **[로그 기록] - [로그 뷰어]** 탭에 들어오면 다음 [그림 24]와 같이 logging-agent를 통해 수집된 로그들을 확인할 수 있습니다.
+    다음으로 로깅 시스템은 **[로그 기록] - [로그 뷰어]** 탭에 들어오면 다음 [그림 24]와 같이 logging-agent를 통해 수집된 로그들을 확인할 수 있다.
 
     | ![log_viewer](/static/assets/img/landing/project/gcp_toyproject_24.png){: width="900" height="294"} |
     |:--:| 
@@ -716,7 +716,7 @@ icon: icon-html
 
 - **Cloud SQL 로깅 테스트**   <a name="list3_1"></a>
 
-    서비스 중인 워드프레스 서버에서 Cloud SQL에 대한 접속을 시도하는데 다음 [그림 26]과 같이 패스워드를 잘못 입력한 상황입니다.
+    서비스 중인 워드프레스 서버에서 Cloud SQL에 대한 접속을 시도하는데 다음 [그림 26]과 같이 패스워드를 잘못 입력한 상황이다.
 
     | ![cloudsql_connection_failure](/static/assets/img/landing/project/gcp_toyproject_26.png) |
     |:--:| 
@@ -724,7 +724,7 @@ icon: icon-html
 
     <br>
 
-    패스워드를 잘못 입력하여 접속을 실패하여 쉘에 나타나는 로그를 다음 [그림 27]처럼 GCP의 로그 뷰어에서도 확인할 수 있습니다.
+    패스워드를 잘못 입력하여 접속을 실패하여 쉘에 나타나는 로그를 다음 [그림 27]처럼 GCP의 로그 뷰어에서도 확인할 수 있다.
 
     | ![cloudsql_log_viewer](/static/assets/img/landing/project/gcp_toyproject_27.png) |
     |:--:| 
@@ -734,13 +734,13 @@ icon: icon-html
 
 - **오토 스케일링 및 부하 테스트**   <a name="list3_2"></a>
 
-    다음으로 아파치(Apache)의 `JMeter`라는 툴을 사용하여 부하 테스트를 진행합니다.
+    다음으로 아파치(Apache)의 `JMeter`라는 툴을 사용하여 부하 테스트를 진행한다.
 
-    JMeter에서 핵심 기능은 웹 HTTP/HTTPS 프로토콜을 통해 클라이언트의 요청을 수행하여 부하를 발생시키는 것입니다.
+    JMeter에서 핵심 기능은 웹 HTTP/HTTPS 프로토콜을 통해 클라이언트의 요청을 수행하여 부하를 발생시키는 것이다.
 
-    요청에 대한 성공/실패, 소요 시간 등의 정보를 기록하여 제공해줍니다.
+    요청에 대한 성공/실패, 소요 시간 등의 정보를 기록하여 제공해준다.
     
-    다음 [그림 28]은 테스트할 사용자 수 및 반복 횟수 등을 설정해 웹 사이트 서버의 성능을 테스트한 내용입니다.
+    다음 [그림 28]은 테스트할 사용자 수 및 반복 횟수 등을 설정해 웹 사이트 서버의 성능을 테스트한 내용이다.
 
     | ![jmeter](/static/assets/img/landing/project/gcp_toyproject_28.png) |
     |:--:| 
@@ -748,7 +748,7 @@ icon: icon-html
 
     <br>
 
-    여기서 **스레드를 300개와 1000개 두 번의 부하 테스트를 진행**하였고, 300개의 스레드로 요청을 보냈을 때 오토 스케일링 기능으로 인해 인스턴스의 갯수가 2개에서 3개로 늘어났고, 1000개의 스레드로 부하를 주었을 때 3개에서 4개로 인스턴스가 자동 확장되는 것을 확인할 수 있었습니다.
+    여기서 **스레드를 300개와 1000개 두 번의 부하 테스트를 진행**하였고, 300개의 스레드로 요청을 보냈을 때 오토 스케일링 기능으로 인해 인스턴스의 갯수가 2개에서 3개로 늘어났고, 1000개의 스레드로 부하를 주었을 때 3개에서 4개로 인스턴스가 자동 확장되는 것을 확인할 수 있었다.
 
     | ![instance_upscale](/static/assets/img/landing/project/gcp_toyproject_29.png) |
     |:--:| 
@@ -756,9 +756,9 @@ icon: icon-html
 
     <br>
 
-    위의 [그림 29]는 인스턴스가 3개에서 4개로 확장되는 장면을 캡처한 것입니다. 
+    위의 [그림 29]는 인스턴스가 3개에서 4개로 확장되는 장면을 캡처한 것이다. 
 
-    다음으로 부하 테스트를 진행하면서 인스턴스가 자동 생성되는 부분을 모니터링을 통해 확인하였습니다.
+    다음으로 부하 테스트를 진행하면서 인스턴스가 자동 생성되는 부분을 모니터링을 통해 확인했다.
 
     | ![instance_upscale_monitoring](/static/assets/img/landing/project/gcp_toyproject_30.png) |
     |:--:| 
@@ -766,9 +766,9 @@ icon: icon-html
 
     <br>
 
-    위의 [그림 30]에서 볼 수 있듯이 부하 테스트를 수행한 시점에 **CPU, Memory, Network traffic이 확 늘어난 것을 확인**할 수 있고, 그와 동시에 인스턴스가 각각 하나씩 생겨난 것을 확인할 수 있습니다. 메모리 사용량을 확인하는 부분에서 측정 항목(인스턴스)가 새로 생겨난 것을 쉽게 확인할 수 있습니다.
+    위의 [그림 30]에서 볼 수 있듯이 부하 테스트를 수행한 시점에 **CPU, Memory, Network traffic이 확 늘어난 것을 확인**할 수 있고, 그와 동시에 인스턴스가 각각 하나씩 생겨난 것을 확인할 수 있다. 메모리 사용량을 확인하는 부분에서 측정 항목(인스턴스)가 새로 생겨난 것을 쉽게 확인할 수 있다.
 
-    그 후 **마지막 10분**을 `안정화 기간`이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있습니다. 
+    그 후 **마지막 10분**을 `안정화 기간`이라고 하는데, 안정화 기간동안 관찰된 최대 부하를 기준으로 관리형 인스턴스 그룹이 유지되면 자동으로 인스턴스가 축소 되는 것을 확인할 수 있다. 
 
     | ![instance_downscale](/static/assets/img/landing/project/gcp_toyproject_31.png) |
     |:--:| 
@@ -776,8 +776,8 @@ icon: icon-html
 
     <br>
 
-    물론 안정화 기간에 대한 설정은 로드밸런싱을 구성할 때 따로 설정이 가능하고, 인스턴스는 생성된지 가장 오래된 인스턴스를 우선으로 삭제되는 것 같았습니다.
+    물론 안정화 기간에 대한 설정은 로드밸런싱을 구성할 때 따로 설정이 가능하고, 인스턴스는 생성된지 가장 오래된 인스턴스를 우선으로 삭제되는 것 같았다.
 
-    이로써 GCP의 기능을 활용한 서버 구성과 로깅 및 테스트까지 정상적으로 끝났습니다!
+    이로써 GCP의 기능을 활용한 서버 구성과 로깅 및 테스트까지 정상적으로 끝났다!
 
     <br>

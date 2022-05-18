@@ -5,21 +5,18 @@
 # edit following lines to custom your blog page, make sure name is the same as href but capitalized first letter(except HTML)
 - name: Project
   href: /project/
-  
-- name: Thesis
-  href: /thesis/
-
-- name: Patent
-  href: /patent/
 
 - name: Error-Report
   href: /error-report/
+  
+- name: Research-Output
+  href: /research-output/
 
-- name: Idle-Talk
-  href: /idle-talk/
+- name: Infra
+  href: /infra/  
 
-# - name: Infra
-#   href: /infra/
+- name: Review
+  href: /review/
 
 # - name: Sample
 #   href: /sample/

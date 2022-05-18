@@ -1,0 +1,743 @@
+I"ќ<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. DevSecOps 툴체인 보안 점검 리스트</a></p>
+
+<p><a href="#list1_1">   1.1. SANS DevSecOps Best Practice</a></p>
+
+<p><a href="#list1_2">   1.2. Pre-Commit 단계</a></p>
+
+<p><a href="#list1_3">   1.3. Commit 단계</a></p>
+
+<p><a href="#list2">2. SAST(Static Application Security Testing) 적용</a></p>
+
+<p><a href="#list2_1">   2.1. OWASP Dependency Check</a></p>
+
+<p><a href="#list2_2">   2.2. SpotBugs</a></p>
+
+<p><a href="#list2_3">   2.3. CheckStyle</a></p>
+
+<p><a href="#list2_4">   2.4. PMD(Programing Mistake Detector)</a></p>
+
+<p><a href="#list2_5">   2.5. SonarQube</a></p>
+
+<p><a href="#list2_6">   2.6. Anchore</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-devsecops-툴체인-보안-점검-리스트---"><span style="color:purple"><strong>1. DevSecOps 툴체인 보안 점검 리스트</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>SANS DevSecOps Best Practice</strong>   <a name="list1_1"></a></p>
+
+    <p>SANS 연구소(SANS Institute)는 교육에서 보안 인증 정보 소스를 보유하고 있으며 사이버 및 네트워크 방어, 침투 테스트, 사고 대응, 디지털 포렌식 등 보안 교육에 있어 국제적으로 가장 높은 신뢰를 받는 보안 기관이다.</p>
+
+    <p>이러한 SANS 연구소에서 DevSecOps 도구들을 분류 및 정리하여 발표한 <a href="http://sans.org/u/zAi">Secure DevOps Toolchain and SWAT checklist</a> 자료를 토대로 DevSecOps 파이프라인에서 정적 분석할 도구를 선정할 것이다.</p>
+
+    <p>도구 선정은 앞선 포스팅을 통해 구축된 DevOps 파이프라인에 쉽게 연결할 수 있고, 자동화되어 정적 분석 및 동적 분석을 수행할 수 있는 보안 도구를 선택했다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Pre-Commit 단계</strong>   <a name="list1_2"></a></p>
+
+    <p>먼저 DevSecOps 파이프라인의 첫 번째 단계인 Pre-Commit 단계에서는 개발자가 코드를 GitLab과 같은 SCM에 Commit 되기 전에 완료해야하는 단계이다.</p>
+
+    <p>다음 [그림 1]은 SANS 연구소에서 정리한 Pre-Commit 단계에서 사용할 수 있는 보안 도구들을 정리한 것이다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_1.png" alt="pre_commit_security_tool" width="758" height="273" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Pre-Commit 단계의 보안 도구</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Pre-Commit 단계는 VSCode와 같은 IDE(Integrated Development Environment)에 보안 도구들을 플러그인으로 추가하여 개발자가 코드를 작성 및 실행하면서 보안을 검사한다.</p>
+
+    <p>앞선 포스팅에서 구성한 DevOps 파이프라인은 GitLab에 푸시하는 이벤트로 인해 실행되는데, Pre-Commit 단계는 푸시 이전에 수행되는 작업이기 때문에 DevSecOps 파이프라인에 추가할 도구는 없다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Commit 단계</strong>   <a name="list1_3"></a></p>
+
+    <p>다음으로 코드를 컴파일하고 빌드하는 과정에서 정적 분석을 수행해야 하는 Commit 단계이다.</p>
+
+    <p>[그림 2]는 SANS 연구소에서 정리한 Commit 단계에서 사용할 수 있는 보안 도구들을 정리한 것이다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_2.png" alt="commit_security_tool" width="714" height="308" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Commit 단계의 보안 도구</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Commit 단계는 빌드하고 테스트하는 과정에서 파이프라인의 보안 취약점을 찾기 위해 소스 코드 파일들을 스캔한다.</p>
+
+    <p>검사할 소스 코드의 언어에 따라 사용되는 도구들은 달라질 수 있다.</p>
+
+    <p>본 프로젝트에서는 Java 기반의 웹 서비스에 보안을 적용해볼 것이고, 정적 분석에 사용할 도구들은 다음과 같다.</p>
+
+    <ol>
+      <li>
+        <p>OWASP Dependency Check</p>
+
+        <p>프로젝트의 종속성을 검사하고, 공개적으로 공개 된 취약점을 탐지하는 소프트웨어 구성 분석 도구이다.</p>
+
+        <p>지정된 종속성에 대한 CPE(Common Platform Enumeration) 식별자가 있는지를 확인하고, 발견되면 관련 CVE 항목에 연결되는 보고서를 생성해준다.</p>
+
+        <p>Jenkins와 Maven 플러그인이 존재하여 연동하기 쉽다.</p>
+      </li>
+      <li>
+        <p>SpotBugs</p>
+
+        <p>정적 분석 도구로 사용되는 FindBugs가 이제는 SpotBugs로 바뀌어 사용되고 있다.</p>
+
+        <blockquote>
+          <p>관련 내용은 <a href="https://github.com/findbugsproject/findbugs/blob/master/README.md">FindBugs README</a>에서 확인 가능</p>
+        </blockquote>
+
+        <p>제한된 룰 셋(Rule Set)으로 정적 분석을 수행하여 결함을 확인하고 생성된 보고서를 확인할 수 있다.</p>
+      </li>
+      <li>
+        <p>CheckStyle</p>
+
+        <p>코딩 스타일 규칙을 정의하여 체크해줌으로써 코딩 스타일 통일할 수 있도록 도와준다.</p>
+
+        <p>프로젝트 완료 후 유지보수할 떄 생겨나는 많은 문제중 하나가 많은 프로그래머들이 각자의 취향에 따라 변수명, 메소드명, 작성법등이 다르기 때문에 문제가 발생할 수 있는데 이러한 문제를 해결하기 위해 만들어졌다.</p>
+
+        <p>[그림 2]에 보이는 SANS 연구소의 자료에는 CheckStyle이 없지만 SpotBugs와 더불어 PMD와도 같이 정적 분석 도구로 많이 쓰이고 있어 사용해보았다.</p>
+      </li>
+      <li>
+        <p>PMD(Programing Mistake Detector)</p>
+
+        <p>SpotBugs와 마찬가지로 응용 프로그램에서 Java 소스를 정적 분석하여 발견된 문제를 보고해준다.</p>
+
+        <p>기본적으로 제공되는 룰 셋(Rule Set)이 포함되어 있으며 사용자 지정 규칙을 작성할 수도 있다.</p>
+      </li>
+      <li>
+        <p>SonarQube</p>
+
+        <p>SonarQube는 20개 이상의 프로그래밍 언어에서 Bugs, Code Smell, 보안 취약점을 발견할 목적으로 정적 코드 분석으로 자동 리뷰를 수행하기 위한 지속적인 코드 품질 검사용 오픈 소스 플랫폼이다.</p>
+
+        <p>SonarQube는 자체 분석기로 모든 규칙을 다룰 수 있다고 가정하지만 SonarQube에서 다루지 않는 Findbugs, PMD 또는 CheckStyle의 규칙이 여전히 있다.</p>
+
+        <p>SonarQube 자체로도 좋지만 PMD/Findbugs/Checkstyle을 별도로 사용하고 Jenkins CI에서 가시적으로 볼 수 있도록 해주는 Analysis Collector 플러그인을 사용할 수도 있다.</p>
+
+        <p>이것의 장점은 PMD/Findbugs/Checkstyle 구성을 SCM에 체크인하고 별도의 Sonar 서버에 의존하지 않고 Maven 빌드에 통합 할 수 있다는 것이다.</p>
+
+        <blockquote>
+          <p>오래된 라이브러리(예: Java 8의 경우)를 수정하거나 업그레이드 혹은 대기하는 데 시간을 소비하게 되기 때문에 SonarQube는 현재 PMD, Checkstyle 및 Findbug를 폐기하고 자체 기술을 사용하여 <a href="https://redirect.sonarsource.com/plugins/java.html">SonarJava</a>를 분석 및 개발하는 중이라고 함 
+또한 <a href="http://www.sonarlint.org/index.html">SonarLint</a> 라는 개인 IDE 용 새 플러그인이 존재</p>
+        </blockquote>
+
+        <p>SonarQube에는 <code class="highlighter-rouge">품질 프로파일(Quality Profiles)</code>, <code class="highlighter-rouge">품질 게이트(Quality Gates)</code>라는 정책이 존재한다.</p>
+
+        <ul>
+          <li>
+            <p><strong>품질 프로파일(Quality Profiles)</strong></p>
+
+            <p>코드를 분석하기 위한 룰(Rule)의 집합이다.</p>
+
+            <p>각 언어마다 다른 품질 프로파일들이 존재한다.</p>
+          </li>
+          <li>
+            <p><strong>품질 게이트(Quality Gates)</strong></p>
+
+            <p>프로젝트 지표들로 설정된 임계 값을 정한다.</p>
+
+            <p>품질 게이트를 통과하기 위해서는 모든 임계값 조건을 통과해야 한다.</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>Anchore</p>
+
+        <p>Anchore는 컨테이너 이미지 스캐닝 도구이다.</p>
+
+        <p>컨테이너 이미지를 빌드할 때마다 알려진 보안 취약점을 스캔해서 보안적인 문제가 없는지 분석한다.</p>
+
+        <p>상업 버전도 존재하지만 오픈 소스 버전이 있어 손쉽게 사용이 가능하다.</p>
+
+        <p>Anchore는 기본적으로 보안 CVE(Common Vulnerabilities and Exposures) 목록을 기반으로 해서 스캔하고, NPM과 루비젬에 대한 보안 취약점 피드도 가져온다.</p>
+
+        <p><br /></p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-saststatic-application-security-testing-적용---"><span style="color:purple"><strong>2. SAST(Static Application Security Testing) 적용</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>OWASP Dependency Check</strong>   <a name="list2_1"></a></p>
+
+    <p>Jenkins 파이프라인에서 OWASP Dependency Check를 수행하기 위해 Jenkins 인스턴스에 OWASP Dependency Check를 설치하고 실행할 수 있는 환경을 만들어준다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.2.4-release.zip
+  <span class="nv">$ </span>unzip dependency-check-5.2.4-release.zip
+  <span class="nv">$ </span><span class="nb">mv </span>dependency-check/ /var/lib/jenkins
+</code></pre></div>    </div>
+
+    <p>dependency-check를 다운 받아 unzip하여 Jenkins의 홈디렉토리로 사용되는 <code class="highlighter-rouge">/var/lib/jenkins</code> 디렉토리로 옮겨준다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/var/lib/jenkins/dependency-check/bin/dependency-check.sh <span class="nt">--scan</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> <span class="nt">--format</span> HTML <span class="nt">--out</span> /var/lib/jenkins/reports/dependency-check-report <span class="nt">--prettyPrint</span>
+</code></pre></div>    </div>
+
+    <p>스캔할 소스 코드가 들어있는 프로젝트 디렉토리에서 실행 dependency-check를 실행한다.</p>
+
+    <p>–scan 옵션에 <code class="highlighter-rouge">pwd</code> 명령을 통해 얻은 프로젝트 디렉토리가 들어가야하며, –out 옵션의 값에 해당하는 디렉토리인 <code class="highlighter-rouge">/var/lib/jenkins/reports/dependency-check-report</code>애 스캔하여 출력되는 보고서 파일이 저장된다.</p>
+
+    <p>–format 옵션에 들어가는 값은 HTML, XML, JSON이 존재하는데, 여기서는 dependecy-chcek 결과를 SonarQube에서도 확인할 수 있도록 <code class="highlighter-rouge">HTML</code> 파일로 보고서가 생성되도록 했다.</p>
+
+    <blockquote>
+      <p>참고: 스캔 중에 odc.mv.db 관련 에러가 발생한 적이 있는데, $ /var/lib/jenkins/dependency-check/bin/dependency-check.sh –purge 명령을 통해 해결됨</p>
+    </blockquote>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>SpotBugs</strong>   <a name="list2_2"></a></p>
+
+    <p>Maven에서는 <code class="highlighter-rouge">pom.xml</code> 이라는 빌드 파일을 사용하여 빌드 정보를 기술한다.</p>
+
+    <p>pom.xml 파일에 SpotBugs를 사용하도록 명시하여 프로젝트를 빌드할 때 SpotBugs를 통해 정적 분석을 진행할 수 있도록 한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;com.github.spotbugs&lt;/groupId&gt;
+      &lt;artifactId&gt;spotbugs-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.1.12.2&lt;/version&gt;
+      &lt;configuration&gt;
+          &lt;effort&gt;Max&lt;/effort&gt;
+          &lt;threshold&gt;Low&lt;/threshold&gt;
+          &lt;failOnError&gt;true&lt;/failOnError&gt;
+          &lt;plugins&gt;
+              &lt;plugin&gt;
+                  &lt;groupId&gt;com.h3xstream.findsecbugs&lt;/groupId&gt;
+                  &lt;artifactId&gt;findsecbugs-plugin&lt;/artifactId&gt;
+                  &lt;version&gt;1.10.1&lt;/version&gt;
+              &lt;/plugin&gt;
+          &lt;/plugins&gt;
+      &lt;/configuration&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>scan&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>CheckStyle</strong>   <a name="list2_3"></a></p>
+
+    <p>SpotBugs와 마찬가지로 pom.xml 파일에 CheckStyle을 사용하도록 명시하여 프로젝트를 빌드할 때 CheckStyle을 통해 정적 분석을 진행할 수 있도록 한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
+      &lt;version&gt;2.17&lt;/version&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>validate&lt;/id&gt;
+              &lt;phase&gt;validate&lt;/phase&gt;
+              &lt;configuration&gt;
+                  &lt;configLocation&gt;google_checks.xml&lt;/configLocation&gt;
+                  &lt;suppressionsLocation&gt;suppressions.xml
+                  &lt;/suppressionsLocation&gt;
+                  &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                  &lt;failsOnError&gt;true&lt;/failsOnError&gt;
+                  &lt;consoleOutput&gt;true&lt;/consoleOutput&gt;
+                  &lt;includeTestSourceDirectory&gt;true
+                  &lt;/includeTestSourceDirectory&gt;
+              &lt;/configuration&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>PMD(Programing Mistake Detector)</strong>   <a name="list2_4"></a></p>
+
+    <p>pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-pmd-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.13.0&lt;/version&gt;
+      &lt;executions&gt;
+          &lt;execution&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>pmd-scan&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                  &lt;goal&gt;check&lt;/goal&gt;
+              &lt;/goals&gt;
+          &lt;/execution&gt;
+      &lt;/executions&gt;
+  &lt;/plugin&gt;
+</code></pre></div>    </div>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>SonarQube</strong>   <a name="list2_5"></a></p>
+
+    <p>SonarQube를 사용하기 위해서 여러 가지 방법으로 설치할 수 있지만 본 프로젝트에서는 Docker를 통해서 설치하는 방법을 설명할 것이다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>docker run <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-d</span> <span class="nt">-p</span> 9000:9000 <span class="nt">-p</span> 9092:9092 <span class="nt">--name</span> sonarqube sonarqube
+</code></pre></div>    </div>
+
+    <p>Jenkins 인스턴스에서 Docker 명령을 통해 sonarqube 공식 이미지를 다운로드하여 9000번 포트를 사용하도록 설정한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim /usr/local/maven/conf/settings.xml
+  &lt;settings&gt;
+      &lt;pluginGroups&gt;
+          &lt;pluginGroup&gt;org.sonarsource.scanner.maven&lt;/pluginGroup&gt;
+      &lt;/pluginGroups&gt;
+      &lt;profiles&gt;
+          &lt;profile&gt;
+              &lt;<span class="nb">id</span><span class="o">&gt;</span>sonar&lt;/id&gt;
+              &lt;activation&gt;
+                  &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+              &lt;/activation&gt;
+              &lt;properties&gt;
+                  &lt;<span class="o">!</span><span class="nt">--</span> Optional URL to server. Default value is http://localhost:9000 <span class="nt">--</span><span class="o">&gt;</span>
+                  &lt;sonar.host.url&gt;
+                  http://JENKINS_SERVER_IP:9000
+                  &lt;/sonar.host.url&gt;
+              &lt;/properties&gt;
+          &lt;/profile&gt;
+      &lt;/profiles&gt;
+  &lt;/settings&gt;
+
+  <span class="nv">$ </span>mvn clean verify sonar:sonar
+</code></pre></div>    </div>
+
+    <p>그리고 위와 같이 maven 설정 파일에서 SonarQube 플러그인에 대해 설정하고 <code class="highlighter-rouge">mvn clean verify</code> 명령을 통해 빌드할 때 SonarQube가 정상적으로 동작하는지 확인해본다.</p>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_3.png" alt="create_sonarqube" width="658" height="388" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] SonarQube 프로젝트 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_4.png" alt="create_sonarqube_token" width="516" height="353" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 4] SonarQube 프로젝트의 토큰 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_5.png" alt="sonarqube_project_configuration" width="870" height="432" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 5] SonarQube 프로젝트 설정 및 실행 방법</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_6.png" alt="jenkins_sonarqube_credentials" width="497" height="286" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 6] Jenkins에서 SonarQube credentials 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_7.png" alt="create_sonarqube_webhook" width="408" height="462" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 7] SonarQube 웹훅 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_8.png" alt="jenkins_sonarqube_server_configuration" width="914" height="353" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 8] Jenkins에서 SonarQube 서버 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_9.png" alt="jenkins_sonarqube_scanner_configuration" width="909" height="425" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 9] Jenkins에서 SonarQube 스캐너 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_10.png" alt="sonarqube_dependency_check_configuration" width="918" height="667" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 10] SonarQube에서 Dependency-Check 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_11.png" alt="sonarqube_external_analyzers_configuration" width="930" height="714" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 11] SonarQube에서 External Analyzers 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_12.png" alt="sonarqube_quality_profile" width="886" height="638" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 12] SonarQube 품질 프로파일 구성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Anchore</strong>   <a name="list2_6"></a></p>
+
+    <p>엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행한다. </p>
+
+    <p>이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않는다.</p>
+
+    <p>Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것 이다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace anchore
+  namespace/anchore created
+
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm repo add anchore https://charts.anchore.io
+  <span class="s2">"anchore"</span> has been added to your repositories
+  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm <span class="nb">install </span>anchore anchore/anchore-engine <span class="nt">-n</span> anchore
+  NAME: anchore
+  LAST DEPLOYED: Sat Oct 20 18:06:18 2020
+  NAMESPACE: anchore
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  To use Anchore Engine you need the URL, username, and password to access the API.
+
+  Anchore Engine can be accessed via port 8228 on the following DNS name from within the cluster:
+  anchore-anchore-engine-api.anchore.svc.cluster.local
+
+  Here are the steps to configure the anchore-cli <span class="o">(</span><span class="sb">`</span>pip <span class="nb">install </span>anchorecli<span class="sb">`</span><span class="o">)</span><span class="nb">.</span> Use these same values <span class="k">for </span>direct API access as well.
+
+  To configure your anchore-cli run:
+
+      <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
+      <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
+
+  Using the service endpoint from within the cluster you can use:
+      <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+
+  To verify the service is up and running, you can run container <span class="k">for </span>the Anchore Engine CLI:
+
+      kubectl run <span class="nt">-i</span> <span class="nt">--tty</span> anchore-cli <span class="nt">--restart</span><span class="o">=</span>Always <span class="nt">--image</span> anchore/engine-cli  <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="k">${</span><span class="nv">ANCHORE_CLI_PASS</span><span class="k">}</span> <span class="nt">--env</span> <span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://anchore-anchore-engine-api.anchore.svc.cluster.local:8228/v1/
+
+  from within the container you can use <span class="s1">'anchore-cli'</span> commands.
+
+  <span class="k">*</span> NOTE: On first startup of anchore-engine, it performs a CVE data <span class="nb">sync </span>which may take several minutes to complete. During this <span class="nb">time </span>the system status will report <span class="s1">'partially_down'</span> and any images added <span class="k">for </span>analysis will stay <span class="k">in </span>the <span class="s1">'not_analyzed'</span> state.
+  Once the <span class="nb">sync </span>is <span class="nb">complete</span>, any queued images will be analyzed and the system status will change to <span class="s1">'all_up'</span><span class="nb">.</span>
+
+  Initial setup <span class="nb">time </span>can be <span class="o">&gt;</span>120sec <span class="k">for </span>postgresql setup and readiness checks to pass <span class="k">for </span>the services as indicated by pod state. You can check with:
+      kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>anchore-anchore-engine,component<span class="o">=</span>api
+
+  A quick primer on using the Anchore Engine CLI follows. For more info see: https://github.com/anchore/anchore-engine/wiki/Getting-Started
+
+  View system status:
+
+      anchore-cli system status
+
+  Add an image to be analyzed:
+
+      anchore-cli image add &lt;imageref&gt;
+
+  List images and see the analysis status <span class="o">(</span>not_analyzed initially<span class="o">)</span>:
+
+      anchore-cli image list
+
+  Once the image is analyzed you<span class="s1">'ll see status change to '</span>analyzed<span class="s1">'. This may take some time on first execution with a new database because
+  the system must first do a CVE data sync which can take several minutes. Once complete, the image will transition to '</span>analyzing<span class="s1">' state.
+
+  When the image reaches '</span>analyzed<span class="s1">' state, you can view policy evaluation output with:
+
+      anchore-cli evaluate check &lt;imageref&gt;
+
+  List CVEs found in the image with:
+
+      anchore-cli image vuln &lt;imageref&gt; os
+
+  List OS packages found in the image with:
+      anchore-cli image content &lt;imageref&gt; os
+
+  List files found in the image with:
+      anchore-cli image content &lt;imageref&gt; files
+</span></code></pre></div>    </div>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> epel-release
+  <span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> python-pip
+  <span class="nv">$ </span>pip <span class="nb">install </span>anchorecli
+  <span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_USER</span><span class="o">=</span>admin
+  <span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span>foobar
+  <span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_URL</span><span class="o">=</span>http://ANCHORE_IP:30228/v1
+
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">export </span><span class="nv">ANCHORE_CLI_PASS</span><span class="o">=</span><span class="si">$(</span>kubectl get secret <span class="nt">--namespace</span> anchore anchore-anchore-engine <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.ANCHORE_ADMIN_PASSWORD}"</span> | <span class="nb">base64</span> <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="si">)</span>
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$ANCHORE_CLI_PASS</span>
+  foobar
+</code></pre></div>    </div>
+
+    <p>컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>vim anchore-nodeport.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+  name: anchore-api
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+      app: anchore-anchore-engine
+      component: api
+  ports:
+      - protocol: TCP
+      port: 8228
+      targetPort: 8228
+      nodePort: 30228
+
+  crisis51526@cloudshell:~/anchore-engine <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create <span class="nt">-f</span> anchore-nodeport.yaml <span class="nt">-n</span> anchore
+  service/anchore-api created
+
+  <span class="o">[</span>root@jenkins cccr-dvwa]# anchore-cli image add jisunpark/cccr-dvwa-java-web <span class="nt">--dockerfile</span><span class="o">=</span>Dockerfile <span class="nt">--force</span>
+  Image Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Parent Digest: sha256:fec038ff428898223fc9fb516caedbf52c4572f2e491590d8f5647e8e5d787c9
+  Analysis Status: not_analyzed
+  Image Type: docker
+  Analyzed At: 2020-10-20T18:43:29Z
+  Image ID: 85a4a0ea97867479bcb328c7a6c75691434d36ea0a0b75e6e453b22ff0f6fc7d
+  Dockerfile Mode: Actual
+  Distro: debian
+  Distro Version: 10
+  Size: 920176640
+  Architecture: amd64
+  Layer Count: 16
+
+  Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
+  Tag Detected At: 2020-10-20T18:40:33Z
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  properties<span class="o">([</span>
+      parameters<span class="o">([</span>
+          string<span class="o">(</span>name: <span class="s1">'sonar.projectKey'</span>, defaultValue: <span class="s1">'cccr-dvwa'</span><span class="o">)</span>,
+          string<span class="o">(</span>name: <span class="s1">'sonar.host.url'</span>, defaultValue: <span class="s1">'http://JENKINS_SERVER_IP:9000'</span><span class="o">)</span>,
+          string<span class="o">(</span>name: <span class="s1">'sonar.login'</span>, defaultValue: <span class="s1">'265c24760ec4f5cf1f28b87981c7bbe55c3bdffc'</span><span class="o">)</span>,
+      <span class="o">])</span> 
+  <span class="o">])</span>
+  pipeline <span class="o">{</span>
+      environment <span class="o">{</span>
+          SLACK_CHANNEL <span class="o">=</span> <span class="s1">'#send-slack-message-from-jenkins'</span>
+          REGISTRY <span class="o">=</span> <span class="s1">'crisis513/cccr-dvwa-java-web'</span> 
+          REGISTRYCREDENTIAL <span class="o">=</span> <span class="s1">'dockerhub'</span> 
+          DOCKER_IMAGE <span class="o">=</span> <span class="s1">''</span>
+      <span class="o">}</span>
+      agent any
+      tools <span class="o">{</span> 
+          maven <span class="s1">'mvn'</span> 
+      <span class="o">}</span>
+      stages <span class="o">{</span>
+          stage<span class="o">(</span><span class="s1">'Git clone'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  git <span class="s1">'https://github.com/JisunParkRea/cccr-dvwa.git'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Docker image build and push to Dockerhub'</span><span class="o">)</span> <span class="o">{</span> 
+              steps<span class="o">{</span>
+                  script <span class="o">{</span>
+                      DOCKER_IMAGE <span class="o">=</span> docker.build registry
+                      docker.withRegistry<span class="o">(</span><span class="s1">''</span>, REGISTRYCREDENTIAL<span class="o">)</span> <span class="o">{</span>
+                          DOCKER_IMAGE.push<span class="o">(</span><span class="s2">"latest"</span><span class="o">)</span>
+                      <span class="o">}</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span> 
+          stage<span class="o">(</span><span class="s1">'Anchore Analysis'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s1">'echo "$REGISTRY:latest `pwd`/Dockerfile" &gt; anchore_images'</span>
+                  anchore name: <span class="s1">'anchore_images'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Clean local docker image'</span><span class="o">)</span> <span class="o">{</span>
+              agent any
+                  steps <span class="o">{</span> 
+                  sh <span class="s1">'docker rmi $REGISTRY:latest'</span>
+              <span class="o">}</span> 
+          <span class="o">}</span>
+          stage <span class="o">(</span><span class="s1">'Static Analysis(PMD, SpotBugs, CheckStyle)'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s1">'mvn pmd:pmd spotbugs:spotbugs checkstyle:checkstyle'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage <span class="o">(</span><span class="s1">'Dependency-Check Analysis'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s1">'/var/lib/jenkins/dependency-check/bin/dependency-check.sh --scan `pwd` --format HTML --out /var/lib/jenkins/reports/dependency-check-report --prettyPrint'</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Sonarqube and Quality gate'</span><span class="o">)</span> <span class="o">{</span>
+              options <span class="o">{</span>
+                  <span class="nb">timeout</span><span class="o">(</span><span class="nb">time</span>: 5, unit: <span class="s1">'MINUTES'</span><span class="o">)</span>
+                  retry<span class="o">(</span>2<span class="o">)</span>
+              <span class="o">}</span>
+              steps <span class="o">{</span>
+                  withSonarQubeEnv<span class="o">(</span><span class="s1">'SonarQube Server'</span><span class="o">)</span> <span class="o">{</span>
+                      sh <span class="s2">"mvn sonar:sonar"</span>
+                  <span class="o">}</span>
+                  script <span class="o">{</span>
+                      qualitygate <span class="o">=</span> waitForQualityGate<span class="o">()</span>
+                      <span class="k">if</span> <span class="o">(</span>qualitygate.status <span class="o">!=</span> <span class="s2">"OK"</span><span class="o">)</span> <span class="o">{</span>
+                          currentBuild.result <span class="o">=</span> <span class="s2">"FAILURE"</span>
+                          slackSend <span class="o">(</span>channel: <span class="nv">$SLACK_CHANNEL</span>, color: <span class="s1">'#F01717'</span>, message: <span class="s2">"*</span><span class="nv">$JOB_NAME</span><span class="s2">*, &lt;</span><span class="nv">$BUILD_URL</span><span class="s2">|Build #</span><span class="nv">$BUILD_NUMBER</span><span class="s2">&gt;"</span><span class="o">)</span>
+                      <span class="o">}</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+      post <span class="o">{</span> 
+          success <span class="o">{</span> 
+              slackSend <span class="o">(</span>channel: <span class="nv">$SLACK_CHANNEL</span>, color: <span class="s1">'#00FF00'</span>, message: <span class="s2">"SUCCESSFUL: Job '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span> 
+          <span class="o">}</span>
+          failure <span class="o">{</span>
+              slackSend <span class="o">(</span>channel: <span class="nv">$SLACK_CHANNEL</span>, color: <span class="s1">'#F01717'</span>, message: <span class="s2">"FAILURE: '</span><span class="k">${</span><span class="nv">env</span><span class="p">.JOB_NAME</span><span class="k">}</span><span class="s2"> [</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_NUMBER</span><span class="k">}</span><span class="s2">]' (</span><span class="k">${</span><span class="nv">env</span><span class="p">.BUILD_URL</span><span class="k">}</span><span class="s2">)"</span><span class="o">)</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_6_13.png" alt="anchore_test" width="819" height="342" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 13] Anchore 파이프라인 테스트</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>여기까지 다음 포스팅에서는 지금까지 설정해 둔 DevOps 파이프라인에서 SAST(Static Application Security Testing)를 적용하여 자동으로 정적 테스트를 거쳐 배포할 수 있는 방법을 기술해보겠다!</p>
+  </li>
+</ul>
+:ET

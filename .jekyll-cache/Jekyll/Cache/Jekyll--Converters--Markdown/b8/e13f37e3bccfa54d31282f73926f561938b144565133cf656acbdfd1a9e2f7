@@ -1,0 +1,587 @@
+I"�y<h2 id="목차">목차</h2>
+
+<p><a href="#list1">1. CD(Continuous Delivery/Continuous Deployment) 구성</a></p>
+
+<p><a href="#list1_1">   1.1. CD 란?</a></p>
+
+<p><a href="#list1_2">   1.2. Jenkins - 쿠버네티스 연동</a></p>
+
+<p><a href="#list1_3">   1.3. Jenkins Slave 설정</a></p>
+
+<p><a href="#list1_4">   1.4. 쿠버네티스 배포 파이프라인 추가</a></p>
+
+<p><a href="#list2">2. ArgoCD를 이용한 CD 구성</a></p>
+
+<p><a href="#list2_1">   2.1. ArgoCD 란?</a></p>
+
+<p><a href="#list2_2">   2.2. ArgoCD 설치</a></p>
+
+<p><a href="#list2_3">   2.3. ArgoCD 설정</a></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="1-cdcontinuous-deliverycontinuous-deploy-구성---"><span style="color:purple"><strong>1. CD(Continuous Delivery/Continuous Deploy) 구성</strong></span>   <a name="list1"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>CD 란?</strong>   <a name="list1_1"></a></p>
+
+    <p>CD는 지속적인 지속적인 제공(Continuous Delivery) 또는 지속적인 배포(Continuous Deployment)를 의미한다.</p>
+
+    <p>이 두 용어는 상호 교환적으로 사용되며, 두 가지 의미 모두 파이프라인의 추가 단계에 대한 자동화를 뜻하지만 때로는 얼마나 많은 자동화가 이루어지고 있는지를 설명하기 위해 별도로 사용되기도 한다.</p>
+
+    <p>지속적인 제공이란 <strong>개발자들이 애플리케이션에 적용한 변경 사항이 버그 테스트를 거쳐 리포지토리에 자동으로 업로드</strong>되는 것을 뜻한다.</p>
+
+    <p>지속적인 배포란 <strong>개발자의 변경 사항을 리포지토리에서 고객이 사용 가능한 프로덕션 환경까지 자동으로 릴리스하는 것</strong>을 의미한다.</p>
+
+    <p>이는 애플리케이션 제공 속도를 저해하는 수동 프로세스로 인한 운영팀의 프로세스 과부하 문제를 해결해준다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins - 쿠버네티스 연동</strong>   <a name="list1_2"></a></p>
+
+    <p>Jenkins에서 쿠버네티스 클러스터와 연동하는 방법에 대해서 설명할 것이다.</p>
+
+    <p>Jenkins와 쿠버네티스의 구성은 <a href="https://crisis513.github.io/project/2020/10/03/devsecops1.html#list2_1">구축 환경 참고</a>를 참고 바란다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_1.png" alt="kubernetes_plugin" width="728" height="718" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 1] Jenkins에서 쿠버네티스 플러그인 설치</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>다음은 설치된 쿠버네티스 플러그인에 대한 설정을 진행한다.</p>
+
+    <p>Jenkins 시스템 설정에서 맨 밑으로 내려가면 [그림 2]와 같이 클라우드 설정하는 부분이 나온다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_2.png" alt="cloud_configuration" width="598" height="75" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 2] Jenkins 시스템 설정에서 클라우드 설정 클릭</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>여기서 <code class="highlighter-rouge">a separate configuration page</code>를 눌러 Configure Clouds 설정으로 들어온다.</p>
+
+    <p>쿠버네티스 설정은 다음 [그림 3], [그림 4]와 같이 진행한다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_3.png" alt="kubernetes_plugin_configuration" width="725" height="335" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 3] 쿠버네티스 플러그인 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>Kubernetes URL은 kube-master 인스턴스에 접속하여 <code class="highlighter-rouge">~/.kube/config</code> 파일의 내용을 확인해보면 server에 명시된 URL을 기입하면 된다.</p>
+
+    <p>Kubernetes URL을 입력하고 <code class="highlighter-rouge">Test Connection</code> 버튼을 눌러 쿠버네티스 클러스터에 정상적으로 접속되는지 확인한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">cat</span> ~/.kube/config 
+  apiVersion: v1
+  clusters:
+  - cluster:
+      certificate-authority-data: <span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJd01UQXdPREF5TlRreU9Gb1hEVE13TVRBd05qQXlOVGt5T0Zvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTlNhCkhwK2M2cWxhRXU1cXlWWHpLZFA3UTJZWnVjVnN1aTRTczFqamUxQW41cXlEVDVnMk9iKzM5OXN4Y0phM215MkIKYjg0UE5NYmc1MERyenZ4S1VOWVZySkk4Z1F2c2JXWXRPZnhhTGV3NUF1aE5NV1dsRlVlRUpyTE9WT0NQdndoTApDRHVLOVd5TUlIMTU4U1hKM1dYRW5TeUZJWXVSeDI3NTNicnFWRzVuNnZMTVVMMUdDKzNSaHJ1cEN5d0xoVG12CnpyYWdWTVFicUVjV2pTcjV2TVZueTduTXVvQ2xmSjE3SXBYa1MweTN3eDJsRTJVREtIblNuSlZHeVNYbXVKYVYKL3A5THk4djNWL2VsVjZLY1plRStIaVZFNlNBT3R4bXhwSDl2Zmh2blpxQzBsbzNpaGpzR0hGUGRyeStiZkhVegpPaSsrZ1VCZmxKTkZucFZlNE5zQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFBNlI3NW9SWnJxQ2tDMEpqbURTMmgxMUN4WkYKTmM0cXRqMTlqeEZlQUFlMCt4a0MveUlidzBUYmY0OW1TWGE1VUhPbkE1RSszSStFWTdXc0h6dTJTOEZlU3FwbgpNZC9iYXp6aU5wT28vNGxoNGVWNkE5NmNsdjV1cm5CSVIzOVVpM085SnpKUDBobTRhUGxDZFVqcDhyb3BrSWFmCkZieURTcVBFS1E0Rm5tc1MvcGJWellHQ2RVdmlqT3JCcnBiTEU2ZW1PYkc2RGE4WG0xNWJHSzVUVUt5Mm5rOGgKOHoxNjZZanVVOTR1bW9RYjR4eVNWOThNZ2RRTWVsWml1U2dHelRKcEtKTHN3NG94SGdPbkNLZUNNeURHSFZOUwpnMFo2MU12YldlVzhzVEtaSHpCVVZySFZ3WjlTSCtNdGtMWllSb0VWdk9NTTNLSXczbmRieG8rcXd5OD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo</span><span class="o">=</span>
+      server: https://10.178.0.19:6443
+  ...<span class="o">(</span>중략<span class="o">)</span>
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p>그 후 아래로 내리다보면 <code class="highlighter-rouge">Pod Templates</code>를 구성하는 버튼이 있다.</p>
+
+    <p>그 버튼을 눌러 다음 [그림 4]와 같이 설정하고 저장한다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_4.png" alt="pod_template" width="910" height="601" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 4] Pod 템플릿 설정</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Jenkins Slave 설정</strong>   <a name="list1_3"></a></p>
+
+    <p>Jenkins에서 쿠버네티스 클러스터와의 연동이 정상적으로 설정되었다면 다음은 Jenkins Slave를 생성 및 구성해야 한다.</p>
+
+    <p>Jenkins의 <code class="highlighter-rouge">Manage Nodes</code> 설정에 들어와서 왼쪽의 <code class="highlighter-rouge">신규 노드</code> 탭을 눌러 Jenkins Slave 노드를 생성해준다.</p>
+
+    <p>첫 화면에서는 노드 명에 ‘jenkins-slave’라고 입력하고 <code class="highlighter-rouge">Permanent Agent</code>를 클릭 후 다음으로 넘어간다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_5.png" alt="create_jenkins_slave" width="937" height="437" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 5] Jenkins Slave 생성</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>신규 노드에 대한 설정에서 위의 [그림 5]와 같이 설정한다.</p>
+
+    <p><strong>jenkins-slave를 kube-master 인스턴스에서 실행시켜놓고 Jenkins에서 웹 소켓을 통해 kube-master에 접근하여 스크립트를 실행시켜서 서비스를 배포하는 형태로 진행된다.</strong></p>
+
+    <p><br /></p>
+
+    <p>jenkins-slave agent를 생성하면 다음 [그림 6]의 화면을 볼 수 있다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_6.png" alt="jenkins_slave_guide" width="1050" height="297" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 6] jenkins-slave 가이드 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p><strong>agent.jar 링크를 눌러 파일을 다운</strong>받고 kube-master 인스턴스에 복사한 후에 [그림 6]에 보이는 명령을 실행하면 된다.</p>
+
+    <p>하지만 kube-master 인스턴스에는 java가 설치되어 있지 않아 java를 설치하고 설정하는 작업부터 진행한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>yum <span class="nt">-y</span> <span class="nb">install </span>java-1.8.0-openjdk-devel.x86_64
+  <span class="nv">$ </span><span class="nb">readlink</span> <span class="nt">-f</span> /usr/bin/javac
+  <span class="nv">$ </span>vi /etc/profile
+  <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64
+
+  <span class="nv">$ </span><span class="nb">source</span> /etc/profile
+  <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
+  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/bin/javac
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p><strong>java 1.8 버전을 설치</strong>하고 <strong>JAVA_HOME 환경변수를 설정</strong>하여 java 명령을 실행시킬 수 있도록 해주고 다음 명령을 입력한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>java <span class="nt">-jar</span> agent.jar <span class="nt">-jnlpUrl</span> http://serversIP:8002/computer/jenkins-slave/slave-agent.jnlp <span class="nt">-secret</span> 032e782a7ef4897446fec5be230aefb9036ddb841552142e415012d266ced967 <span class="nt">-workDir</span> <span class="s2">"/data/jenkins"</span>
+  Sep 30, 2020 3:18:20 PM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+  INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+  Sep 30, 2020 3:18:20 PM org.jenkinsci.remoting.engine.WorkDirManager setupLogging
+  INFO: Both error and output logs will be printed to /home/jenkins/agent/remoting
+  Sep 30, 2020 3:18:21 PM hudson.remoting.jnlp.Main createEngine
+  INFO: Setting up agent: jenkins-slave
+  Sep 30, 2020 3:18:21 PM hudson.remoting.jnlp.Main<span class="nv">$CuiListener</span> &lt;init&gt;
+  INFO: Jenkins agent is running <span class="k">in </span>headless mode.
+  Sep 30, 2020 3:18:21 PM hudson.remoting.Engine startEngine
+  INFO: Using Remoting version: 4.5
+  Sep 30, 2020 3:18:21 PM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+  INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+  Sep 30, 2020 3:18:21 PM hudson.remoting.jnlp.Main<span class="nv">$CuiListener</span> status
+  INFO: WebSocket connection open
+  Sep 30, 2020 3:18:22 PM hudson.remoting.jnlp.Main<span class="nv">$CuiListener</span> status
+  INFO: Connected
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+    <p>정상적으로 jenkins-slave가 실행되면 Jenkins에서 쿠버네티스 클러스터에 서비스를 배포할 수 있는 환경이 만들어진 것이고 [그림 7]과 같이 agent가 연결된 것을 확인할 수 있다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_7.png" alt="jenkins_slave_agent" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 7] jenkins-slave agent 연결 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>Pipeline 설정 및 테스트</strong>   <a name="list1_4"></a></p>
+
+    <p>위의 쿠버네티스 관련 설정이 정상적으로 완료되면 파이프라인 스크립트를 다음과 같이 작성해준다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  pipeline <span class="o">{</span>
+      environment <span class="o">{</span>
+          registry <span class="o">=</span> <span class="s2">"crisis513/flask-app"</span>
+          registryCredential <span class="o">=</span> <span class="s2">"crisis513"</span>
+          dockerImage <span class="o">=</span> <span class="s2">""</span>
+          releaseName <span class="o">=</span> <span class="s2">"flask-app"</span>
+          helmChartRepo <span class="o">=</span> <span class="s2">"flask-kubernetes-helm"</span>
+          release_version <span class="o">=</span> <span class="s2">"latest"</span>
+      <span class="o">}</span>
+      agent <span class="o">{</span>
+          label <span class="s2">"jenkins-slave"</span>
+      <span class="o">}</span>
+      stages <span class="o">{</span>
+          stage<span class="o">(</span><span class="s1">'Cloning our Git'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  git <span class="s2">"http://GITLAB_SERVER_IP:8001/root/flask-app.git"</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Building docker image'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      dockerImage <span class="o">=</span> docker.build registry + <span class="s2">":</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Deploy docker image'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  script <span class="o">{</span>
+                      docker.withRegistry<span class="o">(</span> <span class="s1">''</span>, registryCredential <span class="o">)</span> <span class="o">{</span>
+                          dockerImage.push<span class="o">()</span>
+                      <span class="o">}</span>
+                  <span class="o">}</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Cleaning up'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s2">"docker rmi </span><span class="nv">$registry</span><span class="s2">:</span><span class="k">${</span><span class="nv">release_version</span><span class="k">}</span><span class="s2">"</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+          stage<span class="o">(</span><span class="s1">'Deploy image to kubernetes'</span><span class="o">)</span> <span class="o">{</span>
+              steps <span class="o">{</span>
+                  sh <span class="s2">"""
+                      helm lint </span><span class="k">${</span><span class="nv">helmChartRepo</span><span class="k">}</span><span class="s2">
+                      helm upgrade </span><span class="k">${</span><span class="nv">releaseName</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">helmChartRepo</span><span class="k">}</span><span class="s2">
+                  """</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p><strong>만약 Jenkins agent에서 도커를 실행하지 못하는 에러가 발생하면 docker.io 패키지를 설치해야 한다.</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  yum <span class="nt">-y</span> <span class="nb">install </span>docker.io
+</code></pre></div>    </div>
+
+    <p>파이프라인은 다음과 같이 실행된다.</p>
+
+    <p>CI가 실행되는 스크립트는 이전 포스팅과 동일하고 그 이후 배포하는 과정이 추가되었고, ‘Deploy image to kubernetes’ Stage에서 <strong>helm upgrade 명령어를 통해 쿠버네티스 클러스터에 실행되고 있는 서비스에 롤링 업데이트 형태로 재배포할 수 있다.</strong></p>
+
+    <p><br /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_8.png" alt="pipeline_execute_result" width="716" height="332" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 8] 쿠버네티스 배포까지의 파이프라인 실행 결과</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>위 스크립트의 실행 결과는 위의 [그림 8]과 같다. Git clone하는 부분부터 쿠버네티스 클러스터에 서비스 배포하는 과정까지 정상적으로 실행된 것을 확인할 수 있다.</p>
+
+    <blockquote>
+      <p>Helm에 대한 부분은 추후 별도로 포스팅 할 예정</p>
+    </blockquote>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-argocd를-이용한-cd-구성---"><span style="color:purple"><strong>2. ArgoCD를 이용한 CD 구성</strong></span>   <a name="list2"></a></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>ArgoCD 란?</strong>   <a name="list2_1"></a></p>
+
+    <p>앞서 설명한 Jenkins Slave를 구성하여 CI/CD를 모두 제어할 수 있지만, CI를 Jenkins에서 진행하고 CD를 ArgoCD로 진행하는 형태로도 구축할 수 있다.</p>
+
+    <p>ArgoCD는 쿠버네티스 클러스터에 설치 한 후 애플리케이션들을 관리할 수 ​​있다.</p>
+
+    <p>Git 저장소에 앱을 설명하는 쿠버네티스 매니페스트가 존재하는데, ArgoCD는 이러한 매니페스트가 항상 동기화되어 있는지 확인한다.</p>
+
+    <p>모든 매니페스트와 해당 동기화 상태는 UI가 깔끔하고 시각적으로 잘 표현되어 있으면서도 가볍기 때문에 Jenkins와 같이 사용하는 것도 상당히 매력적인 선택지 중 하나이다.</p>
+
+    <p>애플리케이션 배포 및 수명주기 관리는 자동화되고 감사 가능하며 이해하기 쉬워야합니다. 이 모든 작업은 Argo를 사용하여 수행할 수 있다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>ArgoCD 설치</strong>   <a name="list2_2"></a></p>
+
+    <p><strong>ArgoCD는 쿠버네티스 위에서 동작하는 GitOps 지속적 배포 도구이다.</strong></p>
+
+    <p>따라서 Helm을 사용하여 ArgoCD를 쿠버네티스에 배포할 것이다.</p>
+
+    <p>우선 argocd의 네임스페이스를 생성해준다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace argocd
+</code></pre></div>    </div>
+
+    <p>다음으로 ArgoCD의 Helm 레포지토리를 추가해주고 앞서 생성해준 argocd 네임스페이스에 Helm을 사용해 argocd를 설치해준다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>helm repo add argo https://argoproj.github.io/argo-helm
+  <span class="nv">$ </span>helm <span class="nb">install </span>argocd argo/argo-cd <span class="nt">-n</span> 
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  manifest_sorter.go:192: info: skipping unknown hook: <span class="s2">"crd-install"</span>
+  NAME: argocd
+  LAST DEPLOYED: Wed Oct 10 06:38:54 2020
+  NAMESPACE: argocd
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  In order to access the server UI you have the following options:
+
+  1. kubectl port-forward service/argocd-server <span class="nt">-n</span> argocd 8080:443
+
+      and <span class="k">then </span>open the browser on http://localhost:8080 and accept the certificate
+
+  2. <span class="nb">enable </span>ingress <span class="k">in </span>the values file <span class="sb">`</span>service.ingress.enabled<span class="sb">`</span> and either
+      - Add the annotation <span class="k">for </span>ssl passthrough: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/ingress.md#option-1-ssl-passthrough
+      - Add the <span class="sb">`</span><span class="nt">--insecure</span><span class="sb">`</span> flag to <span class="sb">`</span>server.extraArgs<span class="sb">`</span> <span class="k">in </span>the values file and terminate SSL at your ingress: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/ingress.md#option-2-multiple-ingress-objects-and-hosts
+
+
+  After reaching the UI the first <span class="nb">time </span>you can login with username: admin and the password will be the
+  name of the server pod. You can get the pod name by running:
+
+  kubectl get pods <span class="nt">-n</span> argocd <span class="nt">-l</span> app.kubernetes.io/name<span class="o">=</span>argocd-server <span class="nt">-o</span> name | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">'/'</span> <span class="nt">-f</span> 2
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>설치 시 수정 된 values.yaml을 적용할 경우 다음의 명령어를 통해 배포
+$ helm install argocd argo/argo-cd -f ./values.yaml</p>
+    </blockquote>
+
+    <p>성공적으로 배포가 되었는지 확인해본다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> argocd
+  NAME                                                READY   STATUS    RESTARTS   AGE
+  pod/argocd-application-controller-544c45984-26sfs   1/1     Running   0          15h
+  pod/argocd-dex-server-7cd54b9d86-6hhvw              1/1     Running   0          15h
+  pod/argocd-redis-5ddd577d68-nh867                   1/1     Running   0          15h
+  pod/argocd-repo-server-69fc78b68-8f9n2              1/1     Running   0          15h
+  pod/argocd-server-7c5f6f8d9-xkc8h                   1/1     Running   0          15h
+
+
+  NAME                            TYPE           CLUSTER-IP       EXTERNAL-IP     PORT<span class="o">(</span>S<span class="o">)</span>                      AGE
+  service/argocd-dex-server       ClusterIP      10.100.97.188    &lt;none&gt;          5556/TCP,5557/TCP,5558/TCP   15h
+  service/argocd-metrics          ClusterIP      10.108.127.86    &lt;none&gt;          8082/TCP                     15h
+  service/argocd-redis            ClusterIP      10.105.230.152   &lt;none&gt;          6379/TCP                     15h
+  service/argocd-repo-server      ClusterIP      10.104.24.97     &lt;none&gt;          8081/TCP,8084/TCP            15h
+  service/argocd-server           ClusterIP      10.104.68.51     &lt;none&gt;          80:30854/TCP,443:32178/TCP   15h
+  service/argocd-server-metrics   ClusterIP      10.103.118.105   &lt;none&gt;          8083/TCP                     15h
+
+
+  NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/argocd-application-controller   1/1     1            1           15h
+  deployment.apps/argocd-dex-server               1/1     1            1           15h
+  deployment.apps/argocd-redis                    1/1     1            1           15h
+  deployment.apps/argocd-repo-server              1/1     1            1           15h
+  deployment.apps/argocd-server                   1/1     1            1           15h
+
+  NAME                                                      DESIRED   CURRENT   READY   AGE
+  replicaset.apps/argocd-application-controller-544c45984   1         1         1       15h
+  replicaset.apps/argocd-dex-server-7cd54b9d86              1         1         1       15h
+  replicaset.apps/argocd-redis-5ddd577d68                   1         1         1       15h
+  replicaset.apps/argocd-repo-server-69fc78b68              1         1         1       15h
+  replicaset.apps/argocd-server-7c5f6f8d9                   1         1         1       15h
+</code></pre></div>    </div>
+
+    <p>서비스가 정상적으로 배포가 되었다면 argocd에 접근하기 위해 argocd-server에 대한 NodePort를 생성해준다.</p>
+
+    <p>본 프로젝트에서는 30093으로 정의하였고, 마찬가지로 GCP 방화벽에서도 해당 포트번호를 추가해주어야 한다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim argocd-nodeport.yaml 
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: argocd
+  spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/name: argocd-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30093
+</code></pre></div>    </div>
+
+    <p>이제 ArgoCD에 접속하여 로그인을 시도해본다.</p>
+
+    <p>Helm으로 배포했을 때 초기 아이디는 <code class="highlighter-rouge">admin</code>, 패스워드는 ArgoCD 파드명 즉, <code class="highlighter-rouge">argocd-server-7c5f6f8d9-xkc8h</code> 이다.</p>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p><strong>ArgoCD 설정</strong>   <a name="list2_3"></a></p>
+
+    <p>정상적으로 로그인이 이루어지면 Git 레포지토리를 추가하는 작업을 해주어야 한다.</p>
+
+    <p>왼쪽의 <code class="highlighter-rouge">settings</code> 탭에서 <code class="highlighter-rouge">Repositories</code> 항목을 눌러 다음 [그림 9]와 같이 레포지토리를 추가해준다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_9.png" alt="argocd_repo" width="680" height="239" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 9] ArgoCD 레포지토리 추가</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>정상적으로 레포지토리가 연결되면 [그림 10]과 같이 상태 부분에 <strong>Successful</strong> 이라는 문구가 뜨게 된다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_10.png" alt="argocd_repo_check" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 10] ArgoCD 레포지토리 추가 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>다음으로 <code class="highlighter-rouge">Applications</code> 탭에 와서 <code class="highlighter-rouge">NEW APP</code> 버튼을 눌러 배포를 관리할 애플리케이션을 추가해준다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_11.png" alt="argocd_app" width="638" height="453" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 11] ArgoCD 애플리케이션 추가</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>애플리케이션 이름을 정의해주고 아래로 내리면 [그림 12]와 같은 화면이 나온다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_12.png" alt="argocd_app2" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 12] ArgoCD 애플리케이션 추가2</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>레포지토리 주소와 배포할 yaml 파일들이 들어있는 경로를 명시해주고, 배포할 쿠버네티스의 클러스터 주소와 네임스페이스까지 작성하여 애플리케이션을 만들어준다.</p>
+
+    <p>정상적으로 애플리케이션이 만들어지면 다음 [그림 13]과 같이 ArgoCD에서 Git 레포지토리와 연동된 애플리케이션을 볼 수 있다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_13.png" alt="argocd_app_check" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 13] ArgoCD 애플리케이션 추가 확인</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>동기화 되지 않은 상태로 <code class="highlighter-rouge">OutOfSync</code>라는 문구와 <strong>노란색</strong>으로 표현이 되고, Sync 버튼을 눌러주면 쿠버네티스 클러스터에 자동으로 배포가 되면서 <code class="highlighter-rouge">Sync OK</code> 라는 문구와 함께 <strong>초록색</strong>으로 바뀌어 정상 동작하는 것을 확인할 수 있다.</p>
+
+    <p>ArgoCD에서 정상적으로 동기화를 시켜주면 다음 [그림 14]와 같은 화면을 보실 수 있다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"><img src="/static/assets/img/landing/project/devsecops_3_14.png" alt="argocd_sync" width="952" height="309" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">[그림 14] ArgoCD 배포 동기화</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><br /></p>
+
+    <p>[그림 13]에서 애플리케이션을 선택해 들어가면 [그림 14]와 같이 실행중인 애플리케이션을 지속적으로 모니터링할 수 있는 화면이 나오게 된다.</p>
+
+    <p>Git 레포지토리와 쿠버네티스 클러스터와의 차이점을 보고하고 시각화하는 동시에 라이브 상태를 원하는 상태로 동기화하는 기능을 제공한다.</p>
+
+    <p><br /></p>
+
+    <p>여기까지 Jenkins를 활용하여 쿠버네티스를 연동하여 CD를 구성하고 ArgeCD 설치 및 설정하는 과정을 살펴보았다.</p>
+
+    <p>다음 포스팅에서는 Helm을 활용하여 Prometheus와 Grafana를 구성하여 모니터링 시스템을 구축하고, EFK(Elasticsearch, Fluent Bit, Kibana)를 구성하여 로깅 시스템을 구축하는 방법에 대해 기술해보겠다!</p>
+  </li>
+</ul>
+:ET
