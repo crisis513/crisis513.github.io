@@ -5,8 +5,8 @@
     <description>son's blog, use Jekyll and github pages.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 May 2022 20:24:52 +0900</pubDate>
-    <lastBuildDate>Wed, 18 May 2022 20:24:52 +0900</lastBuildDate>
+    <pubDate>Mon, 23 May 2022 17:04:09 +0900</pubDate>
+    <lastBuildDate>Mon, 23 May 2022 17:04:09 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -579,7 +579,7 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;PMD(Programing Mistake Detector)&lt;/strong&gt;   &lt;a name=&quot;list2_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 한다.&lt;/p&gt;
+    &lt;p&gt;OMD 또한 pom.xml 파일에 PMD를 사용하도록 명시하여 프로젝트를 빌드할 때 PMD를 통해 정적 분석을 진행할 수 있도록 한다.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;plugin&amp;gt;
       &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
@@ -637,6 +637,8 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;정상적으로 SonarQube가 실행되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Create New Project&lt;/code&gt; 버튼을 누르면 다음 [그림 3]과 같은 화면이 나온다.&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -649,6 +651,14 @@
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Project key와 Display name을 입력한 후 Set Up 버튼을 눌러 프로젝트를 생성한다.&lt;/p&gt;
+
+    &lt;p&gt;프로젝트가 정상적으로 생성되었다면 토큰을 생성한다.&lt;/p&gt;
+
+    &lt;p&gt;Provide a token에 임의의 키를 입력한 후에 Generate를 클릭하면 다음 [그림 4]와 같이 토큰 키가 생성된다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -667,6 +677,12 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;생성된 토큰은 Jenkins와 SonarQube를 연동하여 파이프라인에서 활용하기 위해 사용된다.&lt;/p&gt;
+
+    &lt;p&gt;아래에는 다음 [그림 5]와 같이 Run analysis on your project 항목이 있는데, 해당 프로젝트에서 분석할 애플리케이션의 언어와 빌드 도구를 선택하면 SonarQube 분석을 실행시킬 수 있는 명령어가 나온다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -679,6 +695,10 @@
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음으로 [그림 6]과 같이 Jenkins에서 SonarQube credentials을 생성한다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -697,6 +717,10 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;그리고 다음 [그림 7]과 같이 Jenkins와 연동하기 위해 SonarQube에서 웹훅을 생성하고 설정한다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -709,6 +733,16 @@
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;이렇게 설정된 웹훅은 Jenkins에서 요청이 오면 정적 분석에 대한 결과를 Jenkins QualifyGate에 응답하게 된다.&lt;/p&gt;
+
+    &lt;p&gt;다음으로 [그림 8]과 같이 Jenkins에서 SonarQube 서버를 연동하기 위한 설정을 진행한다.&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins 관리 &amp;gt; 시스템 설정에서 SonarQube Servers&lt;/code&gt;가 없으면 Sonar Quality Gates 플러그인을 설치해야 함&lt;/p&gt;
+    &lt;/blockquote&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -727,6 +761,16 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;[그림 6]에서 생성했었던 Token을 선택하고 SonarQube Server URL을 설정한다.&lt;/p&gt;
+
+    &lt;p&gt;그리고 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins 관리 &amp;gt; Global Tool Configuration에서 SonarQube Scanner&lt;/code&gt;에서 다음 [그림 9]와 같이 구성한다.&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Install automatically를 체크하면 SonarQube Scanner가 자동으로 설치하도록 구성&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -739,6 +783,14 @@
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;여기까지 정상적으로 설정되었다면 Jenkins Pipeline에 SonarQube를 활용할 수 있는 환경이 모두 갖춰진 것이다.&lt;/p&gt;
+
+    &lt;p&gt;추가적으로 Jenkins에서 SonarQube로 분석한 결과 파일을 가져올 수 있도록 CheckStyle, PMD, SpotBugs와 Dependency-Check 각각의 분석 결과 파일의 경로를 설정해보겠다.&lt;/p&gt;
+
+    &lt;p&gt;먼저 Dependency-Check는 &lt;code class=&quot;highlighter-rouge&quot;&gt;환경설정 &amp;gt; 프로젝트 설정 &amp;gt; Dependency-Check&lt;/code&gt; 탭에 들어가서 설정한다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -757,6 +809,12 @@
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+    &lt;p&gt;Dependency-Check는 HTML, JSON, XML 세 가지 파일 형식으로 결과를 도출할 수 있는데, 각 파일에 대한 저장하고 싶은 Path를 입력하면 된다.&lt;/p&gt;
+
+    &lt;p&gt;다음으로 CheckStyle, PMD, SpotBug는 Dependency-Check 탭 바로 아래의 &lt;code class=&quot;highlighter-rouge&quot;&gt;External Analyzers&lt;/code&gt; 탭에서 설정한다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -769,6 +827,12 @@
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;CheckStyle, PMD, SpotBug도 마찬가지로 각 툴에서 도출된 결과 레포트 파일을 어느 경로에 저장할 것인지를 명시해준다.&lt;/p&gt;
+
+    &lt;p&gt;각 툴에 대한 경로 설정이 정상적으로 끝났다면 Quality Profiles를 설정해보자.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -786,15 +850,27 @@
     &lt;/table&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Quality Profiles은 SonarQube에서 분석할 때 적용할 Rule을 설정할 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;기본적으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;DEFAULT&lt;/code&gt;라고 되어있는 &lt;strong&gt;Sonar way&lt;/strong&gt; Profile로 분석을 하지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;BUILT-IN&lt;/code&gt; 되어 있는 Rule을 모두 분석해보기 위해 &lt;strong&gt;My way&lt;/strong&gt;라는 Profile을 만들어 하위 Profile로 다른 Profile을 배치(?)한 후에 My way Profile의 오른쪽 톱니바퀴를 눌러 Set as Default를 설정해주었다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;젠장.. Jenkins에서 SonarQube 연동하여 Pipeline 실행시킨 스크린샷이 어디갔지 -_-;;&lt;/p&gt;
+    &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Anchore&lt;/strong&gt;   &lt;a name=&quot;list2_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;엔진이 처음 시작되면 CVE 취약성 데이터를 포함하여 피드 데이터의 전체 동기화를 수행한다. &lt;/p&gt;
+    &lt;p&gt;다음 Jenkins에 연동핳 정적 분석 도구인 Anchore를 살펴보겠다.&lt;/p&gt;
 
-    &lt;p&gt;이 첫 번째 동기화는 몇 시간 동안 지속될 수 있으며 이 시간 동안 Anchore Engine은 이미지를 분석 할 수 있지만 피드 동기화가 성공적으로 완료 될 때까지 정책 평가 또는 CVE 보고를 수행하지 않는다.&lt;/p&gt;
+    &lt;p&gt;Anchore는 컨테이너 이미지의 검사, 분석 및 인증을 위한 중앙 집중식 서비스를 제공하는 오픈 소스 프로젝트이다.&lt;/p&gt;
 
-    &lt;p&gt;Anchore Engine은 REST API를 노출하지만 Anchore Engine과 상호 작용하는 가장 쉬운 방법은 Python PiP를 사용하여 설치할 수있는 Anchore CLI를 사용하는 것 이다.&lt;/p&gt;
+    &lt;p&gt;GEM, Java Archive (jar, war, ear), NPM, Python 패키지가 제공되며, 특히 Jenkins 플러그인을 통해 연동이 가능하다.&lt;/p&gt;
+
+    &lt;p&gt;우선 Kubernetes 및 Helm을 활용하여 Anchore 서버를 구성해보자.&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create namespace anchore
   namespace/anchore created
@@ -869,6 +945,12 @@
       anchore-cli image content &amp;lt;imageref&amp;gt; files
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Anchore Engine이 정상적으로 배포되었다면 pip를 통해 anchore-cli 패키지를 설치하고, anchore 컨테이너에 전달 된 secret에 액세스하여 kubernetes에서 비밀번호를 검색한다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; python-pip
   &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;anchorecli
@@ -881,7 +963,11 @@
   foobar
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;컨테이너에 전달 된 비밀에 액세스하여 kubernetes에서 비밀번호를 검색 할 수 있다.&lt;/p&gt;
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;다음으로 Jenkins Pipeline에서 실행해보기 전에 anchore-cli 명령을 통해 앞서 컨테이너 이미지 검사가 정상적으로 이루어지는지 테스트 해보겠다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  crisis51526@cloudshell:~/anchore-engine &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;cccr-nov2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim anchore-nodeport.yaml
   apiVersion: v1
@@ -919,6 +1005,18 @@
   Full Tag: docker.io/jisunpark/cccr-dvwa-java-web:latest
   Tag Detected At: 2020-10-20T18:40:33Z
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;jisunpark/cccr-dvwa-java-web&lt;/strong&gt;라는 테스트용 이미지는 DVJA(Damn Vulnerable Java Application)를 사용했다.&lt;/p&gt;
+
+    &lt;p&gt;DVWA(Damn Vulnerable Web Application)는 취약점이 많은 웹 애플리케이션을 모의해킹 및 실습 용도로 PHP와 MySQL을 사용하여 만들어진 것이고, DVJA는 Java로 만들어진 웹 애플리케이션이다.&lt;/p&gt;
+
+    &lt;p&gt;https://github.com/appsecco/dvja&lt;/p&gt;
+
+    &lt;p&gt;위의 git을 클론하여 DVJA 도커 이미지를 helm으로 배포할 수 있도록 개발하여 실습을 진행했다.&lt;/p&gt;
+
+    &lt;p&gt;최종적으로 정적 분석 도구들을 Jenkins에 연동하여 Pipeline 코드를 작성한 내용은 다음과 같다.&lt;/p&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -1008,6 +1106,40 @@
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;일련의 과정을 정리하면 다음과 같다.&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;코드를 Git에 Push하면 Jenkins에서 웹훅을 받아 파이프라인이 자동으로 실행&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;웹훅을 받은 Git 레포지토리를 Clone&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;해당 Git에 업데이트된 코드를 기반으로 Docker 이미지를 빌드하고 지정된 Docker hub로 Push&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;빌드된 이미지를 Anchore로 분석&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;도커 이미지를 제거 후 SpotBugs, PMD, CheckStyle, Dependency-Check 도구를 통해 코드 정적 분석&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;그리고 SonarQube에서 설정한 Quality Profiles의 Rule을 바탕으로 정적 분석&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;해당 파이프라인의 성공 여부를 Slack 메시지로 전달&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;해당 파이프라인을 실행시키면 다음 [그림 13]과 같이 정상적으로 파이프라인이 실행된 것을 확인할 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
     &lt;table&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -1016,16 +1148,20 @@
       &lt;/thead&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          &lt;td style=&quot;text-align: center&quot;&gt;[그림 13] Anchore 파이프라인 테스트&lt;/td&gt;
+          &lt;td style=&quot;text-align: center&quot;&gt;[그림 13] Jenkins 정적 분석도구 파이프라인 테스트&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/tbody&gt;
     &lt;/table&gt;
 
     &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-    &lt;p&gt;여기까지 DevOps 파이프라인에서 배포할 때 정적 테스트를 거쳐 배포할 수 있는 방법을 알아보았다.&lt;/p&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;왜 [그림 13]에 SonarQube stage는 없는 것인가… 분명 성공했었는데 스샷을 못남긴 듯 하다 ㅠㅠㅠ&lt;/p&gt;
+    &lt;/blockquote&gt;
 
-    &lt;p&gt;Acceptance, Production 단계인 CD 파이프라인에 OWASP ZAP, Hashicorp Vault, Chaos monkey 등 동적 테스트 자동화도 적용시켜보고 싶었지만 갑작스럽게 군대를 가게되어 프로젝트는 여기까지 진행되었다.😭😭&lt;/p&gt;
+    &lt;p&gt;아무튼 여기까지 DevOps 파이프라인에서 배포할 때 정적 테스트를 거쳐 배포할 수 있는 방법을 알아보았다.&lt;/p&gt;
+
+    &lt;p&gt;Acceptance, Production 단계인 CD 파이프라인에 OWASP ZAP, Hashicorp Vault, kube-monkey 등 동적 테스트 자동화도 적용시켜보고 싶었지만 갑작스럽게 군대를 가게되어 필자는 여기까지만 프로젝트를 참여하게 되었다.😭😭&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
