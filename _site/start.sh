@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# OS: Ubuntu 20.04 LTS
 # $ sudo apt-get update
 # $ sudo apt -y install make build-essential ruby ruby-devr
 # $ vi ~/.bashrc
