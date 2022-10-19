@@ -19,8 +19,24 @@
     
     
     {
-        "title" : "[Infra] a - 2021-06-07",
-        "url" : "/2021/06/07/infra1.html"
+        "title" : "[Infra] minikube에서 istio 사용기 - 2021-10-14",
+        "url" : "/infra/2021/10/14/use_istio.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Infra] minikube에서 istio 설치하기 - 2021-10-14",
+        "url" : "/infra/2021/10/14/install_istio.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Infra] Ubuntu 22.04 환경에서 minikube 설치하기 - 2021-10-13",
+        "url" : "/infra/2021/10/13/install_minikube.html"
     }
     
     ,

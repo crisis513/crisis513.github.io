@@ -41,8 +41,6 @@ icon: icon-html
 
 [&nbsp;&nbsp; 3.2. 오토 스케일링 및 부하 테스트](#list3_2)
 
-<br>
-
 ---
 
 ## <span style="color:purple">**1. 프로젝트 개요**</span>   <a name="list1"></a>
@@ -82,8 +80,6 @@ icon: icon-html
     Cloud DNS를 이용하여 도메인을 설정해보고 싶었지만, 도메인을 구입하고 등록하는 과정이 필요하여 생략했다.
 
     <br>
-
----
 
 ## <span style="color:purple">**2. 프로젝트 구현**</span>   <a name="list2"></a>
 
@@ -707,8 +703,6 @@ icon: icon-html
     | [그림 25] 로그 뷰어 쿼리 빌더 |
 
     <br>
-
----
 
 ## <span style="color:purple">**3. 프로젝트 테스트**</span>   <a name="list3"></a>
 

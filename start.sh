@@ -14,5 +14,5 @@ if [[ $1 = "watch" ]]; then
 elif [[ $1 = "inc" ]]; then
 	jekyll serve --incremental
 else
-	jekyll serve
+	jekyll serve --host 192.168.116.128
 fi

@@ -1,0 +1,172 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1; minimum-scale=1; user-scalable=no;"> <meta content="[Infra] Ubuntu 22.04 환경에서 minikube 설치하기" name="description"> <meta name="keywords" content="son,blog,infra,docker,minikube,kubectl,kubernetes"> <meta name="author" content="son"> <meta name="baseurl" content=""> <title> son | [Infra] Ubuntu 22.04 환경에서 minikube 설치하기 </title> <!-- favicon --> <link rel="shortcut icon" href="/static/assets/img/favicon.ico"> <!-- Main CSS --> <link href="/static/assets/app-20200311.min.css" rel="stylesheet"> <link href="/static/css/custom.css" rel="stylesheet"> <!-- Main Scripts --> <script src="/static/assets/app-20200311.min.js"></script> <script src="/static/assets/blog-20200311.min.js"></script> <!-- Google AdSense --> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <script> (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-6196184620200311", enable_page_level_ads: true }); </script> </head> <body id="page-top" class="landing-page"> <div class="search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right: 0px; opacity: 0.95; background-color: #111111; z-index: 9999; display: none;"> <input type="text" class="form-control search-content" id="search-content" style="position: fixed; top: 60px" placeholder="Search Blog"> <div style="position: fixed; top: 16px; right: 16px; z-index: 9999;"> <img src="/static/assets/img/search/cb-close.png" id="close-btn"/> </div> </div> <div style="position: fixed; right: 16px; bottom: 20px; z-index: 9999;"> <img src="/static/assets/img/search/cb-search.png" id="search-btn" title="Double click Ctrl"/> </div> <div class="navbar-wrapper"> <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header page-scroll"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/">son</a> </div> <div id="navbar" class="navbar-collapse collapse"> <ul class="nav navbar-nav navbar-right"> <li><a class="page-scroll" href="blog/"></a></li> <li> <a class="page-scroll" href="/blog/">All</a></li> <li> <a class="page-scroll" href="/project/">Project</a></li> <li> <a class="page-scroll" href="/error-report/">Error-Report</a></li> <li> <a class="page-scroll" href="/research-output/">Research-Output</a></li> <li> <a class="page-scroll" href="/infra/">Infra</a></li> <li> <a class="page-scroll" href="/review/">Review</a></li> </ul> </div> </div> </nav> </div> <div id="inSlider" class="carousel carousel-fade" data-ride="carousel"> <ol class="carousel-indicators"> <li data-target="#inSlider" data-slide-to="0" class="active"></li> <li data-target="#inSlider" data-slide-to="1"></li> <li data-target="#inSlider" data-slide-to="2"></li> </ol> <div class="carousel-inner" role="listbox"> <div class="item active"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_one.jpg);" title="han-gi's blog"> </div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_two.jpg);" title="han-gi's blog"></div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_three.jpg);" title="han-gi's blog"></div> </div> </div> <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#inSlider" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div> <div class="wrapper wrapper-content animated fadeInRight article"> <div class="row"> <div class="col-lg-10 col-lg-offset-1"> <div class="ibox"> <div class="ibox-content"> <div class="pull-right"> <a class="btn btn-white btn-xs" href="/infra">Infra</a> </div> <div class="text-center article-title"> <span class="text-muted"><i class="fa fa-clock-o"></i> 13 Oct 2021</span> <h1> [Infra] Ubuntu 22.04 환경에서 minikube 설치하기 </h1> </div> <p>본 포스팅에서는 Ubuntu 22.04 환경에서 minikube를 설치하는 과정을 설명합니다.</p> <hr /> <h2 id="목차">목차</h2> <p><a href="#list1">1. 개요</a></p> <p><a href="#list1_1">   1.1. minikube란?</a></p> <p><a href="#list1_2">   1.2. 개발 환경</a></p> <p><a href="#list2">2. Docker 설치</a></p> <p><a href="#list3">3. minikube 설치 과정</a></p> <p><a href="#list3_1">   3.1. minikube 설치</a></p> <p><a href="#list3_2">   3.2. kubectl 설치</a></p> <p><a href="#list3_3">   3.3. minikube 실행 및 종료</a></p> <hr /> <h2 id="1-개요-"><span style="color:purple"><strong>1. 개요</strong></span> <a name="list1"></a></h2> <p><br /></p> <h3 id="11-minikube란-">1.1. minikube란? <a name="list1_1"></a></h3> <p>minikube는 다양한 OS에서 로컬 Kubernetes 클러스터를 구현할 수 있도록 도와주는 <strong>오픈 소스 도구</strong>입니다. minikube의 주요 목표는 로컬 Kubernetes 애플리케이션 개발을 위한 도구들과 그에 맞는 모든 <strong>Kubernetes 기능을 지원</strong>하는 것 입니다. 로컬에서 리소스 활용이 적은 단일 노드 kubernetes 클러스터를 구동시킬 수 있기 때문에 개발 테스트 및 POC 목적으로 사용하기 좋습니다.</p> <p>자세한 설명은 <a href="https://minikube.sigs.k8s.io/docs" title="minikube">minikube 웹사이트</a>를 통해 확인하시기 바랍니다.</p> <p><br /></p> <h3 id="12-개발-환경-">1.2. 개발 환경 <a name="list1_2"></a></h3> <p>필자는 실습을 위해 <strong>VMWare Workstation 16.2</strong>에서 <strong>Ubuntu 22.04 LTS Desktop</strong> 이미지로 가상머신을 생성하여 진행하였습니다. 해당 환경에서 <strong>Docker</strong>를 설치하고, <strong>minikube</strong>에서 드라이버로 Docker를 사용하여 Kubernetes 구성 요소를 여기에 설치해볼 예정입니다.</p> <p><br /></p> <h2 id="2-docker-설치-"><span style="color:purple"><strong>2. Docker 설치</strong></span> <a name="list2"></a></h2> <p>minikube를 설치하기 위해서는 드라이버를 설정해주어야 하는데, minikube는 virtualbox와 같은 VM, Docker와 같은 컨테이너 또는 베어메탈 등 다양한 드라이버를 지원하고 있습니다. 이 중에서 본 포스팅에서는 Docker를 드라이버로 사용하여 진행할 것 입니다.</p> <p>Docker를 설치하기 전에 모든 시스템 패키지를 최신 릴리스로 업데이트 해야 합니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>apt update
+son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>apt-transport-https
+son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>apt upgrade
+</code></pre></div></div> <p>혹시나 재부팅이 필요한 경우 재부팅을 하고난 다음 설치를 진행하면 됩니다.</p> <p>Docker는 <code class="language-plaintext highlighter-rouge">get.docker.com</code>에서 지원하는 <strong>스크립트를 다운받아 실행</strong>해주기만 하면 되기 때문에 간단하게 설치할 수 있습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>son@son-localhost <span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://get.docker.com <span class="nt">-o</span> get-docker.sh
+son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>sh get-docker.sh
+<span class="c"># Executing docker install script, commit: 4f282167c425347a931ccfd95cc91fab041d414f</span>
++ sh <span class="nt">-c</span> apt-get update <span class="nt">-qq</span> <span class="o">&gt;</span>/dev/null
++ sh <span class="nt">-c</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="nt">-qq</span> apt-transport-https ca-certificates curl <span class="o">&gt;</span>/dev/null
++ sh <span class="nt">-c</span> <span class="nb">mkdir</span> <span class="nt">-p</span> /etc/apt/keyrings <span class="o">&amp;&amp;</span> <span class="nb">chmod</span> <span class="nt">-R</span> 0755 /etc/apt/keyrings
++ sh <span class="nt">-c</span> curl <span class="nt">-fsSL</span> <span class="s2">"https://download.docker.com/linux/ubuntu/gpg"</span> | gpg <span class="nt">--dearmor</span> <span class="nt">--yes</span> <span class="nt">-o</span> /etc/apt/keyrings/docker.gpg
++ sh <span class="nt">-c</span> <span class="nb">chmod </span>a+r /etc/apt/keyrings/docker.gpg
++ sh <span class="nt">-c</span> <span class="nb">echo</span> <span class="s2">"deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable"</span> <span class="o">&gt;</span> /etc/apt/sources.list.d/docker.list
++ sh <span class="nt">-c</span> apt-get update <span class="nt">-qq</span> <span class="o">&gt;</span>/dev/null
++ sh <span class="nt">-c</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="nt">-qq</span> <span class="nt">--no-install-recommends</span> docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin <span class="o">&gt;</span>/dev/null
++ version_gte 20.10
++ <span class="o">[</span> <span class="nt">-z</span>  <span class="o">]</span>
++ <span class="k">return </span>0
++ sh <span class="nt">-c</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="nt">-qq</span> docker-ce-rootless-extras <span class="o">&gt;</span>/dev/null
++ sh <span class="nt">-c</span> docker version
+Client: Docker Engine - Community
+  Version:           20.10.18
+  API version:       1.41
+  Go version:        go1.18.6
+  Git commit:        b40c2f6
+  Built:             Thu Sep  8 23:11:43 2022
+  OS/Arch:           linux/amd64
+  Context:           default
+  Experimental:      <span class="nb">true
+
+</span>Server: Docker Engine - Community
+  Engine:
+  Version:          20.10.18
+  API version:      1.41 <span class="o">(</span>minimum version 1.12<span class="o">)</span>
+  Go version:       go1.18.6
+  Git commit:       e42327a
+  Built:            Thu Sep  8 23:09:30 2022
+  OS/Arch:          linux/amd64
+  Experimental:     <span class="nb">false
+  </span>containerd:
+  Version:          1.6.8
+  GitCommit:        9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6
+  runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+  docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+<span class="o">================================================================================</span>
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon <span class="k">in </span>rootless mode <span class="k">for </span>your user:
+
+    dockerd-rootless-setuptool.sh <span class="nb">install
+
+</span>Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+<span class="nb">users </span>access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+          to root access on the host. Refer to the <span class="s1">'Docker daemon attack surface'</span>
+          documentation <span class="k">for </span>details: https://docs.docker.com/go/attack-surface/
+
+<span class="o">================================================================================</span>
+</code></pre></div></div> <p>get-docker.sh란 이름으로 스크립트를 다운받아 실행해주어 Docker를 설치하고 아래 명령어를 통해 Docker 어느 버전으로 설치되었는지 확인해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>son@son-localhost <span class="nv">$ </span>docker <span class="nt">--version</span>
+Docker version 20.10.18, build b40c2f6
+</code></pre></div></div> <p>Docker가 정상적으로 설치가 되긴 했지만, 현재 상태로 minikube에서 Docker를 드라이버로 설정하여 설치할 때 permission denied 에러가 발생할 것 입니다. 에러를 사전에 방지하기 위해 Docker를 일반 유저도 쓸 수 있도록 설정해주겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span> <span class="o">&amp;&amp;</span> newgrp docker
+</code></pre></div></div> <p>추가로 docker-compose를 사용할 것이라면 다음 명령을 통해 docker-compose를 설치할 수도 있습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>son@son-localhost <span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>docker-compose
+son@son-localhost <span class="nv">$ </span>docker-compose <span class="nt">--version</span>
+docker-compose version 1.29.2, build unknown
+</code></pre></div></div> <p><br /></p> <h2 id="3-minikube-설치-과정-"><span style="color:purple"><strong>3. minikube 설치 과정</strong></span> <a name="list3"></a></h2> <p>위의 과정을 통해 Docker를 정상적으로 설치하였다면 다음으로 minikube를 설치하겠습니다.</p> <p><br /></p> <h3 id="31-minikube-설치-">3.1. minikube 설치 <a name="list3_1"></a></h3> <p>minikube를 설치하기 위해서는 <strong>minikube 바이너리를 다운로드</strong>해야 합니다. 바이너리를 다운받아 <strong>실행 권한을 준 다음 /usr/local/bin 디렉토리 아래에 넣을 것</strong>입니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  <span class="nt">--2022-10-13</span> 04:03:24--  https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  Resolving storage.googleapis.com <span class="o">(</span>storage.googleapis.com<span class="o">)</span>... 34.64.4.112, 34.64.4.80, 34.64.4.16, ...
+  Connecting to storage.googleapis.com <span class="o">(</span>storage.googleapis.com<span class="o">)</span>|34.64.4.112|:443... connected.
+  HTTP request sent, awaiting response... 200 OK
+  Length: 76629407 <span class="o">(</span>73M<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+  Saving to: ‘minikube-linux-amd64’
+  
+  minikube-linux-amd64        100%[<span class="o">===========================================&gt;]</span>  73.08M  5.17MB/s    <span class="k">in </span>13s
+  
+  2022-10-13 04:03:38 <span class="o">(</span>5.72 MB/s<span class="o">)</span> - ‘minikube-linux-amd64’ saved <span class="o">[</span>76629407/76629407]
+  
+  son@son-localhost <span class="nv">$ </span><span class="nb">chmod</span> +x minikube-linux-amd64
+  son@son-localhost <span class="nv">$ </span><span class="nb">sudo mv </span>minikube-linux-amd64 /usr/local/bin/minikube
+</code></pre></div></div> <p>minikube 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 minikube 버전을 확인해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>minikube version
+  minikube version: v1.27.1
+  commit: fe869b5d4da11ba318eb84a3ac00f336411de7ba
+</code></pre></div></div> <blockquote> <p>혹시나 minikube가 실행되지 않는다면 $PATH에 /usr/local/bin이 없기 때문일 것입니다. 다른 $PATH로 위치를 옮기거나 $PATH에 /usr/local/bin 위치를 추가해야 합니다.</p> </blockquote> <p><br /></p> <h3 id="32-kubectl-설치-">3.2. kubectl 설치 <a name="list3_2"></a></h3> <p>minikube를 설치하더라도 <strong>Kubernetes에서 애플리케이션을 배포하고 관리하기 위해 사용되는 도구인 kubectl</strong>을 따로 설치해야 합니다. 마찬가지로 kubectl 바이너리 파일을 다운받아 실행권한을 준 다음 /usr/local/bin 위치로 옮겨주겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>curl <span class="nt">-LO</span> https://storage.googleapis.com/kubernetes-release/release/<span class="sb">`</span>curl <span class="nt">-s</span> https://storage.googleapis.com/kubernetes-release/release/stable.txt<span class="sb">`</span>/bin/linux/amd64/kubectl
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+  100 42.9M  100 42.9M    0     0  8035k      0  0:00:05  0:00:05 <span class="nt">--</span>:--:-- 8355k
+  son@son-localhost <span class="nv">$ </span><span class="nb">chmod</span> +x ./kubectl
+  son@son-localhost <span class="nv">$ </span><span class="nb">sudo mv</span> ./kubectl /usr/local/bin/kubectl
+</code></pre></div></div> <p>kubectl 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 kubectl 버전을 확인해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>kubectl version <span class="nt">-o</span> json <span class="nt">--client</span>
+  <span class="o">{</span>
+    <span class="s2">"clientVersion"</span>: <span class="o">{</span>
+      <span class="s2">"major"</span>: <span class="s2">"1"</span>,
+      <span class="s2">"minor"</span>: <span class="s2">"25"</span>,
+      <span class="s2">"gitVersion"</span>: <span class="s2">"v1.25.2"</span>,
+      <span class="s2">"gitCommit"</span>: <span class="s2">"5835544ca568b757a8ecae5c153f317e5736700e"</span>,
+      <span class="s2">"gitTreeState"</span>: <span class="s2">"clean"</span>,
+      <span class="s2">"buildDate"</span>: <span class="s2">"2022-09-21T14:33:49Z"</span>,
+      <span class="s2">"goVersion"</span>: <span class="s2">"go1.19.1"</span>,
+      <span class="s2">"compiler"</span>: <span class="s2">"gc"</span>,
+      <span class="s2">"platform"</span>: <span class="s2">"linux/amd64"</span>
+    <span class="o">}</span>,
+    <span class="s2">"kustomizeVersion"</span>: <span class="s2">"v4.5.7"</span>
+  <span class="o">}</span>
+</code></pre></div></div> <p><br /></p> <h3 id="33-minikube-실행-및-종료-">3.3. minikube 실행 및 종료 <a name="list3_3"></a></h3> <p>minikube를 실행시키기 위해서는 다음과 같이 minikube start 명령을 사용하면 됩니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>minikube start
+  <span class="k">*</span> minikube v1.27.1 on Ubuntu 22.04
+  <span class="k">*</span> Automatically selected the docker driver. Other choices: ssh, none
+  <span class="k">*</span> Using Docker driver with root privileges
+  <span class="k">*</span> Starting control plane node minikube <span class="k">in </span>cluster minikube
+  <span class="k">*</span> Pulling base image ...
+  <span class="k">*</span> Downloading Kubernetes v1.25.2 preload ...
+      <span class="o">&gt;</span> preloaded-images-k8s-v18-v1...:  385.41 MiB / 385.41 MiB  100.00% 4.47 Mi
+      <span class="o">&gt;</span> gcr.io/k8s-minikube/kicbase:  387.10 MiB / 387.11 MiB  100.00% 3.68 MiB p
+      <span class="o">&gt;</span> gcr.io/k8s-minikube/kicbase:  0 B <span class="o">[</span>________________________] ?% ? p/s 58s
+  <span class="k">*</span> Creating docker container <span class="o">(</span><span class="nv">CPUs</span><span class="o">=</span>2, <span class="nv">Memory</span><span class="o">=</span>2200MB<span class="o">)</span> ...
+  <span class="k">*</span> Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
+    - Generating certificates and keys ...
+    - Booting up control plane ...
+    - Configuring RBAC rules ...
+  <span class="k">*</span> Verifying Kubernetes components...
+    - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  <span class="k">*</span> Enabled addons: default-storageclass, storage-provisioner
+  <span class="k">*</span> Done! kubectl is now configured to use <span class="s2">"minikube"</span> cluster and <span class="s2">"default"</span> namespace by default
+</code></pre></div></div> <p>아무런 옵션도 기입하지 않으면 위에서 설치했던 Docker를 드라이버로 잡고, kicbase 이미지를 받아 CPU 2 core와 Memory 2200MB를 자동으로 잡는 것을 확인할 수 있습니다.</p> <blockquote> <p>여기서 kicbase 이미지는 통신하기 위해 프록시의 역할을 하는 것으로 알고 있습나다. 해당 이미지가 없다면 docker pull을 통해 받아오거나, VPN 또는 HTTP/HTTPS 프록시를 환경 변수로 사용하여 minikube start 해야합니다.</p> </blockquote> <p>minikube가 정상적으로 실행되었다면 kubectl 명령을 통해 생성된 클러스터 정보와 설정을 확인해보도록 하겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>kubectl cluster-info
+  Kubernetes control plane is running at https://192.168.49.2:8443
+  CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+  To further debug and diagnose cluster problems, use <span class="s1">'kubectl cluster-info dump'</span><span class="nb">.</span>
+  
+  son@son-localhost <span class="nv">$ </span>kubectl config view
+  apiVersion: v1
+  clusters:
+  - cluster:
+      certificate-authority: /home/son/.minikube/ca.crt
+      extensions:
+      - extension:
+          last-update: Thu, 13 Oct 2022 21:29:21 KST
+          provider: minikube.sigs.k8s.io
+          version: v1.27.1
+        name: cluster_info
+      server: https://192.168.49.2:8443
+    name: minikube
+  contexts:
+  - context:
+      cluster: minikube
+      extensions:
+      - extension:
+          last-update: Thu, 13 Oct 2022 21:29:21 KST
+          provider: minikube.sigs.k8s.io
+          version: v1.27.1
+        name: context_info
+      namespace: default
+      user: minikube
+    name: minikube
+  current-context: minikube
+  kind: Config
+  preferences: <span class="o">{}</span>
+  <span class="nb">users</span>:
+  - name: minikube
+    user:
+      client-certificate: /home/son/.minikube/profiles/minikube/client.crt
+      client-key: /home/son/.minikube/profiles/minikube/client.key
+</code></pre></div></div> <p>minikube를 종료하고 싶다면 다음과 같이 minikube stop 명령을 통해 종료할 수 있습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>minikube stop
+  <span class="k">*</span> Stopping node <span class="s2">"minikube"</span>  ...
+  <span class="k">*</span> Powering off <span class="s2">"minikube"</span> via SSH ...
+  <span class="k">*</span> 1 node stopped.
+</code></pre></div></div> <p><br /></p> <hr> <div class="row"> <div class="col-md-6"> <h5 style="display: inline;">Tags:</h5> <button class="btn btn-white btn-xs" type="button">son</button> <button class="btn btn-white btn-xs" type="button">blog</button> <button class="btn btn-white btn-xs" type="button">infra</button> <button class="btn btn-white btn-xs" type="button">docker</button> <button class="btn btn-white btn-xs" type="button">minikube</button> <button class="btn btn-white btn-xs" type="button">kubectl</button> <button class="btn btn-white btn-xs" type="button">kubernetes</button> </div> <div class="col-md-6"> <div class="small text-right"> <div> <i class="fa fa-comments-o"> </i> <span class="disqus-comment-count" data-disqus-url="http://192.168.116.128:4000/infra/2021/10/13/install_minikube.html">0</span> comments </div> </div> </div> </div> <div class="PageNavigation"> <a class="prev" href="/project/2020/10/21/devsecops6.html">&laquo; [Project] DevSecOps 프로젝트 - SAST 분석 및 활용</a> <a class="next" href="/infra/2021/10/14/install_istio.html">[Infra] minikube에서 istio 설치하기 &raquo;</a> </div> <br> <div class="row"> <div class="col-lg-12"> <!-- donate --> <br> <!-- share --> <div class="a2a_kit a2a_kit_size_32 a2a_default_style"> <a class="a2a_dd" href="https://www.addtoany.com/share"></a> <a class="a2a_button_facebook"></a> <a class="a2a_button_twitter"></a> <a class="a2a_button_google_plus"></a> <a class="a2a_button_linkedin"></a> <a class="a2a_button_email"></a> <a class="a2a_button_wechat"></a> <a class="a2a_button_sina_weibo"></a> <a class="a2a_button_pocket"></a> </div> <script> var a2a_config = a2a_config || {}; a2a_config.color_main = "D7E5ED"; a2a_config.color_border = "AECADB"; a2a_config.color_link_text = "333333"; a2a_config.color_link_text_hover = "333333"; </script> <script async src="https://static.addtoany.com/menu/page.js"></script> <br> <!-- comment --> <div id="disqus_thread"></div> <script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ /* var disqus_config = function () { this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable }; */ (function() { var d = document, s = d.createElement('script'); s.src = '//son.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> </div> </div> </div> </div> </div> </div> </div> <!-- Google analytics --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-93473370-3', 'auto'); ga('require', ''); ga('send', 'pageview'); </script> <!-- GrowingIO --> <script id="dsq-count-scr" src="https://son.disqus.com/count.js" async></script> </body> </html>

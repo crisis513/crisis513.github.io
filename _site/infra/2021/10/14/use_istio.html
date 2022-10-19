@@ -1,0 +1,169 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1; minimum-scale=1; user-scalable=no;"> <meta content="[Infra] minikube에서 istio 사용기" name="description"> <meta name="keywords" content="son,blog,infra,docker,minikube,kubectl,kubernetes,istio"> <meta name="author" content="son"> <meta name="baseurl" content=""> <title> son | [Infra] minikube에서 istio 사용기 </title> <!-- favicon --> <link rel="shortcut icon" href="/static/assets/img/favicon.ico"> <!-- Main CSS --> <link href="/static/assets/app-20200311.min.css" rel="stylesheet"> <link href="/static/css/custom.css" rel="stylesheet"> <!-- Main Scripts --> <script src="/static/assets/app-20200311.min.js"></script> <script src="/static/assets/blog-20200311.min.js"></script> <!-- Google AdSense --> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <script> (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-6196184620200311", enable_page_level_ads: true }); </script> </head> <body id="page-top" class="landing-page"> <div class="search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right: 0px; opacity: 0.95; background-color: #111111; z-index: 9999; display: none;"> <input type="text" class="form-control search-content" id="search-content" style="position: fixed; top: 60px" placeholder="Search Blog"> <div style="position: fixed; top: 16px; right: 16px; z-index: 9999;"> <img src="/static/assets/img/search/cb-close.png" id="close-btn"/> </div> </div> <div style="position: fixed; right: 16px; bottom: 20px; z-index: 9999;"> <img src="/static/assets/img/search/cb-search.png" id="search-btn" title="Double click Ctrl"/> </div> <div class="navbar-wrapper"> <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header page-scroll"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/">son</a> </div> <div id="navbar" class="navbar-collapse collapse"> <ul class="nav navbar-nav navbar-right"> <li><a class="page-scroll" href="blog/"></a></li> <li> <a class="page-scroll" href="/blog/">All</a></li> <li> <a class="page-scroll" href="/project/">Project</a></li> <li> <a class="page-scroll" href="/error-report/">Error-Report</a></li> <li> <a class="page-scroll" href="/research-output/">Research-Output</a></li> <li> <a class="page-scroll" href="/infra/">Infra</a></li> <li> <a class="page-scroll" href="/review/">Review</a></li> </ul> </div> </div> </nav> </div> <div id="inSlider" class="carousel carousel-fade" data-ride="carousel"> <ol class="carousel-indicators"> <li data-target="#inSlider" data-slide-to="0" class="active"></li> <li data-target="#inSlider" data-slide-to="1"></li> <li data-target="#inSlider" data-slide-to="2"></li> </ol> <div class="carousel-inner" role="listbox"> <div class="item active"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_one.jpg);" title="han-gi's blog"> </div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_two.jpg);" title="han-gi's blog"></div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_three.jpg);" title="han-gi's blog"></div> </div> </div> <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#inSlider" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div> <div class="wrapper wrapper-content animated fadeInRight article"> <div class="row"> <div class="col-lg-10 col-lg-offset-1"> <div class="ibox"> <div class="ibox-content"> <div class="pull-right"> <a class="btn btn-white btn-xs" href="/infra">Infra</a> </div> <div class="text-center article-title"> <span class="text-muted"><i class="fa fa-clock-o"></i> 14 Oct 2021</span> <h1> [Infra] minikube에서 istio 사용기 </h1> </div> <p><a href="http://crisis513.github.io/infra/2021/10/13/install.istio.html&quot;이전 포스팅&quot;">이전 포스팅</a>과 이어지는 내용으로, <a href="http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2" title="개발 환경">개발 환경</a>은 해당 포스팅을 참고 바랍니다.</p> <hr /> <h2 id="목차">목차</h2> <p><a href="#list1">1. istio 사용기</a></p> <p><a href="#list1_1">   1.1. addons 배포</a></p> <p><a href="#list1_2">   1.2. helloworld 예제 앱 배포</a></p> <p><a href="#list1_3">   1.3. kiali dashboard 사용</a></p> <p><a href="#list1_4">   1.4. 마무리</a></p> <hr /> <h2 id="1-istio-사용기-"><span style="color:purple"><strong>1. istio 사용기</strong></span> <a name="list1"></a></h2> <p><br /></p> <h3 id="11-addons-배포-">1.1. addons 배포 <a name="list1_1"></a></h3> <p>이전 포스팅과 같이 정상적으로 istio 설치되었다면 이번 포스팅에서는 istio 폴더에서 샘플로 제공되는 addons에 존재하는 모든 매니페스트를 kubernetes에 배포하겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span><span class="nb">ls </span>istio-1.15.2/samples/addons
+  extras  grafana.yaml  jaeger.yaml  kiali.yaml  prometheus.yaml  README.md
+  son@son-localhost <span class="nv">$ </span>kubectl apply <span class="nt">-f</span> istio-1.15.2/samples/addons
+  serviceaccount/grafana created
+  configmap/grafana created
+  service/grafana created
+  deployment.apps/grafana created
+  configmap/istio-grafana-dashboards created
+  configmap/istio-services-grafana-dashboards created
+  deployment.apps/jaeger created
+  service/tracing created
+  service/zipkin created
+  service/jaeger-collector created
+  serviceaccount/kiali created
+  configmap/kiali created
+  clusterrole.rbac.authorization.k8s.io/kiali-viewer created
+  clusterrole.rbac.authorization.k8s.io/kiali created
+  clusterrolebinding.rbac.authorization.k8s.io/kiali created
+  role.rbac.authorization.k8s.io/kiali-controlplane created
+  rolebinding.rbac.authorization.k8s.io/kiali-controlplane created
+  service/kiali created
+  deployment.apps/kiali created
+  serviceaccount/prometheus created
+  configmap/prometheus created
+  clusterrole.rbac.authorization.k8s.io/prometheus created
+  clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+  service/prometheus created
+  deployment.apps/prometheus created
+
+  son@son-localhost <span class="nv">$ </span>kubectl get all <span class="nt">-n</span> istio-system
+  NAME                                        READY   STATUS    RESTARTS   AGE
+  pod/grafana-56bdf8bf85-2ccqf                1/1     Running   0          2m58s
+  pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          9m35s
+  pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          9m35s
+  pod/istiod-5456fd558d-x6jpf                 1/1     Running   0          10m
+  pod/jaeger-c4fdf6674-gz6fg                  1/1     Running   0          2m58s
+  pod/kiali-5ff49b9f69-tlbrj                  1/1     Running   0          2m58s
+  pod/prometheus-85949fddb-gwqkl              2/2     Running   0          2m57s
+
+  NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT<span class="o">(</span>S<span class="o">)</span>                                                                      AGE
+  service/grafana                ClusterIP      10.104.101.157   &lt;none&gt;          3000/TCP                                                                     2m58s
+  service/istio-egressgateway    ClusterIP      10.105.237.74    &lt;none&gt;          80/TCP,443/TCP                                                               18m
+  service/istio-ingressgateway   LoadBalancer   10.97.166.77     192.168.49.100  15021:32414/TCP,80:30295/TCP,443:30180/TCP,31400:30731/TCP,15443:30050/TCP   18m
+  service/istiod                 ClusterIP      10.109.182.176   &lt;none&gt;          15010/TCP,15012/TCP,443/TCP,15014/TCP                                        18m
+  service/jaeger-collector       ClusterIP      10.104.197.76    &lt;none&gt;          14268/TCP,14250/TCP,9411/TCP                                                 2m58s
+  service/kiali                  ClusterIP      10.109.226.241   &lt;none&gt;          20001/TCP,9090/TCP                                                           2m58s
+  service/prometheus             ClusterIP      10.100.195.182   &lt;none&gt;          9090/TCP                                                                     2m58s
+  service/tracing                ClusterIP      10.100.65.84     &lt;none&gt;          80/TCP,16685/TCP                                                             2m58s
+  service/zipkin                 ClusterIP      10.108.103.68    &lt;none&gt;          9411/TCP                                                                     2m58s
+
+  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/grafana                1/1     1            1           2m58s
+  deployment.apps/istio-egressgateway    1/1     1            1           18m
+  deployment.apps/istio-ingressgateway   1/1     1            1           18m
+  deployment.apps/istiod                 1/1     1            1           18m
+  deployment.apps/jaeger                 1/1     1            1           2m58s
+  deployment.apps/kiali                  1/1     1            1           2m58s
+  deployment.apps/prometheus             1/1     1            1           2m57s
+
+  NAME                                              DESIRED   CURRENT   READY   AGE
+  replicaset.apps/grafana-56bdf8bf85                1         1         1       2m58s
+  replicaset.apps/istio-egressgateway-fffc799cf     1         1         1       9m35s
+  replicaset.apps/istio-ingressgateway-7d68764b55   1         1         1       9m35s
+  replicaset.apps/istiod-5456fd558d                 1         1         1       10m
+  replicaset.apps/jaeger-c4fdf6674                  1         1         1       2m58s
+  replicaset.apps/kiali-5ff49b9f69                  1         1         1       2m58s
+  replicaset.apps/prometheus-85949fddb              1         1         1       2m57s
+</code></pre></div></div> <p>istio 디렉토리에서 samples/addons 경로에는 istio와 통합되는 다양한 addon의 샘플이 포함되어 있습니다. istio의 일부가 아닌 서드파티 형태의 툴이지만 istio의 기능을 최대한 활용할 수 있기 때문에 필수로 사용되고 있습니다.</p> <p>각각의 툴에 대해 간단하게 정리하자면 다음과 같습니다.</p> <ul> <li> <p>Prometheus</p> <p>오픈 소스 모니터링 시스템 및 시계열 데이터베이스로, istio와 함께 Prometheus를 사용하여 서비스 메시 내에서 <strong>애플리케이션의 상태를 추적하는 메트릭을 기록</strong>합니다. Prometheus로 수집된 메트릭은 Grafana 및 Kiali와 같은 도구를 사용하여 시각화 할 수 있습니다.</p> </li> <li> <p>Grafana</p> <p>istio용 대시보드를 구성할 수 있는 오픈 소스 모니터링 도구로, Grafana를 사용하여 서비스 메시 내에서 <strong>애플리케이션의 상태를 모니터링</strong> 할 수 있습니다.</p> </li> <li> <p>Kiali</p> <p>서비스 메시 구성 기능이 있는 istio용 observability 콘솔로, <strong>토폴로지를 유추하여 서비스 메시의 구조를 이해하고 상태를 확인하기 용이</strong>합니다. Jaeger를 통합하여 분산 추적을 제공합니다.</p> </li> <li> <p>Jaeger</p> <p>오픈 소스 종단 간 <strong>분산 추적 시스템</strong>으로, 사용자가 복잡한 복잡한 마이크로서비스 환경을 모니터링하고 문제를 해결하는데 사용합니다.</p> </li> <li> <p>Zipkin</p> <p>Jaeger와 같은 분산 추적 시스템으로, <strong>Jaeger의 대안이며 기본적으로 배포되지 않습니다</strong>.</p> </li> </ul> <p><br /></p> <p>성공적으로 <strong>istio-system</strong> 네임스페이스가 생기고 모든 리소스가 정상적으로 작동하는 것을 확인하고, ingress 및 egress 트래픽을 제어하기 위해 각 파드에 istio-proxy 컨테이너를 추가할 것입니다. 다음 명령을 통해 <strong>default 네임스페이스에 대한 사이드카 삽입을 활성화</strong> 해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>kubectl label namespace default istio-injection<span class="o">=</span>enabled <span class="nt">--overwrite</span>
+  namespace/default labeled
+</code></pre></div></div> <p>이제 default 네임스페이스에 배포하는 서비스는 istio-proxy가 사이드카로 같이 올라가기 때문에 트래픽 제어나 보안 등 다양한 istio 의 기능을 사용할 수 있게 됩니다.</p> <p><br /></p> <h3 id="12-helloworld-예제-앱-배포-">1.2. helloworld 예제 앱 배포 <a name="list1_2"></a></h3> <p>다음은 default 네임스페이스에 샘플 앱인 helloworld를 배포하고 helloworld 서비스(service), 게이트웨이(gateways)와 가상 서비스(virtualservices) 리소스를 생성해보겠습니다. 해당 매니페스트는 istio 폴더 내의 samples/helloworld 폴더에 helloworld.yaml과 helloworld-gateway.yaml 파일로 존재합니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>kubectl apply <span class="nt">-f</span> istio-1.15.2/samples/helloworld/helloworld.yaml
+  service/helloworld created
+  son@son-localhost <span class="nv">$ </span>kubectl get all
+  NAME                                 READY   STATUS    RESTARTS   AGE
+  pod/helloworld-v1-78b9f5c87f-tljjx   2/2     Running   0          62s
+  pod/helloworld-v2-54dddc5567-sd9td   2/2     Running   0          62s
+
+  NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
+  service/helloworld   ClusterIP   10.98.206.190   &lt;none&gt;        5000/TCP   62s
+  service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    154m
+
+  NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/helloworld-v1   1/1     1            1           62s
+  deployment.apps/helloworld-v2   1/1     1            1           62s
+
+  NAME                                       DESIRED   CURRENT   READY   AGE
+  replicaset.apps/helloworld-v1-78b9f5c87f   1         1         1       62s
+  replicaset.apps/helloworld-v2-54dddc5567   1         1         1       62s
+
+  son@son-localhost <span class="nv">$ </span>kubectl apply <span class="nt">-f</span> istio-1.15.2/samples/helloworld/helloworld-gateway.yaml
+  gateway.networking.istio.io/helloworld-gateway created
+  virtualservice.networking.istio.io/helloworld created
+  son@son-localhost <span class="nv">$ </span>kubectl get gateways,virtualservices
+  NAME                                             AGE
+  gateway.networking.istio.io/helloworld-gateway   30s
+
+  NAME                                            GATEWAYS                 HOSTS   AGE
+  virtualservice.networking.istio.io/helloworld   <span class="o">[</span><span class="s2">"helloworld-gateway"</span><span class="o">]</span>   <span class="o">[</span><span class="s2">"*"</span><span class="o">]</span>   30s
+</code></pre></div></div> <p>혹시나 스크립트로 서버를 관리하거나 작업을 자동화시킨다면 다음 명령어들을 통해 서비스 IP 주소나 포트 번호 등 리소스들의 정보를 가져올 수 있으니 참고바랍니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span><span class="nb">export </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="si">$(</span>kubectl get service <span class="se">\</span>
+    istio-ingressgateway <span class="nt">-n</span> istio-system <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.loadBalancer.ingress[0].ip}'</span><span class="si">)</span>
+  son@son-localhost <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$INGRESS_HOST</span>
+  192.168.49.100
+
+  son@son-localhost <span class="nv">$ </span><span class="nb">export </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="si">$(</span>kubectl get service <span class="se">\</span>
+    istio-ingressgateway <span class="nt">-n</span> istio-system <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="http2")].port}'</span><span class="si">)</span>
+  son@son-localhost <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$INGRESS_PORT</span>
+  80
+
+  son@son-localhost <span class="nv">$ </span><span class="nb">export </span><span class="nv">SECURE_INGRESS_PORT</span><span class="o">=</span><span class="si">$(</span>kubectl get service <span class="se">\</span>
+    istio-ingressgateway <span class="nt">-n</span> istio-system <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="https")].port}'</span><span class="si">)</span>
+  son@son-localhost <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$SECURE_INGRESS_PORT</span>
+  443
+
+  son@son-localhost <span class="nv">$ </span><span class="nb">export </span><span class="nv">GATEWAY_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">INGRESS_HOST</span><span class="k">}</span><span class="s2">:</span><span class="k">${</span><span class="nv">INGRESS_PORT</span><span class="k">}</span><span class="s2">"</span>
+  son@son-localhost <span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$GATEWAY_URL</span>
+  192.168.49.100:80
+
+  son@son-localhost <span class="nv">$ </span>kubectl get virtualservice helloworld <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.http[0].match[0].uri}{"\n"}'</span>
+  <span class="o">{</span><span class="s2">"exact"</span>:<span class="s2">"/hello"</span><span class="o">}</span>
+</code></pre></div></div> <p>위 명령들을 통해 GATEWAY_URL 환경 변수에 helloworld 서비스의 External IP와 port가 조합되어 있을 것 입니다. 해당 환경변수를 넣어 curl 명령을 통해 helloworld 서비스가 정상 동작하는지 확인해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>curl <span class="nt">-vk</span><span class="c"># "http://${GATEWAY_URL}/hello"</span>
+  <span class="k">*</span>   Trying 192.168.49.100:80...
+  <span class="k">*</span> Connected to 192.168.49.100 <span class="o">(</span>192.168.49.100<span class="o">)</span> port 80 <span class="o">(</span><span class="c">#0)</span>
+  <span class="o">&gt;</span> GET /hello HTTP/1.1
+  <span class="o">&gt;</span> Host: 192.168.49.100
+  <span class="o">&gt;</span> User-Agent: curl/7.81.0
+  <span class="o">&gt;</span> Accept: <span class="k">*</span>/<span class="k">*</span>
+  <span class="o">&gt;</span>
+  <span class="k">*</span> Mark bundle as not supporting multiuse
+  &lt; HTTP/1.1 200 OK
+  &lt; content-type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+  &lt; content-length: 60
+  &lt; server: istio-envoy
+  &lt; <span class="nb">date</span>: Thu, 13 Oct 2022 15:24:24 GMT
+  &lt; x-envoy-upstream-service-time: 243
+  &lt;
+  Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx
+  <span class="k">*</span> Connection <span class="c">#0 to host 192.168.49.100 left intact</span>
+</code></pre></div></div> <p>curl 명령을 통해 http://192.168.49.100:80/hello url로 접근해보니 상태코드 200과 함께 <strong>Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx</strong> 이라는 응답이 왔습니다.</p> <p><code class="language-plaintext highlighter-rouge">kubectl exec -it pod/helloworld-v1-78b9f5c87f-tljjx cat app.py</code> 명령을 입력하여 helloworld 애플리케이션의 코드를 확인할 수 있는데, /hello 경로로 요청했던 것에 대해 정상적으로 응답받은 것을 확인할 수 있습니다.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">#!/usr/bin/python
+</span>  <span class="kn">import</span> <span class="nn">os</span><span class="p">,</span> <span class="n">math</span>
+  <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+  <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+  <span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/hello'</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+      <span class="n">version</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'SERVICE_VERSION'</span><span class="p">)</span>
+
+      <span class="c1"># do some cpu intensive computation
+</span>      <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0001</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">):</span>
+              <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+      <span class="k">return</span> <span class="s">'Hello version: %s, instance: %s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'HOSTNAME'</span><span class="p">))</span>
+
+  <span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/health'</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">health</span><span class="p">():</span>
+      <span class="k">return</span> <span class="s">'Helloworld is healthy'</span><span class="p">,</span> <span class="mi">200</span>
+
+  <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+      <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">,</span> <span class="n">threaded</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div> <p><br /></p> <h3 id="13-kiali-dashboard-사용-">1.3. kiali dashboard 사용 <a name="list1_3"></a></h3> <p>kiali dashboard를 사용하기 전에 helloworld 서비스에 트래픽을 발생시키기 위해 새로운 터미널을 열어 loadgen.sh 파일을 실행해보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'^#'</span> istio-1.15.2/samples/helloworld/loadgen.sh
+
+  <span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do </span>curl <span class="nt">-s</span> <span class="nt">-o</span> /dev/null <span class="s2">"http://</span><span class="nv">$GATEWAY_URL</span><span class="s2">/hello"</span><span class="p">;</span> <span class="k">done
+  </span>son@son-localhost <span class="nv">$ </span>./istio-1.15.2/samples/helloworld/loadgen.sh
+</code></pre></div></div> <p>loadgen.sh에서는 프로세스가 멈출 때까지 <strong>http://$GATEWAY_URL/hello</strong> url에 접근하는데, GATEWAY_URL 환경변수가 설정되어 있지 않다면 위의 내용을 참고하여 설정을 하거나 loadgen.sh 파일 내용을 $GATEWAY_URL 대신 INGRESS_HOST:INGRESS_PORT 형식의 값으로 바꿔넣어주면 됩니다.</p> <p>일정 시간이 지나 프로세스를 멈추려면 <strong>Ctrl + C</strong> 키를 누르면 됩니다. 다음으로 kiali dashboard를 구동시켜보겠습니다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost <span class="nv">$ </span>istioctl dashboard kiali
+  http://localhost:20001/kiali
+</code></pre></div></div> <p>kiali로 접속할 수 있는 주소가 안내되고, 해당 주소로 접속하면 [그림 1]과 같은 화면을 볼 수 있습니다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/istio3.png" alt="kiali-dashboard" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 1] kiali dashboard 접속</td> </tr> </tbody> </table> <p><br /></p> <p>Application 탭에는 istio 수신 게이트웨이, 애플리케이션 서비스 및 요청을 처리하는 파드 간의 연결이 표시됩니다. Applications를 클릭하고 default 네임스페이스를 선택 후 helloworld 애플리케이션 이름을 클릭하면 다음 [그림 2]와 같이 나올 것입니다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/istio4.png" alt="kiali-applications-overview" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 2] kiali Applications Overview 탭 화면</td> </tr> </tbody> </table> <p><br /></p> <p>Inbound Metrics 탭을 클릭하면 네트워크 트래픽 그래프가 업데이트되면 [그림 3]과 같이 Inbound Metrics가 표시되는 것을 확인할 수 있습니다</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/istio5.png" alt="kiali-applications-inbound" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 3] kiali Applications Inbound Metrics 탭 화면</td> </tr> </tbody> </table> <p><br /></p> <p>Workloads 탭을 클릭한 다음 배포 이름인 <strong>helloworld-v1</strong>을 클릭합니다. Logs 탭을 클릭하면 파드 컨테이너에 대한 로그를 확인할 수 있고, helloworld 애플리케이션 또는 istio-proxy 컨테이너에 대한 로그를 필터링할 수도 있습니다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/istio6.png" alt="kiali-workloads-logs" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 4] kiali Workloads Logs 탭 화면</td> </tr> </tbody> </table> <p><br /></p> <h3 id="14-마무리-">1.4. 마무리 <a name="list1_4"></a></h3> <p>짧게나마 istio를 사용해보니 모든 컨테이너에 대한 로깅, 메트릭 측정, 정책 등을 통합하여 쿠버네티스의 복잡성을 줄이고 효율적으로 관리할 수 있을 것으로 보입니다. 언젠가 기회가 된다면 istio를 사용해 대규모 시스템을 관리해보고 싶어졌습니다.</p> <p><br /></p> <hr> <div class="row"> <div class="col-md-6"> <h5 style="display: inline;">Tags:</h5> <button class="btn btn-white btn-xs" type="button">son</button> <button class="btn btn-white btn-xs" type="button">blog</button> <button class="btn btn-white btn-xs" type="button">infra</button> <button class="btn btn-white btn-xs" type="button">docker</button> <button class="btn btn-white btn-xs" type="button">minikube</button> <button class="btn btn-white btn-xs" type="button">kubectl</button> <button class="btn btn-white btn-xs" type="button">kubernetes</button> <button class="btn btn-white btn-xs" type="button">istio</button> </div> <div class="col-md-6"> <div class="small text-right"> <div> <i class="fa fa-comments-o"> </i> <span class="disqus-comment-count" data-disqus-url="http://192.168.116.128:4000/infra/2021/10/14/use_istio.html">0</span> comments </div> </div> </div> </div> <div class="PageNavigation"> <a class="prev" href="/infra/2021/10/14/install_istio.html">&laquo; [Infra] minikube에서 istio 설치하기</a> <a class="next" href="/review/2022/09/07/army.html">[Review] 군 복무 스토리 &raquo;</a> </div> <br> <div class="row"> <div class="col-lg-12"> <!-- donate --> <br> <!-- share --> <div class="a2a_kit a2a_kit_size_32 a2a_default_style"> <a class="a2a_dd" href="https://www.addtoany.com/share"></a> <a class="a2a_button_facebook"></a> <a class="a2a_button_twitter"></a> <a class="a2a_button_google_plus"></a> <a class="a2a_button_linkedin"></a> <a class="a2a_button_email"></a> <a class="a2a_button_wechat"></a> <a class="a2a_button_sina_weibo"></a> <a class="a2a_button_pocket"></a> </div> <script> var a2a_config = a2a_config || {}; a2a_config.color_main = "D7E5ED"; a2a_config.color_border = "AECADB"; a2a_config.color_link_text = "333333"; a2a_config.color_link_text_hover = "333333"; </script> <script async src="https://static.addtoany.com/menu/page.js"></script> <br> <!-- comment --> <div id="disqus_thread"></div> <script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ /* var disqus_config = function () { this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable }; */ (function() { var d = document, s = d.createElement('script'); s.src = '//son.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> </div> </div> </div> </div> </div> </div> </div> <!-- Google analytics --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-93473370-3', 'auto'); ga('require', ''); ga('send', 'pageview'); </script> <!-- GrowingIO --> <script id="dsq-count-scr" src="https://son.disqus.com/count.js" async></script> </body> </html>
