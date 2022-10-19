@@ -3,6 +3,30 @@
     "data" : [
      
     {
+        "title" : "[Infra] minikube에서 istio 사용기 - 2022-10-14",
+        "url" : "/infra/2022/10/14/use_istio.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Infra] minikube에서 istio 설치하기 - 2022-10-14",
+        "url" : "/infra/2022/10/14/install_istio.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Infra] Ubuntu 22.04 환경에서 minikube 설치하기 - 2022-10-13",
+        "url" : "/infra/2022/10/13/install_minikube.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "[Review] 엑셀을 활용한 날짜 데이터 가공 - 2022-09-08",
         "url" : "/review/2022/09/08/date_data_procecssing.html"
     }
@@ -13,30 +37,6 @@
     {
         "title" : "[Review] 군 복무 스토리 - 2022-09-07",
         "url" : "/review/2022/09/07/army.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] minikube에서 istio 사용기 - 2021-10-14",
-        "url" : "/infra/2021/10/14/use_istio.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] minikube에서 istio 설치하기 - 2021-10-14",
-        "url" : "/infra/2021/10/14/install_istio.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Ubuntu 22.04 환경에서 minikube 설치하기 - 2021-10-13",
-        "url" : "/infra/2021/10/13/install_minikube.html"
     }
     
     ,

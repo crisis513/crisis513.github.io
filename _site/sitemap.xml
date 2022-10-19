@@ -1,113 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
 
 <url>
   <loc>https://crisis513.github.io/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/blog/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/04/30/ssustack_installer.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/08/16/gcp_project.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/03/devsecops1.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://crisis513.github.io/thesis/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <loc>https://crisis513.github.io/error-report/</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://crisis513.github.io/patent/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <loc>https://crisis513.github.io/research-output/</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/infra/</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/review/</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/review/2022/09/08/date_data_procecssing.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/review/2022/09/07/army.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/infra/2021/10/14/use_istio.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/infra/2021/10/14/install_istio.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/infra/2021/10/13/install_minikube.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/21/devsecops6.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/15/devsecops5.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/13/devsecops4.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/11/devsecops3.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/10/08/devsecops2.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://crisis513.github.io/project/2020/08/30/linux_vulnerability_diagnosis_project.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/04/29/ssustack.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://crisis513.github.io/project/2020/08/30/linux_vulnerability_diagnosis_project.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://crisis513.github.io/project/2020/04/08/nn_scraper.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://crisis513.github.io/thesis/2020/04/01/bkms.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <loc>https://crisis513.github.io/research-output/2020/04/03/patent2.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://crisis513.github.io/patent/2020/04/03/patent2.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <loc>https://crisis513.github.io/research-output/2020/04/03/patent1.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://crisis513.github.io/patent/2020/04/03/patent1.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
+  <loc>https://crisis513.github.io/research-output/2020/04/01/bkms.html</loc>
+  <lastmod>2022-10-19T19:22:02+00:00</lastmod>
   <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://crisis513.github.io/sample/2020/03/07/sample.html</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://crisis513.github.io/sample/</loc>
-  <lastmod>2020-11-03T07:29:35+00:00</lastmod>
-  <priority>0.33</priority>
 </url>
 
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Infra] minikube에서 istio 설치하기"
-date: 2021-10-14
+date: 2022-10-14
 desc: "[Infra] minikube에서 istio 설치하기"
 keywords: "son,blog,infra,docker,minikube,kubectl,kubernetes,istio"
 categories: [Infra]

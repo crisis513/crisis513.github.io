@@ -5,9 +5,1057 @@
     <description>son&apos;s blog, use Jekyll and github pages.</description>
     <link>http://192.168.116.128:4000/</link>
     <atom:link href="http://192.168.116.128:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 20 Oct 2022 04:19:54 +0900</pubDate>
-    <lastBuildDate>Thu, 20 Oct 2022 04:19:54 +0900</lastBuildDate>
+    <pubDate>Thu, 20 Oct 2022 04:52:05 +0900</pubDate>
+    <lastBuildDate>Thu, 20 Oct 2022 04:52:05 +0900</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>[Infra] minikube에서 istio 사용기</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install.istio.html&amp;quot;이전 포스팅&amp;quot;&quot;&gt;이전 포스팅&lt;/a&gt;과 이어지는 내용으로, &lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2&quot; title=&quot;개발 환경&quot;&gt;개발 환경&lt;/a&gt;은 해당 포스팅을 참고 바랍니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. istio 사용기&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. addons 배포&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. helloworld 예제 앱 배포&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. kiali dashboard 사용&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_4&quot;&gt;   1.4. 마무리&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-istio-사용기-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. istio 사용기&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;11-addons-배포-&quot;&gt;1.1. addons 배포 &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;이전 포스팅과 같이 정상적으로 istio 설치되었다면 이번 포스팅에서는 istio 폴더에서 샘플로 제공되는 addons에 존재하는 모든 매니페스트를 쿠버네티스에 배포해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls &lt;/span&gt;istio-1.15.2/samples/addons
+  extras  grafana.yaml  jaeger.yaml  kiali.yaml  prometheus.yaml  README.md
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/addons
+  serviceaccount/grafana created
+  configmap/grafana created
+  service/grafana created
+  deployment.apps/grafana created
+  configmap/istio-grafana-dashboards created
+  configmap/istio-services-grafana-dashboards created
+  deployment.apps/jaeger created
+  service/tracing created
+  service/zipkin created
+  service/jaeger-collector created
+  serviceaccount/kiali created
+  configmap/kiali created
+  clusterrole.rbac.authorization.k8s.io/kiali-viewer created
+  clusterrole.rbac.authorization.k8s.io/kiali created
+  clusterrolebinding.rbac.authorization.k8s.io/kiali created
+  role.rbac.authorization.k8s.io/kiali-controlplane created
+  rolebinding.rbac.authorization.k8s.io/kiali-controlplane created
+  service/kiali created
+  deployment.apps/kiali created
+  serviceaccount/prometheus created
+  configmap/prometheus created
+  clusterrole.rbac.authorization.k8s.io/prometheus created
+  clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+  service/prometheus created
+  deployment.apps/prometheus created
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system
+  NAME                                        READY   STATUS    RESTARTS   AGE
+  pod/grafana-56bdf8bf85-2ccqf                1/1     Running   0          2m58s
+  pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          9m35s
+  pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          9m35s
+  pod/istiod-5456fd558d-x6jpf                 1/1     Running   0          10m
+  pod/jaeger-c4fdf6674-gz6fg                  1/1     Running   0          2m58s
+  pod/kiali-5ff49b9f69-tlbrj                  1/1     Running   0          2m58s
+  pod/prometheus-85949fddb-gwqkl              2/2     Running   0          2m57s
+
+  NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                      AGE
+  service/grafana                ClusterIP      10.104.101.157   &amp;lt;none&amp;gt;          3000/TCP                                                                     2m58s
+  service/istio-egressgateway    ClusterIP      10.105.237.74    &amp;lt;none&amp;gt;          80/TCP,443/TCP                                                               18m
+  service/istio-ingressgateway   LoadBalancer   10.97.166.77     192.168.49.100  15021:32414/TCP,80:30295/TCP,443:30180/TCP,31400:30731/TCP,15443:30050/TCP   18m
+  service/istiod                 ClusterIP      10.109.182.176   &amp;lt;none&amp;gt;          15010/TCP,15012/TCP,443/TCP,15014/TCP                                        18m
+  service/jaeger-collector       ClusterIP      10.104.197.76    &amp;lt;none&amp;gt;          14268/TCP,14250/TCP,9411/TCP                                                 2m58s
+  service/kiali                  ClusterIP      10.109.226.241   &amp;lt;none&amp;gt;          20001/TCP,9090/TCP                                                           2m58s
+  service/prometheus             ClusterIP      10.100.195.182   &amp;lt;none&amp;gt;          9090/TCP                                                                     2m58s
+  service/tracing                ClusterIP      10.100.65.84     &amp;lt;none&amp;gt;          80/TCP,16685/TCP                                                             2m58s
+  service/zipkin                 ClusterIP      10.108.103.68    &amp;lt;none&amp;gt;          9411/TCP                                                                     2m58s
+
+  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/grafana                1/1     1            1           2m58s
+  deployment.apps/istio-egressgateway    1/1     1            1           18m
+  deployment.apps/istio-ingressgateway   1/1     1            1           18m
+  deployment.apps/istiod                 1/1     1            1           18m
+  deployment.apps/jaeger                 1/1     1            1           2m58s
+  deployment.apps/kiali                  1/1     1            1           2m58s
+  deployment.apps/prometheus             1/1     1            1           2m57s
+
+  NAME                                              DESIRED   CURRENT   READY   AGE
+  replicaset.apps/grafana-56bdf8bf85                1         1         1       2m58s
+  replicaset.apps/istio-egressgateway-fffc799cf     1         1         1       9m35s
+  replicaset.apps/istio-ingressgateway-7d68764b55   1         1         1       9m35s
+  replicaset.apps/istiod-5456fd558d                 1         1         1       10m
+  replicaset.apps/jaeger-c4fdf6674                  1         1         1       2m58s
+  replicaset.apps/kiali-5ff49b9f69                  1         1         1       2m58s
+  replicaset.apps/prometheus-85949fddb              1         1         1       2m57s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;istio 디렉토리에서 samples/addons 경로에는 istio와 통합되는 다양한 addon의 샘플이 포함되어 있습니다. istio의 일부가 아닌 서드파티 형태의 툴이지만 istio의 기능을 최대한 활용할 수 있기 때문에 필수로 사용되고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;각각의 툴에 대해 간단하게 정리하자면 다음과 같습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Prometheus&lt;/p&gt;
+
+    &lt;p&gt;오픈 소스 모니터링 시스템 및 시계열 데이터베이스로, istio와 함께 Prometheus를 사용하여 서비스 메시 내에서 &lt;strong&gt;애플리케이션의 상태를 추적하는 메트릭을 기록&lt;/strong&gt;합니다. Prometheus로 수집된 메트릭은 Grafana 및 Kiali와 같은 도구를 사용하여 시각화 할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Grafana&lt;/p&gt;
+
+    &lt;p&gt;istio용 대시보드를 구성할 수 있는 오픈 소스 모니터링 도구로, Grafana를 사용하여 서비스 메시 내에서 &lt;strong&gt;애플리케이션의 상태를 모니터링&lt;/strong&gt; 할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Kiali&lt;/p&gt;
+
+    &lt;p&gt;서비스 메시 구성 기능이 있는 istio용 observability 콘솔로, &lt;strong&gt;토폴로지를 유추하여 서비스 메시의 구조를 이해하고 상태를 확인하기 용이&lt;/strong&gt;합니다. Jaeger를 통합하여 분산 추적을 제공합니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Jaeger&lt;/p&gt;
+
+    &lt;p&gt;오픈 소스 종단 간 &lt;strong&gt;분산 추적 시스템&lt;/strong&gt;으로, 사용자가 복잡한 복잡한 마이크로서비스 환경을 모니터링하고 문제를 해결하는데 사용합니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Zipkin&lt;/p&gt;
+
+    &lt;p&gt;Jaeger와 같은 분산 추적 시스템으로, &lt;strong&gt;Jaeger의 대안이며 기본적으로 배포되지 않습니다&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;성공적으로 &lt;strong&gt;istio-system&lt;/strong&gt; 네임스페이스가 생기고 모든 리소스가 정상적으로 작동하는 것을 확인하고, ingress 및 egress 트래픽을 제어하기 위해 각 파드에 istio-proxy 컨테이너를 추가할 것입니다. 다음 명령을 통해 &lt;strong&gt;default 네임스페이스에 대한 사이드카 삽입을 활성화&lt;/strong&gt; 해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl label namespace default istio-injection&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;enabled &lt;span class=&quot;nt&quot;&gt;--overwrite&lt;/span&gt;
+  namespace/default labeled
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이제 default 네임스페이스에 배포하는 서비스는 istio-proxy가 사이드카로 같이 올라가기 때문에 트래픽 제어나 보안 등 다양한 istio 의 기능을 사용할 수 있게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;12-helloworld-예제-앱-배포-&quot;&gt;1.2. helloworld 예제 앱 배포 &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;다음은 default 네임스페이스에 샘플 앱인 helloworld를 배포하고 helloworld 서비스(service), 게이트웨이(gateways)와 가상 서비스(virtualservices) 리소스를 생성해보겠습니다. 해당 매니페스트는 istio 폴더 내의 samples/helloworld 폴더에 helloworld.yaml과 helloworld-gateway.yaml 파일로 존재합니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/helloworld/helloworld.yaml
+  service/helloworld created
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all
+  NAME                                 READY   STATUS    RESTARTS   AGE
+  pod/helloworld-v1-78b9f5c87f-tljjx   2/2     Running   0          62s
+  pod/helloworld-v2-54dddc5567-sd9td   2/2     Running   0          62s
+
+  NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;    AGE
+  service/helloworld   ClusterIP   10.98.206.190   &amp;lt;none&amp;gt;        5000/TCP   62s
+  service/kubernetes   ClusterIP   10.96.0.1       &amp;lt;none&amp;gt;        443/TCP    154m
+
+  NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/helloworld-v1   1/1     1            1           62s
+  deployment.apps/helloworld-v2   1/1     1            1           62s
+
+  NAME                                       DESIRED   CURRENT   READY   AGE
+  replicaset.apps/helloworld-v1-78b9f5c87f   1         1         1       62s
+  replicaset.apps/helloworld-v2-54dddc5567   1         1         1       62s
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/helloworld/helloworld-gateway.yaml
+  gateway.networking.istio.io/helloworld-gateway created
+  virtualservice.networking.istio.io/helloworld created
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get gateways,virtualservices
+  NAME                                             AGE
+  gateway.networking.istio.io/helloworld-gateway   30s
+
+  NAME                                            GATEWAYS                 HOSTS   AGE
+  virtualservice.networking.istio.io/helloworld   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;helloworld-gateway&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;   30s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;혹시나 스크립트로 서버를 관리하거나 작업을 자동화시킨다면 다음 명령어들을 통해 서비스 IP 주소나 포트 번호 등 리소스들의 정보를 가져올 수 있으니 참고바랍니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.status.loadBalancer.ingress[0].ip}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INGRESS_HOST&lt;/span&gt;
+  192.168.49.100
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.ports[?(@.name==&quot;http2&quot;)].port}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INGRESS_PORT&lt;/span&gt;
+  80
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SECURE_INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.ports[?(@.name==&quot;https&quot;)].port}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SECURE_INGRESS_PORT&lt;/span&gt;
+  443
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GATEWAY_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_HOST&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$GATEWAY_URL&lt;/span&gt;
+  192.168.49.100:80
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get virtualservice helloworld &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.http[0].match[0].uri}{&quot;\n&quot;}&apos;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;exact&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 명령들을 통해 GATEWAY_URL 환경 변수에 helloworld 서비스의 External IP와 port가 조합되어 있을 것 입니다. 해당 환경변수를 넣어 curl 명령을 통해 helloworld 서비스가 정상 동작하는지 확인해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-vk&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# &quot;http://${GATEWAY_URL}/hello&quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;   Trying 192.168.49.100:80...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Connected to 192.168.49.100 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;192.168.49.100&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; port 80 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#0)&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; GET /hello HTTP/1.1
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; Host: 192.168.49.100
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; User-Agent: curl/7.81.0
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; Accept: &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Mark bundle as not supporting multiuse
+  &amp;lt; HTTP/1.1 200 OK
+  &amp;lt; content-type: text/html&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;charset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;utf-8
+  &amp;lt; content-length: 60
+  &amp;lt; server: istio-envoy
+  &amp;lt; &lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;: Thu, 13 Oct 2022 15:24:24 GMT
+  &amp;lt; x-envoy-upstream-service-time: 243
+  &amp;lt;
+  Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Connection &lt;span class=&quot;c&quot;&gt;#0 to host 192.168.49.100 left intact&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;curl 명령을 통해 http://192.168.49.100:80/hello url로 접근해보니 상태코드 200과 함께 &lt;strong&gt;Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx&lt;/strong&gt; 이라는 응답이 왔습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl exec -it pod/helloworld-v1-78b9f5c87f-tljjx cat app.py&lt;/code&gt; 명령을 입력하여 helloworld 애플리케이션의 코드를 확인할 수 있는데, /hello 경로로 요청했던 것에 대해 정상적으로 응답받은 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;#!/usr/bin/python
+&lt;/span&gt;  &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;
+  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;flask&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;/hello&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;SERVICE_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# do some cpu intensive computation
+&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0001&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;Hello version: %s, instance: %s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;HOSTNAME&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;/health&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;Helloworld is healthy&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;0.0.0.0&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threaded&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;13-kiali-dashboard-사용-&quot;&gt;1.3. kiali dashboard 사용 &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;kiali dashboard를 사용하기 전에 helloworld 서비스에 트래픽을 발생시키기 위해 새로운 터미널을 열어 loadgen.sh 파일을 실행해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;^#&apos;&lt;/span&gt; istio-1.15.2/samples/helloworld/loadgen.sh
+
+  &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /dev/null &lt;span class=&quot;s2&quot;&gt;&quot;http://&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$GATEWAY_URL&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/hello&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done
+  &lt;/span&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./istio-1.15.2/samples/helloworld/loadgen.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;loadgen.sh에서는 프로세스가 멈출 때까지 &lt;strong&gt;http://$GATEWAY_URL/hello&lt;/strong&gt; url에 접근하는데, GATEWAY_URL 환경변수가 설정되어 있지 않다면 위의 내용을 참고하여 설정을 하거나 loadgen.sh 파일 내용을 $GATEWAY_URL 대신 INGRESS_HOST:INGRESS_PORT 형식의 값으로 바꿔넣어주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;일정 시간이 지나 프로세스를 멈추려면 &lt;strong&gt;Ctrl + C&lt;/strong&gt; 키를 누르면 됩니다. 다음으로 kiali dashboard를 구동시켜보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl dashboard kiali
+  http://localhost:20001/kiali
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;kiali로 접속할 수 있는 주소가 안내되고, 해당 주소로 접속하면 [그림 1]과 같은 화면을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio3.png&quot; alt=&quot;kiali-dashboard&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] kiali dashboard 접속&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Application 탭에는 istio 수신 게이트웨이, 애플리케이션 서비스 및 요청을 처리하는 파드 간의 연결이 표시됩니다. Applications를 클릭하고 default 네임스페이스를 선택 후 helloworld 애플리케이션 이름을 클릭하면 다음 [그림 2]와 같이 나올 것입니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio4.png&quot; alt=&quot;kiali-applications-overview&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] kiali Applications Overview 탭 화면&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Inbound Metrics 탭을 클릭하면 네트워크 트래픽 그래프가 업데이트되면 [그림 3]과 같이 Inbound Metrics가 표시되는 것을 확인할 수 있습니다&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio5.png&quot; alt=&quot;kiali-applications-inbound&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] kiali Applications Inbound Metrics 탭 화면&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Workloads 탭을 클릭한 다음 배포 이름인 &lt;strong&gt;helloworld-v1&lt;/strong&gt;을 클릭합니다. Logs 탭을 클릭하면 파드 컨테이너에 대한 로그를 확인할 수 있고, helloworld 애플리케이션 또는 istio-proxy 컨테이너에 대한 로그를 필터링할 수도 있습니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio6.png&quot; alt=&quot;kiali-workloads-logs&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] kiali Workloads Logs 탭 화면&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;14-마무리-&quot;&gt;1.4. 마무리 &lt;a name=&quot;list1_4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;짧게나마 istio를 사용해보니 모든 컨테이너에 대한 로깅, 메트릭 측정, 정책 등을 통합하여 쿠버네티스의 복잡성을 줄이고 효율적으로 관리할 수 있을 것으로 보입니다. 언젠가 기회가 된다면 istio를 사용해 대규모 시스템을 관리해보고 싶어졌습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 14 Oct 2022 00:00:00 +0900</pubDate>
+        <link>http://192.168.116.128:4000/infra/2022/10/14/use_istio.html</link>
+        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2022/10/14/use_istio.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>infra</category>
+        
+        <category>docker</category>
+        
+        <category>minikube</category>
+        
+        <category>kubectl</category>
+        
+        <category>kubernetes</category>
+        
+        <category>istio</category>
+        
+        <category>kiali</category>
+        
+        
+        <category>Infra</category>
+        
+      </item>
+    
+      <item>
+        <title>[Infra] minikube에서 istio 설치하기</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2&quot; title=&quot;개발 환경&quot;&gt;개발 환경&lt;/a&gt;은 이전 포스팅과 동일하니 참고바랍니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. istio란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. istio 설치 과정&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_1&quot;&gt;   2.1. istio 최소 사양&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. metallb 설치 및 설정&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. istio 설치&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-istio란-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. istio란?&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;대부분의 서비스 메시와 마찬가지로 istio는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;사이드카(sidecar)&lt;/code&gt; 라는 프록시 컨테이너로 기존 애플리케이션 컨테이너를 보완합니다. 사이드카 프록시로 Envoy를 사용하고, 아래와 같이 서비스 컨테이너에서 오가는 네트워크 트래픽을 가로채고 전용 네트워크를 통해 트래픽을 다시 라우팅합니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio1.png&quot; alt=&quot;istio-architecture&quot; width=&quot;80%&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] istio 아키텍처&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;먼저, Envoy 프록시는 다음과 같은 기능을 가집니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TCP, HTTP1, HTTP2, gRPC protocol 지원&lt;/li&gt;
+  &lt;li&gt;TLS client certification&lt;/li&gt;
+  &lt;li&gt;L7 라우팅 지원 및 URL 기반, 버퍼링, 서버간 부하 분산량 조절&lt;/li&gt;
+  &lt;li&gt;Auto retry / Circuit Breaker 지원 / 다양한 로드밸런싱 기능 제공&lt;/li&gt;
+  &lt;li&gt;Zipkin을 통한 분산 트랜잭션 성능 측정 제공&lt;/li&gt;
+  &lt;li&gt;Dynamic configuration 지원, 중앙 레지스트리에 설정 및 설정 정보를 동적으로 읽어옴&lt;/li&gt;
+  &lt;li&gt;MongoDB에 대한 L7 라우팅 기능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, galley, Mixer(istio-1.5.0 부터는 istiod로 통합)로 구성되어 있고, 서비스 디스커버리, 설정 관리, 인증 관리 역할을 수행합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-istio-설치-과정-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;2. istio 설치 과정&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;21-istio-최소-사양-&quot;&gt;2.1. istio 최소 사양 &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;istio는 istioctl, helm, Istio Operator 등 다양한 방법으로 설치할 수 있고, minikube에서는 istio를 추가 기능으로 제공하고 있긴 하지만 &lt;strong&gt;본 포스팅에서는 istioctl로 설치&lt;/strong&gt;해볼 것 입니다. istio는 minikube에서 작동하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4개의 vCPU와 8GB의 RAM이 필요&lt;/code&gt;합니다. 참고로 minikube 가상 머신에 할당된 RAM이 충분하지 않으면 다음과 같은 오류가 발생할 수 있습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이미지 가져오기 실패&lt;/li&gt;
+  &lt;li&gt;상태 확인 시간 초과 실패&lt;/li&gt;
+  &lt;li&gt;호스트의 kubectl 오류&lt;/li&gt;
+  &lt;li&gt;가상 머신과 호스트의 일반적인 네트워크 불안정&lt;/li&gt;
+  &lt;li&gt;가상 머신의 완전한 잠금&lt;/li&gt;
+  &lt;li&gt;호스트 NMI 워치독 재부팅&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위에서 설명한대로 vCPU 4개와 8GB RAM의 조건을 충족하기 위해 다음 명령을 통해 minikube를 실행하겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube start &lt;span class=&quot;nt&quot;&gt;--cpus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4 &lt;span class=&quot;nt&quot;&gt;--memory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8g
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; minikube v1.27.1 on Ubuntu 22.04
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Using the docker driver based on existing profile
+
+  X The requested memory allocation of 8192MiB does not leave room &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;system overhead &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;total system memory: 8481MiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; You may face stability issues.
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Suggestion: Start minikube with less memory allocated: &lt;span class=&quot;s1&quot;&gt;&apos;minikube start --memory=2200mb&apos;&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; You cannot change the memory size &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;an existing minikube cluster. Please first delete the cluster.
+  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; You cannot change the CPUs &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;an existing minikube cluster. Please first delete the cluster.
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Starting control plane node minikube &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;cluster minikube
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Pulling base image ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Restarting existing docker container &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Verifying Kubernetes components...
+    - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+    - Using image docker.io/kubernetesui/dashboard:v2.7.0
+    - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Enabled addons: storage-provisioner, default-storageclass, dashboard
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Done! kubectl is now configured to use &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; cluster and &lt;span class=&quot;s2&quot;&gt;&quot;default&quot;&lt;/span&gt; namespace by default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;minikube에서 지원하는 여러가지 기능들을 addons를 통해 확인할 수 있는데, 여기에 istio도 있는 것을 확인할 수 있습니다. 앞서 언급하였듯 istioctl을 통해 설치를 진행할 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;22-metallb-설치-및-설정-&quot;&gt;2.2. metallb 설치 및 설정 &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;minikube가 istio에서 사용할 로드 밸런서를 제공하도록 하려면 minikube tunnel 기능을 사용할 수 있지만 본 포스팅에서는 tunnel 기능을 사용하지 않고, metallb를 사용해볼 것 입니다. 그리고 metallb는 addons에 있는 기능으로 사용할 것 입니다. 우선 addons를 확인해보겠습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;만약 metallb를 사용하지 않고 minikube tunnel을 사용한다면 아래 명령어를 새로운 터미널 창을 띄워 실행시키면 되겠습니다.&lt;/p&gt;
+
+  &lt;p&gt;$ minikube tunnel&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons list
+  |-----------------------------|----------|--------------|--------------------------------|
+  |         ADDON NAME          | PROFILE  |    STATUS    |           MAINTAINER           |
+  |-----------------------------|----------|--------------|--------------------------------|
+  | ambassador                  | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ambassador&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;         |
+  | auto-pause                  | minikube | disabled     | Google                         |
+  | csi-hostpath-driver         | minikube | disabled     | Kubernetes                     |
+  | dashboard                   | minikube | disabled     | Kubernetes                     |
+  | default-storageclass        | minikube | enabled ✅   | Kubernetes                     |
+  | efk                         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Elastic&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | freshpod                    | minikube | disabled     | Google                         |
+  | gcp-auth                    | minikube | disabled     | Google                         |
+  | gvisor                      | minikube | disabled     | Google                         |
+  | headlamp                    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;kinvolk.io&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;         |
+  | helm-tiller                 | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Helm&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;               |
+  | inaccel                     | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;InAccel             |
+  |                             |          |              | &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;info@inaccel.com]&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | ingress                     | minikube | disabled     | Kubernetes                     |
+  | ingress-dns                 | minikube | disabled     | Google                         |
+  | istio                       | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Istio&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;              |
+  | istio-provisioner           | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Istio&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;              |
+  | kong                        | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Kong HQ&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | kubevirt                    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;KubeVirt&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;           |
+  | logviewer                   | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | metallb                     | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;MetalLB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | metrics-server              | minikube | disabled     | Kubernetes                     |
+  | nvidia-driver-installer     | minikube | disabled     | Google                         |
+  | nvidia-gpu-device-plugin    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Nvidia&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;             |
+  | olm                         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Operator Framework&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; |
+  | pod-security-policy         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | portainer                   | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Portainer.io&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;       |
+  | registry                    | minikube | disabled     | Google                         |
+  | registry-aliases            | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | registry-creds              | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UPMC Enterprises&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   |
+  | storage-provisioner         | minikube | enabled ✅   | Google                         |
+  | storage-provisioner-gluster | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Gluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
+  | volumesnapshots             | minikube | disabled     | Kubernetes                     |
+  |-----------------------------|----------|--------------|--------------------------------|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;현재 metallb가 사용되고 있지 않기 떄문에 disabled 상태인 것을 확인할 수 있습니다. minikube addons에서 metallb를 활성화 시켜보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;metallb
+  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; metallb is a 3rd party addon and not maintained or verified by minikube maintainers, &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;at your own risk.
+    - Using image docker.io/metallb/speaker:v0.9.6
+    - Using image docker.io/metallb/controller:v0.9.6
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; The &lt;span class=&quot;s1&quot;&gt;&apos;metallb&apos;&lt;/span&gt; addon is enabled
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get ns
+  NAME              STATUS   AGE
+  default           Active   125m
+  kube-node-lease   Active   125m
+  kube-public       Active   125m
+  kube-system       Active   125m
+  metallb-system    Active   39s
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system
+  NAME                              READY   STATUS    RESTARTS   AGE
+  pod/controller-55496b5cd7-52h5q   1/1     Running   0          56s
+  pod/speaker-cfvms                 1/1     Running   0          56s
+
+  NAME                     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
+  daemonset.apps/speaker   1         1         1       1            1           beta.kubernetes.io/os&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;linux   56s
+
+  NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/controller   1/1     1            1           56s
+
+  NAME                                    DESIRED   CURRENT   READY   AGE
+  replicaset.apps/controller-55496b5cd7   1         1         1       56s
+
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get configmap config &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; yaml
+  apiVersion: v1
+  data:
+    config: |
+      address-pools:
+      - name: default
+        protocol: layer2
+        addresses:
+        - -
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;apiVersion&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;v1&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;address-pools:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;- name: default&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  protocol: layer2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  addresses:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  - -&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;kind&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;ConfigMap&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;metadata&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;annotations&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;namespace&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;metallb-system&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+    creationTimestamp: &lt;span class=&quot;s2&quot;&gt;&quot;2022-10-13T14:34:11Z&quot;&lt;/span&gt;
+    name: config
+    namespace: metallb-system
+    resourceVersion: &lt;span class=&quot;s2&quot;&gt;&quot;5621&quot;&lt;/span&gt;
+    uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;minikube에서 metallb를 활성화시키면 metallb-system이라는 네임 스페이스가 생기는데, controller라는 deployment와 speaker라는 daemonset이 동작하는 것을 확인할 수 있고 configmap도 생성된 것을 확인할 수 있습니다. configmap 내용을 보면 프로토콜이 &lt;strong&gt;Layer2&lt;/strong&gt;로 동작하고, 주소 풀이 비어있는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;metallb는 기본적으로 외부에 연결할 수 있는 IP 대역대가 있다면 metallb에서 IP 대역을 지정하여 IP를 할당해줄 수 있는데, 우리는 로컬 환경에서 구축하고 있기 때문에 External IP 대신 로컬에서 접속할 수 있는 IP 대역대를 입력해줄 것 입니다. 여기서 metallb를 통해 External IP가 설정된 주소 풀에 맞게 할당되도록 설정해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons configure metallb
+  &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; Enter Load Balancer Start IP: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;192.168.49.100&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; Enter Load Balancer End IP: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;192.168.49.120&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+    - Using image docker.io/metallb/speaker:v0.9.6
+    - Using image docker.io/metallb/controller:v0.9.6
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; metallb was successfully configured
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get configmap config &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; yaml
+  apiVersion: v1
+  data:
+    config: |
+      address-pools:
+      - name: default
+        protocol: layer2
+        addresses:
+        - 192.168.49.100-192.168.49.120
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;apiVersion&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;v1&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;address-pools:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;- name: default&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  protocol: layer2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  addresses:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  - 192.168.49.100-192.168.49.120&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;kind&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;ConfigMap&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;metadata&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;annotations&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;namespace&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;metallb-system&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+    creationTimestamp: &lt;span class=&quot;s2&quot;&gt;&quot;2022-10-13T14:34:11Z&quot;&lt;/span&gt;
+    name: config
+    namespace: metallb-system
+    resourceVersion: &lt;span class=&quot;s2&quot;&gt;&quot;5805&quot;&lt;/span&gt;
+    uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기서 필자는 Enter Load Balancer Start IP 부분에 192.168.49.100을, End IP 부분에 192.168.49.120을 입력하였습니다. 여기서 192.168.49.x 대역대는 필자의 개발환경에서 minikube가 사용하는 내부 네트워크의 대역대 입니다. &lt;strong&gt;만약 실습을 따라하고 있는 사람이 있다면 각자 환경에 맞는 IP를 기입해야 할 것 입니다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;23-istio-설치-&quot;&gt;2.3. istio 설치 &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;다음으로 istio 설치 파일을 다운받아 설치해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; https://istio.io/downloadIstio | sh -
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                  Dload  Upload   Total   Spent    Left  Speed
+  100   101  100   101    0     0    247      0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:--   247
+  100  4856  100  4856    0     0   8533      0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:--  237k
+
+  Downloading istio-1.15.2 from https://github.com/istio/istio/releases/download/1.15.2/istio-1.15.2-linux-amd64.tar.gz ...
+
+  Istio 1.15.2 Download Complete!
+
+  Istio has been successfully downloaded into the istio-1.15.2 folder on your system.
+
+  Next Steps:
+  See https://istio.io/latest/docs/setup/install/ to add Istio to your Kubernetes cluster.
+
+  To configure the istioctl client tool &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;your workstation,
+  add the /home/son/istio-1.15.2/bin directory to your environment path variable with:
+          &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/home/son/istio-1.15.2/bin&quot;&lt;/span&gt;
+
+  Begin the Istio pre-installation check by running:
+          istioctl x precheck
+
+  Need more information? Visit https://istio.io/latest/docs/setup/install/
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/home/son/istio-1.15.2/bin&quot;&lt;/span&gt;
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which istioctl
+  /home/son/istio-1.15.2/bin/istioctl
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl version
+  client version: 1.15.2
+  control plane version: 1.12.1
+  data plane version: 1.12.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2 proxies&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;설치할 당시의 istio 최신 버전을 다운받았고, bin 폴더에 있는 istioctl 바이너리 파일을 통해 istio를 설치할 것 입니다. 위의 istio 다운로드 스크립트를 실행했을 때 안내된 대로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;istioctl x precheck&lt;/code&gt; 명령을 사용하여 설치 요구사항을 충족하고, 설치시 문제없이 안전하게 설치할 수 있는지 사전 검사를 진행해보고나서 설치하겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl x precheck
+  ✔ No issues found when checking the cluster. Istio is safe to &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;or upgrade!
+    To get started, check out https://istio.io/latest/docs/setup/getting-started/
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;demo &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+  ✔ Istio core installed
+  ✔ Istiod installed
+  ✔ Ingress gateways installed
+  ✔ Egress gateways installed
+  ✔ Installation &lt;span class=&quot;nb&quot;&gt;complete       
+  &lt;/span&gt;Making this installation the default &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;injection and validation.
+
+  Thank you &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;installing Istio 1.15.  Please take a few minutes to tell us about your &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;/upgrade experience!  https://forms.gle/SWHFBmwJspusK1hv6
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system
+  NAME                                        READY   STATUS    RESTARTS   AGE
+  pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          64s
+  pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          64s
+  pod/istiod-5456fd558d-x6jpf                 1/1     Running   0          93s
+
+  NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                      AGE
+  service/istio-egressgateway    ClusterIP      10.105.237.74    &amp;lt;none&amp;gt;          80/TCP,443/TCP                                                               10m
+  service/istio-ingressgateway   LoadBalancer   10.97.166.77     192.168.49.100  15021:32414/TCP,80:30295/TCP,443:30180/TCP,31400:30731/TCP,15443:30050/TCP   10m
+  service/istiod                 ClusterIP      10.109.182.176   &amp;lt;none&amp;gt;          15010/TCP,15012/TCP,443/TCP,15014/TCP                                        10m
+
+  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/istio-egressgateway    1/1     1            1           10m
+  deployment.apps/istio-ingressgateway   1/1     1            1           10m
+  deployment.apps/istiod                 1/1     1            1           10m
+
+  NAME                                              DESIRED   CURRENT   READY   AGE
+  replicaset.apps/istio-egressgateway-fffc799cf     1         1         1       64s
+  replicaset.apps/istio-ingressgateway-7d68764b55   1         1         1       64s
+  replicaset.apps/istiod-5456fd558d                 1         1         1       93s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;istio 디렉토리의 manifests/profiles 경로를 보면 다양한 매니페스트 파일이 존재하는 것을 확인할 수 있는데, 테스트 용도로 설치해보기 위해 demo 매니페스트를 kubernetes에 배포하였습니다. 성공적으로 배포가 되었다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;istio-system&lt;/code&gt;이라는 네임 스페이스가 생성되는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 istio-ingressgateway 로드밸런서 서비스의 External IP가 192.168.49.100으로 할당되어 있는 것을 확인할 수 있습니다. 앞서 metallb를 설치하고 IP 풀을 할당해줬기 때문에 metallb에서 istio-ingressgateway라는 로드밸런서 타입의 서비스에 External IP를 부여해준 것 입니다. 현재 테스트 환경을 간단하게 그림으로 그려보자면 다음 [그림 2]과 같습니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio2.png&quot; alt=&quot;metallb-istio&quot; width=&quot;576&quot; height=&quot;384&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] metallb와 istio 테스트 환경&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 14 Oct 2022 00:00:00 +0900</pubDate>
+        <link>http://192.168.116.128:4000/infra/2022/10/14/install_istio.html</link>
+        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2022/10/14/install_istio.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>infra</category>
+        
+        <category>docker</category>
+        
+        <category>minikube</category>
+        
+        <category>kubectl</category>
+        
+        <category>kubernetes</category>
+        
+        <category>istio</category>
+        
+        
+        <category>Infra</category>
+        
+      </item>
+    
+      <item>
+        <title>[Infra] Ubuntu 22.04 환경에서 minikube 설치하기</title>
+        <description>&lt;p&gt;본 포스팅에서는 Ubuntu 22.04 환경에서 minikube를 설치하는 과정을 설명합니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 개요&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. minikube란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. 개발 환경&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. Docker 설치&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. minikube 설치 과정&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_1&quot;&gt;   3.1. minikube 설치&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_2&quot;&gt;   3.2. kubectl 설치&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list3_3&quot;&gt;   3.3. minikube 실행 및 종료&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-개요-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. 개요&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;11-minikube란-&quot;&gt;1.1. minikube란? &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;minikube는 다양한 OS에서 로컬 Kubernetes 클러스터를 구현할 수 있도록 도와주는 &lt;strong&gt;오픈 소스 도구&lt;/strong&gt;입니다. minikube의 주요 목표는 로컬 Kubernetes 애플리케이션 개발을 위한 도구들과 그에 맞는 모든 &lt;strong&gt;Kubernetes 기능을 지원&lt;/strong&gt;하는 것 입니다. 로컬에서 리소스 활용이 적은 단일 노드 kubernetes 클러스터를 구동시킬 수 있기 때문에 개발 테스트 및 POC 목적으로 사용하기 좋습니다.&lt;/p&gt;
+
+&lt;p&gt;자세한 설명은 &lt;a href=&quot;https://minikube.sigs.k8s.io/docs&quot; title=&quot;minikube&quot;&gt;minikube 웹사이트&lt;/a&gt;를 통해 확인하시기 바랍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;12-개발-환경-&quot;&gt;1.2. 개발 환경 &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;필자는 실습을 위해 &lt;strong&gt;VMWare Workstation 16.2&lt;/strong&gt;에서 &lt;strong&gt;Ubuntu 22.04 LTS Desktop&lt;/strong&gt; 이미지로 가상머신을 생성하여 진행하였습니다. 해당 환경에서 &lt;strong&gt;Docker&lt;/strong&gt;를 설치하고, &lt;strong&gt;minikube&lt;/strong&gt;에서 드라이버로 Docker를 사용하여 Kubernetes 구성 요소를 여기에 설치해볼 예정입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-docker-설치-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;2. Docker 설치&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;minikube를 설치하기 위해서는 드라이버를 설정해주어야 하는데, minikube는 virtualbox와 같은 VM, Docker와 같은 컨테이너 또는 베어메탈 등 다양한 드라이버를 지원하고 있습니다. 이 중에서 본 포스팅에서는 Docker를 드라이버로 사용하여 진행할 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;Docker를 설치하기 전에 모든 시스템 패키지를 최신 릴리스로 업데이트 해야 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt update
+son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;apt-transport-https
+son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;혹시나 재부팅이 필요한 경우 재부팅을 하고난 다음 설치를 진행하면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;Docker는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get.docker.com&lt;/code&gt;에서 지원하는 &lt;strong&gt;스크립트를 다운받아 실행&lt;/strong&gt;해주기만 하면 되기 때문에 간단하게 설치할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://get.docker.com &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; get-docker.sh
+son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh get-docker.sh
+&lt;span class=&quot;c&quot;&gt;# Executing docker install script, commit: 4f282167c425347a931ccfd95cc91fab041d414f&lt;/span&gt;
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; apt-get update &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; apt-transport-https ca-certificates curl &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /etc/apt/keyrings &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; 0755 /etc/apt/keyrings
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://download.docker.com/linux/ubuntu/gpg&quot;&lt;/span&gt; | gpg &lt;span class=&quot;nt&quot;&gt;--dearmor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--yes&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /etc/apt/keyrings/docker.gpg
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+r /etc/apt/keyrings/docker.gpg
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /etc/apt/sources.list.d/docker.list
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; apt-get update &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-install-recommends&lt;/span&gt; docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
++ version_gte 20.10
++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
++ &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;0
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; docker-ce-rootless-extras &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
++ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; docker version
+Client: Docker Engine - Community
+  Version:           20.10.18
+  API version:       1.41
+  Go version:        go1.18.6
+  Git commit:        b40c2f6
+  Built:             Thu Sep  8 23:11:43 2022
+  OS/Arch:           linux/amd64
+  Context:           default
+  Experimental:      &lt;span class=&quot;nb&quot;&gt;true
+
+&lt;/span&gt;Server: Docker Engine - Community
+  Engine:
+  Version:          20.10.18
+  API version:      1.41 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;minimum version 1.12&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  Go version:       go1.18.6
+  Git commit:       e42327a
+  Built:            Thu Sep  8 23:09:30 2022
+  OS/Arch:          linux/amd64
+  Experimental:     &lt;span class=&quot;nb&quot;&gt;false
+  &lt;/span&gt;containerd:
+  Version:          1.6.8
+  GitCommit:        9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6
+  runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+  docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+&lt;span class=&quot;o&quot;&gt;================================================================================&lt;/span&gt;
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;rootless mode &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;your user:
+
+    dockerd-rootless-setuptool.sh &lt;span class=&quot;nb&quot;&gt;install
+
+&lt;/span&gt;Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+&lt;span class=&quot;nb&quot;&gt;users &lt;/span&gt;access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+          to root access on the host. Refer to the &lt;span class=&quot;s1&quot;&gt;&apos;Docker daemon attack surface&apos;&lt;/span&gt;
+          documentation &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;details: https://docs.docker.com/go/attack-surface/
+
+&lt;span class=&quot;o&quot;&gt;================================================================================&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;get-docker.sh란 이름으로 스크립트를 다운받아 실행해주어 Docker를 설치하고 아래 명령어를 통해 Docker 어느 버전으로 설치되었는지 확인해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
+Docker version 20.10.18, build b40c2f6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Docker가 정상적으로 설치가 되긴 했지만, 현재 상태로 minikube에서 Docker를 드라이버로 설정하여 설치할 때 permission denied 에러가 발생할 것 입니다. 에러를 사전에 방지하기 위해 Docker를 일반 유저도 쓸 수 있도록 설정해주겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;usermod &lt;span class=&quot;nt&quot;&gt;-aG&lt;/span&gt; docker &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; newgrp docker
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;추가로 docker-compose를 사용할 것이라면 다음 명령을 통해 docker-compose를 설치할 수도 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;docker-compose
+son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker-compose &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
+docker-compose version 1.29.2, build unknown
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-minikube-설치-과정-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;3. minikube 설치 과정&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;위의 과정을 통해 Docker를 정상적으로 설치하였다면 다음으로 minikube를 설치하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;31-minikube-설치-&quot;&gt;3.1. minikube 설치 &lt;a name=&quot;list3_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;minikube를 설치하기 위해서는 &lt;strong&gt;minikube 바이너리를 다운로드&lt;/strong&gt;해야 합니다. 바이너리를 다운받아 &lt;strong&gt;실행 권한을 준 다음 /usr/local/bin 디렉토리 아래에 넣을 것&lt;/strong&gt;입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  &lt;span class=&quot;nt&quot;&gt;--2022-10-13&lt;/span&gt; 04:03:24--  https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  Resolving storage.googleapis.com &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;storage.googleapis.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;... 34.64.4.112, 34.64.4.80, 34.64.4.16, ...
+  Connecting to storage.googleapis.com &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;storage.googleapis.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;|34.64.4.112|:443... connected.
+  HTTP request sent, awaiting response... 200 OK
+  Length: 76629407 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;73M&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;application/octet-stream]
+  Saving to: ‘minikube-linux-amd64’
+  
+  minikube-linux-amd64        100%[&lt;span class=&quot;o&quot;&gt;===========================================&amp;gt;]&lt;/span&gt;  73.08M  5.17MB/s    &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;13s
+  
+  2022-10-13 04:03:38 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;5.72 MB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - ‘minikube-linux-amd64’ saved &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;76629407/76629407]
+  
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x minikube-linux-amd64
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;minikube-linux-amd64 /usr/local/bin/minikube
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;minikube 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 minikube 버전을 확인해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube version
+  minikube version: v1.27.1
+  commit: fe869b5d4da11ba318eb84a3ac00f336411de7ba
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;혹시나 minikube가 실행되지 않는다면 $PATH에 /usr/local/bin이 없기 때문일 것입니다. 
+다른 $PATH로 위치를 옮기거나 $PATH에 /usr/local/bin 위치를 추가해야 합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;32-kubectl-설치-&quot;&gt;3.2. kubectl 설치 &lt;a name=&quot;list3_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;minikube를 설치하더라도 &lt;strong&gt;Kubernetes에서 애플리케이션을 배포하고 관리하기 위해 사용되는 도구인 kubectl&lt;/strong&gt;을 따로 설치해야 합니다. 마찬가지로 kubectl 바이너리 파일을 다운받아 실행권한을 준 다음 /usr/local/bin 위치로 옮겨주겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-LO&lt;/span&gt; https://storage.googleapis.com/kubernetes-release/release/&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; https://storage.googleapis.com/kubernetes-release/release/stable.txt&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/bin/linux/amd64/kubectl
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+  100 42.9M  100 42.9M    0     0  8035k      0  0:00:05  0:00:05 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- 8355k
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x ./kubectl
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv&lt;/span&gt; ./kubectl /usr/local/bin/kubectl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;kubectl 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 kubectl 버전을 확인해보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl version &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; json &lt;span class=&quot;nt&quot;&gt;--client&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;clientVersion&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;major&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;1&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;minor&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;25&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;gitVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;v1.25.2&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;gitCommit&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;5835544ca568b757a8ecae5c153f317e5736700e&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;gitTreeState&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;clean&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;buildDate&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2022-09-21T14:33:49Z&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;goVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;go1.19.1&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;compiler&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;gc&quot;&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&quot;platform&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;linux/amd64&quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+    &lt;span class=&quot;s2&quot;&gt;&quot;kustomizeVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;v4.5.7&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;33-minikube-실행-및-종료-&quot;&gt;3.3. minikube 실행 및 종료 &lt;a name=&quot;list3_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;minikube를 실행시키기 위해서는 다음과 같이 minikube start 명령을 사용하면 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube start
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; minikube v1.27.1 on Ubuntu 22.04
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Automatically selected the docker driver. Other choices: ssh, none
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Using Docker driver with root privileges
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Starting control plane node minikube &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;cluster minikube
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Pulling base image ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Downloading Kubernetes v1.25.2 preload ...
+      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; preloaded-images-k8s-v18-v1...:  385.41 MiB / 385.41 MiB  100.00% 4.47 Mi
+      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; gcr.io/k8s-minikube/kicbase:  387.10 MiB / 387.11 MiB  100.00% 3.68 MiB p
+      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; gcr.io/k8s-minikube/kicbase:  0 B &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;________________________] ?% ? p/s 58s
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Creating docker container &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPUs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2, &lt;span class=&quot;nv&quot;&gt;Memory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2200MB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
+    - Generating certificates and keys ...
+    - Booting up control plane ...
+    - Configuring RBAC rules ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Verifying Kubernetes components...
+    - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Enabled addons: default-storageclass, storage-provisioner
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Done! kubectl is now configured to use &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; cluster and &lt;span class=&quot;s2&quot;&gt;&quot;default&quot;&lt;/span&gt; namespace by default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아무런 옵션도 기입하지 않으면 위에서 설치했던 Docker를 드라이버로 잡고, kicbase 이미지를 받아 CPU 2 core와 Memory 2200MB를 자동으로 잡는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;여기서 kicbase 이미지는 통신하기 위해 프록시의 역할을 하는 것으로 알고 있습나다. 
+해당 이미지가 없다면 docker pull을 통해 받아오거나, VPN 또는 HTTP/HTTPS 프록시를 환경 변수로 사용하여 minikube start 해야합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;minikube가 정상적으로 실행되었다면 kubectl 명령을 통해 생성된 클러스터 정보와 설정을 확인해보도록 하겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl cluster-info
+  Kubernetes control plane is running at https://192.168.49.2:8443
+  CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+  To further debug and diagnose cluster problems, use &lt;span class=&quot;s1&quot;&gt;&apos;kubectl cluster-info dump&apos;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+  
+  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl config view
+  apiVersion: v1
+  clusters:
+  - cluster:
+      certificate-authority: /home/son/.minikube/ca.crt
+      extensions:
+      - extension:
+          last-update: Thu, 13 Oct 2022 21:29:21 KST
+          provider: minikube.sigs.k8s.io
+          version: v1.27.1
+        name: cluster_info
+      server: https://192.168.49.2:8443
+    name: minikube
+  contexts:
+  - context:
+      cluster: minikube
+      extensions:
+      - extension:
+          last-update: Thu, 13 Oct 2022 21:29:21 KST
+          provider: minikube.sigs.k8s.io
+          version: v1.27.1
+        name: context_info
+      namespace: default
+      user: minikube
+    name: minikube
+  current-context: minikube
+  kind: Config
+  preferences: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;users&lt;/span&gt;:
+  - name: minikube
+    user:
+      client-certificate: /home/son/.minikube/profiles/minikube/client.crt
+      client-key: /home/son/.minikube/profiles/minikube/client.key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;minikube를 종료하고 싶다면 다음과 같이 minikube stop 명령을 통해 종료할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube stop
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Stopping node &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt;  ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Powering off &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; via SSH ...
+  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 1 node stopped.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 13 Oct 2022 00:00:00 +0900</pubDate>
+        <link>http://192.168.116.128:4000/infra/2022/10/13/install_minikube.html</link>
+        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2022/10/13/install_minikube.html</guid>
+        
+        <category>son</category>
+        
+        <category>blog</category>
+        
+        <category>infra</category>
+        
+        <category>docker</category>
+        
+        <category>minikube</category>
+        
+        <category>kubectl</category>
+        
+        <category>kubernetes</category>
+        
+        
+        <category>Infra</category>
+        
+      </item>
     
       <item>
         <title>[Review] 엑셀을 활용한 날짜 데이터 가공</title>
@@ -469,1052 +1517,6 @@
         
         
         <category>Review</category>
-        
-      </item>
-    
-      <item>
-        <title>[Infra] minikube에서 istio 사용기</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install.istio.html&amp;quot;이전 포스팅&amp;quot;&quot;&gt;이전 포스팅&lt;/a&gt;과 이어지는 내용으로, &lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2&quot; title=&quot;개발 환경&quot;&gt;개발 환경&lt;/a&gt;은 해당 포스팅을 참고 바랍니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. istio 사용기&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. addons 배포&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. helloworld 예제 앱 배포&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_3&quot;&gt;   1.3. kiali dashboard 사용&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_4&quot;&gt;   1.4. 마무리&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;1-istio-사용기-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. istio 사용기&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;11-addons-배포-&quot;&gt;1.1. addons 배포 &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;이전 포스팅과 같이 정상적으로 istio 설치되었다면 이번 포스팅에서는 istio 폴더에서 샘플로 제공되는 addons에 존재하는 모든 매니페스트를 kubernetes에 배포하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls &lt;/span&gt;istio-1.15.2/samples/addons
-  extras  grafana.yaml  jaeger.yaml  kiali.yaml  prometheus.yaml  README.md
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/addons
-  serviceaccount/grafana created
-  configmap/grafana created
-  service/grafana created
-  deployment.apps/grafana created
-  configmap/istio-grafana-dashboards created
-  configmap/istio-services-grafana-dashboards created
-  deployment.apps/jaeger created
-  service/tracing created
-  service/zipkin created
-  service/jaeger-collector created
-  serviceaccount/kiali created
-  configmap/kiali created
-  clusterrole.rbac.authorization.k8s.io/kiali-viewer created
-  clusterrole.rbac.authorization.k8s.io/kiali created
-  clusterrolebinding.rbac.authorization.k8s.io/kiali created
-  role.rbac.authorization.k8s.io/kiali-controlplane created
-  rolebinding.rbac.authorization.k8s.io/kiali-controlplane created
-  service/kiali created
-  deployment.apps/kiali created
-  serviceaccount/prometheus created
-  configmap/prometheus created
-  clusterrole.rbac.authorization.k8s.io/prometheus created
-  clusterrolebinding.rbac.authorization.k8s.io/prometheus created
-  service/prometheus created
-  deployment.apps/prometheus created
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system
-  NAME                                        READY   STATUS    RESTARTS   AGE
-  pod/grafana-56bdf8bf85-2ccqf                1/1     Running   0          2m58s
-  pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          9m35s
-  pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          9m35s
-  pod/istiod-5456fd558d-x6jpf                 1/1     Running   0          10m
-  pod/jaeger-c4fdf6674-gz6fg                  1/1     Running   0          2m58s
-  pod/kiali-5ff49b9f69-tlbrj                  1/1     Running   0          2m58s
-  pod/prometheus-85949fddb-gwqkl              2/2     Running   0          2m57s
-
-  NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                      AGE
-  service/grafana                ClusterIP      10.104.101.157   &amp;lt;none&amp;gt;          3000/TCP                                                                     2m58s
-  service/istio-egressgateway    ClusterIP      10.105.237.74    &amp;lt;none&amp;gt;          80/TCP,443/TCP                                                               18m
-  service/istio-ingressgateway   LoadBalancer   10.97.166.77     192.168.49.100  15021:32414/TCP,80:30295/TCP,443:30180/TCP,31400:30731/TCP,15443:30050/TCP   18m
-  service/istiod                 ClusterIP      10.109.182.176   &amp;lt;none&amp;gt;          15010/TCP,15012/TCP,443/TCP,15014/TCP                                        18m
-  service/jaeger-collector       ClusterIP      10.104.197.76    &amp;lt;none&amp;gt;          14268/TCP,14250/TCP,9411/TCP                                                 2m58s
-  service/kiali                  ClusterIP      10.109.226.241   &amp;lt;none&amp;gt;          20001/TCP,9090/TCP                                                           2m58s
-  service/prometheus             ClusterIP      10.100.195.182   &amp;lt;none&amp;gt;          9090/TCP                                                                     2m58s
-  service/tracing                ClusterIP      10.100.65.84     &amp;lt;none&amp;gt;          80/TCP,16685/TCP                                                             2m58s
-  service/zipkin                 ClusterIP      10.108.103.68    &amp;lt;none&amp;gt;          9411/TCP                                                                     2m58s
-
-  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/grafana                1/1     1            1           2m58s
-  deployment.apps/istio-egressgateway    1/1     1            1           18m
-  deployment.apps/istio-ingressgateway   1/1     1            1           18m
-  deployment.apps/istiod                 1/1     1            1           18m
-  deployment.apps/jaeger                 1/1     1            1           2m58s
-  deployment.apps/kiali                  1/1     1            1           2m58s
-  deployment.apps/prometheus             1/1     1            1           2m57s
-
-  NAME                                              DESIRED   CURRENT   READY   AGE
-  replicaset.apps/grafana-56bdf8bf85                1         1         1       2m58s
-  replicaset.apps/istio-egressgateway-fffc799cf     1         1         1       9m35s
-  replicaset.apps/istio-ingressgateway-7d68764b55   1         1         1       9m35s
-  replicaset.apps/istiod-5456fd558d                 1         1         1       10m
-  replicaset.apps/jaeger-c4fdf6674                  1         1         1       2m58s
-  replicaset.apps/kiali-5ff49b9f69                  1         1         1       2m58s
-  replicaset.apps/prometheus-85949fddb              1         1         1       2m57s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;istio 디렉토리에서 samples/addons 경로에는 istio와 통합되는 다양한 addon의 샘플이 포함되어 있습니다. istio의 일부가 아닌 서드파티 형태의 툴이지만 istio의 기능을 최대한 활용할 수 있기 때문에 필수로 사용되고 있습니다.&lt;/p&gt;
-
-&lt;p&gt;각각의 툴에 대해 간단하게 정리하자면 다음과 같습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Prometheus&lt;/p&gt;
-
-    &lt;p&gt;오픈 소스 모니터링 시스템 및 시계열 데이터베이스로, istio와 함께 Prometheus를 사용하여 서비스 메시 내에서 &lt;strong&gt;애플리케이션의 상태를 추적하는 메트릭을 기록&lt;/strong&gt;합니다. Prometheus로 수집된 메트릭은 Grafana 및 Kiali와 같은 도구를 사용하여 시각화 할 수 있습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Grafana&lt;/p&gt;
-
-    &lt;p&gt;istio용 대시보드를 구성할 수 있는 오픈 소스 모니터링 도구로, Grafana를 사용하여 서비스 메시 내에서 &lt;strong&gt;애플리케이션의 상태를 모니터링&lt;/strong&gt; 할 수 있습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Kiali&lt;/p&gt;
-
-    &lt;p&gt;서비스 메시 구성 기능이 있는 istio용 observability 콘솔로, &lt;strong&gt;토폴로지를 유추하여 서비스 메시의 구조를 이해하고 상태를 확인하기 용이&lt;/strong&gt;합니다. Jaeger를 통합하여 분산 추적을 제공합니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Jaeger&lt;/p&gt;
-
-    &lt;p&gt;오픈 소스 종단 간 &lt;strong&gt;분산 추적 시스템&lt;/strong&gt;으로, 사용자가 복잡한 복잡한 마이크로서비스 환경을 모니터링하고 문제를 해결하는데 사용합니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Zipkin&lt;/p&gt;
-
-    &lt;p&gt;Jaeger와 같은 분산 추적 시스템으로, &lt;strong&gt;Jaeger의 대안이며 기본적으로 배포되지 않습니다&lt;/strong&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;성공적으로 &lt;strong&gt;istio-system&lt;/strong&gt; 네임스페이스가 생기고 모든 리소스가 정상적으로 작동하는 것을 확인하고, ingress 및 egress 트래픽을 제어하기 위해 각 파드에 istio-proxy 컨테이너를 추가할 것입니다. 다음 명령을 통해 &lt;strong&gt;default 네임스페이스에 대한 사이드카 삽입을 활성화&lt;/strong&gt; 해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl label namespace default istio-injection&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;enabled &lt;span class=&quot;nt&quot;&gt;--overwrite&lt;/span&gt;
-  namespace/default labeled
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제 default 네임스페이스에 배포하는 서비스는 istio-proxy가 사이드카로 같이 올라가기 때문에 트래픽 제어나 보안 등 다양한 istio 의 기능을 사용할 수 있게 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;12-helloworld-예제-앱-배포-&quot;&gt;1.2. helloworld 예제 앱 배포 &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;다음은 default 네임스페이스에 샘플 앱인 helloworld를 배포하고 helloworld 서비스(service), 게이트웨이(gateways)와 가상 서비스(virtualservices) 리소스를 생성해보겠습니다. 해당 매니페스트는 istio 폴더 내의 samples/helloworld 폴더에 helloworld.yaml과 helloworld-gateway.yaml 파일로 존재합니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/helloworld/helloworld.yaml
-  service/helloworld created
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all
-  NAME                                 READY   STATUS    RESTARTS   AGE
-  pod/helloworld-v1-78b9f5c87f-tljjx   2/2     Running   0          62s
-  pod/helloworld-v2-54dddc5567-sd9td   2/2     Running   0          62s
-
-  NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;    AGE
-  service/helloworld   ClusterIP   10.98.206.190   &amp;lt;none&amp;gt;        5000/TCP   62s
-  service/kubernetes   ClusterIP   10.96.0.1       &amp;lt;none&amp;gt;        443/TCP    154m
-
-  NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/helloworld-v1   1/1     1            1           62s
-  deployment.apps/helloworld-v2   1/1     1            1           62s
-
-  NAME                                       DESIRED   CURRENT   READY   AGE
-  replicaset.apps/helloworld-v1-78b9f5c87f   1         1         1       62s
-  replicaset.apps/helloworld-v2-54dddc5567   1         1         1       62s
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; istio-1.15.2/samples/helloworld/helloworld-gateway.yaml
-  gateway.networking.istio.io/helloworld-gateway created
-  virtualservice.networking.istio.io/helloworld created
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get gateways,virtualservices
-  NAME                                             AGE
-  gateway.networking.istio.io/helloworld-gateway   30s
-
-  NAME                                            GATEWAYS                 HOSTS   AGE
-  virtualservice.networking.istio.io/helloworld   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;helloworld-gateway&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;   30s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;혹시나 스크립트로 서버를 관리하거나 작업을 자동화시킨다면 다음 명령어들을 통해 서비스 IP 주소나 포트 번호 등 리소스들의 정보를 가져올 수 있으니 참고바랍니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.status.loadBalancer.ingress[0].ip}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INGRESS_HOST&lt;/span&gt;
-  192.168.49.100
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.ports[?(@.name==&quot;http2&quot;)].port}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INGRESS_PORT&lt;/span&gt;
-  80
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SECURE_INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;kubectl get service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    istio-ingressgateway &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.ports[?(@.name==&quot;https&quot;)].port}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SECURE_INGRESS_PORT&lt;/span&gt;
-  443
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GATEWAY_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_HOST&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;INGRESS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$GATEWAY_URL&lt;/span&gt;
-  192.168.49.100:80
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get virtualservice helloworld &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jsonpath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{.spec.http[0].match[0].uri}{&quot;\n&quot;}&apos;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;exact&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위 명령들을 통해 GATEWAY_URL 환경 변수에 helloworld 서비스의 External IP와 port가 조합되어 있을 것 입니다. 해당 환경변수를 넣어 curl 명령을 통해 helloworld 서비스가 정상 동작하는지 확인해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-vk&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# &quot;http://${GATEWAY_URL}/hello&quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;   Trying 192.168.49.100:80...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Connected to 192.168.49.100 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;192.168.49.100&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; port 80 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#0)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; GET /hello HTTP/1.1
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; Host: 192.168.49.100
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; User-Agent: curl/7.81.0
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; Accept: &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Mark bundle as not supporting multiuse
-  &amp;lt; HTTP/1.1 200 OK
-  &amp;lt; content-type: text/html&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;charset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;utf-8
-  &amp;lt; content-length: 60
-  &amp;lt; server: istio-envoy
-  &amp;lt; &lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;: Thu, 13 Oct 2022 15:24:24 GMT
-  &amp;lt; x-envoy-upstream-service-time: 243
-  &amp;lt;
-  Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Connection &lt;span class=&quot;c&quot;&gt;#0 to host 192.168.49.100 left intact&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;curl 명령을 통해 http://192.168.49.100:80/hello url로 접근해보니 상태코드 200과 함께 &lt;strong&gt;Hello version: v1, instance: helloworld-v1-78b9f5c87f-tljjx&lt;/strong&gt; 이라는 응답이 왔습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl exec -it pod/helloworld-v1-78b9f5c87f-tljjx cat app.py&lt;/code&gt; 명령을 입력하여 helloworld 애플리케이션의 코드를 확인할 수 있는데, /hello 경로로 요청했던 것에 대해 정상적으로 응답받은 것을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;#!/usr/bin/python
-&lt;/span&gt;  &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;
-  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;flask&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;/hello&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;SERVICE_VERSION&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;# do some cpu intensive computation
-&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0001&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-              &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;Hello version: %s, instance: %s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;HOSTNAME&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;/health&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;Helloworld is healthy&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;0.0.0.0&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threaded&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;13-kiali-dashboard-사용-&quot;&gt;1.3. kiali dashboard 사용 &lt;a name=&quot;list1_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;kiali dashboard를 사용하기 전에 helloworld 서비스에 트래픽을 발생시키기 위해 새로운 터미널을 열어 loadgen.sh 파일을 실행해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;^#&apos;&lt;/span&gt; istio-1.15.2/samples/helloworld/loadgen.sh
-
-  &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /dev/null &lt;span class=&quot;s2&quot;&gt;&quot;http://&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$GATEWAY_URL&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/hello&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done
-  &lt;/span&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./istio-1.15.2/samples/helloworld/loadgen.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;loadgen.sh에서는 프로세스가 멈출 때까지 &lt;strong&gt;http://$GATEWAY_URL/hello&lt;/strong&gt; url에 접근하는데, GATEWAY_URL 환경변수가 설정되어 있지 않다면 위의 내용을 참고하여 설정을 하거나 loadgen.sh 파일 내용을 $GATEWAY_URL 대신 INGRESS_HOST:INGRESS_PORT 형식의 값으로 바꿔넣어주면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;일정 시간이 지나 프로세스를 멈추려면 &lt;strong&gt;Ctrl + C&lt;/strong&gt; 키를 누르면 됩니다. 다음으로 kiali dashboard를 구동시켜보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl dashboard kiali
-  http://localhost:20001/kiali
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;kiali로 접속할 수 있는 주소가 안내되고, 해당 주소로 접속하면 [그림 1]과 같은 화면을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio3.png&quot; alt=&quot;kiali-dashboard&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] kiali dashboard 접속&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Application 탭에는 istio 수신 게이트웨이, 애플리케이션 서비스 및 요청을 처리하는 파드 간의 연결이 표시됩니다. Applications를 클릭하고 default 네임스페이스를 선택 후 helloworld 애플리케이션 이름을 클릭하면 다음 [그림 2]와 같이 나올 것입니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio4.png&quot; alt=&quot;kiali-applications-overview&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] kiali Applications Overview 탭 화면&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Inbound Metrics 탭을 클릭하면 네트워크 트래픽 그래프가 업데이트되면 [그림 3]과 같이 Inbound Metrics가 표시되는 것을 확인할 수 있습니다&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio5.png&quot; alt=&quot;kiali-applications-inbound&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 3] kiali Applications Inbound Metrics 탭 화면&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Workloads 탭을 클릭한 다음 배포 이름인 &lt;strong&gt;helloworld-v1&lt;/strong&gt;을 클릭합니다. Logs 탭을 클릭하면 파드 컨테이너에 대한 로그를 확인할 수 있고, helloworld 애플리케이션 또는 istio-proxy 컨테이너에 대한 로그를 필터링할 수도 있습니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio6.png&quot; alt=&quot;kiali-workloads-logs&quot; width=&quot;100%&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 4] kiali Workloads Logs 탭 화면&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;14-마무리-&quot;&gt;1.4. 마무리 &lt;a name=&quot;list1_4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;짧게나마 istio를 사용해보니 모든 컨테이너에 대한 로깅, 메트릭 측정, 정책 등을 통합하여 쿠버네티스의 복잡성을 줄이고 효율적으로 관리할 수 있을 것으로 보입니다. 언젠가 기회가 된다면 istio를 사용해 대규모 시스템을 관리해보고 싶어졌습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 14 Oct 2021 00:00:00 +0900</pubDate>
-        <link>http://192.168.116.128:4000/infra/2021/10/14/use_istio.html</link>
-        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2021/10/14/use_istio.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>infra</category>
-        
-        <category>docker</category>
-        
-        <category>minikube</category>
-        
-        <category>kubectl</category>
-        
-        <category>kubernetes</category>
-        
-        <category>istio</category>
-        
-        
-        <category>Infra</category>
-        
-      </item>
-    
-      <item>
-        <title>[Infra] minikube에서 istio 설치하기</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2&quot; title=&quot;개발 환경&quot;&gt;개발 환경&lt;/a&gt;은 이전 포스팅과 동일하니 참고바랍니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. istio란?&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. istio 설치 과정&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2_1&quot;&gt;   2.1. istio 최소 사양&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. metallb 설치 및 설정&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2_3&quot;&gt;   2.3. istio 설치&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;1-istio란-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. istio란?&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;대부분의 서비스 메시와 마찬가지로 istio는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;사이드카(sidecar)&lt;/code&gt; 라는 프록시 컨테이너로 기존 애플리케이션 컨테이너를 보완합니다. 사이드카 프록시로 Envoy를 사용하고, 아래와 같이 서비스 컨테이너에서 오가는 네트워크 트래픽을 가로채고 전용 네트워크를 통해 트래픽을 다시 라우팅합니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio1.png&quot; alt=&quot;istio-architecture&quot; width=&quot;80%&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 1] istio 아키텍처&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;먼저, Envoy 프록시는 다음과 같은 기능을 가집니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;TCP, HTTP1, HTTP2, gRPC protocol 지원&lt;/li&gt;
-  &lt;li&gt;TLS client certification&lt;/li&gt;
-  &lt;li&gt;L7 라우팅 지원 및 URL 기반, 버퍼링, 서버간 부하 분산량 조절&lt;/li&gt;
-  &lt;li&gt;Auto retry / Circuit Breaker 지원 / 다양한 로드밸런싱 기능 제공&lt;/li&gt;
-  &lt;li&gt;Zipkin을 통한 분산 트랜잭션 성능 측정 제공&lt;/li&gt;
-  &lt;li&gt;Dynamic configuration 지원, 중앙 레지스트리에 설정 및 설정 정보를 동적으로 읽어옴&lt;/li&gt;
-  &lt;li&gt;MongoDB에 대한 L7 라우팅 기능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, galley, Mixer(istio-1.5.0 부터는 istiod로 통합)로 구성되어 있고, 서비스 디스커버리, 설정 관리, 인증 관리 역할을 수행합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-istio-설치-과정-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;2. istio 설치 과정&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;21-istio-최소-사양-&quot;&gt;2.1. istio 최소 사양 &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;istio는 istioctl, helm, Istio Operator 등 다양한 방법으로 설치할 수 있고, minikube에서는 istio를 추가 기능으로 제공하고 있긴 하지만 &lt;strong&gt;본 포스팅에서는 istioctl로 설치&lt;/strong&gt;해볼 것 입니다. istio는 minikube에서 작동하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4개의 vCPU와 8GB의 RAM이 필요&lt;/code&gt;합니다. 참고로 minikube 가상 머신에 할당된 RAM이 충분하지 않으면 다음과 같은 오류가 발생할 수 있습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이미지 가져오기 실패&lt;/li&gt;
-  &lt;li&gt;상태 확인 시간 초과 실패&lt;/li&gt;
-  &lt;li&gt;호스트의 kubectl 오류&lt;/li&gt;
-  &lt;li&gt;가상 머신과 호스트의 일반적인 네트워크 불안정&lt;/li&gt;
-  &lt;li&gt;가상 머신의 완전한 잠금&lt;/li&gt;
-  &lt;li&gt;호스트 NMI 워치독 재부팅&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;위에서 설명한대로 vCPU 4개와 8GB RAM의 조건을 충족하기 위해 다음 명령을 통해 minikube를 실행하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube start &lt;span class=&quot;nt&quot;&gt;--cpus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4 &lt;span class=&quot;nt&quot;&gt;--memory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8g
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; minikube v1.27.1 on Ubuntu 22.04
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Using the docker driver based on existing profile
-
-  X The requested memory allocation of 8192MiB does not leave room &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;system overhead &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;total system memory: 8481MiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; You may face stability issues.
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Suggestion: Start minikube with less memory allocated: &lt;span class=&quot;s1&quot;&gt;&apos;minikube start --memory=2200mb&apos;&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; You cannot change the memory size &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;an existing minikube cluster. Please first delete the cluster.
-  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; You cannot change the CPUs &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;an existing minikube cluster. Please first delete the cluster.
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Starting control plane node minikube &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;cluster minikube
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Pulling base image ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Restarting existing docker container &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Verifying Kubernetes components...
-    - Using image gcr.io/k8s-minikube/storage-provisioner:v5
-    - Using image docker.io/kubernetesui/dashboard:v2.7.0
-    - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Enabled addons: storage-provisioner, default-storageclass, dashboard
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Done! kubectl is now configured to use &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; cluster and &lt;span class=&quot;s2&quot;&gt;&quot;default&quot;&lt;/span&gt; namespace by default
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;minikube에서 지원하는 여러가지 기능들을 addons를 통해 확인할 수 있는데, 여기에 istio도 있는 것을 확인할 수 있습니다. 앞서 언급하였듯 istioctl을 통해 설치를 진행할 것 입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;22-metallb-설치-및-설정-&quot;&gt;2.2. metallb 설치 및 설정 &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;minikube가 istio에서 사용할 로드 밸런서를 제공하도록 하려면 minikube tunnel 기능을 사용할 수 있지만 본 포스팅에서는 tunnel 기능을 사용하지 않고, metallb를 사용해볼 것 입니다. 그리고 metallb는 addons에 있는 기능으로 사용할 것 입니다. 우선 addons를 확인해보겠습니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;만약 metallb를 사용하지 않고 minikube tunnel을 사용한다면 아래 명령어를 새로운 터미널 창을 띄워 실행시키면 되겠습니다.&lt;/p&gt;
-
-  &lt;p&gt;$ minikube tunnel&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons list
-  |-----------------------------|----------|--------------|--------------------------------|
-  |         ADDON NAME          | PROFILE  |    STATUS    |           MAINTAINER           |
-  |-----------------------------|----------|--------------|--------------------------------|
-  | ambassador                  | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ambassador&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;         |
-  | auto-pause                  | minikube | disabled     | Google                         |
-  | csi-hostpath-driver         | minikube | disabled     | Kubernetes                     |
-  | dashboard                   | minikube | disabled     | Kubernetes                     |
-  | default-storageclass        | minikube | enabled ✅   | Kubernetes                     |
-  | efk                         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Elastic&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | freshpod                    | minikube | disabled     | Google                         |
-  | gcp-auth                    | minikube | disabled     | Google                         |
-  | gvisor                      | minikube | disabled     | Google                         |
-  | headlamp                    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;kinvolk.io&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;         |
-  | helm-tiller                 | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Helm&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;               |
-  | inaccel                     | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;InAccel             |
-  |                             |          |              | &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;info@inaccel.com]&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | ingress                     | minikube | disabled     | Kubernetes                     |
-  | ingress-dns                 | minikube | disabled     | Google                         |
-  | istio                       | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Istio&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;              |
-  | istio-provisioner           | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Istio&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;              |
-  | kong                        | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Kong HQ&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | kubevirt                    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;KubeVirt&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;           |
-  | logviewer                   | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | metallb                     | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;MetalLB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | metrics-server              | minikube | disabled     | Kubernetes                     |
-  | nvidia-driver-installer     | minikube | disabled     | Google                         |
-  | nvidia-gpu-device-plugin    | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Nvidia&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;             |
-  | olm                         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Operator Framework&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; |
-  | pod-security-policy         | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | portainer                   | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Portainer.io&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;       |
-  | registry                    | minikube | disabled     | Google                         |
-  | registry-aliases            | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;unknown&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | registry-creds              | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UPMC Enterprises&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   |
-  | storage-provisioner         | minikube | enabled ✅   | Google                         |
-  | storage-provisioner-gluster | minikube | disabled     | 3rd party &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Gluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;            |
-  | volumesnapshots             | minikube | disabled     | Kubernetes                     |
-  |-----------------------------|----------|--------------|--------------------------------|
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;현재 metallb가 사용되고 있지 않기 떄문에 disabled 상태인 것을 확인할 수 있습니다. minikube addons에서 metallb를 활성화 시켜보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;metallb
-  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; metallb is a 3rd party addon and not maintained or verified by minikube maintainers, &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;at your own risk.
-    - Using image docker.io/metallb/speaker:v0.9.6
-    - Using image docker.io/metallb/controller:v0.9.6
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; The &lt;span class=&quot;s1&quot;&gt;&apos;metallb&apos;&lt;/span&gt; addon is enabled
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get ns
-  NAME              STATUS   AGE
-  default           Active   125m
-  kube-node-lease   Active   125m
-  kube-public       Active   125m
-  kube-system       Active   125m
-  metallb-system    Active   39s
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system
-  NAME                              READY   STATUS    RESTARTS   AGE
-  pod/controller-55496b5cd7-52h5q   1/1     Running   0          56s
-  pod/speaker-cfvms                 1/1     Running   0          56s
-
-  NAME                     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
-  daemonset.apps/speaker   1         1         1       1            1           beta.kubernetes.io/os&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;linux   56s
-
-  NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/controller   1/1     1            1           56s
-
-  NAME                                    DESIRED   CURRENT   READY   AGE
-  replicaset.apps/controller-55496b5cd7   1         1         1       56s
-
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get configmap config &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; yaml
-  apiVersion: v1
-  data:
-    config: |
-      address-pools:
-      - name: default
-        protocol: layer2
-        addresses:
-        - -
-  kind: ConfigMap
-  metadata:
-    annotations:
-      kubectl.kubernetes.io/last-applied-configuration: |
-        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;apiVersion&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;v1&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;address-pools:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;- name: default&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  protocol: layer2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  addresses:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  - -&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;kind&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;ConfigMap&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;metadata&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;annotations&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;namespace&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;metallb-system&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
-    creationTimestamp: &lt;span class=&quot;s2&quot;&gt;&quot;2022-10-13T14:34:11Z&quot;&lt;/span&gt;
-    name: config
-    namespace: metallb-system
-    resourceVersion: &lt;span class=&quot;s2&quot;&gt;&quot;5621&quot;&lt;/span&gt;
-    uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;minikube에서 metallb를 활성화시키면 metallb-system이라는 네임 스페이스가 생기는데, controller라는 deployment와 speaker라는 daemonset이 동작하는 것을 확인할 수 있고 configmap도 생성된 것을 확인할 수 있습니다. configmap 내용을 보면 프로토콜이 &lt;strong&gt;Layer2&lt;/strong&gt;로 동작하고, 주소 풀이 비어있는 것을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;metallb는 기본적으로 외부에 연결할 수 있는 IP 대역대가 있다면 metallb에서 IP 대역을 지정하여 IP를 할당해줄 수 있는데, 우리는 로컬 환경에서 구축하고 있기 때문에 External IP 대신 로컬에서 접속할 수 있는 IP 대역대를 입력해줄 것 입니다. 여기서 metallb를 통해 External IP가 설정된 주소 풀에 맞게 할당되도록 설정해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube addons configure metallb
-  &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; Enter Load Balancer Start IP: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;192.168.49.100&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; Enter Load Balancer End IP: &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;192.168.49.120&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-    - Using image docker.io/metallb/speaker:v0.9.6
-    - Using image docker.io/metallb/controller:v0.9.6
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; metallb was successfully configured
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get configmap config &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; metallb-system &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; yaml
-  apiVersion: v1
-  data:
-    config: |
-      address-pools:
-      - name: default
-        protocol: layer2
-        addresses:
-        - 192.168.49.100-192.168.49.120
-  kind: ConfigMap
-  metadata:
-    annotations:
-      kubectl.kubernetes.io/last-applied-configuration: |
-        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;apiVersion&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;v1&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;address-pools:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;- name: default&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  protocol: layer2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  addresses:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  - 192.168.49.100-192.168.49.120&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;kind&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;ConfigMap&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;metadata&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;annotations&quot;&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;config&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;namespace&quot;&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;metallb-system&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
-    creationTimestamp: &lt;span class=&quot;s2&quot;&gt;&quot;2022-10-13T14:34:11Z&quot;&lt;/span&gt;
-    name: config
-    namespace: metallb-system
-    resourceVersion: &lt;span class=&quot;s2&quot;&gt;&quot;5805&quot;&lt;/span&gt;
-    uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;여기서 필자는 Enter Load Balancer Start IP 부분에 192.168.49.100을, End IP 부분에 192.168.49.120을 입력하였습니다. 여기서 192.168.49.x 대역대는 필자의 개발환경에서 minikube가 사용하는 내부 네트워크의 대역대 입니다. &lt;strong&gt;만약 실습을 따라하고 있는 사람이 있다면 각자 환경에 맞는 IP를 기입해야 할 것 입니다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;23-istio-설치-&quot;&gt;2.3. istio 설치 &lt;a name=&quot;list2_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;다음으로 istio 설치 파일을 다운받아 설치해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; https://istio.io/downloadIstio | sh -
-    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                  Dload  Upload   Total   Spent    Left  Speed
-  100   101  100   101    0     0    247      0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:--   247
-  100  4856  100  4856    0     0   8533      0 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:--  237k
-
-  Downloading istio-1.15.2 from https://github.com/istio/istio/releases/download/1.15.2/istio-1.15.2-linux-amd64.tar.gz ...
-
-  Istio 1.15.2 Download Complete!
-
-  Istio has been successfully downloaded into the istio-1.15.2 folder on your system.
-
-  Next Steps:
-  See https://istio.io/latest/docs/setup/install/ to add Istio to your Kubernetes cluster.
-
-  To configure the istioctl client tool &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;your workstation,
-  add the /home/son/istio-1.15.2/bin directory to your environment path variable with:
-          &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/home/son/istio-1.15.2/bin&quot;&lt;/span&gt;
-
-  Begin the Istio pre-installation check by running:
-          istioctl x precheck
-
-  Need more information? Visit https://istio.io/latest/docs/setup/install/
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/home/son/istio-1.15.2/bin&quot;&lt;/span&gt;
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which istioctl
-  /home/son/istio-1.15.2/bin/istioctl
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl version
-  client version: 1.15.2
-  control plane version: 1.12.1
-  data plane version: 1.12.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2 proxies&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;설치할 당시의 istio 최신 버전을 다운받았고, bin 폴더에 있는 istioctl 바이너리 파일을 통해 istio를 설치할 것 입니다. 위의 istio 다운로드 스크립트를 실행했을 때 안내된 대로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;istioctl x precheck&lt;/code&gt; 명령을 사용하여 설치 요구사항을 충족하고, 설치시 문제없이 안전하게 설치할 수 있는지 사전 검사를 진행해보고나서 설치하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl x precheck
-  ✔ No issues found when checking the cluster. Istio is safe to &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;or upgrade!
-    To get started, check out https://istio.io/latest/docs/setup/getting-started/
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;istioctl &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;demo &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
-  ✔ Istio core installed
-  ✔ Istiod installed
-  ✔ Ingress gateways installed
-  ✔ Egress gateways installed
-  ✔ Installation &lt;span class=&quot;nb&quot;&gt;complete       
-  &lt;/span&gt;Making this installation the default &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;injection and validation.
-
-  Thank you &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;installing Istio 1.15.  Please take a few minutes to tell us about your &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;/upgrade experience!  https://forms.gle/SWHFBmwJspusK1hv6
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl get all &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; istio-system
-  NAME                                        READY   STATUS    RESTARTS   AGE
-  pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          64s
-  pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          64s
-  pod/istiod-5456fd558d-x6jpf                 1/1     Running   0          93s
-
-  NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;S&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                      AGE
-  service/istio-egressgateway    ClusterIP      10.105.237.74    &amp;lt;none&amp;gt;          80/TCP,443/TCP                                                               10m
-  service/istio-ingressgateway   LoadBalancer   10.97.166.77     192.168.49.100  15021:32414/TCP,80:30295/TCP,443:30180/TCP,31400:30731/TCP,15443:30050/TCP   10m
-  service/istiod                 ClusterIP      10.109.182.176   &amp;lt;none&amp;gt;          15010/TCP,15012/TCP,443/TCP,15014/TCP                                        10m
-
-  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/istio-egressgateway    1/1     1            1           10m
-  deployment.apps/istio-ingressgateway   1/1     1            1           10m
-  deployment.apps/istiod                 1/1     1            1           10m
-
-  NAME                                              DESIRED   CURRENT   READY   AGE
-  replicaset.apps/istio-egressgateway-fffc799cf     1         1         1       64s
-  replicaset.apps/istio-ingressgateway-7d68764b55   1         1         1       64s
-  replicaset.apps/istiod-5456fd558d                 1         1         1       93s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;istio 디렉토리의 manifests/profiles 경로를 보면 다양한 매니페스트 파일이 존재하는 것을 확인할 수 있는데, 테스트 용도로 설치해보기 위해 demo 매니페스트를 kubernetes에 배포하였습니다. 성공적으로 배포가 되었다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;istio-system&lt;/code&gt;이라는 네임 스페이스가 생성되는 것을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;그리고 istio-ingressgateway 로드밸런서 서비스의 External IP가 192.168.49.100으로 할당되어 있는 것을 확인할 수 있습니다. 앞서 metallb를 설치하고 IP 풀을 할당해줬기 때문에 metallb에서 istio-ingressgateway라는 로드밸런서 타입의 서비스에 External IP를 부여해준 것 입니다. 현재 테스트 환경을 간단하게 그림으로 그려보자면 다음 [그림 2]과 같습니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/static/assets/img/landing/infra/istio2.png&quot; alt=&quot;metallb-istio&quot; width=&quot;576&quot; height=&quot;384&quot; /&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;[그림 2] metallb와 istio 테스트 환경&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 14 Oct 2021 00:00:00 +0900</pubDate>
-        <link>http://192.168.116.128:4000/infra/2021/10/14/install_istio.html</link>
-        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2021/10/14/install_istio.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>infra</category>
-        
-        <category>docker</category>
-        
-        <category>minikube</category>
-        
-        <category>kubectl</category>
-        
-        <category>kubernetes</category>
-        
-        <category>istio</category>
-        
-        
-        <category>Infra</category>
-        
-      </item>
-    
-      <item>
-        <title>[Infra] Ubuntu 22.04 환경에서 minikube 설치하기</title>
-        <description>&lt;p&gt;본 포스팅에서는 Ubuntu 22.04 환경에서 minikube를 설치하는 과정을 설명합니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 개요&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_1&quot;&gt;   1.1. minikube란?&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1_2&quot;&gt;   1.2. 개발 환경&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. Docker 설치&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. minikube 설치 과정&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list3_1&quot;&gt;   3.1. minikube 설치&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list3_2&quot;&gt;   3.2. kubectl 설치&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list3_3&quot;&gt;   3.3. minikube 실행 및 종료&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;1-개요-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;1. 개요&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;11-minikube란-&quot;&gt;1.1. minikube란? &lt;a name=&quot;list1_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;minikube는 다양한 OS에서 로컬 Kubernetes 클러스터를 구현할 수 있도록 도와주는 &lt;strong&gt;오픈 소스 도구&lt;/strong&gt;입니다. minikube의 주요 목표는 로컬 Kubernetes 애플리케이션 개발을 위한 도구들과 그에 맞는 모든 &lt;strong&gt;Kubernetes 기능을 지원&lt;/strong&gt;하는 것 입니다. 로컬에서 리소스 활용이 적은 단일 노드 kubernetes 클러스터를 구동시킬 수 있기 때문에 개발 테스트 및 POC 목적으로 사용하기 좋습니다.&lt;/p&gt;
-
-&lt;p&gt;자세한 설명은 &lt;a href=&quot;https://minikube.sigs.k8s.io/docs&quot; title=&quot;minikube&quot;&gt;minikube 웹사이트&lt;/a&gt;를 통해 확인하시기 바랍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;12-개발-환경-&quot;&gt;1.2. 개발 환경 &lt;a name=&quot;list1_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;필자는 실습을 위해 &lt;strong&gt;VMWare Workstation 16.2&lt;/strong&gt;에서 &lt;strong&gt;Ubuntu 22.04 LTS Desktop&lt;/strong&gt; 이미지로 가상머신을 생성하여 진행하였습니다. 해당 환경에서 &lt;strong&gt;Docker&lt;/strong&gt;를 설치하고, &lt;strong&gt;minikube&lt;/strong&gt;에서 드라이버로 Docker를 사용하여 Kubernetes 구성 요소를 여기에 설치해볼 예정입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-docker-설치-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;2. Docker 설치&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;minikube를 설치하기 위해서는 드라이버를 설정해주어야 하는데, minikube는 virtualbox와 같은 VM, Docker와 같은 컨테이너 또는 베어메탈 등 다양한 드라이버를 지원하고 있습니다. 이 중에서 본 포스팅에서는 Docker를 드라이버로 사용하여 진행할 것 입니다.&lt;/p&gt;
-
-&lt;p&gt;Docker를 설치하기 전에 모든 시스템 패키지를 최신 릴리스로 업데이트 해야 합니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt update
-son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;apt-transport-https
-son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;혹시나 재부팅이 필요한 경우 재부팅을 하고난 다음 설치를 진행하면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;Docker는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get.docker.com&lt;/code&gt;에서 지원하는 &lt;strong&gt;스크립트를 다운받아 실행&lt;/strong&gt;해주기만 하면 되기 때문에 간단하게 설치할 수 있습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://get.docker.com &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; get-docker.sh
-son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh get-docker.sh
-&lt;span class=&quot;c&quot;&gt;# Executing docker install script, commit: 4f282167c425347a931ccfd95cc91fab041d414f&lt;/span&gt;
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; apt-get update &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; apt-transport-https ca-certificates curl &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /etc/apt/keyrings &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; 0755 /etc/apt/keyrings
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://download.docker.com/linux/ubuntu/gpg&quot;&lt;/span&gt; | gpg &lt;span class=&quot;nt&quot;&gt;--dearmor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--yes&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /etc/apt/keyrings/docker.gpg
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+r /etc/apt/keyrings/docker.gpg
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /etc/apt/sources.list.d/docker.list
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; apt-get update &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-install-recommends&lt;/span&gt; docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
-+ version_gte 20.10
-+ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-+ &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;0
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;DEBIAN_FRONTEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noninteractive apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; docker-ce-rootless-extras &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
-+ sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; docker version
-Client: Docker Engine - Community
-  Version:           20.10.18
-  API version:       1.41
-  Go version:        go1.18.6
-  Git commit:        b40c2f6
-  Built:             Thu Sep  8 23:11:43 2022
-  OS/Arch:           linux/amd64
-  Context:           default
-  Experimental:      &lt;span class=&quot;nb&quot;&gt;true
-
-&lt;/span&gt;Server: Docker Engine - Community
-  Engine:
-  Version:          20.10.18
-  API version:      1.41 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;minimum version 1.12&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  Go version:       go1.18.6
-  Git commit:       e42327a
-  Built:            Thu Sep  8 23:09:30 2022
-  OS/Arch:          linux/amd64
-  Experimental:     &lt;span class=&quot;nb&quot;&gt;false
-  &lt;/span&gt;containerd:
-  Version:          1.6.8
-  GitCommit:        9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6
-  runc:
-  Version:          1.1.4
-  GitCommit:        v1.1.4-0-g5fd4c4d
-  docker-init:
-  Version:          0.19.0
-  GitCommit:        de40ad0
-
-&lt;span class=&quot;o&quot;&gt;================================================================================&lt;/span&gt;
-
-To run Docker as a non-privileged user, consider setting up the
-Docker daemon &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;rootless mode &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;your user:
-
-    dockerd-rootless-setuptool.sh &lt;span class=&quot;nb&quot;&gt;install
-
-&lt;/span&gt;Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
-
-To run the Docker daemon as a fully privileged service, but granting non-root
-&lt;span class=&quot;nb&quot;&gt;users &lt;/span&gt;access, refer to https://docs.docker.com/go/daemon-access/
-
-WARNING: Access to the remote API on a privileged Docker daemon is equivalent
-          to root access on the host. Refer to the &lt;span class=&quot;s1&quot;&gt;&apos;Docker daemon attack surface&apos;&lt;/span&gt;
-          documentation &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;details: https://docs.docker.com/go/attack-surface/
-
-&lt;span class=&quot;o&quot;&gt;================================================================================&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;get-docker.sh란 이름으로 스크립트를 다운받아 실행해주어 Docker를 설치하고 아래 명령어를 통해 Docker 어느 버전으로 설치되었는지 확인해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
-Docker version 20.10.18, build b40c2f6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Docker가 정상적으로 설치가 되긴 했지만, 현재 상태로 minikube에서 Docker를 드라이버로 설정하여 설치할 때 permission denied 에러가 발생할 것 입니다. 에러를 사전에 방지하기 위해 Docker를 일반 유저도 쓸 수 있도록 설정해주겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;usermod &lt;span class=&quot;nt&quot;&gt;-aG&lt;/span&gt; docker &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; newgrp docker
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;추가로 docker-compose를 사용할 것이라면 다음 명령을 통해 docker-compose를 설치할 수도 있습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;docker-compose
-son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker-compose &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
-docker-compose version 1.29.2, build unknown
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-minikube-설치-과정-&quot;&gt;&lt;span style=&quot;color:purple&quot;&gt;&lt;strong&gt;3. minikube 설치 과정&lt;/strong&gt;&lt;/span&gt; &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;위의 과정을 통해 Docker를 정상적으로 설치하였다면 다음으로 minikube를 설치하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;31-minikube-설치-&quot;&gt;3.1. minikube 설치 &lt;a name=&quot;list3_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;minikube를 설치하기 위해서는 &lt;strong&gt;minikube 바이너리를 다운로드&lt;/strong&gt;해야 합니다. 바이너리를 다운받아 &lt;strong&gt;실행 권한을 준 다음 /usr/local/bin 디렉토리 아래에 넣을 것&lt;/strong&gt;입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  &lt;span class=&quot;nt&quot;&gt;--2022-10-13&lt;/span&gt; 04:03:24--  https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  Resolving storage.googleapis.com &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;storage.googleapis.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;... 34.64.4.112, 34.64.4.80, 34.64.4.16, ...
-  Connecting to storage.googleapis.com &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;storage.googleapis.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;|34.64.4.112|:443... connected.
-  HTTP request sent, awaiting response... 200 OK
-  Length: 76629407 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;73M&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;application/octet-stream]
-  Saving to: ‘minikube-linux-amd64’
-  
-  minikube-linux-amd64        100%[&lt;span class=&quot;o&quot;&gt;===========================================&amp;gt;]&lt;/span&gt;  73.08M  5.17MB/s    &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;13s
-  
-  2022-10-13 04:03:38 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;5.72 MB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - ‘minikube-linux-amd64’ saved &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;76629407/76629407]
-  
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x minikube-linux-amd64
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;minikube-linux-amd64 /usr/local/bin/minikube
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;minikube 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 minikube 버전을 확인해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube version
-  minikube version: v1.27.1
-  commit: fe869b5d4da11ba318eb84a3ac00f336411de7ba
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;혹시나 minikube가 실행되지 않는다면 $PATH에 /usr/local/bin이 없기 때문일 것입니다. 
-다른 $PATH로 위치를 옮기거나 $PATH에 /usr/local/bin 위치를 추가해야 합니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;32-kubectl-설치-&quot;&gt;3.2. kubectl 설치 &lt;a name=&quot;list3_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;minikube를 설치하더라도 &lt;strong&gt;Kubernetes에서 애플리케이션을 배포하고 관리하기 위해 사용되는 도구인 kubectl&lt;/strong&gt;을 따로 설치해야 합니다. 마찬가지로 kubectl 바이너리 파일을 다운받아 실행권한을 준 다음 /usr/local/bin 위치로 옮겨주겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-LO&lt;/span&gt; https://storage.googleapis.com/kubernetes-release/release/&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; https://storage.googleapis.com/kubernetes-release/release/stable.txt&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/bin/linux/amd64/kubectl
-    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                    Dload  Upload   Total   Spent    Left  Speed
-  100 42.9M  100 42.9M    0     0  8035k      0  0:00:05  0:00:05 &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;:--:-- 8355k
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x ./kubectl
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv&lt;/span&gt; ./kubectl /usr/local/bin/kubectl
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;kubectl 바이너리 파일을 /usr/local/bin 디렉토리 아래에 두었다면 다음 명령어를 통해 설치된 kubectl 버전을 확인해보겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl version &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; json &lt;span class=&quot;nt&quot;&gt;--client&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&quot;clientVersion&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;s2&quot;&gt;&quot;major&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;1&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;minor&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;25&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;gitVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;v1.25.2&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;gitCommit&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;5835544ca568b757a8ecae5c153f317e5736700e&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;gitTreeState&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;clean&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;buildDate&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;2022-09-21T14:33:49Z&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;goVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;go1.19.1&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;compiler&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;gc&quot;&lt;/span&gt;,
-      &lt;span class=&quot;s2&quot;&gt;&quot;platform&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;linux/amd64&quot;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
-    &lt;span class=&quot;s2&quot;&gt;&quot;kustomizeVersion&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;v4.5.7&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;33-minikube-실행-및-종료-&quot;&gt;3.3. minikube 실행 및 종료 &lt;a name=&quot;list3_3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;minikube를 실행시키기 위해서는 다음과 같이 minikube start 명령을 사용하면 됩니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube start
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; minikube v1.27.1 on Ubuntu 22.04
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Automatically selected the docker driver. Other choices: ssh, none
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Using Docker driver with root privileges
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Starting control plane node minikube &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;cluster minikube
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Pulling base image ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Downloading Kubernetes v1.25.2 preload ...
-      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; preloaded-images-k8s-v18-v1...:  385.41 MiB / 385.41 MiB  100.00% 4.47 Mi
-      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; gcr.io/k8s-minikube/kicbase:  387.10 MiB / 387.11 MiB  100.00% 3.68 MiB p
-      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; gcr.io/k8s-minikube/kicbase:  0 B &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;________________________] ?% ? p/s 58s
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Creating docker container &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPUs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2, &lt;span class=&quot;nv&quot;&gt;Memory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2200MB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
-    - Generating certificates and keys ...
-    - Booting up control plane ...
-    - Configuring RBAC rules ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Verifying Kubernetes components...
-    - Using image gcr.io/k8s-minikube/storage-provisioner:v5
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Enabled addons: default-storageclass, storage-provisioner
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Done! kubectl is now configured to use &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; cluster and &lt;span class=&quot;s2&quot;&gt;&quot;default&quot;&lt;/span&gt; namespace by default
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아무런 옵션도 기입하지 않으면 위에서 설치했던 Docker를 드라이버로 잡고, kicbase 이미지를 받아 CPU 2 core와 Memory 2200MB를 자동으로 잡는 것을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;여기서 kicbase 이미지는 통신하기 위해 프록시의 역할을 하는 것으로 알고 있습나다. 
-해당 이미지가 없다면 docker pull을 통해 받아오거나, VPN 또는 HTTP/HTTPS 프록시를 환경 변수로 사용하여 minikube start 해야합니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;minikube가 정상적으로 실행되었다면 kubectl 명령을 통해 생성된 클러스터 정보와 설정을 확인해보도록 하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl cluster-info
-  Kubernetes control plane is running at https://192.168.49.2:8443
-  CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-
-  To further debug and diagnose cluster problems, use &lt;span class=&quot;s1&quot;&gt;&apos;kubectl cluster-info dump&apos;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-  
-  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl config view
-  apiVersion: v1
-  clusters:
-  - cluster:
-      certificate-authority: /home/son/.minikube/ca.crt
-      extensions:
-      - extension:
-          last-update: Thu, 13 Oct 2022 21:29:21 KST
-          provider: minikube.sigs.k8s.io
-          version: v1.27.1
-        name: cluster_info
-      server: https://192.168.49.2:8443
-    name: minikube
-  contexts:
-  - context:
-      cluster: minikube
-      extensions:
-      - extension:
-          last-update: Thu, 13 Oct 2022 21:29:21 KST
-          provider: minikube.sigs.k8s.io
-          version: v1.27.1
-        name: context_info
-      namespace: default
-      user: minikube
-    name: minikube
-  current-context: minikube
-  kind: Config
-  preferences: &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;users&lt;/span&gt;:
-  - name: minikube
-    user:
-      client-certificate: /home/son/.minikube/profiles/minikube/client.crt
-      client-key: /home/son/.minikube/profiles/minikube/client.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;minikube를 종료하고 싶다면 다음과 같이 minikube stop 명령을 통해 종료할 수 있습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;minikube stop
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Stopping node &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt;  ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Powering off &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt; via SSH ...
-  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 1 node stopped.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Wed, 13 Oct 2021 00:00:00 +0900</pubDate>
-        <link>http://192.168.116.128:4000/infra/2021/10/13/install_minikube.html</link>
-        <guid isPermaLink="true">http://192.168.116.128:4000/infra/2021/10/13/install_minikube.html</guid>
-        
-        <category>son</category>
-        
-        <category>blog</category>
-        
-        <category>infra</category>
-        
-        <category>docker</category>
-        
-        <category>minikube</category>
-        
-        <category>kubectl</category>
-        
-        <category>kubernetes</category>
-        
-        
-        <category>Infra</category>
         
       </item>
     
