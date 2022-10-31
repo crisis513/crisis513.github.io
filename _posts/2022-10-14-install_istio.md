@@ -1,35 +1,35 @@
 ---
 layout: post
-title: "[Infra] minikube에서 istio 설치하기"
+title: "[Infra] Minikube에서 Istio 설치하기"
 date: 2022-10-14
-desc: "[Infra] minikube에서 istio 설치하기"
+desc: "[Infra] Minikube에서 Istio 설치하기"
 keywords: "son,blog,infra,docker,minikube,kubectl,kubernetes,istio"
 categories: [Infra]
 tags: [son,blog,infra,docker,minikube,kubectl,kubernetes,istio]
 icon: icon-html
 ---
 
-[개발 환경](http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2 "개발 환경")은 이전 포스팅과 동일하니 참고바랍니다.
+[개발 환경](http://crisis513.github.io/infra/2021/10/13/install_minikube.html#list1_2 "개발 환경")은 이전 포스팅과 동일하니 참고바란다.
 
 ---
 
 ## 목차
 
-[1. istio란?](#list1)
+[1. Istio란?](#list1)
 
-[2. istio 설치 과정](#list2)
+[2. Istio 설치 과정](#list2)
 
-[&nbsp;&nbsp; 2.1. istio 최소 사양](#list2_1)
+[&nbsp;&nbsp; 2.1. Istio 최소 사양](#list2_1)
 
 [&nbsp;&nbsp; 2.2. metallb 설치 및 설정](#list2_2)
 
-[&nbsp;&nbsp; 2.3. istio 설치](#list2_3)
+[&nbsp;&nbsp; 2.3. Istio 설치](#list2_3)
 
 ---
 
-## <span style="color:purple">**1. istio란?**</span> <a name="list1"></a>
+## <span style="color:purple">**1. Istio란?**</span> <a name="list1"></a>
 
-대부분의 서비스 메시와 마찬가지로 istio는 `사이드카(sidecar)` 라는 프록시 컨테이너로 기존 애플리케이션 컨테이너를 보완합니다. 사이드카 프록시로 Envoy를 사용하고, 아래와 같이 서비스 컨테이너에서 오가는 네트워크 트래픽을 가로채고 전용 네트워크를 통해 트래픽을 다시 라우팅합니다.
+대부분의 서비스 메시와 마찬가지로 istio는 `사이드카(sidecar)` 라는 프록시 컨테이너로 기존 애플리케이션 컨테이너를 보완한다. 사이드카 프록시로 Envoy를 사용하고, 아래와 같이 서비스 컨테이너에서 오가는 네트워크 트래픽을 가로채고 전용 네트워크를 통해 트래픽을 다시 라우팅한다.
 
 | ![istio-architecture](/static/assets/img/landing/infra/istio1.png){: width="80%"} |
 |:--:| 
@@ -37,7 +37,7 @@ icon: icon-html
 
 <br>
 
-먼저, Envoy 프록시는 다음과 같은 기능을 가집니다.
+먼저, Envoy 프록시는 다음과 같은 기능을 가진다.
 
 - TCP, HTTP1, HTTP2, gRPC protocol 지원
 - TLS client certification
@@ -47,17 +47,17 @@ icon: icon-html
 - Dynamic configuration 지원, 중앙 레지스트리에 설정 및 설정 정보를 동적으로 읽어옴
 - MongoDB에 대한 L7 라우팅 기능
 
-Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, galley, Mixer(istio-1.5.0 부터는 istiod로 통합)로 구성되어 있고, 서비스 디스커버리, 설정 관리, 인증 관리 역할을 수행합니다. 
+Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, galley, Mixer(istio-1.5.0 부터는 istiod로 통합)로 구성되어 있고, 서비스 디스커버리, 설정 관리, 인증 관리 역할을 수행한다. 
 
 <br>
 
-## <span style="color:purple">**2. istio 설치 과정**</span> <a name="list2"></a>
+## <span style="color:purple">**2. Istio 설치 과정**</span> <a name="list2"></a>
 
 <br>
 
-### 2.1. istio 최소 사양 <a name="list2_1"></a>
+### 2.1. Istio 최소 사양 <a name="list2_1"></a>
 
-  istio는 istioctl, helm, Istio Operator 등 다양한 방법으로 설치할 수 있고, minikube에서는 istio를 추가 기능으로 제공하고 있긴 하지만 **본 포스팅에서는 istioctl로 설치**해볼 것 입니다. istio는 minikube에서 작동하기 위해 `4개의 vCPU와 8GB의 RAM이 필요`합니다. 참고로 minikube 가상 머신에 할당된 RAM이 충분하지 않으면 다음과 같은 오류가 발생할 수 있습니다.
+  istio는 istioctl, helm, Istio Operator 등 다양한 방법으로 설치할 수 있고, minikube에서는 istio를 추가 기능으로 제공하고 있긴 하지만 **본 포스팅에서는 istioctl로 설치**해볼 것이다. istio는 minikube에서 작동하기 위해 `4개의 vCPU와 8GB의 RAM이 필요`하다. 참고로 minikube 가상 머신에 할당된 RAM이 충분하지 않으면 다음과 같은 오류가 발생할 수 있다.
 
   - 이미지 가져오기 실패
   - 상태 확인 시간 초과 실패
@@ -66,7 +66,7 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
   - 가상 머신의 완전한 잠금
   - 호스트 NMI 워치독 재부팅
 
-위에서 설명한대로 vCPU 4개와 8GB RAM의 조건을 충족하기 위해 다음 명령을 통해 minikube를 실행하겠습니다.
+  위에서 설명한대로 vCPU 4개와 8GB RAM의 조건을 충족하기 위해 다음 명령을 통해 minikube를 실행하겠다.
 
   ```bash
   son@son-localhost $ minikube start --cpus=4 --memory=8g
@@ -90,15 +90,15 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
   * Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
   ```
 
-  minikube에서 지원하는 여러가지 기능들을 addons를 통해 확인할 수 있는데, 여기에 istio도 있는 것을 확인할 수 있습니다. 앞서 언급하였듯 istioctl을 통해 설치를 진행할 것 입니다.
+  minikube에서 지원하는 여러가지 기능들을 addons를 통해 확인할 수 있는데, 여기에 istio도 있는 것을 확인할 수 있다. 앞서 언급하였듯 istioctl을 통해 설치를 진행할 것이다.
 
   <br>
 
 ### 2.2. metallb 설치 및 설정 <a name="list2_2"></a>
 
-  minikube가 istio에서 사용할 로드 밸런서를 제공하도록 하려면 minikube tunnel 기능을 사용할 수 있지만 본 포스팅에서는 tunnel 기능을 사용하지 않고, metallb를 사용해볼 것 입니다. 그리고 metallb는 addons에 있는 기능으로 사용할 것 입니다. 우선 addons를 확인해보겠습니다.
+  minikube가 istio에서 사용할 로드 밸런서를 제공하도록 하려면 minikube tunnel 기능을 사용할 수 있지만 본 포스팅에서는 tunnel 기능을 사용하지 않고, metallb를 사용해볼 것이다. 그리고 metallb는 addons에 있는 기능으로 사용할 것 입니다. 우선 addons를 확인해보겠다.
 
-  > 만약 metallb를 사용하지 않고 minikube tunnel을 사용한다면 아래 명령어를 새로운 터미널 창을 띄워 실행시키면 되겠습니다.
+  > 만약 metallb를 사용하지 않고 minikube tunnel을 사용한다면 아래 명령어를 새로운 터미널 창을 띄워 실행시키면 된다.
   >
   > $ minikube tunnel
 
@@ -143,7 +143,7 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
   |-----------------------------|----------|--------------|--------------------------------|
   ```
 
-  현재 metallb가 사용되고 있지 않기 떄문에 disabled 상태인 것을 확인할 수 있습니다. minikube addons에서 metallb를 활성화 시켜보겠습니다.
+  현재 metallb가 사용되고 있지 않기 떄문에 disabled 상태인 것을 확인할 수 있다. minikube addons에서 metallb를 활성화 시켜보겠다.
 
   ```bash
   son@son-localhost $ minikube addons enable metallb
@@ -193,18 +193,18 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
     uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
   ```
 
-  minikube에서 metallb를 활성화시키면 metallb-system이라는 네임 스페이스가 생기는데, controller라는 deployment와 speaker라는 daemonset이 동작하는 것을 확인할 수 있고 configmap도 생성된 것을 확인할 수 있습니다. configmap 내용을 보면 프로토콜이 **Layer2**로 동작하고, 주소 풀이 비어있는 것을 확인할 수 있습니다. 
+  minikube에서 metallb를 활성화시키면 metallb-system이라는 네임 스페이스가 생기는데, controller라는 deployment와 speaker라는 daemonset이 동작하는 것을 확인할 수 있고 configmap도 생성된 것을 확인할 수 있다. configmap 내용을 보면 프로토콜이 **Layer2**로 동작하고, 주소 풀이 비어있는 것을 확인할 수 있다. 
 
-  metallb는 기본적으로 외부에 연결할 수 있는 IP 대역대가 있다면 metallb에서 IP 대역을 지정하여 IP를 할당해줄 수 있는데, 우리는 로컬 환경에서 구축하고 있기 때문에 External IP 대신 로컬에서 접속할 수 있는 IP 대역대를 입력해줄 것 입니다. 여기서 metallb를 통해 External IP가 설정된 주소 풀에 맞게 할당되도록 설정해보겠습니다.
+  metallb는 기본적으로 외부에 연결할 수 있는 IP 대역대가 있다면 metallb에서 IP 대역을 지정하여 IP를 할당해줄 수 있는데, 우리는 로컬 환경에서 구축하고 있기 때문에 External IP 대신 로컬에서 접속할 수 있는 IP 대역대를 입력해줄 것이다. 여기서 metallb를 통해 External IP가 설정된 주소 풀에 맞게 할당되도록 설정해보겠다.
   
   ```bash
-  son@son-localhost $ minikube addons configure metallb
+  son@son-localhost ~ $ minikube addons configure metallb
   -- Enter Load Balancer Start IP: `192.168.49.100`
   -- Enter Load Balancer End IP: `192.168.49.120`
     - Using image docker.io/metallb/speaker:v0.9.6
     - Using image docker.io/metallb/controller:v0.9.6
   * metallb was successfully configured
-  son@son-localhost $ kubectl get configmap config -n metallb-system -o yaml
+  son@son-localhost ~ $ kubectl get configmap config -n metallb-system -o yaml
   apiVersion: v1
   data:
     config: |
@@ -225,16 +225,16 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
     uid: 0a5fd834-87f0-4191-a093-aa9cd25f5f35
   ```
 
-  여기서 필자는 Enter Load Balancer Start IP 부분에 192.168.49.100을, End IP 부분에 192.168.49.120을 입력하였습니다. 여기서 192.168.49.x 대역대는 필자의 개발환경에서 minikube가 사용하는 내부 네트워크의 대역대 입니다. **만약 실습을 따라하고 있는 사람이 있다면 각자 환경에 맞는 IP를 기입해야 할 것 입니다.**
+  여기서 필자는 Enter Load Balancer Start IP 부분에 192.168.49.100을, End IP 부분에 192.168.49.120을 입력하였다. 여기서 192.168.49.x 대역대는 필자의 개발환경에서 minikube가 사용하는 내부 네트워크의 대역대이다. **만약 실습을 따라하고 있는 사람이 있다면 각자 환경에 맞는 IP를 기입해야 할 것이다.**
 
   <br>
 
-### 2.3. istio 설치 <a name="list2_3"></a>
+### 2.3. Istio 설치 <a name="list2_3"></a>
 
-  다음으로 istio 설치 파일을 다운받아 설치해보겠습니다. 
+  다음으로 istio 설치 파일을 다운받아 설치해보자. 
 
   ```bash
-  son@son-localhost $ curl -L https://istio.io/downloadIstio | sh -
+  son@son-localhost ~ $ curl -L https://istio.io/downloadIstio | sh -
     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                   Dload  Upload   Total   Spent    Left  Speed
   100   101  100   101    0     0    247      0 --:--:-- --:--:-- --:--:--   247
@@ -257,22 +257,22 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
           istioctl x precheck
 
   Need more information? Visit https://istio.io/latest/docs/setup/install/
-  son@son-localhost $ export PATH="$PATH:/home/son/istio-1.15.2/bin"
-  son@son-localhost $ which istioctl
+  son@son-localhost ~ $ export PATH="$PATH:/home/son/istio-1.15.2/bin"
+  son@son-localhost ~ $ which istioctl
   /home/son/istio-1.15.2/bin/istioctl
-  son@son-localhost $ istioctl version
+  son@son-localhost ~ $ istioctl version
   client version: 1.15.2
   control plane version: 1.12.1
   data plane version: 1.12.1 (2 proxies)
   ```
 
-  설치할 당시의 istio 최신 버전을 다운받았고, bin 폴더에 있는 istioctl 바이너리 파일을 통해 istio를 설치할 것 입니다. 위의 istio 다운로드 스크립트를 실행했을 때 안내된 대로 `istioctl x precheck` 명령을 사용하여 설치 요구사항을 충족하고, 설치시 문제없이 안전하게 설치할 수 있는지 사전 검사를 진행해보고나서 설치하겠습니다.
+  설치할 당시의 istio 최신 버전을 다운받았고, bin 폴더에 있는 istioctl 바이너리 파일을 통해 istio를 설치할 것이다. 위의 istio 다운로드 스크립트를 실행했을 때 안내된 대로 `istioctl x precheck` 명령을 사용하여 설치 요구사항을 충족하고, 설치시 문제없이 안전하게 설치할 수 있는지 사전 검사를 진행해보고나서 설치해보겠다.
 
   ```bash
-  son@son-localhost $ istioctl x precheck
+  son@son-localhost ~ $ istioctl x precheck
   ✔ No issues found when checking the cluster. Istio is safe to install or upgrade!
     To get started, check out https://istio.io/latest/docs/setup/getting-started/
-  son@son-localhost $ istioctl install --set profile=demo -y
+  son@son-localhost ~ $ istioctl install --set profile=demo -y
   ✔ Istio core installed
   ✔ Istiod installed
   ✔ Ingress gateways installed
@@ -281,7 +281,7 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
   Making this installation the default for injection and validation.
 
   Thank you for installing Istio 1.15.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/SWHFBmwJspusK1hv6
-  son@son-localhost $ kubectl get all -n istio-system
+  son@son-localhost ~ $ kubectl get all -n istio-system
   NAME                                        READY   STATUS    RESTARTS   AGE
   pod/istio-egressgateway-fffc799cf-kd26t     1/1     Running   0          64s
   pod/istio-ingressgateway-7d68764b55-ckkc5   1/1     Running   0          64s
@@ -303,9 +303,9 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
   replicaset.apps/istiod-5456fd558d                 1         1         1       93s
   ```
 
-  istio 디렉토리의 manifests/profiles 경로를 보면 다양한 매니페스트 파일이 존재하는 것을 확인할 수 있는데, 테스트 용도로 설치해보기 위해 demo 매니페스트를 kubernetes에 배포하였습니다. 성공적으로 배포가 되었다면 `istio-system`이라는 네임 스페이스가 생성되는 것을 확인할 수 있습니다. 
+  istio 디렉토리의 manifests/profiles 경로를 보면 다양한 매니페스트 파일이 존재하는 것을 확인할 수 있는데, 테스트 용도로 설치해보기 위해 demo 매니페스트를 kubernetes에 배포하였다. 성공적으로 배포가 되었다면 `istio-system`이라는 네임 스페이스가 생성되는 것을 확인할 수 있다. 
 
-  그리고 istio-ingressgateway 로드밸런서 서비스의 External IP가 192.168.49.100으로 할당되어 있는 것을 확인할 수 있습니다. 앞서 metallb를 설치하고 IP 풀을 할당해줬기 때문에 metallb에서 istio-ingressgateway라는 로드밸런서 타입의 서비스에 External IP를 부여해준 것 입니다. 현재 테스트 환경을 간단하게 그림으로 그려보자면 다음 [그림 2]과 같습니다.
+  그리고 istio-ingressgateway 로드밸런서 서비스의 External IP가 192.168.49.100으로 할당되어 있는 것을 확인할 수 있다. 앞서 metallb를 설치하고 IP 풀을 할당해줬기 때문에 metallb에서 istio-ingressgateway라는 로드밸런서 타입의 서비스에 External IP를 부여해준 것이다. 현재 테스트 환경을 간단하게 그림으로 그려보자면 다음 [그림 2]과 같다.
 
   | ![metallb-istio](/static/assets/img/landing/infra/istio2.png){: width="576" height="384"} |
   |:--:| 

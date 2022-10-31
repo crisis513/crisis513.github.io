@@ -58,7 +58,7 @@
     <p>먼저 모니터링을 위한 네임스페이스를 생성해준다.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>kubectl create namespace monitoring
-  namespace/monitoring created
+  namemonitoring created
 </code></pre></div>    </div>
 
     <p>생성된 네임스페이스에 다음 명령어를 통해 prometheus-operator를 설치해준다.</p>

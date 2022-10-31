@@ -1,4 +1,4 @@
-I"I�<h2 id="목차">목차</h2>
+I"I�<h2 id="목차">목차</h2>
 
 <p><a href="#list1">1. DevSecOps 툴체인 보안 점검 리스트</a></p>
 
@@ -599,7 +599,7 @@
     <p>우선 Kubernetes 및 Helm을 활용하여 Anchore 서버를 구성해보자.</p>
 
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>kubectl create namespace anchore
-  namespace/anchore created
+  nameanchore created
 
   crisis51526@cloudshell:~ <span class="o">(</span>cccr-nov2<span class="o">)</span><span class="nv">$ </span>helm repo add anchore https://charts.anchore.io
   <span class="s2">"anchore"</span> has been added to your repositories

@@ -1,0 +1,158 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1; minimum-scale=1; user-scalable=no;"> <meta content="[Infra] Kubernetes Blue/Green 배포 전략 실습" name="description"> <meta name="keywords" content="son,blog,infra,docker,minikube,kubernetes,grafana,blue/green"> <meta name="author" content="son"> <meta name="baseurl" content=""> <title> son | [Infra] Kubernetes Blue/Green 배포 전략 실습 </title> <!-- favicon --> <link rel="shortcut icon" href="/static/assets/img/favicon.ico"> <!-- Main CSS --> <link href="/static/assets/app-20200311.min.css" rel="stylesheet"> <link href="/static/css/custom.css" rel="stylesheet"> <!-- Main Scripts --> <script src="/static/assets/app-20200311.min.js"></script> <script src="/static/assets/blog-20200311.min.js"></script> <!-- Google AdSense --> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <script> (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-6196184620200311", enable_page_level_ads: true }); </script> </head> <body id="page-top" class="landing-page"> <div class="search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right: 0px; opacity: 0.95; background-color: #111111; z-index: 9999; display: none;"> <input type="text" class="form-control search-content" id="search-content" style="position: fixed; top: 60px" placeholder="Search Blog"> <div style="position: fixed; top: 16px; right: 16px; z-index: 9999;"> <img src="/static/assets/img/search/cb-close.png" id="close-btn"/> </div> </div> <div style="position: fixed; right: 16px; bottom: 20px; z-index: 9999;"> <img src="/static/assets/img/search/cb-search.png" id="search-btn" title="Double click Ctrl"/> </div> <div class="navbar-wrapper"> <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header page-scroll"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/">son</a> </div> <div id="navbar" class="navbar-collapse collapse"> <ul class="nav navbar-nav navbar-right"> <li><a class="page-scroll" href="blog/"></a></li> <li> <a class="page-scroll" href="/blog/">All</a></li> <li> <a class="page-scroll" href="/project/">Project</a></li> <li> <a class="page-scroll" href="/research/">Research</a></li> <li> <a class="page-scroll" href="/troubleshooting/">Troubleshooting</a></li> <li> <a class="page-scroll" href="/infra/">Infra</a></li> <li> <a class="page-scroll" href="/data/">Data</a></li> <li> <a class="page-scroll" href="/anything/">Anything</a></li> </ul> </div> </div> </nav> </div> <div id="inSlider" class="carousel carousel-fade" data-ride="carousel"> <ol class="carousel-indicators"> <li data-target="#inSlider" data-slide-to="0" class="active"></li> <li data-target="#inSlider" data-slide-to="1"></li> <li data-target="#inSlider" data-slide-to="2"></li> </ol> <div class="carousel-inner" role="listbox"> <div class="item active"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_one.jpg);" title="han-gi's blog"> </div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_two.jpg);" title="han-gi's blog"></div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_three.jpg);" title="han-gi's blog"></div> </div> </div> <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#inSlider" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div> <div class="wrapper wrapper-content animated fadeInRight article"> <div class="row"> <div class="col-lg-10 col-lg-offset-1"> <div class="ibox"> <div class="ibox-content"> <div class="pull-right"> <a class="btn btn-white btn-xs" href="/infra">Infra</a> </div> <div class="text-center article-title"> <span class="text-muted"><i class="fa fa-clock-o"></i> 23 Oct 2022</span> <h1> [Infra] Kubernetes Blue/Green 배포 전략 실습 </h1> </div> <p>본 포스팅에서는 Kubernetes의 여러 배포 전략 중 Blue/Green에 대해 알아보고 실습해볼 것이다. 실습 진행은 <a href="&quot;https://github.com/ContainerSolutions/k8s-deployment-strategies&quot;">해당 깃허브 내용</a>을 참고하였다.</p> <hr /> <h2 id="목차">목차</h2> <p><a href="#list1">1. Blue/Green 배포</a></p> <p><a href="#list1_1">   1.1. Blue/Green이란?</a></p> <p><a href="#list1_2">   1.2. Blue/Green 실습</a></p> <p><a href="#list1_3">   1.3. Grafana dashboard 확인</a></p> <hr /> <h2 id="1-bluegreen-배포-"><span style="color:purple"><strong>1. Blue/Green 배포</strong></span> <a name="list1"></a></h2> <p><br /></p> <h3 id="11-bluegreen이란-">1.1. Blue/Green이란? <a name="list1_1"></a></h3> <p>이전 포스팅에서 살펴본 Rolling Update는 기존 버전과 새로운 버전이 같이 배포되는 시간이 어느정도 있다는 문제가 있다. 이러한 문제를 해결하기 위해 사용되는 방법이 Blue/Green 배포이다. Blue/Green 배포는 서버를 기존 버전과 새로운 버전을 동시에 배포하여 한꺼번에 교체하는 방법이다. 그림으로 살펴보자면 다음 [그림 1]과 같다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/bluegreen1.png" alt="blue_green" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 1] Blue/Green 배포 과정</td> </tr> </tbody> </table> <p><br /></p> <p>새로운 버전이 요구 사항을 충족하는지 테스트한 후 selector 필드의 version 레이블을 교체하여 새로운 버전으로 트래픽을 보내도록 업데이트하는 방식이다. 즉각적인 롤아웃/롤백이 가능하고 버전 관리 문제를 피하고 전체 클러스터 상태를 한 번에 변경할 수 있는 장점이 있지만, 두 버전이 동시에 올라가야 하기 때문에 두 배의 자원이 필요하고, 프로덕션에 출시하기 전에 전체 플랫폼에 대한 적절한 테스트를 수행하는 과정이 필요하다.</p> <p><br /></p> <h3 id="12-bluegreen-실습-">1.2. Blue/Green 실습 <a name="list1_2"></a></h3> <p>실습은 이전 포스팅의 Rolling Update를 진행했던 ramped 폴더에서 blue-green/single-service 폴더로 이동하여 진행한다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/ramped <span class="nv">$ </span><span class="nb">cd</span> ../blue-green/single-service
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span><span class="nb">ls
+  </span>app-v1.yaml  app-v2.yaml  README.md
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span><span class="nb">cat </span>app-v1.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: my-app
+    labels:
+      app: my-app
+  spec:
+    <span class="nb">type</span>: NodePort
+    ports:
+    - name: http
+      port: 80
+      targetPort: http
+    selector:
+      app: my-app
+      version: v1.0.0
+  <span class="nt">---</span>
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: my-app-v1
+    labels:
+      app: my-app
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: my-app
+        version: v1.0.0
+    template:
+      metadata:
+        labels:
+          app: my-app
+          version: v1.0.0
+        annotations:
+          prometheus.io/scrape: <span class="s2">"true"</span>
+          prometheus.io/port: <span class="s2">"9101"</span>
+      spec:
+        containers:
+        - name: my-app
+          image: crisis513/strategies-test
+          ports:
+          - name: http
+            containerPort: 8080
+          - name: probe
+            containerPort: 8086
+          <span class="nb">env</span>:
+          - name: VERSION
+            value: v1.0.0
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: probe
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: probe
+            periodSeconds: 5
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span><span class="nb">cat </span>app-v2.yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: my-app-v2
+    labels:
+      app: my-app
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: my-app
+        version: v2.0.0
+    template:
+      metadata:
+        labels:
+          app: my-app
+          version: v2.0.0
+        annotations:
+          prometheus.io/scrape: <span class="s2">"true"</span>
+          prometheus.io/port: <span class="s2">"9101"</span>
+      spec:
+        containers:
+        - name: my-app
+          image: crisis513/strategies-test
+          ports:
+          - name: http
+            containerPort: 8080
+          - name: probe
+            containerPort: 8086
+          <span class="nb">env</span>:
+          - name: VERSION
+            value: v2.0.0
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: probe
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: probe
+            periodSeconds: 5
+</code></pre></div></div> <p>Blue/Green도 컨테이너 이미지 부분을 이전에 미리 컨테이너 이미지를 빌드 및 Docker Hub에 푸시했던 <strong>crisis513/strategies-test</strong>로 바꾸었다. 매니페스트가 Rolling Update와 다른 점은 strategy 부분이 없고, selector &gt; matchLabels &gt; version이 추가된 점이다. 사실 <code class="language-plaintext highlighter-rouge">kubectl patch service</code> 명령어로 어떤 selector의 요소를 바라보게 할 것인지를 바꿔주면 되는 것이고, 본 포스팅에서는 selector &gt; matchLabels &gt; version 부분으로 컨트롤 하는 것 뿐이다.</p> <p>먼저 app-v1.yaml을 배포해보자.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k apply <span class="nt">-f</span> app-v1.yaml
+  service/my-app created
+  deployment.apps/my-app-v1 created
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k get all
+  NAME                             READY   STATUS    RESTARTS   AGE
+  pod/my-app-v1-69b978c757-9wtgt   1/1     Running   0          69s
+  pod/my-app-v1-69b978c757-g2bfr   1/1     Running   0          69s
+  pod/my-app-v1-69b978c757-kcwn7   1/1     Running   0          69s
+
+  NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>        AGE
+  service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP        15d
+  service/my-app       NodePort    10.104.28.204   &lt;none&gt;        80:32448/TCP   69s
+
+  NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/my-app-v1   3/3     3            3           69s
+
+  NAME                                   DESIRED   CURRENT   READY   AGE
+  replicaset.apps/my-app-v1-69b978c757   3         3         3       69s
+</code></pre></div></div> <p>서비스가 정상적으로 올라갔다면 Rolling Update 때와 마찬가지로 해당 애플리케이션으로 지속적인 요청을 보내보도록 하겠다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span><span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do </span>curl <span class="nt">-s</span> <span class="nt">-o</span> /dev/null <span class="s2">"http://192.168.49.2:32448"</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div> <p>요청은 계속 보내도록 그대로 두고 어느 정도 시간이 지나고나서 새로운 터미널을 열어 app-v2.yaml을 배포하겠다.</p> <p>새로운 터미널을 열어 다음 명령어를 통해 pod가 롤아웃 되는 과정을 확인할 수 있다.</p> <p>$ watch kubectl get po</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k apply <span class="nt">-f</span> app-v2.yaml
+  deployment.apps/my-app-v2 created
+</code></pre></div></div> <p>다음 그림은 app-v1.yaml과 app-v2.yaml을 함께 배포한 것을 확인해본 것으로, 함께 배포되어 있는 것을 확인할 수 있다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/bluegreen2.png" alt="watch_pod" width="70%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 2] watch kubectl get po 확인</td> </tr> </tbody> </table> <p><br /></p> <p>여기서 kubectl patch service 명령으로 어느 버전의 애플리케이션을 가리키느냐에 따라 트래픽의 이동 방향이 정해지는 것이고, 새로운 버전의 애플리케이션을 가리킨 후에 이전 버전의 애플리케이션을 삭제해주면 Blue/Green 배포가 완료되는 것이다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k patch service my-app <span class="nt">-p</span> <span class="s1">'{"spec":{"selector":{"version":"v2.0.0"}}}'</span>
+  service/my-app patched
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k delete deploy my-app-v1
+  deployment.apps <span class="s2">"my-app-v1"</span> deleted
+
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k get pod
+  NAME                             READY   STATUS    RESTARTS   AGE
+  pod/my-app-v2-69b978c757-jf9dn   1/1     Running   0          10m
+  pod/my-app-v2-69b978c757-2mdfj   1/1     Running   0          10m
+  pod/my-app-v2-69b978c757-ms9dn   1/1     Running   0          10m
+
+  son@son-localhost ~/k8s-deployment-strategies/blue-green/single-service <span class="nv">$ </span>k describe service/my-app
+  Name:                     my-app
+  Namespace:                default
+  Labels:                   <span class="nv">app</span><span class="o">=</span>my-app
+  Annotations:              &lt;none&gt;
+  Selector:                 <span class="nv">app</span><span class="o">=</span>my-app,version<span class="o">=</span>v2.0.0
+  Type:                     NodePort
+  IP Family Policy:         SingleStack
+  IP Families:              IPv4
+  IP:                       10.109.224.206
+  IPs:                      10.109.224.206
+  Port:                     http  80/TCP
+  TargetPort:               http/TCP
+  NodePort:                 http  30427/TCP
+  Endpoints:                172.17.0.10:8080,172.17.0.11:8080,172.17.0.7:8080
+  Session Affinity:         None
+  External Traffic Policy:  Cluster
+  Events:                   &lt;none&gt;
+</code></pre></div></div> <p>app-v2.yaml을 배포하고 kubectl patch service 명령어를 통해 새로 배포된 애플리케이션으로 트래픽을 보내도록 설정한 후에 기존 버전의 애플리케이션을 삭제해 주었다. v2에 해당하는 pod들이 Running되고 있는 것을 확인할 수 있고, 서비스 정보를 살펴보니 Selector의 version도 2.0.0으로 바뀐 것을 확인할 수 있다.</p> <blockquote> <p>반대로 롤백하고 싶다면 다음 명령어를 사용하면 된다.</p> <p>$ kubectl patch service my-app -p ‘{“spec”:{“selector”:{“version”:”v1.0.0”}}}’</p> </blockquote> <p><br /></p> <h3 id="13-grafana-dashboard-확인-">1.3. Grafana dashboard 확인 <a name="list1_3"></a></h3> <p>새로운 버전으로의 배포가 정상적으로 완료되었다면 Grafana를 통해 Blue/Green 배포 과정에 대한 지속적인 요청 메트릭을 확인하겠다. 마찬가지로 이전 포스팅에서 배포해 두었던 Grafana에 접속하기 위해 localhost:3000으로 접근하여 만들어 둔 패널을 <strong>refresh</strong>해보자. 다음 [그림 3]과 같은 화면을 볼 수 있을 것이다.</p> <table> <thead> <tr> <th style="text-align: center"><img src="/static/assets/img/landing/infra/bluegreen3.png" alt="request_total_panel" width="100%" /></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">[그림 3] Request Total 패널 확인</td> </tr> </tbody> </table> <p><br /></p> <p>시각화된 데이터를 보면 기존 버전에서 새로운 버전으로 한 번에 교체하기 때문에 점진적으로 롤아웃하던 Rolling Update 때와는 다르게 단번에 롤아웃 되는 것을 확인할 수 있다.</p> <hr> <div class="row"> <div class="col-md-6"> <h5 style="display: inline;">Tags:</h5> <button class="btn btn-white btn-xs" type="button">son</button> <button class="btn btn-white btn-xs" type="button">blog</button> <button class="btn btn-white btn-xs" type="button">infra</button> <button class="btn btn-white btn-xs" type="button">docker</button> <button class="btn btn-white btn-xs" type="button">minikube</button> <button class="btn btn-white btn-xs" type="button">kubernetes</button> <button class="btn btn-white btn-xs" type="button">grafana</button> <button class="btn btn-white btn-xs" type="button">blue/green</button> </div> <div class="col-md-6"> <div class="small text-right"> <div> <i class="fa fa-comments-o"> </i> <span class="disqus-comment-count" data-disqus-url="http://192.168.116.128:4000/infra/2022/10/23/blue-green.html">0</span> comments </div> </div> </div> </div> <div class="PageNavigation"> <a class="prev" href="/infra/2022/10/22/rolling-update.html">&laquo; [Infra] Kubernetes Rolling Update 배포 전략 실습</a> <a class="next" href="/infra/2022/10/24/canary.html">[Infra] Kubernetes Canary 배포 전략 실습 &raquo;</a> </div> <br> <div class="row"> <div class="col-lg-12"> <!-- donate --> <br> <!-- share --> <div class="a2a_kit a2a_kit_size_32 a2a_default_style"> <a class="a2a_dd" href="https://www.addtoany.com/share"></a> <a class="a2a_button_facebook"></a> <a class="a2a_button_twitter"></a> <a class="a2a_button_google_plus"></a> <a class="a2a_button_linkedin"></a> <a class="a2a_button_email"></a> <a class="a2a_button_wechat"></a> <a class="a2a_button_sina_weibo"></a> <a class="a2a_button_pocket"></a> </div> <script> var a2a_config = a2a_config || {}; a2a_config.color_main = "D7E5ED"; a2a_config.color_border = "AECADB"; a2a_config.color_link_text = "333333"; a2a_config.color_link_text_hover = "333333"; </script> <script async src="https://static.addtoany.com/menu/page.js"></script> <br> <!-- comment --> <div id="disqus_thread"></div> <script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ /* var disqus_config = function () { this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable }; */ (function() { var d = document, s = d.createElement('script'); s.src = '//son.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> </div> </div> </div> </div> </div> </div> </div> <!-- Google analytics --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-93473370-3', 'auto'); ga('require', ''); ga('send', 'pageview'); </script> <!-- GrowingIO --> <script id="dsq-count-scr" src="https://son.disqus.com/count.js" async></script> </body> </html>

@@ -163,6 +163,6 @@ Controller node 및 Compute node에서 설치할 서비스를 선택하고 넘�
 
 ### Testing video
 
-<video width="840" height="480" src="/static/assets/video/ssustack_working.mp4" controls></video>
+<video width="840" height="480" src="/static/assets/video/blog/ssustack_working.mp4" controls></video>
 
 > 영상이 재생되지 않는다면 IE 환경에서 다시 재생

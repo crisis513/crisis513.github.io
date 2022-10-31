@@ -6,17 +6,20 @@
 - name: Project
   href: /project/
 
-- name: Error-Report
-  href: /error-report/
-  
-- name: Research-Output
-  href: /research-output/
+- name: Research
+  href: /research/
+
+- name: Troubleshooting
+  href: /troubleshooting/
 
 - name: Infra
   href: /infra/  
 
-- name: Review
-  href: /review/
+- name: Data
+  href: /data/
+
+- name: Anything
+  href: /anything/
 
 # - name: Sample
 #   href: /sample/
