@@ -1279,7 +1279,7 @@ a {
   h1, h2, h3, h4, h5 {
     margin-top: 5px;
   }
-  max-width: 80%;
+  max-width: 70%;
   margin: auto;
 }
 
@@ -2833,4 +2833,26 @@ body {
 
 .PageNavigation .next {
   text-align: right;
+}
+
+.ikVqUi {
+  width: 240px;
+  margin-left: 5rem;
+  border-left: 2px solid var(--border4);
+  padding: 0.25rem 0.75rem;
+  color: var(--text3);
+  line-height: 1.5;
+  font-size: 0.875rem;
+  max-height: calc(100vh - 128px);
+  overflow: hidden auto;
+}
+
+.bXGcfF {
+  display: block;
+  transition: all 0.125s ease-in 0s;
+}
+
+.ksJIXb {
+  position: absolute;
+  left: 100%;
 }
