@@ -5,8 +5,8 @@
     <description>son&apos;s blog, use Jekyll and github pages.</description>
     <link>http://192.168.116.128:4000/</link>
     <atom:link href="http://192.168.116.128:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 05 Nov 2022 03:39:19 +0900</pubDate>
-    <lastBuildDate>Sat, 05 Nov 2022 03:39:19 +0900</lastBuildDate>
+    <pubDate>Sat, 05 Nov 2022 07:19:30 +0900</pubDate>
+    <lastBuildDate>Sat, 05 Nov 2022 07:19:30 +0900</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
@@ -289,7 +289,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;1-bluegreen이란-&quot;&gt;1. Blue/Green이란?** &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;1-bluegreen이란-&quot;&gt;1. &lt;strong&gt;Blue/Green이란?&lt;/strong&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 
 &lt;p&gt;이전 포스팅에서 살펴본 Rolling Update는 기존 버전과 새로운 버전이 같이 배포되는 시간이 어느정도 있다는 문제가 있다. 이러한 문제를 해결하기 위해 사용되는 방법이 Blue/Green 배포이다. Blue/Green 배포는 서버를 기존 버전과 새로운 버전을 동시에 배포하여 한꺼번에 교체하는 방법이다. 그림으로 살펴보자면 다음 [그림 1]과 같다.&lt;/p&gt;
 

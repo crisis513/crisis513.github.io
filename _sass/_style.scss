@@ -78,6 +78,7 @@ h3, h4, h5 {
 
 .navbar {
   border: 0;
+  margin-bottom: 50px !important;
 }
 
 .navbar-default {
@@ -1220,7 +1221,7 @@ label.error {
 body {
   font-family: "Noto Sans KR", "NanumSquare", "Source Sans Pro", Apple SD Gothic Neo, Nanum Barun Gothic, Nanum Gothic, Verdana, Arial, Dotum, sans-serif;
   background-color: #2f4050;
-  font-size: 16px;
+  font-size: 14px;
   color: #676a6c;
   height: 100%;
 }
@@ -2411,6 +2412,7 @@ body {
       background-color: #fff;
       border-color: #fff;
       padding: 15px 0;
+      opacity: 0.6;
     }
     background-color: transparent;
     border-color: transparent;
@@ -2890,4 +2892,25 @@ body {
   a:hover {
      color: #3385FF;
   }
+}
+
+#topBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 20px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  //color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 5px; /* Some padding */
+  border-radius: 2px; /* Rounded corners */
+  //font-size: 18px; /* Increase font size */
+  background-color: aquamarine;
+  opacity: 0.8;
+}
+
+#topBtn:hover {
+  background-color: #999; /* Add a dark-grey background on hover */
 }
