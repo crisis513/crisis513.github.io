@@ -33,11 +33,11 @@ icon: icon-html
 
 ---
 
-## <span style="color:purple">**1. 개요**</span> <a name="list1"></a>
+## **1. 개요** <a name="list1"></a>
 
 <br>
 
-### 1.1. minikube란? <a name="list1_1"></a>
+### **1.1. minikube란?** <a name="list1_1"></a>
 
   minikube는 다양한 OS에서 로컬 Kubernetes 클러스터를 구현할 수 있도록 도와주는 **오픈 소스 도구**이다. minikube의 주요 목표는 로컬 Kubernetes 애플리케이션 개발을 위한 도구들과 그에 맞는 모든 **Kubernetes 기능을 지원**하는 것이다. 로컬에서 리소스 활용이 적은 단일 노드 kubernetes 클러스터를 구동시킬 수 있기 때문에 개발 테스트 및 POC 목적으로 사용하기 좋다.
 
@@ -45,13 +45,13 @@ icon: icon-html
 
 <br>
 
-### 1.2. 개발 환경 <a name="list1_2"></a>
+### **1.2. 개발 환경** <a name="list1_2"></a>
 
   필자는 실습을 위해 **VMWare Workstation 16.2**에서 **Ubuntu 22.04 LTS Desktop** 이미지로 가상머신을 생성하여 진행하였다. 해당 환경에서 **Docker**를 설치하고, **minikube**에서 드라이버로 Docker를 사용하여 Kubernetes 구성 요소를 여기에 설치해볼 예정이다.
 
 <br>
 
-## <span style="color:purple">**2. Docker 설치**</span> <a name="list2"></a>
+## **2. Docker 설치** <a name="list2"></a>
 
 minikube를 설치하기 위해서는 드라이버를 설정해주어야 하는데, minikube는 virtualbox와 같은 VM, Docker와 같은 컨테이너 또는 베어메탈 등 다양한 드라이버를 지원하고 있다. 이 중에서 본 포스팅에서는 Docker를 드라이버로 사용하여 진행할 것이다.
 
@@ -156,13 +156,13 @@ docker-compose version 1.29.2, build unknown
 
 <br>
 
-## <span style="color:purple">**3. Minikube 설치 과정**</span> <a name="list3"></a>
+## **3. Minikube 설치 과정** <a name="list3"></a>
 
 위의 과정을 통해 Docker를 정상적으로 설치하였다면 다음으로 minikube를 설치하겠다.
 
 <br>
 
-### 3.1. Minikube 설치 <a name="list3_1"></a>
+### **3.1. Minikube 설치** <a name="list3_1"></a>
 
   minikube를 설치하기 위해서는 **minikube 바이너리를 다운로드**해야 한다. 바이너리를 다운받아 **실행 권한을 준 다음 /usr/local/bin 디렉토리 아래에 넣을 것**이다.
 
@@ -196,7 +196,7 @@ docker-compose version 1.29.2, build unknown
 
   <br>
     
-### 3.2. kubectl 설치 <a name="list3_2"></a>
+### **3.2. kubectl 설치** <a name="list3_2"></a>
 
   minikube를 설치하더라도 **Kubernetes에서 애플리케이션을 배포하고 관리하기 위해 사용되는 도구인 kubectl**을 따로 설치해야 한다. 마찬가지로 kubectl 바이너리 파일을 다운받아 실행권한을 준 다음 /usr/local/bin 위치로 옮겨주자.
     
@@ -231,7 +231,7 @@ docker-compose version 1.29.2, build unknown
 
   <br>
 
-### 3.3. Minikube 실행 및 종료 <a name="list3_3"></a>
+### **3.3. Minikube 실행 및 종료** <a name="list3_3"></a>
   
   minikube를 실행시키기 위해서는 다음과 같이 minikube start 명령을 사용하면 된다.
 

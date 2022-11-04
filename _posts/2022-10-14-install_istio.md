@@ -27,7 +27,7 @@ icon: icon-html
 
 ---
 
-## <span style="color:purple">**1. Istio란?**</span> <a name="list1"></a>
+## **1. Istio란?** <a name="list1"></a>
 
 대부분의 서비스 메시와 마찬가지로 istio는 `사이드카(sidecar)` 라는 프록시 컨테이너로 기존 애플리케이션 컨테이너를 보완한다. 사이드카 프록시로 Envoy를 사용하고, 아래와 같이 서비스 컨테이너에서 오가는 네트워크 트래픽을 가로채고 전용 네트워크를 통해 트래픽을 다시 라우팅한다.
 
@@ -51,11 +51,11 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
 
 <br>
 
-## <span style="color:purple">**2. Istio 설치 과정**</span> <a name="list2"></a>
+## **2. Istio 설치 과정** <a name="list2"></a>
 
 <br>
 
-### 2.1. Istio 최소 사양 <a name="list2_1"></a>
+### **2.1. Istio 최소 사양** <a name="list2_1"></a>
 
   istio는 istioctl, helm, Istio Operator 등 다양한 방법으로 설치할 수 있고, minikube에서는 istio를 추가 기능으로 제공하고 있긴 하지만 **본 포스팅에서는 istioctl로 설치**해볼 것이다. istio는 minikube에서 작동하기 위해 `4개의 vCPU와 8GB의 RAM이 필요`하다. 참고로 minikube 가상 머신에 할당된 RAM이 충분하지 않으면 다음과 같은 오류가 발생할 수 있다.
 
@@ -94,7 +94,7 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
 
   <br>
 
-### 2.2. metallb 설치 및 설정 <a name="list2_2"></a>
+### **2.2. metallb 설치 및 설정** <a name="list2_2"></a>
 
   minikube가 istio에서 사용할 로드 밸런서를 제공하도록 하려면 minikube tunnel 기능을 사용할 수 있지만 본 포스팅에서는 tunnel 기능을 사용하지 않고, metallb를 사용해볼 것이다. 그리고 metallb는 addons에 있는 기능으로 사용할 것 입니다. 우선 addons를 확인해보겠다.
 
@@ -229,7 +229,7 @@ Control Plane은 Data Plane을 컨트롤하는 부분으로써 pilot, citadel, g
 
   <br>
 
-### 2.3. Istio 설치 <a name="list2_3"></a>
+### **2.3. Istio 설치** <a name="list2_3"></a>
 
   다음으로 istio 설치 파일을 다운받아 설치해보자. 
 

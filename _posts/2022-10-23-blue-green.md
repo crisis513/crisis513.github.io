@@ -9,27 +9,21 @@ tags: [son,blog,infra,docker,minikube,kubernetes,grafana,blue/green]
 icon: icon-html
 ---
 
-본 포스팅에서는 Kubernetes의 여러 배포 전략 중 Blue/Green에 대해 알아보고 실습해볼 것이다. 실습 진행은 [해당 깃허브 내용]("https://github.com/ContainerSolutions/k8s-deployment-strategies")을 참고하였다.
+본 포스팅에서는 Kubernetes의 여러 배포 전략 중 Blue/Green에 대해 알아보고 실습해볼 것이다. 실습 진행은 [해당 깃허브 내용](https://github.com/ContainerSolutions/k8s-deployment-strategies)을 참고하였다.
 
 ---
 
 ## 목차
 
-[1. Blue/Green 배포](#list1)
+[1. Blue/Green이란?](#list1)
 
-[&nbsp;&nbsp; 1.1. Blue/Green이란?](#list1_1)
+[2. Blue/Green 실습](#list2)
 
-[&nbsp;&nbsp; 1.2. Blue/Green 실습](#list1_2)
-
-[&nbsp;&nbsp; 1.3. Grafana dashboard 확인](#list1_3)
+[3. Grafana dashboard 확인](#list3)
 
 ---
 
-## <span style="color:purple">**1. Blue/Green 배포**</span> <a name="list1"></a>
-
-<br>
-
-### 1.1. Blue/Green이란? <a name="list1_1"></a>
+## 1. Blue/Green이란?** <a name="list1"></a>
 
   이전 포스팅에서 살펴본 Rolling Update는 기존 버전과 새로운 버전이 같이 배포되는 시간이 어느정도 있다는 문제가 있다. 이러한 문제를 해결하기 위해 사용되는 방법이 Blue/Green 배포이다. Blue/Green 배포는 서버를 기존 버전과 새로운 버전을 동시에 배포하여 한꺼번에 교체하는 방법이다. 그림으로 살펴보자면 다음 [그림 1]과 같다.
 
@@ -43,7 +37,7 @@ icon: icon-html
 
   <br>
 
-### 1.2. Blue/Green 실습 <a name="list1_2"></a>
+## **2. Blue/Green 실습** <a name="list2"></a>
 
   실습은 이전 포스팅의 Rolling Update를 진행했던 ramped 폴더에서 blue-green/single-service 폴더로 이동하여 진행한다.
 
@@ -249,7 +243,7 @@ icon: icon-html
 
   <br>
 
-### 1.3. Grafana dashboard 확인 <a name="list1_3"></a>
+## **3. Grafana dashboard 확인** <a name="list3"></a>
 
   새로운 버전으로의 배포가 정상적으로 완료되었다면 Grafana를 통해 Blue/Green 배포 과정에 대한 지속적인 요청 메트릭을 확인하겠다. 마찬가지로 이전 포스팅에서 배포해 두었던 Grafana에 접속하기 위해 localhost:3000으로 접근하여 만들어 둔 패널을 **refresh**해보자. 다음 [그림 3]과 같은 화면을 볼 수 있을 것이다. 
 

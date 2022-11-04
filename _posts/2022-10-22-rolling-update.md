@@ -9,7 +9,7 @@ tags: [son,blog,infra,docker,minikube,kubernetes,grafana,rolling update]
 icon: icon-html
 ---
 
-본 포스팅에서는 Kubernetes의 여러 배포 전략 중 Rolloing Update에 대해 알아보고 실습해볼 것이다. 실습 진행은 [해당 깃허브 내용]("https://github.com/ContainerSolutions/k8s-deployment-strategies")을 참고하였다.
+본 포스팅에서는 Kubernetes의 여러 배포 전략 중 Rolloing Update에 대해 알아보고 실습해볼 것이다. 실습 진행은 [해당 깃허브 내용](https://github.com/ContainerSolutions/k8s-deployment-strategies)을 참고하였다.
 
 ---
 
@@ -17,17 +17,15 @@ icon: icon-html
 
 [1. 무중단 배포 전략](#list1)
 
-[2. Rolling Update 배포](#list2)
+[2. Rolling Update란?](#list2)
 
-[&nbsp;&nbsp; 2.1. Rolling Update란?](#list2_1)
+[3. Rolling Update 실습](list3)
 
-[&nbsp;&nbsp; 2.2. Rolling Update 실습](list2_2)
-
-[&nbsp;&nbsp; 2.3. Grafana dashboard 확인](#list2_3)
+[4. Grafana dashboard 확인](#list4)
 
 ---
 
-## <span style="color:purple">**1. 무중단 배포 전략**</span> <a name="list1"></a>
+## **1. 무중단 배포 전략** <a name="list1"></a>
 
 무중단 배포는 실제로 **서버를 운영할 때 서비스가 중단되지 않고, 서비스적인 장애를 최소화시킬 수 있도록 배포**하는 것을 의미한다. 얼마 전 2022년 10월 15일에 C&C 데이터센터에 화재가 발생하여 역대 최악의 서비스 중단 사태를 맞았었다. 10시간이 지나서야 일부 기능이 복구되기 시작되었고 공식적으로는 127시간 30분만에 모든 서비스가 정상화 되었다고 알려져있는데, 이번 사태로 유료서비스 사용자에 대한 보상액과 서비스 중단에 대한 매출액 피해 등을 합하면 수백 수천억의 손실을 입었을 것이다. 서비스의 규모가 클 수록 정상적으로 서비스를 운영할 수 있는 인프라 및 환경을 갖추는 것이 매우 중요하다. 데이터센터가 이원화가 재대로 되지 않아 발생한 문제여서 이번 포스팅에서 다룰 쿠버네티스 무중단 배포 전략과는 약간 다른 문제이긴 하지만 그만큼 서비스가 중단되지 않고 정상 서비스하는 것이 매우 중요하다는 것을 강조하고 싶었다. 
 
@@ -35,11 +33,7 @@ icon: icon-html
 
 <br>
 
-## <span style="color:purple">**2. Rolling Update 배포**</span> <a name="list2"></a>
-
-<br>
-
-### 2.1. Rolling Update란? <a name="list2_1"></a>
+## **2. Rolling Update란?** <a name="list2"></a>
 
   Rolling Update란 새로운 버전을 배포하면서 새로운 버전의 인스턴스를 하나씩 올리고 기존 버전의 인스턴스를 하나씩 줄여나가는 방식이다. 이런 방식으로 배포하면 서비스가 중단되지 않으며 배포할 수 있다는 장점이 있지만, 새로운 버전의 인스턴스로 트래픽이 이전되기 전까지 이전 버전과 새로운 버전의 인스턴스가 동시에 존재할 수 있다는 단점이 있다. 배포하는 기간 동안 어떤 사용자는 이전 버전을 사용하게 되고, 또다른 사용자는 새로운 버전을 사용할 수도 있다는 것이다. 그림으로 표현하자면 다음 [그림 1]과 같다.
 
@@ -53,7 +47,7 @@ icon: icon-html
 
   <br>
 
-### 2.2. Rolling Update 실습 <a name="list2_2"></a>
+## **3. Rolling Update 실습** <a name="list3"></a>
 
   먼저 Rolling Update 실습에 필요한 자료를 다운받아 오겠다.
 
@@ -394,7 +388,7 @@ icon: icon-html
 
   <br>
   
-### 2.3. Grafana dashboard 확인 <a name="list2_3"></a>
+## **4. Grafana dashboard 확인** <a name="list4"></a>
   
   **현재 Rolling Update를 통해 새로운 버전으로 버전업시키는 과정을 curl을 통해 계속해서 요청을 보내는 메트릭을 수집하고 있는 상황**이고, 일정 시간이 지난 후에 위에서 만들어둔 Grafana 패널을 확인해보면 [그림 5]와 같이 보일 것이다.
 
