@@ -7,7 +7,7 @@ permalink: /blog/
 <div class="row">
     <div class="col-lg-12 text-center">
         <div class="navy-line"></div>
-        <h1>Latest Blog</h1>
+        <h1>Latest 20 Blog</h1>
     </div>
 </div>
 
@@ -15,8 +15,8 @@ permalink: /blog/
     <div class="col-lg-8 col-lg-offset-2">
         <div class="wrapper wrapper-content animated fadeInRight">
 
-            <!-- latest 10 blog -->
-			{% for post in site.posts limit:10 %}
+            <!-- latest 20 blog -->
+			{% for post in site.posts limit:20 %}
             <div class="vote-item">
                 <div class="row">
                     <div class="col-md-10">

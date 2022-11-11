@@ -50,7 +50,7 @@
     detail: 병역 복무
     i18n: company_d
   desc:
-    detail: 육군 종합정비창 정보통신실 빅데이터분석반 소속으로 빅데이터분석병이라는 직책을 맡아 BI(Business Intelligence) 업무를 주로 하였고, 현재는 병장 만기전역
+    detail: 육군 종합정비창 정보통신실 빅데이터분석반 소속으로 빅데이터분석병으로 보직되어 주로 BI(Business Intelligence) 업무를 맡았고, 파이썬 프로그래밍 교육 및 빅데이터 시각화 도구인 Qlik Sense의 교육 교관으로 임명되어 교육을 진행하는 등 빅데이터분석병으로서의 직무를 다하고 전역
     i18n: company_d_desc
   date:
     detail: 2020.11.09 ~ 2022.05.08
@@ -62,10 +62,10 @@
   present: true
 
 - name: 
-    detail: 자유의 몸
+    detail: 
     i18n: company_d
   desc:
-    detail: 취업 준비 및 사회 적응 중
+    detail: 재대 후 가족들과 시간을 보내며 셀프스터디를 하는 중
     i18n: company_d_desc
   date:
     detail: 2022.05.08 ~

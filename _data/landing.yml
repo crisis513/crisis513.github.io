@@ -24,6 +24,12 @@
   tpl: projects.html
   css: project
 
+# - id: certificates
+#   i18n: nav.certificates
+#   name: Certificates
+#   tpl: certificates.html
+#   css: certificate
+
 - id: blog
   i18n: nav.blog
   name: Blog

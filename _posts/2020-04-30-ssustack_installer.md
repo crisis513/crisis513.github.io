@@ -3,9 +3,9 @@ layout: post
 title: "[Project] ssustack_installer"
 date: 2020-04-30
 desc: "[Project] ssustack_installer"
-keywords: "son,blog,project,ssustack,installer"
+keywords: "project,ssustack,installer,openstack,cloud computing"
 categories: [Project]
-tags: [son,blog,project,ssustack,installer]
+tags: [project,ssustack,installer,openstack,cloud computing]
 icon: icon-html
 ---
 

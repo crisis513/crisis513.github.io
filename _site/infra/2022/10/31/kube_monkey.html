@@ -1,0 +1,178 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1; minimum-scale=1; user-scalable=no;"> <meta content="[Infra] Kubernetes Choas Monkey: kube-monkey 사용기" name="description"> <meta name="keywords" content="infra,minikube,kubernetes,chaos,kube-monkey"> <meta name="author" content="son"> <meta name="baseurl" content=""> <title> son | [Infra] Kubernetes Choas: kube-monkey 사용기 </title> <!-- favicon --> <link rel="shortcut icon" href="/static/assets/img/favicon.ico"> <!-- Main CSS --> <link href="/static/assets/app-20200311.min.css" rel="stylesheet"> <link href="/static/css/custom.css" rel="stylesheet"> <!-- Main Scripts --> <script src="/static/assets/app-20200311.min.js"></script> <script src="/static/assets/blog-20200311.min.js"></script> <!-- Google AdSense --> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <script> (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-6196184620200311", enable_page_level_ads: true }); </script> </head> <body id="page-top" class="landing-page"> <div> <button onclick="topFunction()" id="topBtn" title="Go to top"><img src="/static/assets/img/landing/top-icon.png" style="width: 30px; height: 30px;" /></button> </div> <div class="search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right: 0px; opacity: 0.95; background-color: #111111; z-index: 9999; display: none;"> <input type="text" class="form-control search-content" id="search-content" style="position: fixed; top: 60px" placeholder="Search Blog"> <div style="position: fixed; top: 20px; right: 20px; z-index: 9999;"> <img src="/static/assets/img/search/cb-close.png" id="close-btn"/> </div> </div> <div style="position: fixed; left: 20px; bottom: 20px; z-index: 9999;"> <img src="/static/assets/img/search/cb-search.png" id="search-btn" title="Double click Ctrl"/> </div> <div class="navbar-wrapper"> <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header page-scroll"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/">son</a> </div> <div id="navbar" class="navbar-collapse collapse"> <ul class="nav navbar-nav navbar-right"> <li><a class="page-scroll" href="blog/"></a></li> <li> <a class="page-scroll" href="/blog/">Blog</a></li> <li> <a class="page-scroll" href="/project/">Project</a></li> <li> <a class="page-scroll" href="/research/">Research</a></li> <li> <a class="page-scroll" href="/troubleshooting/">Troubleshooting</a></li> <li> <a class="page-scroll" href="/infra/">Infra</a></li> <li> <a class="page-scroll" href="/data/">Data</a></li> <li> <a class="page-scroll" href="/anything/">Anything</a></li> </ul> </div> </div> </nav> </div> <div id="inSlider" class="carousel carousel-fade" data-ride="carousel"> <ol class="carousel-indicators"> <li data-target="#inSlider" data-slide-to="0" class="active"></li> <li data-target="#inSlider" data-slide-to="1"></li> <li data-target="#inSlider" data-slide-to="2"></li> </ol> <div class="carousel-inner" role="listbox"> <div class="item active"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_one.jpg);" title="han-gi's blog"> </div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_two.jpg);" title="han-gi's blog"></div> </div> <div class="item"> <div class="container"> <div class="carousel-caption"> </div> <div class="carousel-image wow zoomIn"> <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> --> </div> </div> <!-- Set background for slide in css --> <div class="header-back" style="background-image: url(/static/assets/img/landing/header_three.jpg);" title="han-gi's blog"></div> </div> </div> <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#inSlider" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div> <script> let mybutton = document.getElementById("topBtn"); window.onscroll = function() {scrollFunction()}; function scrollFunction() { if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) { mybutton.style.display = "block"; } else { mybutton.style.display = "none"; } } function topFunction() { document.body.scrollTop = 0; document.documentElement.scrollTop = 0; } </script> <div class="wrapper wrapper-content animated fadeInRight article"> <div class="row"> <div class="col-lg-10 col-lg-offset-1"> <div class="ibox"> <div class="ibox-content"> <div class="pull-right"> <a class="btn btn-white btn-xs" href="/infra">Infra</a> </div> <div class="text-center article-title"> <span class="text-muted"><i class="fa fa-clock-o"></i> 31 Oct 2022</span> <h1> [Infra] Kubernetes Choas: kube-monkey 사용기 </h1> </div> <aside class="sidebar__right sticky" style="height: auto !important;"> <div class="toc"> <ul><li><a href="#목차">목차</a></li><li><a href="#1-kube-monkey란-">1. kube-monkey란? </a></li><li><a href="#2-kube-monkey-실습-">2. kube-monkey 실습 </a><ul><li><a href="#21-실습-환경-구성-">2.1. 실습 환경 구성 </a></li><li><a href="#22-kube-monkey-배포-">2.2. kube-monkey 배포 </a></li></ul></li></ul> </div> </aside> <p>본 포스팅에서는 Kubernetes에서 kube-monkey를 사용하여 카오스 엔지니어링을 실습해볼 것이다. DevSecOps 파이프라인 구축 프로젝트를 진행할 때 앱을 배포하면서 Chaos Monkey를 통해 각종 장애에 대한 테스트를 진행하는 과정을 추가해볼 계획이었지만 갑작스런 입대로 인해 적용시키지 못했던 것이 아쉬웠던 기억이 있어 한 번 살펴보는 시간을 가져보았다.</p> <hr /> <h2 id="목차">목차</h2> <p><a href="#list1">1. kube-monkey란?</a></p> <p><a href="#list2">2. kube-monkey 실습</a></p> <p><a href="#list2_1">   2.1. 실습 환경 구성</a></p> <p><a href="#list2_2">   2.2. kube-monkey 배포</a></p> <hr /> <h2 id="1-kube-monkey란-"><strong>1. kube-monkey란?</strong> <a name="list1"></a></h2> <p>kube-monkey는 Netflix의 Chaos Monkey를 Kubernetes 환경에서 사용할 수 있도록 간단하게 구현된 오픈소스 도구이다. Kubernetes 클러스터에서 Kube API를 통해 Pod를 무작위로 삭제하여 장애에 대한 복구가 정상 동작하는지 확인할 수 있다. <strong>기존의 Chaos Monkey와는 달리 노드 자체를 방해하거나 네트워크 또는 IO에 영향을 미치는 기능을 제공하지 않으며 순전히 Pod를 죽이는 기능만 제공하고</strong> 있다. 해당 기능을 통해 구성 및 배포가 빠르며 Pod 장애에 대한 복구를 시뮬레이션 및 테스트해볼 수 있고, 모든 것이 얼마나 빨리 정상화되는지 확인할 수 있다.</p> <p><br /></p> <h2 id="2-kube-monkey-실습-"><strong>2. kube-monkey 실습</strong> <a name="list2"></a></h2> <p><br /></p> <h3 id="21-실습-환경-구성-"><strong>2.1. 실습 환경 구성</strong> <a name="list2_1"></a></h3> <p>우선 Kubernetes 클러스터 환경이 필요하다. 여기서는 Minikube와 kubectl이 설치되어 있고, <strong>minikube를 통해 Kubernetes 클러스터를 구성</strong>하여 사용하여 실습에 필요한 <a href="https://github.com/asobti/kube-monkey">해당 Git 레포지토리</a>를 다운받아 실습을 진행해볼 것이다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~ <span class="nv">$ </span>minikube start <span class="nt">--cpus</span><span class="o">=</span>4 <span class="nt">--memory</span><span class="o">=</span>8g
+  <span class="k">*</span> minikube v1.27.1 on Ubuntu 22.04
+  <span class="k">*</span> Using the docker driver based on existing profile
+
+  X The requested memory allocation of 8192MiB does not leave room <span class="k">for </span>system overhead <span class="o">(</span>total system memory: 9103MiB<span class="o">)</span><span class="nb">.</span> You may face stability issues.
+  <span class="k">*</span> Suggestion: Start minikube with less memory allocated: <span class="s1">'minikube start --memory=2200mb'</span>
+
+  <span class="o">!</span> You cannot change the memory size <span class="k">for </span>an existing minikube cluster. Please first delete the cluster.
+  <span class="o">!</span> You cannot change the CPUs <span class="k">for </span>an existing minikube cluster. Please first delete the cluster.
+  <span class="k">*</span> Starting control plane node minikube <span class="k">in </span>cluster minikube
+  <span class="k">*</span> Pulling base image ...
+  <span class="k">*</span> Restarting existing docker container <span class="k">for</span> <span class="s2">"minikube"</span> ...
+  <span class="k">*</span> Preparing Kubernetes v1.25.2 on Docker 20.10.18 ...
+  <span class="k">*</span> Verifying Kubernetes components...
+  - Using image docker.io/metallb/controller:v0.9.6
+  - Using image docker.io/metallb/speaker:v0.9.6
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  <span class="k">*</span> Enabled addons: default-storageclass, storage-provisioner, metallb
+  <span class="k">*</span> Done! kubectl is now configured to use <span class="s2">"minikube"</span> cluster and <span class="s2">"default"</span> namespace by default
+
+  son@son-localhost ~ <span class="nv">$ </span>git clone https://github.com/asobti/kube-monkey
+  Cloning into <span class="s1">'kube-monkey'</span>...
+  remote: Enumerating objects: 14804, <span class="k">done</span><span class="nb">.</span>
+  remote: Counting objects: 100% <span class="o">(</span>277/277<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+  remote: Compressing objects: 100% <span class="o">(</span>159/159<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+  remote: Total 14804 <span class="o">(</span>delta 119<span class="o">)</span>, reused 222 <span class="o">(</span>delta 93<span class="o">)</span>, pack-reused 14527
+  Receiving objects: 100% <span class="o">(</span>14804/14804<span class="o">)</span>, 30.68 MiB | 4.75 MiB/s, <span class="k">done</span><span class="nb">.</span>
+  Resolving deltas: 100% <span class="o">(</span>6565/6565<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+  son@son-localhost ~ <span class="nv">$ </span><span class="nb">cd </span>kube-monkey
+</code></pre></div></div> <p>그리고 kube-monkey 배포를 위해 helm을 설치하겠다. 필자는 Ubuntu 22.04에서 실습을 진행하기 때문에 다음 명령어를 통해 helm을 설치하지만, 각자 환경에 맞는 설치법을 찾아 설치해주면 된다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/kube-monkey <span class="nv">$ </span><span class="nb">sudo </span>snap <span class="nb">install </span>helm <span class="nt">--classic</span>
+  helm 3.7.0 from Snapcrafters installed
+</code></pre></div></div> <p><br /></p> <h3 id="22-kube-monkey-배포-"><strong>2.2. kube-monkey 배포</strong> <a name="list2_2"></a></h3> <p>kube-monkey를 배포할 네임스페이스를 만들어서 해당 네임스페이스에 helm을 사용하여 kube-monkey를 배포해볼 것이다. helm 배포에 필요한 차트와 설정 파일들은 helm/kubemonkey 디렉토리에 들어있다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/kube-monkey <span class="nv">$ </span>k create ns kube-monkey
+  namespace/kube-monkey created
+  son@son-localhost ~/kube-monkey <span class="nv">$ </span>helm upgrade <span class="nt">--install</span> kube-monkey ./helm/kubemonkey <span class="se">\</span>
+    <span class="nt">-n</span> kube-monkey <span class="se">\</span>
+    <span class="nt">--set</span> config.debug.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+    <span class="nt">--set</span> config.debug.schedule_immediate_kill<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+    <span class="nt">--set</span> config.dryRun<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+    <span class="nt">--set</span> config.whitelistedNamespaces<span class="o">=</span><span class="s2">"{default}"</span>
+  Release <span class="s2">"kube-monkey"</span> does not exist. Installing it now.
+  NAME: kube-monkey
+  LAST DEPLOYED: Sun Oct 30 15:03:12 2022
+  NAMESPACE: kube-monkey
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  1. Wait <span class="k">until </span>the application is rolled out:
+    kubectl <span class="nt">-n</span> kube-monkey rollout status deployment kube-monkey
+  2. Check the logs:
+    kubectl logs <span class="nt">-f</span> deployment.apps/kube-monkey <span class="nt">-n</span> kube-monkey
+
+  son@son-localhost ~/kube-monkey <span class="nv">$ </span>k get all <span class="nt">-n</span> kube-monkey
+  NAME                              READY   STATUS    RESTARTS   AGE
+  pod/kube-monkey-9dc7d68df-rxkr2   1/1     Running   0          17s
+
+  NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/kube-monkey   1/1     1            1           17s
+
+  NAME                                    DESIRED   CURRENT   READY   AGE
+  replicaset.apps/kube-monkey-9dc7d68df   1         1         1       17s
+</code></pre></div></div> <p>helm 배포할 때 옵션 중 <code class="language-plaintext highlighter-rouge">schedule_immediate_kill=true</code>는 30초마다 새로운 스케줄을 예약하여 테스트할 수 있는 디버그 옵션이다. <code class="language-plaintext highlighter-rouge">dryRun=false</code> 옵션은 실제로 대상 Pod를 죽이는 것을 의미하고, <code class="language-plaintext highlighter-rouge">whitelistedNamespaces="{default}"</code> 옵션은 테스트를 허용할 네임스페이스 리스트를 작성하면 된다. 여기서는 default 네임스페이스에서 앱을 배포하여 테스트해볼 예정이다.</p> <p>schedule_immediate_kill 옵션을 true로 설정 했기 때문에 kube-monkey가 배포된 즉시 Pod 종료하기 시작한다. kube-monkey 로그를 확인하여 정상적으로 작동하는지 확인할 수 있다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/kube-monkey <span class="nv">$ </span>k get all
+  NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>        AGE
+  service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP        23d
+
+  son@son-localhost ~/kube-monkey <span class="nv">$ </span>kubectl logs <span class="nt">-n</span> kube-monkey <span class="nt">-l</span> <span class="nv">release</span><span class="o">=</span>kube-monkey <span class="nt">-f</span>
+  I1106 06:03:46.953170       1 kubemonkey.go:21] Status Update: Generating next schedule <span class="k">in </span>30 sec
+  I1106 06:04:16.954629       1 schedule.go:73] Status Update: Generating schedule <span class="k">for </span>terminations
+  I1106 06:04:16.990255       1 schedule.go:66] Status Update: 0 terminations scheduled today
+  I1106 06:04:16.990304       1 kubemonkey.go:76] Status Update: Waiting to run scheduled terminations.
+  I1106 06:04:16.990308       1 kubemonkey.go:94] Status Update: All terminations <span class="k">done</span><span class="nb">.</span>
+  I1106 06:04:16.990404       1 kubemonkey.go:20] Debug mode detected!
+  I1106 06:04:16.990414       1 kubemonkey.go:21] Status Update: Generating next schedule <span class="k">in </span>30 sec
+          <span class="k">**********</span> Today<span class="s1">'s schedule **********
+          No terminations scheduled
+          ********** End of schedule **********
+</span></code></pre></div></div> <p>지금은 default 네임스페이스에 Deployment나 Pod가 배포되어 있지 않은 상태이기 때문에 kube-monkey 로그를 확인해봤을 때 종료할 Pod가 없어 스케쥴이 따로 잡히지 않는 것을 확인할 수 있다. default 네임스페이스에 배포되어 있는 Pod는 없지만, 위의 옵션처럼 30초마다 Pod를 죽이기 위한 스케쥴이 지속적으로 예약되고 있는 상황인 것이다.</p> <p><br /></p> <p>샘플 애플리케이션은 <a href="http://crisis513.github.io/infra/2022/10/24/canary.html">이전 포스팅</a>의 Canary 배포에 사용한 애플리케이션을 사용할 것이다. 앱은 아무거나 사용해도 되지만 매니페스트에서 추가해야 할 부분이 있다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/kube-monkey <span class="nv">$ </span><span class="nb">cd</span> ~/k8s-deployment-strategies/canary/native
+  son@son-localhost ~/kube-monkey <span class="nv">$ </span><span class="nb">cat </span>app-v1.yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: my-app
+    labels:
+      app: my-app
+  spec:
+    <span class="nb">type</span>: NodePort
+    ports:
+    - name: http
+      port: 80
+      targetPort: http
+    selector:
+      app: my-app
+  <span class="nt">---</span>
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: my-app-v1
+    labels:
+      app: my-app
+      kube-monkey/enabled: enabled
+      kube-monkey/identifier: monkey-victim
+      kube-monkey/mtbf: <span class="s1">'2'</span>
+      kube-monkey/kill-mode: <span class="s2">"fixed"</span>
+      kube-monkey/kill-value: <span class="s1">'1'</span>
+  spec:
+    replicas: 10
+    selector:
+      matchLabels:
+        app: my-app
+        version: v1.0.0
+    template:
+      metadata:
+        labels:
+          app: my-app
+          version: v1.0.0
+          kube-monkey/enabled: enabled
+          kube-monkey/identifier: monkey-victim
+        annotations:
+          prometheus.io/scrape: <span class="s2">"true"</span>
+          prometheus.io/port: <span class="s2">"9101"</span>
+      spec:
+        containers:
+        - name: my-app
+          image: crisis513/strategies-test
+          ports:
+          - name: http
+            containerPort: 8080
+          - name: probe
+            containerPort: 8086
+          <span class="nb">env</span>:
+          - name: VERSION
+            value: v1.0.0
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: probe
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: probe
+            periodSeconds: 5
+
+  son@son-localhost ~/k8s-deployment-strategies/canary/native <span class="nv">$ </span>k apply <span class="nt">-f</span> app-v1.yaml
+  service/my-app created
+  deployment.apps/my-app-v1 created
+</code></pre></div></div> <p>위 내용과 같이 metadata.labels 섹션에 kube-monkey 관련 옵션 5줄과 spec.template.metadata.labels 섹션에 kube-monkey 관련 옵션 2줄이 추가된 것을 확인할 수 있다. <code class="language-plaintext highlighter-rouge">kube-monkey/enabled: enabled</code> 옵션으로 kube-monkey에 해당 Pod가 종료 일정의 대상으로 간주하도록 설정하고, <code class="language-plaintext highlighter-rouge">kube-monkey/identifier: monkey-victim</code> 옵션은 어떤 Pod가 어떤 배포에 속하는지 확인하기 위한 고유 식별자 레이블이다. 다음으로 <code class="language-plaintext highlighter-rouge">kube-monkey/mtbf: '2'</code> 옵션에서 mtbf는 <strong>Mean Time Between Failure</strong>를 나타내며 Kubernetes 배포에서 Pod 중 하나가 종료될 것으로 예상할 수 있는 평균 일수를 의미한다. 그리고 <code class="language-plaintext highlighter-rouge">kube-monkey/kill-mode: "fixed"</code> 옵션은 고정된 수의 Pod를 죽이는 옵션이며, <code class="language-plaintext highlighter-rouge">kube-monkey/kill-value: '1'</code> 옵션은 죽일 Pod의 수를 결정한다.</p> <p>필요에 따라 kube-monkey 옵션을 설정하여 default 네임스페이스에 앱을 배포하고나서 다시 kube-monkey 로그를 살펴보면 배포된 Pod들 중 하나가 스케줄에 잡혀있는 것을 확인할 수 있다.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/k8s-deployment-strategies/canary/native <span class="nv">$ </span>k logs <span class="nt">-n</span> kube-monkey <span class="nt">-l</span> <span class="nv">release</span><span class="o">=</span>kube-monkey <span class="nt">-f</span>
+  I1106 06:05:53.657472       1 schedule.go:66] Status Update: 0 terminations scheduled today
+  I1106 06:05:53.657495       1 kubemonkey.go:76] Status Update: Waiting to run scheduled terminations.
+  I1106 06:05:53.657498       1 kubemonkey.go:94] Status Update: All terminations <span class="k">done</span><span class="nb">.</span>
+  I1106 06:05:53.657518       1 kubemonkey.go:20] Debug mode detected!
+  I1106 06:05:53.657521       1 kubemonkey.go:21] Status Update: Generating next schedule <span class="k">in </span>30 sec
+  I1106 06:06:23.660792       1 schedule.go:73] Status Update: Generating schedule <span class="k">for </span>terminations
+          <span class="k">**********</span> Today<span class="s1">'s schedule **********
+          No terminations scheduled
+          ********** End of schedule **********
+  I1106 06:06:23.783121       1 schedule.go:66] Status Update: 0 terminations scheduled today
+  I1106 06:06:23.783144       1 kubemonkey.go:76] Status Update: Waiting to run scheduled terminations.
+  I1106 06:06:23.783148       1 kubemonkey.go:94] Status Update: All terminations done.
+  I1106 06:06:23.783209       1 kubemonkey.go:20] Debug mode detected!
+  I1106 06:06:23.783213       1 kubemonkey.go:21] Status Update: Generating next schedule in 30 sec
+  I1106 06:06:53.787910       1 schedule.go:73] Status Update: Generating schedule for terminations
+  I1106 06:06:53.951894       1 schedule.go:66] Status Update: 1 terminations scheduled today
+  I1106 06:06:53.951927       1 schedule.go:68] v1.Deployment my-app-v1 scheduled for termination at 10/30/2022 01:07:29 -0500 EST
+  I1106 06:06:53.951953       1 kubemonkey.go:76] Status Update: Waiting to run scheduled terminations.
+          ********** Today'</span>s schedule <span class="k">**********</span>
+          k8 Api Kind     Kind Namespace  Kind Name               Termination Time
+          <span class="nt">-----------</span>     <span class="nt">--------------</span>  <span class="nt">---------</span>               <span class="nt">----------------</span>
+          v1.Deployment   default my-app-v1               10/30/2022 01:07:29 <span class="nt">-0500</span> EST
+          <span class="k">**********</span> End of schedule <span class="k">**********</span>
+  I1106 06:07:30.044403       1 kubemonkey.go:84] Termination successfully executed <span class="k">for </span>v1.Deployment my-app-v1
+  I1106 06:07:30.044441       1 kubemonkey.go:91] Status Update: 0 scheduled terminations left.
+  I1106 06:07:30.044445       1 kubemonkey.go:94] Status Update: All terminations <span class="k">done</span><span class="nb">.</span>
+  I1106 06:07:30.045412       1 kubemonkey.go:20] Debug mode detected!
+  I1106 06:07:30.045446       1 kubemonkey.go:21] Status Update: Generating next schedule <span class="k">in </span>30 sec
+</code></pre></div></div> <p><br /></p> <p>다음 영상은 위에서 설명한 내용을 실습하는 과정을 촬영한 것이고, 1.5배로 재생되도록 편집하였다. 30초마다 Pod가 삭제되는 스케쥴이 잡히고 실제로 Pod가 삭제되고 다시 생성되는 것을 확인할 수 있다.</p> <video width="100%" preload="auto" muted="" controls=""> <source src="/static/assets/video/blog/kube-monkey.mp4" type="video/mp4" /> </video> <p><br /></p> <p>마지막으로 kube-monkey를 삭제하지 않으면 계속해서 Pod 삭제 스케쥴이 잡히기 때문에 테스트를 다 했다면 삭제해주도록 하자.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  son@son-localhost ~/kube-monkey <span class="nv">$ </span>helm uninstall kube-monkey
+</code></pre></div></div> <p><br /></p> <p>kube-monkey는 Pod를 죽이는 기능밖에 없기 때문에 카오스 엔지니어링을 하기에는 기능이 많이 부족하다. 다음 포스팅에서는 Pod Fault 뿐만 아니라 Stress test, IO Injection, Network Attack, HTTP Fault 등 다양한 카오스 엔지니어링을 실습할 수 있는 chaos-mesh를 실습해보는 시간을 가져볼 것이다.</p> <hr> <div class="row"> <div class="col-md-6"> <h5 style="display: inline;">Tags:</h5> <button class="btn btn-white btn-xs" type="button">infra</button> <button class="btn btn-white btn-xs" type="button">minikube</button> <button class="btn btn-white btn-xs" type="button">kubernetes</button> <button class="btn btn-white btn-xs" type="button">chaos</button> <button class="btn btn-white btn-xs" type="button">kube-monkey</button> </div> <div class="col-md-6"> <div class="small text-right"> <div> <i class="fa fa-comments-o"> </i> <span class="disqus-comment-count" data-disqus-url="http://192.168.116.128:4000/infra/2022/10/31/kube_monkey.html">0</span> comments </div> </div> </div> </div> <div class="PageNavigation"> <a class="prev" href="/infra/2022/10/24/canary.html">&laquo; [Infra] Kubernetes Canary 배포 전략 실습</a> </div> <br> <div class="row"> <div class="col-lg-12"> <!-- donate --> <br> <!-- share --> <div class="a2a_kit a2a_kit_size_32 a2a_default_style"> <a class="a2a_dd" href="https://www.addtoany.com/share"></a> <a class="a2a_button_facebook"></a> <a class="a2a_button_twitter"></a> <a class="a2a_button_google_plus"></a> <a class="a2a_button_linkedin"></a> <a class="a2a_button_email"></a> <a class="a2a_button_wechat"></a> <a class="a2a_button_sina_weibo"></a> <a class="a2a_button_pocket"></a> </div> <script> var a2a_config = a2a_config || {}; a2a_config.color_main = "D7E5ED"; a2a_config.color_border = "AECADB"; a2a_config.color_link_text = "333333"; a2a_config.color_link_text_hover = "333333"; </script> <script async src="https://static.addtoany.com/menu/page.js"></script> <br> <!-- comment --> <div id="disqus_thread"></div> <script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ /* var disqus_config = function () { this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable }; */ (function() { var d = document, s = d.createElement('script'); s.src = '//son.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> </div> </div> </div> </div> </div> </div> </div> <script> function getTOCNodes(master) { var nodes = Array.prototype.slice.call(master.getElementsByTagName("*"), 0); var tocNodes = nodes.filter(function(elem) { return elem.tagName == "A"; }); return tocNodes; } function getHeaderNodes(master) { var nodes = Array.prototype.slice.call(master.getElementsByTagName("*"), 0); var headerNodes = nodes.filter(function(elem) { return elem.tagName == "H1" || elem.tagName == "H2" || elem.tagName == "H3" || elem.tagName == "H4" || elem.tagName == "H5" || elem.tagName == "H6"; }); return headerNodes; } var title = document.getElementsByClassName("article-title")[0]; var titleY = window.pageYOffset + title.getBoundingClientRect().top; var article = document.getElementsByClassName("post-article")[0]; var articleY = window.pageYOffset + article.getBoundingClientRect().top; var toc = document.getElementsByClassName("toc")[0]; var headerNodes = getHeaderNodes(article); var tocNodes = getTOCNodes(toc); var before = undefined; document.body.addEventListener('scroll', function(e) { if (window.scrollY >= articleY-60) { toc.style.cssText = "position: fixed; top: 60px;"; } else { toc.style.cssText = ""; } var current = headerNodes.filter(function(header) { var headerY = window.pageYOffset + header.getBoundingClientRect().top; return window.scrollY >= headerY - 60; }); if (current.length > 0) { current = current[current.length-1]; var currentA = tocNodes.filter(function(tocNode) { return tocNode.innerHTML == current.innerHTML; }) currentA = currentA[0]; if (currentA) { if (before == undefined) before = currentA; if (before != currentA) { before.classList.remove("toc-active"); before = currentA; } currentA.classList.add("toc-active"); } else { if (before) before.classList.remove("toc-active"); } } else { if (before) before.classList.remove("toc-active"); } }, false); </script> <!-- Google analytics --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-93473370-3', 'auto'); ga('require', ''); ga('send', 'pageview'); </script> <!-- GrowingIO --> <script id="dsq-count-scr" src="https://son.disqus.com/count.js" async></script> </body> </html>

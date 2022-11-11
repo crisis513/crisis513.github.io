@@ -2839,61 +2839,6 @@ body {
   text-align: right;
 }
 
-.toc {
-  position: absolute;
-  right: 0px;
-  //width: 240px;
-  color: #777;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  margin-right: 0px;
-  font-size: 0.8rem;
-  border-left: 2px solid #e0d9e7;
-
-  display: none;
-  @media (min-width: 75em){
-    //width: 240px;
-    display: block;
-  }
-  @media (min-width: 85em){
-    //width: 300px;
-    display: block;
-  }
-  @media (min-width: 95em){
-    //width: 360px;
-    display: block;
-  }
-
-  a.toc-active {
-    font-weight: bold; 
-    transition: all 0.125s ease-in 0s; 
-    font-size: 0.85rem;
-    color: #9075aa;
-  }
-
-  ul {
-    list-style-type: none;
-    margin-bottom: 0.1rem;
-    padding-left: 0rem;
-    li {
-      padding-left: .5rem;
-    }
-  }
-
-  a {
-      color: #777;
-      text-decoration: none;
-  }
- 
-  a:hover {
-     color: #3385FF;
-  }
-}
-
 #topBtn {
   display: none; /* Hidden by default */
   position: fixed; /* Fixed/sticky position */
@@ -2913,4 +2858,55 @@ body {
 
 #topBtn:hover {
   background-color: #999; /* Add a dark-grey background on hover */
+}
+
+.sidebar__right {
+  display: block;
+  position: sticky;
+  top: 0;
+  right: 0;
+  width: 220px;
+  margin-right: -300px;
+  /* padding-left: 1em; */
+  z-index: 10;
+  clear: both;
+  position: -webkit-sticky;
+  top: 8em;
+  float: right;
+}
+
+.toc {
+  color: #2a2a2a;
+  line-height: 2;
+  background-color: #ffffff;
+  //border: 1px solid #b6b6b6;
+  border-left: 2px solid;
+  border-color: #999;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.125);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.125);
+  width: 100%;
+  font-size: .8em;
+  ul {
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+  }
+  li {
+    padding: 0px 10px;
+  }
+
+  display: none;
+  @media (min-width: 75em){
+    width: 220px;
+    display: block;
+  }
+  @media (min-width: 85em){
+    width: 230px;
+    display: block;
+  }
+  @media (min-width: 95em){
+    width: 240px;
+    display: block;
+  }
 }

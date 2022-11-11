@@ -3,9 +3,9 @@ layout: post
 title: "[Infra] Kubernetes Blue/Green 배포 전략 실습"
 date: 2022-10-23
 desc: "[Infra] Kubernetes Blue/Green 배포 전략 실습"
-keywords: "son,blog,infra,docker,minikube,kubernetes,grafana,blue/green"
+keywords: "infra,docker,minikube,kubernetes,grafana,blue/green"
 categories: [Infra]
-tags: [son,blog,infra,docker,minikube,kubernetes,grafana,blue/green]
+tags: [infra,docker,minikube,kubernetes,grafana,blue/green]
 icon: icon-html
 ---
 
@@ -18,6 +18,10 @@ icon: icon-html
 [1. Blue/Green이란?](#list1)
 
 [2. Blue/Green 실습](#list2)
+
+[&nbsp;&nbsp; 2.1. 실습 환경 구성](#list3_1)
+
+[&nbsp;&nbsp; 2.2. Blue/Green 앱 배포](#list3_2)
 
 [3. Grafana dashboard 확인](#list3)
 
@@ -38,6 +42,10 @@ icon: icon-html
   <br>
 
 ## **2. Blue/Green 실습** <a name="list2"></a>
+
+<br>
+
+### **2.1. 실습 환경 구성** <a name="list2_1"></a>
 
   실습은 이전 포스팅의 Rolling Update를 진행했던 ramped 폴더에서 blue-green/single-service 폴더로 이동하여 진행한다.
 
@@ -151,7 +159,11 @@ icon: icon-html
             periodSeconds: 5
   ```
 
-  Blue/Green도 컨테이너 이미지 부분을 이전에 미리 컨테이너 이미지를 빌드 및 Docker Hub에 푸시했던 **crisis513/strategies-test**로 바꾸었다. 매니페스트가 Rolling Update와 다른 점은 strategy 부분이 없고, selector > matchLabels > version이 추가된 점이다. 사실 `kubectl patch service` 명령어로 어떤 selector의 요소를 바라보게 할 것인지를 바꿔주면 되는 것이고, 본 포스팅에서는 selector > matchLabels > version 부분으로 컨트롤 하는 것 뿐이다.
+  Blue/Green도 컨테이너 이미지 부분을 이전에 미리 컨테이너 이미지를 빌드 및 Docker Hub에 푸시했던 **crisis513/strategies-test**로 바꾸었다. 매니페스트가 Rolling Update와 다른 점은 strategy 부분이 없고, selector.matchLabels.version이 추가된 점이다. 사실 `kubectl patch service` 명령어로 어떤 selector의 요소를 바라보게 할 것인지를 바꿔주면 되는 것이고, 본 포스팅에서는 selector.matchLabels.version 부분으로 컨트롤 하는 것 뿐이다.
+
+  <br>
+
+### **2.2. Blue/Green 앱 배포** <a name="list2_2"></a>
 
   먼저 app-v1.yaml을 배포해보자.
 

@@ -18,12 +18,12 @@ layout: default
                             {{ page.title }}
                         </h1>
                     </div>
-                    <!-- <article class="post-article">
-                      <div class="toc">
-                        <a href="#"><b>⬆️ go to top ⬆️</b></a>
-                        {% include toc.html html=content %}
-                      </div>
-                    </article> -->
+                      <aside class="sidebar__right sticky" style="height: auto !important;">
+                        <div class="toc">
+                          {% include toc.html html=content sanitize=true h_min=1 h_max=3 %}
+                        </div>
+                      </aside>
+
                     	{{ content }}
                     <hr>
                     <div class="row">

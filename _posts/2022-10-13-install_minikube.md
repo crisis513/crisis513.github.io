@@ -3,9 +3,9 @@ layout: post
 title: "[Infra] Ubuntu 22.04 환경에서 Minikube 설치하기"
 date: 2022-10-13
 desc: "[Infra] Ubuntu 22.04 환경에서 Minikube 설치하기"
-keywords: "son,blog,infra,docker,minikube,kubectl,kubernetes"
+keywords: "infra,docker,minikube,kubectl,kubernetes"
 categories: [Infra]
-tags: [son,blog,infra,docker,minikube,kubectl,kubernetes]
+tags: [infra,docker,minikube,kubectl,kubernetes]
 icon: icon-html
 ---
 

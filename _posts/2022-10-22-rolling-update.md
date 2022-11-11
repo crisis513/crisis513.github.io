@@ -3,9 +3,9 @@ layout: post
 title: "[Infra] Kubernetes Rolling Update 배포 전략 실습"
 date: 2022-10-22
 desc: "[Infra] Kubernetes Rolling Update 배포 전략 실습"
-keywords: "son,blog,infra,docker,minikube,kubernetes,grafana,rolling update"
+keywords: "infra,docker,minikube,kubernetes,grafana,rolling update"
 categories: [Infra]
-tags: [son,blog,infra,docker,minikube,kubernetes,grafana,rolling update]
+tags: [infra,docker,minikube,kubernetes,grafana,rolling update]
 icon: icon-html
 ---
 
@@ -20,6 +20,14 @@ icon: icon-html
 [2. Rolling Update란?](#list2)
 
 [3. Rolling Update 실습](list3)
+
+[&nbsp;&nbsp; 3.1. 실습 환경 구성](#list3_1)
+
+[&nbsp;&nbsp; 3.2. Docker 빌드 및 푸시](#list3_2)
+
+[&nbsp;&nbsp; 3.3. Grafana 접속](#list3_3)
+
+[&nbsp;&nbsp; 3.4. Rolling Update 앱 배포](#list3_4)
 
 [4. Grafana dashboard 확인](#list4)
 
@@ -49,6 +57,10 @@ icon: icon-html
 
 ## **3. Rolling Update 실습** <a name="list3"></a>
 
+<br>
+
+### **3.1. 실습 환경 구성** <a name="list3_1"></a>
+
   먼저 Rolling Update 실습에 필요한 자료를 다운받아 오겠다.
 
   ```bash
@@ -69,11 +81,17 @@ icon: icon-html
   Dockerfile  Gopkg.lock  Gopkg.toml  main.go  Makefile  README.md
   ```
 
-  해당 깃 폴더를 살펴보면 recreate, ramped, blue/green, canary, a/b testing 배포 전략을 실습해볼 수 있도록 폴더가 나뉘어져있고, app에는 배포 테스트를 진행하면서 애플리케이션 버전을 확인해볼 수 있도록 GO 언어로 간단하게 구현되어 있다. 그리고 Dockerfile을 통해 컨테이너 이미지로 만들 수 있기 때문에 빌드하여 Docker Hub에서 새로운 레포지토리를 만든 후에 해당 레포지토리로 푸시해볼 것이다. Docker Hub에서 리포지토리명은 다음 [그림 2]와 같이 `strategies-test`로 만들었다.
+  해당 깃 폴더를 살펴보면 recreate, ramped, blue/green, canary, a/b testing 배포 전략을 실습해볼 수 있도록 폴더가 나뉘어져있고, app에는 배포 테스트를 진행하면서 애플리케이션 버전을 확인해볼 수 있도록 GO 언어로 간단하게 구현되어 있다.
+  
+  <br>
 
-  | ![](/static/assets/img/landing/infra/rollingupdate2.png){: width="60%"} |
+### **3.2. Docker 빌드 및 푸시** <a name="list3_2"></a>
+
+  Dockerfile을 통해 컨테이너 이미지로 만들 수 있기 때문에 빌드하여 Docker Hub에서 새로운 레포지토리를 만든 후에 해당 레포지토리로 푸시해볼 것이다. Docker Hub에서 리포지토리명은 다음 [그림 2]와 같이 `strategies-test`로 만들었다.
+
+  | ![create_docker_hub_repo](/static/assets/img/landing/infra/rollingupdate2.png){: width="60%"} |
   |:--:| 
-  | [그림 2] Grafana 접속 화면 |
+  | [그림 2] Docker Hub 레포지토리 생성 |
 
   <br>
 
@@ -139,9 +157,11 @@ icon: icon-html
 
   <br>
 
+### **3.3. Grafana 접속** <a name="list3_3"></a>
+
   다음으로 Prometheus와 Grafana를 배포해야 하는데, 이전 포스팅에서 Istio를 설치하여 addons를 배포하는 과정에서 Prometheus와 Grafana가 이미 Running 상태이다. 따라서 필자는 Grafana에 접속할 수 있도록 포트포워딩만 해줄 것이다.
 
-  > 혹시나 블로그 내용을 따라오고 있지 않아 Istio가 구성되어 있지 않다면 [해당 readme]("https://github.com/ContainerSolutions/k8s-deployment-strategies#readme")를 참고하여 Prometheus와 Grafana 환경을 구성하면 될 것 같다.
+  > 혹시나 블로그 내용을 따라오고 있지 않아 Istio가 구성되어 있지 않다면 [해당 readme](https://github.com/ContainerSolutions/k8s-deployment-strategies#readme)를 참고하여 Prometheus와 Grafana 환경을 구성하면 될 것 같다.
   >
   > 그리고 Grafana에 접속할 때마다 포트포워딩을 해주기 귀찮다면 NodePort를 올려도 상관 없다.
 
@@ -204,6 +224,8 @@ icon: icon-html
   | [그림 3] Grafana 접속 화면 |
 
   <br>
+
+### **3.4. Rolling Update 앱 배포** <a name="list3_4"></a>
 
   Grafana에 정상적으로 접근이 된다면 준비가 다 되었다. 다음으로 Rolling Update 실습을 진행해보자. Rolling Update 실습에 사용되는 매니페스트는 ramped 폴더에 있다. ramped 폴더 안에 있는 app-v1.yaml 파일과 app-v2.yaml의 내용을 비교해보겠다. 
 
@@ -318,7 +340,7 @@ icon: icon-html
             periodSeconds: 5
   ```
 
-  우선, 컨테이너 이미지 부분을 위에서 빌드 및 푸시해서 Docker Hub에 저장한 **crisis513/strategies-test**로 바꾸었다. app-v1.yaml 파일과 다르게 app-v2.yaml에서는 버전을 의미하는 부분들이 v1.0.0에서 v2.0.0으로 버전업 되었고, spec > strategy 부분이 추가된 것을 확인할 수 있다. type을 RollingUpdate로 설정하고 maxSurge, maxUnavailable 두 파라미터를 설정해야 한다. **maxSurge는 의도한 pod 수에 대해 생성할 수 있는 최대 pod 수를 지정할 수 있고, maxUnavailable는 Rolling Update 중에 사용할 수 없는 최대 파드의 수를 지정할 수 있다.** [그림 1]에서는 pod 집합을 하나씩 제거한다고 설명했지만 실제로는 maxUnavailable에서 설정된 값만큼 기존 버전의 pod들을 제거하고 새로운 버전의 pod들을 생성하게 된다. maxSurge, maxUnavailable 두 파라미터의 값은 직접적인 **수치(ex: 1)**를 지정하거나 **비율(ex: 10%)**로도 지정이 가능하다.
+  우선, 컨테이너 이미지 부분을 위에서 빌드 및 푸시해서 Docker Hub에 저장한 **crisis513/strategies-test**로 바꾸었다. app-v1.yaml 파일과 다르게 app-v2.yaml에서는 버전을 의미하는 부분들이 v1.0.0에서 v2.0.0으로 버전업 되었고, spec.strategy 섹션이 추가된 것을 확인할 수 있다. type을 RollingUpdate로 설정하고 maxSurge, maxUnavailable 두 파라미터를 설정해야 한다. **maxSurge는 의도한 pod 수에 대해 생성할 수 있는 최대 pod 수를 지정할 수 있고, maxUnavailable는 Rolling Update 중에 사용할 수 없는 최대 파드의 수를 지정할 수 있다.** [그림 1]에서는 pod 집합을 하나씩 제거한다고 설명했지만 실제로는 maxUnavailable에서 설정된 값만큼 기존 버전의 pod들을 제거하고 새로운 버전의 pod들을 생성하게 된다. maxSurge, maxUnavailable 두 파라미터의 값은 직접적인 **수치(ex: 1)**를 지정하거나 **비율(ex: 10%)**로도 지정이 가능하다.
 
   app-v1.yaml부터 배포하여 서비스와 디플로이먼트, 파드들이 정상적으로 동작하는지 확인해보자.
 
