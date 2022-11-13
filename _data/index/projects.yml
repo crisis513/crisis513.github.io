@@ -1,21 +1,13 @@
 # projects section data
 # If you don't have language feature(language.yml is empty), ignore "i18n" items
 # Suggest projects' img be located at '/static/assets/img/landing', and edit following img items.
-- name: ssustack_installer
-  i18n: ssustack_installer
+- name: DevSecOps pipeline toolchain construction
+  i18n: DevSecOps pipeline toolchain construction
   gh_user: crisis513
   repo: crisis513
-  url: https://crisis513.github.io/project/2020/04/30/ssustack_installer.html
-  img: /static/assets/img/landing/ssustack.png
-  desc: ssustack 프로젝트는 Ubuntu 18.04 환경에서 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다. 나아가 Node.js로 구현된 웹 환경에서 몇 가지 간단한 입력으로 손 쉽게 설치할 수 있는 ssustack_installer를 구현하였습니다.
-
-- name: Web Service using GCP
-  i18n: Web Service using GCP
-  gh_user: crisis513
-  repo: crisis513
-  url: https://crisis513.github.io/project/2020/08/16/gcp_project.html
-  img: /static/assets/img/landing/gcp_logo.png
-  desc: GCP 환경에서 웹 서버를 구축 및 운영해보기 위해 시작된 프로젝트입니다. GCP의 기본적인 기능들인 Cloud SQL, Bucket, Stack Driver를 구성하여 로드밸런싱 된 워드프레스에 연동시켰고, 데이터베이스, 백업, 로깅 및 모니터링까지 정상적으로 테스트하였습니다.
+  url: https://crisis513.github.io/project/2020/10/03/devsecops1.html
+  img: /static/assets/img/landing/devsecops_logo.png
+  desc: 클라우드 네이티브 환경에서 DevSecOps 파이프라인 툴체인을 구축하는 프로젝트입니다. DevSecOps 쳬계와 CI/CD 체계를 이해하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인을 구축합니다.
 
 - name: Linux Vulnerability Diagnosis
   i18n: Linux Vulnerability Diagnosis
@@ -25,10 +17,18 @@
   img: /static/assets/img/landing/diagnosis_logo.png
   desc: KISA에서 작성된 '주요정보통신기반시설 기술적 취약점 분석 평가 상세 가이드' 문서를 참고하여 CentOS 환경에서 자동으로 취약점 진단을 진행할 수 있도록 취약점 진단 자동화 스크립트를 개발하고 ELK Stack을 통해 진단 결과를 가시화하여 보여줍니다.
 
-- name: DevSecOps pipeline toolchain construction
-  i18n: DevSecOps pipeline toolchain construction
+- name: Web Service using GCP
+  i18n: Web Service using GCP
   gh_user: crisis513
   repo: crisis513
-  url: https://crisis513.github.io/project/2020/10/03/devsecops1.html
-  img: /static/assets/img/landing/devsecops_logo.png
-  desc: 클라우드 네이티브 환경에서 DevSecOps 파이프라인 툴체인을 구축하는 프로젝트입니다. DevSecOps 쳬계와 CI/CD 체계를 이해하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인을 구축합니다.
+  url: https://crisis513.github.io/project/2020/08/16/gcp_project.html
+  img: /static/assets/img/landing/gcp_logo.png
+  desc: GCP 환경에서 웹 서버를 구축 및 운영해보기 위해 시작된 프로젝트입니다. GCP의 기본적인 기능들인 Cloud SQL, Bucket, Stack Driver를 구성하여 로드밸런싱 된 워드프레스에 연동시켰고, 데이터베이스, 백업, 로깅 및 모니터링까지 정상적으로 테스트하였습니다.
+  
+- name: ssustack installer
+  i18n: ssustack installer
+  gh_user: crisis513
+  repo: crisis513
+  url: https://crisis513.github.io/project/2020/04/30/ssustack_installer.html
+  img: /static/assets/img/landing/ssustack.png
+  desc: ssustack 프로젝트는 Ubuntu 18.04 환경에서 OpenStack의 환경을 자동으로 설치하기 위해 만들어졌습니다. 나아가 Node.js로 구현된 웹 환경에서 몇 가지 간단한 입력으로 손 쉽게 설치할 수 있는 ssustack_installer를 구현하였습니다.

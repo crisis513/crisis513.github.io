@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "[Infra] Kubernetes Choas: kube-monkey 사용기"
+title: "[Infra] Kubernetes kube-monkey 사용기"
 date: 2022-10-31
-desc: "[Infra] Kubernetes Choas Monkey: kube-monkey 사용기"
+desc: "[Infra] Kubernetes kube-monkey 사용기"
 keywords: "infra,minikube,kubernetes,chaos,kube-monkey"
 categories: [Infra]
 tags: [infra,minikube,kubernetes,chaos,kube-monkey]
 icon: icon-html
 ---
 
-본 포스팅에서는 Kubernetes에서 kube-monkey를 사용하여 카오스 엔지니어링을 실습해볼 것이다. DevSecOps 파이프라인 구축 프로젝트를 진행할 때 앱을 배포하면서 Chaos Monkey를 통해 각종 장애에 대한 테스트를 진행하는 과정을 추가해볼 계획이었지만 갑작스런 입대로 인해 적용시키지 못했던 것이 아쉬웠던 기억이 있어 한 번 살펴보는 시간을 가져보았다.
+본 포스팅에서는 Kubernetes에서 kube-monkey를 사용하여 Pod Fault를 실습해볼 것이다. 필자가 DevSecOps 파이프라인 구축 프로젝트를 진행할 때 앱을 배포하면서 Chaos Monkey를 통해 각종 장애에 대한 테스트를 진행하는 과정을 추가해볼 계획이었지만 갑작스런 입대로 인해 적용시키지 못했던 것이 아쉬워 살펴보는 시간을 가져보았다.
 
 ---
 

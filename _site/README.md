@@ -4,7 +4,7 @@
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badge/)
 
-![Blog](https://crisis513.github.io)
+[crisis513.github.io](https://crisis513.github.io)
 
 
 ## Web analytics

@@ -3,7 +3,23 @@
     "data" : [
      
     {
-        "title" : "[Infra] Kubernetes Choas: kube-monkey 사용기 - 2022-10-31",
+        "title" : "[Infra] Kubernetes chaos-mesh 사용기 - 2022-11-05",
+        "url" : "/2022/11/05/chaos_monkey.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Troubleshooting] Install chaos-mesh CRD Error - metadata.annotations: Too long: must have at most 262144 bytes - 2022-11-02",
+        "url" : "/troubleshooting/2022/11/02/chaos_mesh_crd_error.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "[Infra] Kubernetes kube-monkey 사용기 - 2022-10-31",
         "url" : "/infra/2022/10/31/kube_monkey.html"
     }
     

@@ -5,13 +5,205 @@
     <description>son&apos;s blog, use Jekyll and github pages.</description>
     <link>http://192.168.116.128:4000/</link>
     <atom:link href="http://192.168.116.128:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 11 Nov 2022 10:18:06 +0900</pubDate>
-    <lastBuildDate>Fri, 11 Nov 2022 10:18:06 +0900</lastBuildDate>
+    <pubDate>Mon, 14 Nov 2022 08:25:42 +0900</pubDate>
+    <lastBuildDate>Mon, 14 Nov 2022 08:25:42 +0900</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
-        <title>[Infra] Kubernetes Choas: kube-monkey 사용기</title>
-        <description>&lt;p&gt;본 포스팅에서는 Kubernetes에서 kube-monkey를 사용하여 카오스 엔지니어링을 실습해볼 것이다. DevSecOps 파이프라인 구축 프로젝트를 진행할 때 앱을 배포하면서 Chaos Monkey를 통해 각종 장애에 대한 테스트를 진행하는 과정을 추가해볼 계획이었지만 갑작스런 입대로 인해 적용시키지 못했던 것이 아쉬웠던 기억이 있어 한 번 살펴보는 시간을 가져보았다.&lt;/p&gt;
+        <title>[Infra] Kubernetes chaos-mesh 사용기</title>
+        <description>&lt;p&gt;본 포스팅에서는 Kubernetes에서 chaos-mesh를 사용하여 카오스 엔지니어링을 실습해볼 것이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. chaos-mesh란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. chaos-mesh 실습&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_1&quot;&gt;   2.1. 실습 환경 구성&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#list2_2&quot;&gt;   2.2. chaos-mesh 배포&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-chaos-mesh-&quot;&gt;&lt;strong&gt;1. chaos-mesh?&lt;/strong&gt; &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;chaos-mesh는&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-chaos-mesh-실습-&quot;&gt;&lt;strong&gt;2. chaos-mesh 실습&lt;/strong&gt; &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;21-실습-환경-구성-&quot;&gt;&lt;strong&gt;2.1. 실습 환경 구성&lt;/strong&gt; &lt;a name=&quot;list2_1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;우선 Kubernetes 클러스터 환경이 필요하다. 여기서는 Minikube와 kubectl이 설치되어 있고, &lt;strong&gt;minikube를 통해 Kubernetes 클러스터를 구성&lt;/strong&gt;하여 사용하여 실습에 필요한 &lt;a href=&quot;https://github.com/chaos-mesh/chaos-mesh&quot;&gt;해당 Git 레포지토리&lt;/a&gt;를 다운받아 실습을 진행해볼 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;22-chaos-mesh-배포-&quot;&gt;&lt;strong&gt;2.2. chaos-mesh 배포&lt;/strong&gt; &lt;a name=&quot;list2_2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 05 Nov 2022 00:00:00 +0900</pubDate>
+        <link>http://192.168.116.128:4000/2022/11/05/chaos_monkey.html</link>
+        <guid isPermaLink="true">http://192.168.116.128:4000/2022/11/05/chaos_monkey.html</guid>
+        
+        <category>infra</category>
+        
+        <category>minikube</category>
+        
+        <category>kubernetes</category>
+        
+        <category>chaos</category>
+        
+        <category>chaos-mesh</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>[Troubleshooting] Install chaos-mesh CRD Error - metadata.annotations: Too long: must have at most 262144 bytes</title>
+        <description>&lt;p&gt;본 포스팅에서는 Kubernetes 클러스터에 chaos-mesh를 배포할 때 발생하는 주석 길이로 인해 CRD(Custom Resource Definition, 사용자 지정 리소스 정의)를 적용할 수 없는 문제를 해결하는 과정을 설명한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;문제&quot;&gt;&lt;strong&gt;문제&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;다음 에러는 chaos-mesh CRD를 배포하면서 발생하는 에러이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost ~/chaos-mesh &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;k apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; manifests/crd.yaml
+  customresourcedefinition.apiextensions.k8s.io/awschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/azurechaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/blockchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/dnschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/gcpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/httpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/iochaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/jvmchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/kernelchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/networkchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/physicalmachinechaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/physicalmachines.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podhttpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podiochaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podnetworkchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/remoteclusters.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/statuschecks.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/stresschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/timechaos.chaos-mesh.org created
+  Error from server &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Invalid&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: error when creating &lt;span class=&quot;s2&quot;&gt;&quot;manifests/crd.yaml&quot;&lt;/span&gt;: CustomResourceDefinition.apiextensions.k8s.io &lt;span class=&quot;s2&quot;&gt;&quot;schedules.chaos-mesh.org&quot;&lt;/span&gt; is invalid: metadata.annotations: Too long: must have at most 262144 bytes
+  Error from server &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Invalid&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: error when creating &lt;span class=&quot;s2&quot;&gt;&quot;manifests/crd.yaml&quot;&lt;/span&gt;: CustomResourceDefinition.apiextensions.k8s.io &lt;span class=&quot;s2&quot;&gt;&quot;workflownodes.chaos-mesh.org&quot;&lt;/span&gt; is invalid: metadata.annotations: Too long: must have at most 262144 bytes
+  Error from server &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Invalid&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: error when creating &lt;span class=&quot;s2&quot;&gt;&quot;manifests/crd.yaml&quot;&lt;/span&gt;: CustomResourceDefinition.apiextensions.k8s.io &lt;span class=&quot;s2&quot;&gt;&quot;workflows.chaos-mesh.org&quot;&lt;/span&gt; is invalid: metadata.annotations: Too long: must have at most 262144 bytes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Kubernetes 객체는 &lt;strong&gt;annotations에 대해 256KB의 크기 제한&lt;/strong&gt;이 존재하는데, 맨 아래 3줄을 보면 annotations 길이로 인해 CRD를 적용할 수 없는 문제 때문에 배포할 수 없는 문제가 발생할 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;에러를 보인 배포 환경은 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ubuntu 22.04 LTS&lt;/li&gt;
+  &lt;li&gt;Minikube v1.27.1&lt;/li&gt;
+  &lt;li&gt;Kubernetes v1.25.2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;해결&quot;&gt;&lt;strong&gt;해결&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;해당 문제는 Kubernetes v1.18 버전부터 사용자와 컨트롤러가 리소스를 관리할 수 있게 해주는 Server Side Apply를 활용하여 해결할 수 있다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl apply&lt;/code&gt;로 배포할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--server-side=true&lt;/code&gt; 옵션을 사용하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost ~/chaos-mesh &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;k apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; manifests/crd.yaml &lt;span class=&quot;nt&quot;&gt;--server-side&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+  &lt;/span&gt;customresourcedefinition.apiextensions.k8s.io/awschaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/azurechaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/blockchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/dnschaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/gcpchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/httpchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/iochaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/jvmchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/kernelchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/networkchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/physicalmachinechaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/physicalmachines.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/podchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/podhttpchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/podiochaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/podnetworkchaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/remoteclusters.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/schedules.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/statuschecks.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/stresschaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/timechaos.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/workflownodes.chaos-mesh.org serverside-applied
+  customresourcedefinition.apiextensions.k8s.io/workflows.chaos-mesh.org serverside-applied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 명령어를 통해 CRD를 다시 배포하면 해당 문제가 발생하지 않는다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;그리고 Server Side Apply 적용 외에 다른 방법으로는 다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl create&lt;/code&gt;로 배포해도 에러가 발생하지 않는다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  son@son-localhost ~/chaos-mesh &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;k create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; manifests/crd.yaml
+  customresourcedefinition.apiextensions.k8s.io/awschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/azurechaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/blockchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/dnschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/gcpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/httpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/iochaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/jvmchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/kernelchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/networkchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/physicalmachinechaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/physicalmachines.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podhttpchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podiochaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/podnetworkchaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/remoteclusters.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/schedules.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/statuschecks.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/stresschaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/timechaos.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/workflownodes.chaos-mesh.org created
+  customresourcedefinition.apiextensions.k8s.io/workflows.chaos-mesh.org created
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;apply는 부분적인 spec을 적용하여 리소스를 다시 구성해 주는 명령어이고, create는 yaml 파일안에 모든 것을 기술히여 존재하지 않는 리소스를 새로 생성하기 때문에 에러가 발생하지 않은 듯 보인다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 02 Nov 2022 00:00:00 +0900</pubDate>
+        <link>http://192.168.116.128:4000/troubleshooting/2022/11/02/chaos_mesh_crd_error.html</link>
+        <guid isPermaLink="true">http://192.168.116.128:4000/troubleshooting/2022/11/02/chaos_mesh_crd_error.html</guid>
+        
+        <category>troubleshooting</category>
+        
+        <category>minikube</category>
+        
+        <category>kubernetes</category>
+        
+        <category>chaos</category>
+        
+        <category>chaos-mesh</category>
+        
+        <category>crd</category>
+        
+        <category>error</category>
+        
+        
+        <category>Troubleshooting</category>
+        
+      </item>
+    
+      <item>
+        <title>[Infra] Kubernetes kube-monkey 사용기</title>
+        <description>&lt;p&gt;본 포스팅에서는 Kubernetes에서 kube-monkey를 사용하여 Pod Fault를 실습해볼 것이다. 필자가 DevSecOps 파이프라인 구축 프로젝트를 진행할 때 앱을 배포하면서 Chaos Monkey를 통해 각종 장애에 대한 테스트를 진행하는 과정을 추가해볼 계획이었지만 갑작스런 입대로 인해 적용시키지 못했던 것이 아쉬워 살펴보는 시간을 가져보았다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -10111,220 +10303,6 @@ $ pip install -r requirements.txt
         <category>blog</category>
         
         <category>sample</category>
-        
-        
-        <category>Sample</category>
-        
-      </item>
-    
-      <item>
-        <title>Blog sample</title>
-        <description>&lt;h3 id=&quot;목차&quot;&gt;목차&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list1&quot;&gt;1. 헤더(Header)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list2&quot;&gt;2. 목록(List)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list3&quot;&gt;3. 이미지(Images)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list4&quot;&gt;4. 하이퍼링크(Links)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list5&quot;&gt;5. 인용 상자(Blockquotes)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list6&quot;&gt;6. 강조(Emphasis)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list7&quot;&gt;7. 테이블(Tables)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list8&quot;&gt;8. 체크 박스(Task Lists)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list9&quot;&gt;9. 인라인 코드(Inline code)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list10&quot;&gt;10. 수평선(hr)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list11&quot;&gt;11. 탈출 문자(Backslash Escapes)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list12&quot;&gt;12. 이모지(Emoji)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list13&quot;&gt;13. 코드 블록(Code Blocks)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#list14&quot;&gt;14. 배지(Badge) 만들기&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;헤더header----&quot;&gt;헤더(Header)    &lt;a name=&quot;list1&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h1 id=&quot;헤더-크기-h1&quot;&gt;헤더 크기 (h1)&lt;/h1&gt;
-&lt;h2 id=&quot;헤더-크기-h2&quot;&gt;헤더 크기 (h2)&lt;/h2&gt;
-&lt;h3 id=&quot;헤더-크기-h3&quot;&gt;헤더 크기 (h3)&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;목록list----&quot;&gt;목록(List)    &lt;a name=&quot;list2&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;Unordered&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Item 1&lt;/li&gt;
-  &lt;li&gt;Item 2
-    &lt;ul&gt;
-      &lt;li&gt;Item 2a&lt;/li&gt;
-      &lt;li&gt;Item 2b&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Ordered&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Item 1&lt;/li&gt;
-  &lt;li&gt;Item 2&lt;/li&gt;
-  &lt;li&gt;Item 3
-    &lt;ol&gt;
-      &lt;li&gt;Item 3a&lt;/li&gt;
-      &lt;li&gt;Item 3b&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;이미지images----&quot;&gt;이미지(Images)    &lt;a name=&quot;list3&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;첫번째 방법&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/markdown_logo.jpg&quot; alt=&quot;Github logo&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Format: &lt;img src=&quot;url 링크&quot; alt=&quot;이미지 alt명&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;두번째 방법&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#&quot;&gt;&lt;img src=&quot;https://github.com/..각자절대경로../images/markdown_syntax.jpg&quot; width=&quot;400px&quot; alt=&quot;sample image&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Format: img 태그 사용 - 이미지경로는 상대경로 or 절대경로&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;하이퍼링크links----&quot;&gt;하이퍼링크(Links)    &lt;a name=&quot;list4&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://github.com&quot; title=&quot;깃허브&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;인용-상자blockquotes----&quot;&gt;인용 상자(Blockquotes)    &lt;a name=&quot;list5&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;As Grace Hopper said:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;I’ve always been more interested. 
-in the future than in the past.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;강조emphasis----&quot;&gt;강조(Emphasis)    &lt;a name=&quot;list6&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt; 
-&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;This text will be bold&lt;/strong&gt; 
-&lt;strong&gt;This will also be bold&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;You &lt;strong&gt;can&lt;/strong&gt; combine them&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;테이블tables----&quot;&gt;테이블(Tables)    &lt;a name=&quot;list7&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;First Header&lt;/th&gt;
-      &lt;th&gt;Second Header&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Content cell 1&lt;/td&gt;
-      &lt;td&gt;Content cell 2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Content column 1&lt;/td&gt;
-      &lt;td&gt;Content column 2&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;체크-박스task-lists----&quot;&gt;체크 박스(Task Lists)    &lt;a name=&quot;list8&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;ul class=&quot;task-list&quot;&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;this is a complete item&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;this is an incomplete item&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;@mentions, #refs, &lt;a href=&quot;&quot;&gt;links&lt;/a&gt;, &lt;strong&gt;formatting&lt;/strong&gt;, and &lt;del&gt;tags&lt;/del&gt; supported&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;list syntax required (any unordered or ordered list supported)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;인라인-코드inline-code----&quot;&gt;인라인 코드(Inline code)    &lt;a name=&quot;list9&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;문단 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt;를 넣을 수 있습니다. 
-예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf(&quot;hello world!&quot;);&lt;/code&gt; 이런 식으로 들어갑니다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;수평선hr----&quot;&gt;수평선(hr)    &lt;a name=&quot;list10&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-&lt;hr /&gt;
-&lt;hr /&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;탈출-문자backslash-escapes----&quot;&gt;탈출 문자(Backslash Escapes)    &lt;a name=&quot;list11&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;＼&lt;em&gt;literal asterisks＼&lt;/em&gt; 
-&lt;em&gt;literal asterisks&lt;/em&gt; 
-&lt;strong&gt;＼&lt;em&gt;＼&lt;/em&gt;Text＼&lt;em&gt;＼&lt;/em&gt;&lt;/strong&gt; 
-_＼_Tom＼__&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;이모지emoji----&quot;&gt;이모지(Emoji)    &lt;a name=&quot;list12&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;GitHub supports emoji!&lt;/p&gt;
-
-&lt;p&gt;:+1: :sparkles: :camel: :tada: 
-:rocket: :metal: :octocat:&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;코드-블록code-blocks----&quot;&gt;코드 블록(Code Blocks)    &lt;a name=&quot;list13&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;코드 내용
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;배지bedge-만들기----&quot;&gt;배지(Bedge) 만들기    &lt;a name=&quot;list14&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;https://shields.io&lt;/p&gt;
-
-&lt;p&gt;작성 예시
-&lt;a href=&quot;https://img.shields.io/badge/license-mit-green.svg&amp;quot;&quot;&gt;https://img.shields.io/badge/license-mit-green.svg&quot;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;https://img.shields.io/badge/–.svg&lt;/p&gt;
-
-&lt;p&gt;APM: /apm/l/:packageName.svg&lt;/p&gt;
-
-&lt;p&gt;AUR license: /aur/license/:packageName.svg&lt;/p&gt;
-</description>
-        <pubDate>Sat, 07 Mar 2020 00:00:00 +0900</pubDate>
-        <link>http://192.168.116.128:4000/sample/2020/03/07/sample.html</link>
-        <guid isPermaLink="true">http://192.168.116.128:4000/sample/2020/03/07/sample.html</guid>
-        
-        <category>Son</category>
-        
-        <category>blog</category>
         
         
         <category>Sample</category>
