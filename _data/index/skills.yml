@@ -2,5 +2,5 @@
 
 label: Ability
 id : cs
-aspects: Linux, Python, Cloud Computing, Kubernetes, DevOps, IaC, Security, Bash
-percentage: 80, 75, 75, 80, 80, 70, 60, 75
+aspects: Linux, Python, AWS, Kubernetes, DevOps, Terraform, Security, Shell Script
+percentage: 80, 75, 90, 65, 70, 80, 65, 80

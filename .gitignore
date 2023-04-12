@@ -105,3 +105,13 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+
+## Jekyll stuff
+/_site/
+_site/
+.sass-cache/
+.jekyll-metadata
+.jekyll
+Gemfile
+Gemfile.lock

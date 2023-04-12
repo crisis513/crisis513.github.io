@@ -2,7 +2,7 @@
 
 # OS: Ubuntu 20.04 LTS
 # $ sudo apt-get update
-# $ sudo apt -y install make build-essential ruby ruby-devr
+# $ sudo apt -y install make build-essential ruby ruby-dev
 # $ vi ~/.bashrc
 # export GEM_HOME=$HOME/gems
 # export PATH=$HOME/gems/bin:$PATH
@@ -14,5 +14,5 @@ if [[ $1 = "watch" ]]; then
 elif [[ $1 = "inc" ]]; then
 	jekyll serve --incremental
 else
-	jekyll serve --host 192.168.116.128
+	jekyll serve --host 127.0.0.1
 fi

@@ -7,7 +7,7 @@
   repo: crisis513
   url: https://crisis513.github.io/project/2020/10/03/devsecops1.html
   img: /static/assets/img/landing/devsecops_logo.png
-  desc: 클라우드 네이티브 환경에서 DevSecOps 파이프라인 툴체인을 구축하는 프로젝트입니다. DevSecOps 쳬계와 CI/CD 체계를 이해하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인을 구축합니다.
+  desc: 클라우드 네이티브 환경에서 DevSecOps 파이프라인 툴체인을 구축하는 프로젝트입니다. DevSecOps와 CI/CD 체계를 이해하고, 이 체계에 적용되는 보안 분석 도구들을 구축하여 실제 서비스 개발 프로세스에 적용할 수 있는 DevSecOps 툴체인 파이프라인을 구축합니다.
 
 - name: Linux Vulnerability Diagnosis
   i18n: Linux Vulnerability Diagnosis

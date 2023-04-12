@@ -31,46 +31,31 @@
   icon: fa-plus-square
   present: true
 
-# - name:
-#     detail: 한국클라우드컴퓨팅연구조합(CCCR)
-#     i18n: company_c
-#   desc:
-#     detail: CCCR 기관에서 '클라우드 네이티브 환경의 DevSecOps 엔지니어 양성과정'이라는 교육 과정을 이수
-#     i18n: company_c_desc
-#   date:
-#     detail: 2020.06 ~ 2020.11
-#     i18n: company_c_date
-#   job:
-#     detail: Student
-#     i18n: company_c_job
-#   icon: fa-plus-square
-#   present: true
-
 - name: 
     detail: 병역 복무
-    i18n: company_d
+    i18n: company_c
   desc:
     detail: 육군 종합정비창 정보통신실 빅데이터분석반 소속으로 빅데이터분석병으로 보직되어 주로 BI(Business Intelligence) 업무를 맡았고, 파이썬 프로그래밍 교육 및 빅데이터 시각화 도구인 Qlik Sense의 교육 교관으로 임명되어 교육을 진행하는 등 빅데이터분석병으로서의 직무를 다하고 전역
-    i18n: company_d_desc
+    i18n: company_c_desc
   date:
     detail: 2020.11.09 ~ 2022.05.08
-    i18n: company_d_date
+    i18n: company_c_date
   job:
     detail: Soldier
-    i18n: company_d_job
+    i18n: company_c_job
   icon: fa-plus-square
   present: true
 
 - name: 
-    detail: 
+    detail: 경동원
     i18n: company_d
   desc:
-    detail: 재대 후 가족들과 시간을 보내며 셀프스터디를 하는 중
+    detail: 주로 AWS 인프라 관리 및 운영하는 업무와 VPN 및 네트워크, 온프레미스 인프라 운영의 업무도 같이 하고 있음
     i18n: company_d_desc
   date:
-    detail: 2022.05.08 ~
+    detail: 2023.01.16 ~ 재직중
     i18n: company_d_date
   job:
-    detail: Jobless
+    detail: IT Infra Group, Manager
     i18n: company_d_job
   icon: fa-plus-square
