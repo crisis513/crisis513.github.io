@@ -4,7 +4,7 @@ title: "[Infra] Kubernetes kube-monkey 사용기"
 date: 2022-10-31
 desc: "[Infra] Kubernetes kube-monkey 사용기"
 keywords: "infra,minikube,kubernetes,chaos,kube-monkey"
-categories: [Infra]
+categories: []
 tags: [infra,minikube,kubernetes,chaos,kube-monkey]
 icon: icon-html
 ---

@@ -4,7 +4,7 @@ title: "[Infra] Kubernetes Rolling Update 배포 전략 실습"
 date: 2022-10-22
 desc: "[Infra] Kubernetes Rolling Update 배포 전략 실습"
 keywords: "infra,docker,minikube,kubernetes,grafana,rolling update"
-categories: [Infra]
+categories: []
 tags: [infra,docker,minikube,kubernetes,grafana,rolling update]
 icon: icon-html
 ---

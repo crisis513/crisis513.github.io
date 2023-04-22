@@ -4,7 +4,7 @@ title: "[Troubleshooting] Install chaos-mesh CRD Error - metadata.annotations: T
 date: 2022-11-02
 desc: "[Troubleshooting] Install chaos-mesh CRD Error - metadata.annotations: Too long: must have at most 262144 bytes"
 keywords: "troubleshooting,minikube,kubernetes,chaos,chaos-mesh,crd,error"
-categories: [Troubleshooting]
+categories: []
 tags: [troubleshooting,minikube,kubernetes,chaos,chaos-mesh,crd,error]
 icon: icon-html
 ---

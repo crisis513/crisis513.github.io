@@ -4,7 +4,7 @@ title: "[Infra] Kubernetes Blue/Green 배포 전략 실습"
 date: 2022-10-23
 desc: "[Infra] Kubernetes Blue/Green 배포 전략 실습"
 keywords: "infra,docker,minikube,kubernetes,grafana,blue/green"
-categories: [Infra]
+categories: []
 tags: [infra,docker,minikube,kubernetes,grafana,blue/green]
 icon: icon-html
 ---

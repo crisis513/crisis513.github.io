@@ -3,80 +3,8 @@
     "data" : [
      
     {
-        "title" : "[Troubleshooting] Install chaos-mesh CRD Error - metadata.annotations: Too long: must have at most 262144 bytes - 2022-11-02",
-        "url" : "/troubleshooting/2022/11/02/chaos_mesh_crd_error.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Kubernetes kube-monkey 사용기 - 2022-10-31",
-        "url" : "/infra/2022/10/31/kube_monkey.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Kubernetes Canary 배포 전략 실습 - 2022-10-24",
-        "url" : "/infra/2022/10/24/canary.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Kubernetes Blue/Green 배포 전략 실습 - 2022-10-23",
-        "url" : "/infra/2022/10/23/blue-green.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Kubernetes Rolling Update 배포 전략 실습 - 2022-10-22",
-        "url" : "/infra/2022/10/22/rolling-update.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Minikube에서 Istio 사용기 - 2022-10-14",
-        "url" : "/infra/2022/10/14/use_istio.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Minikube에서 Istio 설치하기 - 2022-10-14",
-        "url" : "/infra/2022/10/14/install_istio.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Infra] Ubuntu 22.04 환경에서 Minikube 설치하기 - 2022-10-13",
-        "url" : "/infra/2022/10/13/install_minikube.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Data] 엑셀을 활용한 날짜 데이터 가공 - 2022-09-08",
-        "url" : "/data/2022/09/08/date_data_procecssing.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[story] 군 복무 스토리 - 2022-09-07",
-        "url" : "/anything/2022/09/07/army.html"
+        "title" : "[Story] 군 복무 스토리 - 2022-09-07",
+        "url" : "/story/2022/09/07/army.html"
     }
     
     ,
@@ -125,38 +53,6 @@
     {
         "title" : "[Project] DevSecOps 프로젝트 - 개요 및 환경 구성 - 2020-10-03",
         "url" : "/project/2020/10/03/devsecops1.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 이미지 - 2020-09-03",
-        "url" : "/infra/2020/09/03/docker4.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 네트워크 - 2020-09-02",
-        "url" : "/infra/2020/09/02/docker3.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 이미지와 컨테이너 및 볼륨 기초 - 2020-09-01",
-        "url" : "/infra/2020/09/01/docker2.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Docker] 도커 개요 및 설치 - CentOS 7 - 2020-09-01",
-        "url" : "/infra/2020/09/01/docker1.html"
     }
     
     ,
@@ -221,22 +117,6 @@
     {
         "title" : "[Thesis] 클라우드 컴퓨팅 환경에서 블록체인 기반의 인증 키 관리 시스템 설계 및 구현 - 2020-04-01",
         "url" : "/research/2020/04/01/bkms.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "[Sample] title - 2020-03-08",
-        "url" : "/sample/2020/03/08/sample2.html"
-    }
-    
-    ,
-    
-    
-    {
-        "title" : "Blog sample - 2020-03-07",
-        "url" : "/sample/2020/03/07/sample.html"
     }
     
     

@@ -9,17 +9,8 @@
 - name: Research
   href: /research/
 
-- name: Troubleshooting
-  href: /troubleshooting/
-
-- name: Infra
-  href: /infra/  
-
-- name: Data
-  href: /data/
-
-- name: Anything
-  href: /anything/
+- name: Story
+  href: /story/
 
 # - name: Sample
 #   href: /sample/

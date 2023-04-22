@@ -4,7 +4,7 @@ title: "[Data] 엑셀을 활용한 날짜 데이터 가공"
 date: 2022-09-08
 desc: "[Data] 엑셀을 활용한 데이터 가공"
 keywords: "data,date,processing,excel"
-categories: [Data]
+categories: []
 tags: [data,date,processing,excel]
 icon: icon-html
 ---

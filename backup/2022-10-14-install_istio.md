@@ -4,7 +4,7 @@ title: "[Infra] Minikube에서 Istio 설치하기"
 date: 2022-10-14
 desc: "[Infra] Minikube에서 Istio 설치하기"
 keywords: "infra,docker,minikube,kubectl,kubernetes,istio"
-categories: [Infra]
+categories: []
 tags: [infra,docker,minikube,kubectl,kubernetes,istio]
 icon: icon-html
 ---
