@@ -50,12 +50,12 @@
     detail: 경동원
     i18n: company_d
   desc:
-    detail: 주로 AWS 인프라 관리 및 운영하는 업무와 VPN 및 네트워크, 온프레미스 인프라 운영의 업무도 같이 하고 있음
+    detail: 주로 클라우드 인프라의 신규 시스템 구축 및 운영하는 업무를 도맡아 하였고, 부족한 부서 인원과 보안 침해사고 등의 이슈로 온프레미스 인프라와 네트워크, 보안 솔루션 등 폭넓은 업무 영역을 경험하고 있음
     i18n: company_d_desc
   date:
     detail: 2023.01.16 ~ 재직중
     i18n: company_d_date
   job:
-    detail: IT Infra Group, Manager
+    detail: IT Infra Team, Manager
     i18n: company_d_job
   icon: fa-plus-square
